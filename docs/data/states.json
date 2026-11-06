@@ -1,0 +1,18 @@
+{
+  "_status": "PRELIMINARY - not verified. Sportsbook lists are a starting point and must be checked against each state's regulator before launch. Prediction-market availability is in active litigation in several states and is not filtered here.",
+  "exchanges": ["kalshi", "polymarket_us", "novig", "prophetx"],
+  "states": {
+    "AZ": { "name": "Arizona", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers", "hardrockbet"] },
+    "CA": { "name": "California", "books": [] },
+    "CO": { "name": "Colorado", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers"] },
+    "FL": { "name": "Florida", "books": ["hardrockbet"] },
+    "IL": { "name": "Illinois", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers"] },
+    "MI": { "name": "Michigan", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers"] },
+    "NJ": { "name": "New Jersey", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers", "hardrockbet"] },
+    "NY": { "name": "New York", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers"] },
+    "OH": { "name": "Ohio", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers", "hardrockbet"] },
+    "PA": { "name": "Pennsylvania", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "betrivers"] },
+    "TN": { "name": "Tennessee", "books": ["draftkings", "fanduel", "betmgm", "espnbet", "hardrockbet"] },
+    "TX": { "name": "Texas", "books": [] }
+  }
+}
