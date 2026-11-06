@@ -1,0 +1,72 @@
+name: Update odds and deploy site
+
+on:
+  # One run per day at 16:47 UTC (10:47 AM Central). Odd days: game lines + props. Even days: props only.
+  # Budget on the free plan (500 credits/month): ~135 for lines, ~350 for props.
+  # On the $30 plan (20K credits), replace both lines with e.g. "*/20 * * * *" and set MODE below to "all".
+  schedule:
+    - cron: "47 16 1-31/2 * *"   # lines + props
+    - cron: "47 16 2-30/2 * *"   # props only
+  workflow_dispatch:             # "Run workflow" button on the Actions tab
+    inputs:
+      mode:
+        description: "What to refresh"
+        type: choice
+        options: [all, lines, props]
+        default: all
+  push:
+    branches: [main]             # redeploy the site when you change it (no credits spent)
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: odds-and-pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch latest odds
+        if: github.event_name != 'push'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '47 16 2-30/2 * *' && 'props' || 'all') }}
+          # Optional overrides: Settings -> Secrets and variables -> Actions -> Variables
+          SPORTS: ${{ vars.SPORTS }}
+          BOOKMAKERS: ${{ vars.BOOKMAKERS }}
+          MARKETS: ${{ vars.MARKETS }}
+          DAYS_AHEAD: ${{ vars.DAYS_AHEAD }}
+          PROP_GAMES_NFL: ${{ vars.PROP_GAMES_NFL }}
+          PROP_GAMES_NBA: ${{ vars.PROP_GAMES_NBA }}
+          PROP_GAMES_NCAAF: ${{ vars.PROP_GAMES_NCAAF }}
+          PROP_WINDOW_HOURS: ${{ vars.PROP_WINDOW_HOURS }}
+        run: node scripts/fetch-odds.mjs
+
+      - name: Save odds snapshot to the repo
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "odds-bot"
+          git config user.email "odds-bot@users.noreply.github.com"
+          git add docs/data/odds.json
+          git diff --cached --quiet || git commit -m "Update odds [skip ci]"
+          git push
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deploy
+        uses: actions/deploy-pages@v4
