@@ -4,53 +4,77 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FCK The Vig — Parlay Price Check</title>
-<meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market.">
+<meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state.">
+<meta name="theme-color" content="#07090d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand">
-    <div class="logo" aria-hidden="true">FTV</div>
-    <div>
-      <div class="brand-name">FCK THE VIG</div>
-      <div class="brand-sub">One parlay. Every book. Best payout.</div>
-    </div>
-  </div>
-  <div class="controls">
-    <label class="ctl">
-      <span>State</span>
-      <select id="stateSel"><option value="ALL">All states</option></select>
-    </label>
-    <label class="ctl">
-      <span>Stake</span>
-      <span class="stake-wrap">$<input id="stake" type="number" min="1" step="1" value="10" inputmode="decimal"></span>
-    </label>
+  <a class="brand" href="./" aria-label="FCK The Vig home">
+    <span class="logo" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="36" height="36"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2cf28a"/><stop offset="1" stop-color="#00c2ff"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#lg)"/><path d="M11 12l9 17 9-17" fill="none" stroke="#04140b" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 30L31 9" stroke="#04140b" stroke-width="2.6" stroke-linecap="round" opacity=".55"/></svg>
+    </span>
+    <span class="wordmark">FCK <em>THE</em> VIG</span>
+  </a>
+  <div class="top-right">
+    <button id="stateBtn" class="state-btn" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>
+      <span id="stateBtnText">All states</span>
+    </button>
     <div id="status" class="status" role="status"><span class="dot"></span><span id="statusText">Loading odds…</span></div>
   </div>
 </header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h1>Same bet. Different price.<br><span class="grad">Bet the best one.</span></h1>
+      <p>Build a parlay once and see what it pays at every sportsbook and prediction market that's legal where you are.</p>
+    </div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+</section>
 
 <div id="banner" class="banner" hidden></div>
 
 <main class="layout">
   <section class="board" aria-label="Games">
-    <nav id="sportTabs" class="tabs" role="tablist"></nav>
+    <div class="board-head">
+      <nav id="sportTabs" class="tabs" role="tablist"></nav>
+      <div id="fresh" class="fresh"></div>
+    </div>
     <div id="games" class="games"></div>
   </section>
 
   <aside id="slip" class="slip" aria-label="Parlay">
     <button id="slipToggle" class="slip-toggle" aria-expanded="false">
-      <span id="slipToggleText">Parlay · 0 legs</span><span class="chev" aria-hidden="true">▲</span>
+      <span class="st-left"><span class="st-count" id="slipCount">0</span><span id="slipToggleText">Parlay</span></span>
+      <span class="st-right"><span id="slipToggleBest"></span><span class="chev" aria-hidden="true">▲</span></span>
     </button>
     <div class="slip-body">
       <div class="slip-head">
-        <h2>Your parlay</h2>
-        <button id="clearLegs" class="link-btn" hidden>Clear</button>
+        <h2>Your parlay <span class="count-badge" id="legCount" hidden>0</span></h2>
+        <button id="clearLegs" class="link-btn" hidden>Clear all</button>
       </div>
       <ol id="legs" class="legs"></ol>
-      <div id="empty" class="empty">Tap any spread, moneyline, total or player prop to add a leg. Add two or more to compare parlay payouts across every book.</div>
+      <div id="empty" class="empty">
+        <svg viewBox="0 0 120 80" width="120" height="80" aria-hidden="true"><rect x="10" y="10" width="100" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5"/><path d="M30 32h40M30 44h60M30 56h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="92" cy="32" r="7" fill="#2cf28a"/></svg>
+        <ol class="steps">
+          <li><b>Pick your legs.</b> Tap any spread, moneyline, total or player prop.</li>
+          <li><b>We price every book.</b> Each sportsbook and exchange legal in your state.</li>
+          <li><b>Bet the best one.</b> Same bet, more money back.</li>
+        </ol>
+      </div>
+      <div class="stake-row" id="stakeRow" hidden>
+        <span class="stake-label">Stake</span>
+        <div class="stake-chips" id="stakeChips">
+          <button data-stake="10">$10</button><button data-stake="25">$25</button><button data-stake="50">$50</button><button data-stake="100">$100</button>
+        </div>
+        <label class="stake-wrap">$<input id="stake" type="number" min="1" step="1" value="10" inputmode="decimal" aria-label="Stake in dollars"></label>
+      </div>
       <div id="warnings"></div>
       <div id="results"></div>
     </div>
@@ -58,9 +82,31 @@
 </main>
 
 <footer class="foot">
-  <p>Prices from <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a>. Parlay payouts are calculated by multiplying each book's leg prices, which is how standard (different-game) parlays are paid. Same-game parlays, prediction-market fees and boosts are not reflected. Always confirm the price in the app before you bet. 21+. Gambling problem? Call 1-800-GAMBLER.</p>
+  <div class="foot-inner">
+    <p><b>How payouts are calculated.</b> Standard parlays pay the product of each leg's price, so that's what we show for every book. Same-game parlays, prediction-market trading fees and boosts aren't reflected. Always confirm the price in the app before you bet.</p>
+    <p>Odds via <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a> · <button class="link-btn" id="aboutData">Where each platform is legal or blocked, by state (sources)</button></p>
+    <p class="rg">21+ (18+ on some prediction markets). Gambling problem? Call 1-800-GAMBLER.</p>
+  </div>
 </footer>
 
-<script src="app.js?v=2"></script>
+<dialog id="stateDialog" class="modal">
+  <form method="dialog" class="modal-card">
+    <h3>Where are you betting from?</h3>
+    <p class="muted">We'll only show sportsbooks and prediction markets that operate in your state.</p>
+    <select id="stateSel" aria-label="Your state"><option value="ALL">Show every book (all states)</option></select>
+    <div id="statePreview" class="state-preview"></div>
+    <div class="modal-actions"><button value="ok" class="btn-primary">Show my odds</button></div>
+  </form>
+</dialog>
+
+<dialog id="aboutDialog" class="modal">
+  <form method="dialog" class="modal-card wide">
+    <h3>Where each platform is legal or blocked</h3>
+    <div id="aboutBody"></div>
+    <div class="modal-actions"><button value="ok" class="btn-primary">Close</button></div>
+  </form>
+</dialog>
+
+<script src="app.js?v=4"></script>
 </body>
 </html>
