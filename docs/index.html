@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FCK The Vig — Parlay Price Check</title>
+<meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">FTV</div>
+    <div>
+      <div class="brand-name">FCK THE VIG</div>
+      <div class="brand-sub">One parlay. Every book. Best payout.</div>
+    </div>
+  </div>
+  <div class="controls">
+    <label class="ctl">
+      <span>State</span>
+      <select id="stateSel"><option value="ALL">All states</option></select>
+    </label>
+    <label class="ctl">
+      <span>Stake</span>
+      <span class="stake-wrap">$<input id="stake" type="number" min="1" step="1" value="10" inputmode="decimal"></span>
+    </label>
+    <div id="status" class="status" role="status"><span class="dot"></span><span id="statusText">Loading odds…</span></div>
+  </div>
+</header>
+
+<div id="banner" class="banner" hidden></div>
+
+<main class="layout">
+  <section class="board" aria-label="Games">
+    <nav id="sportTabs" class="tabs" role="tablist"></nav>
+    <div id="games" class="games"></div>
+  </section>
+
+  <aside id="slip" class="slip" aria-label="Parlay">
+    <button id="slipToggle" class="slip-toggle" aria-expanded="false">
+      <span id="slipToggleText">Parlay · 0 legs</span><span class="chev" aria-hidden="true">▲</span>
+    </button>
+    <div class="slip-body">
+      <div class="slip-head">
+        <h2>Your parlay</h2>
+        <button id="clearLegs" class="link-btn" hidden>Clear</button>
+      </div>
+      <ol id="legs" class="legs"></ol>
+      <div id="empty" class="empty">Tap any spread, moneyline, total or player prop to add a leg. Add two or more to compare parlay payouts across every book.</div>
+      <div id="warnings"></div>
+      <div id="results"></div>
+    </div>
+  </aside>
+</main>
+
+<footer class="foot">
+  <p>Prices from <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a>. Parlay payouts are calculated by multiplying each book's leg prices, which is how standard (different-game) parlays are paid. Same-game parlays, prediction-market fees and boosts are not reflected. Always confirm the price in the app before you bet. 21+. Gambling problem? Call 1-800-GAMBLER.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
