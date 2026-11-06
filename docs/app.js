@@ -79,17 +79,29 @@
   const isProp = mk => mk.startsWith('player_');
   const mLabel = mk => MARKET_LABELS[mk] || mk.replace(/^player_/, '').replace(/_/g, ' ');
   const same = (o, name, desc) => o.name === name && (o.desc || null) === (desc || null);
+  // Exchanges often list a ladder of lines for one side (o9.5, o16.5, o19.5...).
+  // Pick the exact line if offered, otherwise the closest one.
+  function pickOutcome(outcomes, name, desc, point) {
+    let best = null, gap = Infinity;
+    for (const o of outcomes || []) {
+      if (!same(o, name, desc)) continue;
+      const g = point == null || o.point == null ? 0 : Math.abs(o.point - point);
+      if (g < gap) { best = o; gap = g; }
+    }
+    return best;
+  }
 
   // Most common line for a side across allowed books, and the best price at that line.
   function consensus(ev, market, name, allowed, desc) {
     const byPoint = new Map();
     for (const [bk, b] of Object.entries(ev.books)) {
       if (!allowed.has(bk)) continue;
-      const o = b.markets?.[market]?.find(x => same(x, name, desc));
-      if (!o) continue;
-      const k = o.point ?? 'none';
-      if (!byPoint.has(k)) byPoint.set(k, []);
-      byPoint.get(k).push(o.price);
+      for (const o of b.markets?.[market] || []) {
+        if (!same(o, name, desc)) continue;
+        const k = o.point ?? 'none';
+        if (!byPoint.has(k)) byPoint.set(k, []);
+        byPoint.get(k).push(o.price);
+      }
     }
     if (!byPoint.size) return null;
     let best = null;
@@ -111,7 +123,7 @@
       const legs = [];
       for (const leg of S.legs) {
         const b = S.events.get(leg.eventId)?.books[bk];
-        const o = b?.markets?.[leg.market]?.find(x => same(x, leg.name, leg.desc));
+        const o = pickOutcome(b?.markets?.[leg.market], leg.name, leg.desc, leg.point);
         if (!o) { ok = false; break; }
         const sameLine = leg.point == null || o.point === leg.point;
         if (!sameLine) exact = false;
@@ -120,11 +132,12 @@
         link = link || b.link || null;
       }
       if (!ok) { missing.push(bk); continue; }
-      const row = { bk, title: bookTitle(bk), ex: isExchange(bk), dec, am: toAm(dec), payout: S.stake * dec, legs, link };
+      const off = legs.reduce((t, l, k) => t + (l.same ? 0 : Math.abs((l.point ?? 0) - (S.legs[k].point ?? 0))), 0);
+      const row = { bk, title: bookTitle(bk), ex: isExchange(bk), dec, am: toAm(dec), payout: S.stake * dec, legs, link, off };
       (exact ? full : alt).push(row);
     }
     const byDec = (a, b) => b.dec - a.dec;
-    return { full: full.sort(byDec), alt: alt.sort(byDec), missing };
+    return { full: full.sort(byDec), alt: alt.sort((a, b) => a.off - b.off || b.dec - a.dec), missing };
   }
 
   function legLabel(leg) {
