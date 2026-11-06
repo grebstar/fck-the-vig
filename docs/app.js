@@ -23,7 +23,7 @@
 
   const S = {
     data: null, source: null, avail: null, sport: null,
-    legs: [], stake: 10, state: 'ALL', events: new Map(), openProps: new Map(), propSearch: new Map(),
+    legs: [], stake: 10, state: 'ALL', events: new Map(), openProps: new Map(), propSearch: new Map(), tab: 'today',
   };
 
   const $ = sel => document.querySelector(sel);
@@ -220,17 +220,89 @@
     el.title = S.data.quota?.remaining != null ? `${S.data.quota.remaining} API credits left this month` : '';
   }
 
-  function renderHeroStats() {
+
+  // Biggest best-vs-worst price differences for the same bet at the same line, across books legal here.
+  function priceGaps(allowed) {
+    const now = Date.now(), out = [];
+    for (const ev of S.events.values()) {
+      if (new Date(ev.commence_time).getTime() <= now) continue;
+      const sides = new Map();
+      for (const [bk, b] of Object.entries(ev.books)) {
+        if (!allowed.has(bk)) continue;
+        for (const [mk, outs] of Object.entries(b.markets)) for (const o of outs) {
+          const key = `${mk}|${o.name}|${o.desc || ''}|${o.point ?? ''}`;
+          if (!sides.has(key)) sides.set(key, { mk, name: o.name, desc: o.desc || null, point: o.point ?? null, offers: [] });
+          const side = sides.get(key);
+          if (!side.offers.some(x => x.bk === bk)) side.offers.push({ bk, price: o.price });
+        }
+      }
+      const perMarket = new Map();
+      for (const side of sides.values()) {
+        if (side.offers.length < 4) continue;
+        if (side.offers.some(o => o.price < -400 || o.price > 400)) continue; // keep it to mainstream prices
+        // Drop stale or thin quotes: anything more than 5 points of implied probability away from the median.
+        const probs = side.offers.map(o => 1 / toDec(o.price)).sort((x, y) => x - y);
+        const med = probs[Math.floor(probs.length / 2)];
+        const offers = side.offers.filter(o => Math.abs(1 / toDec(o.price) - med) <= 0.05);
+        if (offers.length < 4) continue;
+        const best = offers.reduce((m, o) => (toDec(o.price) > toDec(m.price) ? o : m));
+        const worst = offers.reduce((m, o) => (toDec(o.price) < toDec(m.price) ? o : m));
+        // How much more you win at the best book vs the worst, in percent of profit.
+        const gap = ((toDec(best.price) - 1) / (toDec(worst.price) - 1) - 1) * 100;
+        if (gap < 1) continue;
+        const mkey = `${side.mk}|${side.desc || ''}`; // one card per market per game
+        const cur = perMarket.get(mkey);
+        if (!cur || gap > cur.gap) perMarket.set(mkey, { ev, ...side, best, worst, gap, books: offers.length });
+      }
+      out.push(...perMarket.values());
+    }
+    return out.sort((a, b) => b.gap - a.gap).slice(0, 6);
+  }
+
+  // Average hold per book on two-way game lines (moneyline, spread, total) for upcoming games.
+  function vigByBook(allowed) {
+    const acc = new Map();
+    const now = Date.now();
+    for (const ev of S.events.values()) {
+      if (new Date(ev.commence_time).getTime() <= now) continue;
+      for (const [bk, b] of Object.entries(ev.books)) {
+        if (!allowed.has(bk)) continue;
+        const add = pair => {
+          if (pair.length !== 2) return;
+          const h = 1 / toDec(pair[0].price) + 1 / toDec(pair[1].price) - 1;
+          if (h < -0.05 || h > 0.25) return;
+          const a = acc.get(bk) || { sum: 0, n: 0 }; a.sum += h; a.n++; acc.set(bk, a);
+        };
+        const h2h = b.markets.h2h; if (h2h) add(h2h.slice(0, 2));
+        for (const mk of ['spreads', 'totals']) {
+          const groups = new Map();
+          for (const o of b.markets[mk] || []) { const k = Math.abs(o.point ?? 0); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(o); }
+          for (const g of groups.values()) add(g);
+        }
+      }
+    }
+    return [...acc.entries()].filter(([, a]) => a.n >= 3).map(([bk, a]) => ({ bk, vig: (a.sum / a.n) * 100 })).sort((x, y) => x.vig - y.vig);
+  }
+
+  function renderToday() {
     const allowed = allowedBooks();
     const games = S.data.sports.reduce((n, s) => n + s.events.length, 0);
-    const propGames = [...S.events.values()].filter(e => Object.values(e.books).some(b => Object.keys(b.markets).some(isProp))).length;
-    const books = [...allowed].filter(k => !bookInfo(k).ex).length;
-    const exs = [...allowed].filter(k => bookInfo(k).ex).length;
-    $('#heroStats').innerHTML = `
-      <div class="stat accent"><b>${games}</b><span>Games</span></div>
-      <div class="stat"><b>${books}</b><span>Sportsbooks</span></div>
-      <div class="stat"><b>${exs}</b><span>Exchanges</span></div>
-      <div class="stat"><b>${propGames}</b><span>With props</span></div>`;
+    const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date());
+    $('#todaySub').textContent = `${day} · ${games} games · ${allowed.size} books${S.state !== 'ALL' ? ' in ' + stateName(S.state) : ''}`;
+    const gaps = priceGaps(allowed);
+    $('#gaps').innerHTML = gaps.length ? gaps.map(g => {
+      const leg = { market: g.mk, name: g.name, point: g.point, desc: g.desc };
+      const on = S.legs.some(l => l.eventId === g.ev.id && l.market === g.mk && l.name === g.name && l.desc === g.desc);
+      const when = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' }).format(new Date(g.ev.commence_time));
+      return `<button class="gap${on ? ' on' : ''}" data-gev="${esc(g.ev.id)}" data-gmk="${esc(g.mk)}" data-gnm="${esc(g.name)}" data-gpt="${g.point ?? ''}" data-gds="${esc(g.desc || '')}" aria-pressed="${on}">
+        <span class="gap-top"><span class="gap-pick">${esc(legLabel(leg))}</span><span class="gap-badge">Pays ${Math.round(g.gap)}% more</span></span>
+        <span class="gap-game">${esc(g.ev.away)} @ ${esc(g.ev.home)} · ${esc(when)}</span>
+        <span class="gap-row"><span>Best <strong>${fmtAm(g.best.price)} ${esc(bookInfo(g.best.bk).name)}</strong></span><span>Worst <strong>${fmtAm(g.worst.price)} ${esc(bookInfo(g.worst.bk).name)}</strong></span></span>
+      </button>`;
+    }).join('') : '<p class="none">No price gaps to show right now.</p>';
+    const vig = vigByBook(allowed);
+    const max = Math.max(...vig.map(v => v.vig), 1);
+    $('#vigList').innerHTML = vig.map(v => `<li class="${v.vig < 2 ? 'low' : ''}"><span>${esc(bookInfo(v.bk).name)}${bookInfo(v.bk).ex ? ' <span class="muted small">exchange</span>' : ''}</span><span class="pct">${v.vig.toFixed(1)}%</span><span class="bar"><i style="width:${Math.max(4, v.vig / max * 100).toFixed(0)}%"></i></span></li>`).join('');
     $('#stateBtnText').textContent = stateName(S.state);
   }
 
@@ -254,7 +326,7 @@
   function renderTabs() {
     $('#sportTabs').innerHTML = S.data.sports.map(sp => {
       const count = sp.in_season === false ? 'off' : sp.events.length;
-      return `<button class="tab" role="tab" data-sport="${esc(sp.key)}" aria-selected="${sp.key === S.sport}">${sportIcon(sp.key)}${esc(sp.title)} <span class="count">${count}</span></button>`;
+      return `<button class="tab" role="tab" data-sport="${esc(sp.key)}" aria-selected="${sp.key === S.sport}">${esc(sp.title)}<span class="count">${count}</span></button>`;
     }).join('');
     const sp = S.data.sports.find(s => s.key === S.sport);
     $('#fresh').textContent = S.source === 'sample' || !sp ? '' :
@@ -356,31 +428,41 @@
         ? `<a class="${cls}" href="${esc(l.link)}" target="_blank" rel="noopener" title="Add ${esc(legLabel(lg))} to the ${esc(r.name)} bet slip">${label}<span class="ext">↗</span></a>`
         : `<span class="${cls}" title="${esc(legLabel(lg))}">${label}</span>`;
     }).join('');
-    const pct = Math.max(8, Math.min(100, (r.payout / bestPayout) * 100));
+    const pct = Math.max(6, Math.min(100, (r.payout / bestPayout) * 100));
     const age = r.ex && r.minAge ? ` ${r.minAge}+` : '';
     return `<div class="row${i === 0 && isBestGroup ? ' best' : ''}">
-      <span class="bar" style="width:${pct.toFixed(1)}%"></span>
       ${bchip(r)}
       <span class="bk"><span class="n">${esc(r.name)}</span><span class="badge ${r.ex ? 'ex' : 'book'}">${r.ex ? 'Exchange' + age : 'Book'}</span>${r.avail === 'check' ? '<span class="badge chk" title="Availability in your state is unclear right now">Verify</span>' : ''}</span>
       <span class="money"><span class="pay">${money(r.payout)}</span><span class="odds">${fmtAm(r.am)}</span></span>
-      <span class="legp">${legs}</span>
+      <span class="meter"><span class="bar"><i style="width:${pct.toFixed(1)}%"></i></span><span class="legp">${legs}</span></span>
     </div>`;
+  }
+
+  // Best price for one leg (exact line) across books legal here.
+  function bestFor(leg) {
+    let best = null;
+    for (const bk of allowedBooks()) {
+      const o = S.events.get(leg.eventId)?.books[bk]?.markets?.[leg.market]?.find(x => same(x, leg.name, leg.desc) && (leg.point == null || x.point === leg.point));
+      if (o && (!best || toDec(o.price) > toDec(best))) best = o.price;
+    }
+    return best;
   }
 
   function renderSlip() {
     const n = S.legs.length;
     $('#legs').innerHTML = S.legs.map((l, i) => {
       const ev = S.events.get(l.eventId);
-      return `<li class="leg"><span class="ico">${isProp(l.market) ? ICONS.person : sportIcon(ev.sport)}</span>
-        <span><span class="what">${esc(legLabel(l))}</span><br><span class="game-l">${esc(ev.away)} @ ${esc(ev.home)}</span></span>
-        <button class="x" data-rm="${i}" aria-label="Remove leg">×</button></li>`;
+      const b = bestFor(l);
+      return `<li class="leg"><span><span class="what">${esc(legLabel(l))}</span><span class="game-l">${esc(ev.away)} @ ${esc(ev.home)}</span></span>
+        <span class="best">${b == null ? '' : fmtAm(b)}</span>
+        <button class="x" data-rm="${i}" aria-label="Remove ${esc(legLabel(l))}">×</button></li>`;
     }).join('');
     $('#empty').hidden = n > 0;
     $('#clearLegs').hidden = n === 0;
     $('#stakeRow').hidden = n === 0;
-    $('#legCount').hidden = n === 0;
-    $('#legCount').textContent = n;
-    $('#slipCount').textContent = n;
+    $('#tabBadge').hidden = n === 0;
+    $('#tabBadge').textContent = n;
+    $('#resultsSub').textContent = n ? `${n === 1 ? 'Straight bet' : n + '-leg parlay'} · ${money(S.stake)} · ${stateName(S.state)}` : 'Step 2 · compare';
     for (const b of document.querySelectorAll('#stakeChips button')) b.classList.toggle('on', Number(b.dataset.stake) === S.stake);
 
     const warn = [];
@@ -390,23 +472,21 @@
       warn.push(`<div class="note warn"><strong>Same-game parlay.</strong> Books price these with their own correlation models, so the real payout in the app will usually differ (often lower) from the leg-by-leg math below.</div>`);
     }
 
-    let res = '';
-    let toggle = 'Parlay', best = '';
+    let res = '', seeBest = '';
     if (n > 0) {
       const { full, alt, missing } = priceParlay();
-      const label = n === 1 ? 'Straight bet' : `${n}-leg parlay`;
-      toggle = label;
       if (full.length) {
         const top = full[0], worst = full[full.length - 1];
         const edge = top.payout - worst.payout;
-        best = `${money(top.payout)}`;
-        res += `<div class="result-hero">
-          <div class="lbl">${esc(label)} · best payout for ${money(S.stake)}</div>
-          <div class="big">${money(top.payout)}</div>
-          <div class="at">at <b>${esc(top.name)}</b> · ${fmtAm(top.am)}</div>
-          ${full.length > 1 && edge > 0.005 ? `<div class="save-pill">+${money(edge)} vs ${esc(worst.name)}</div>` : ''}
+        seeBest = `See best payout · ${money(top.payout)}`;
+        res += `<div class="payout">
+          <span class="lbl">Best payout · ${esc(top.name)}</span>
+          <span class="big">${money(top.payout)}</span>
+          <span class="sub">${full.length > 1 && edge > 0.005 ? `+${money(edge)} more than ${esc(worst.name)}` : 'Only book with every leg at these lines'} · ${fmtAm(top.am)}</span>
         </div>`;
         res += `<div class="rank"><h3><span>Same lines</span><span>${full.length} book${full.length === 1 ? '' : 's'}</span></h3>${full.map((r, i) => rowHtml(r, i, true, top.payout)).join('')}</div>`;
+        const link = top.legs.find(l => l.link)?.link;
+        if (link) res += `<a class="cta light open-best" href="${esc(link)}" target="_blank" rel="noopener">Open ${esc(top.name)}</a>`;
       } else {
         res += `<div class="note info">No book in ${esc(stateName(S.state))} has every leg at the exact same line.</div>`;
       }
@@ -415,22 +495,32 @@
         res += `<div class="rank"><h3><span>Different line on a leg</span><span>${alt.length}</span></h3>${alt.map((r, i) => rowHtml(r, i, false, ref)).join('')}</div>`;
       }
       if ([...full, ...alt].some(r => r.legs.some(l => l.link))) {
-        res += `<div class="hint">Tap a price with ↗ to add that leg to the book's bet slip (each book takes one leg per link).</div>`;
+        res += `<p class="hint">Tap a price with ↗ to add that leg to the book's bet slip (each book takes one leg per link).</p>`;
       }
-      if (missing.length) res += `<div class="missing">Not offering every leg: ${missing.map(k => esc(bookInfo(k).name)).join(', ')}</div>`;
+      if (missing.length) res += `<p class="missing">Not offering every leg: ${missing.map(k => esc(bookInfo(k).name)).join(', ')}</p>`;
       if ([...full, ...alt].some(r => r.ex)) {
-        res += `<div class="note info"><strong>Exchanges</strong> (Kalshi, Polymarket, Novig, ProphetX) are priced leg-by-leg. Trading fees aren't included, and a native combo there may be priced differently.</div>`;
+        res += `<div class="note info"><strong>Prediction markets</strong> (Kalshi, Polymarket, Novig, ProphetX) are priced leg-by-leg. Trading fees aren't included, and a native combo there may be priced differently.</div>`;
       }
     }
     $('#warnings').innerHTML = warn.join('');
-    $('#results').innerHTML = res;
-    $('#slipToggleText').textContent = toggle;
-    $('#slipToggleBest').textContent = best;
+    $('#out').innerHTML = res;
+    const sb = $('#seeBest');
+    sb.hidden = !seeBest;
+    sb.textContent = seeBest;
+  }
+
+  function setTab(t) {
+    S.tab = t;
+    $('.app').dataset.tab = t;
+    for (const b of document.querySelectorAll('.tabbar [data-tab]')) {
+      if (b.dataset.tab === t) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    }
+    if (window.matchMedia('(max-width: 860px)').matches) window.scrollTo(0, 0);
   }
 
   function render() {
     renderStatus();
-    renderHeroStats();
+    renderToday();
     renderBanner();
     renderTabs();
     renderGames();
@@ -529,9 +619,13 @@
     if (e.target.closest('#clearLegs')) { S.legs = []; return render(); }
     if (e.target.closest('#stateBtn')) return openStateDialog();
     if (e.target.closest('#aboutData')) return openAbout();
-    if (e.target.closest('#slipToggle')) {
-      const s = $('#slip'); s.classList.toggle('open');
-      $('#slipToggle').setAttribute('aria-expanded', s.classList.contains('open'));
+    const tb = e.target.closest('.tabbar [data-tab]');
+    if (tb) return setTab(tb.dataset.tab);
+    if (e.target.closest('#seeBest')) return setTab('results');
+    const gp = e.target.closest('.gap[data-gev]');
+    if (gp) {
+      const pt = gp.dataset.gpt === '' ? null : Number(gp.dataset.gpt);
+      return toggleLeg(gp.dataset.gev, gp.dataset.gmk, gp.dataset.gnm, pt, gp.dataset.gds || null);
     }
   });
   document.addEventListener('input', e => {
