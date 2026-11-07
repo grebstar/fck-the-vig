@@ -1,0 +1,22 @@
+{
+  "name": "fck-the-vig-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "iPhone app for fck the vig. Wraps the site in docs/ with Capacitor.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "sync": "node build.mjs && npx cap sync ios",
+    "open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.3",
+    "@capacitor/ios": "8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

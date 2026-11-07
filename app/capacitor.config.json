@@ -1,0 +1,9 @@
+{
+  "appId": "com.fckvig.app",
+  "appName": "FCK The Vig",
+  "webDir": "www",
+  "backgroundColor": "#110a24",
+  "ios": {
+    "contentInset": "never"
+  }
+}
