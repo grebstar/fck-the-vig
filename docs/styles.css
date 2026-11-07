@@ -638,3 +638,17 @@ button.open-best { font-family: var(--font); }
 .know-pill svg { color: var(--accent); flex: none; }
 @media (max-width: 1100px) { .know-txt { display: none; } .know-btn { padding: 0; width: 44px; justify-content: center; } }
 @media (max-width: 860px) { .topbar .know-btn { display: none; } .know-pill { display: inline-flex; } }
+
+/* share dialog: preview of the picture texts will show */
+.share-preview { position: relative; margin: 14px 0 6px; aspect-ratio: 1200 / 630; border-radius: 16px; overflow: hidden; background: var(--surface-2); }
+.share-preview img { display: block; width: 100%; height: 100%; }
+.share-preview img[hidden] { display: none; }
+.share-preview span { position: absolute; left: 12px; right: 12px; top: 50%; transform: translateY(-50%); text-align: center; font-size: 14px; font-weight: 600; color: var(--muted); }
+.share-preview span[hidden] { display: none; }
+.share-preview img:not([hidden]) + span { top: auto; bottom: 10px; transform: none; padding: 8px 10px; border-radius: 10px; background: rgba(17, 10, 36, .88); color: var(--text); }
+.share-preview.loading { animation: share-pulse 1.2s ease-in-out infinite alternate; }
+@keyframes share-pulse { from { opacity: .55; } to { opacity: 1; } }
+#shareDialog .modal-actions { flex-wrap: wrap; gap: 10px 14px; }
+#shareDialog .modal-actions .cta.ghost { margin-top: 0; }
+#shareDialog .cta:disabled { opacity: .55; cursor: default; }
+@media (max-width: 420px) { #shareDialog .modal-actions .cta { padding: 13px 16px; } }
