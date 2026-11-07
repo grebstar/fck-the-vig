@@ -17,7 +17,7 @@ GitHub Action (on a schedule)
   └─ scripts/fetch-odds.mjs  → calls The Odds API with your secret key
        └─ writes docs/data/odds.json → commits it → deploys docs/ to GitHub Pages
 Browser
-  └─ docs/index.html + app.js → reloads odds.json every 60 s, builds parlays, ranks books
+  └─ docs/index.html + js/main.js → reloads odds.json every 60 s, builds parlays, ranks books
 ```
 
 Your API key stays in GitHub Secrets and never reaches the browser.
@@ -90,3 +90,11 @@ cp test/sample-odds.json docs/data/      # local only: remove before committing
 cd docs && python3 -m http.server 8000  # open http://localhost:8000
 ```
 `test/ui-test.mjs` and `test/props-test.mjs` build parlays (game lines, and lines mixed with props) in a headless browser. It checks every displayed payout against an independent calculation, and it also checks the state filter and the phone layout.
+
+## Saved bets, season-long markets and accounts
+
+- **My bets.** Tap *Save to My bets* on a parlay (or *Save* on a season-long market) and pick the book you used. Bets are stored in the browser (`localStorage`). Game lines and player props are graded automatically from ESPN's public final scores and box scores (`docs/js/grade.js`). If a team or player can't be matched, or a game is postponed, the leg is marked *Needs review* instead of guessing. Futures are settled by hand.
+- **Season.** `scripts/fetch-futures.mjs` writes `docs/data/futures.json` on every scheduled run: championships, awards, stat leaders and win totals from Kalshi's public market data (free), plus sportsbook championship futures from The Odds API about once a week (about 3 credits). Run it on demand with Actions → Run workflow → `futures`.
+- **Accounts.** Optional. `worker/index.js` is a Cloudflare Worker with a D1 database (binding `DB`) served at `https://api.fckvig.com`. It stores a username, a salted PBKDF2 password hash and each user's bets, and syncs them across devices (newest edit wins). No email is collected. Local testing: `cd worker && npx wrangler dev --local --port 8787`, then serve `docs/` on `http://localhost:8000`.
+
+Tests: `node test/grade-test.mjs` (grading rules), `node test/api-test.mjs` (accounts API against wrangler dev), `node test/features-test.mjs` (end to end in Playwright).
