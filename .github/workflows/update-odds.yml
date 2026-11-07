@@ -2,7 +2,8 @@ name: Update odds and deploy site
 
 on:
   # One run per day at 16:47 UTC (10:47 AM Central). Odd days: game lines + props. Even days: props only.
-  # Budget on the free plan (500 credits/month): ~135 for lines, ~350 for props.
+  # Every run also refreshes season-long markets from Kalshi (free); sportsbook futures refresh about once a week (~3 credits).
+  # Budget on the free plan (500 credits/month): ~135 for lines, ~350 for props, ~15 for futures.
   # On the $30 plan (20K credits), replace both lines with e.g. "*/20 * * * *" and set MODE below to "all".
   schedule:
     - cron: "47 16 1-31/2 * *"   # lines + props
@@ -12,7 +13,7 @@ on:
       mode:
         description: "What to refresh"
         type: choice
-        options: [all, lines, props]
+        options: [all, lines, props, futures]
         default: all
   push:
     branches: [main]             # redeploy the site when you change it (no credits spent)
@@ -40,7 +41,7 @@ jobs:
           node-version: 20
 
       - name: Fetch latest odds
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && !(github.event_name == 'workflow_dispatch' && inputs.mode == 'futures')
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '47 16 2-30/2 * *' && 'props' || 'all') }}
@@ -55,12 +56,22 @@ jobs:
           PROP_WINDOW_HOURS: ${{ vars.PROP_WINDOW_HOURS }}
         run: node scripts/fetch-odds.mjs
 
+      - name: Fetch season-long markets (futures, awards, win totals)
+        if: github.event_name != 'push'
+        continue-on-error: true          # never block the odds update
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'all' }}
+          BOOKMAKERS: ${{ vars.BOOKMAKERS }}
+        run: node scripts/fetch-futures.mjs
+
       - name: Save odds snapshot to the repo
         if: github.event_name != 'push'
         run: |
           git config user.name "odds-bot"
           git config user.email "odds-bot@users.noreply.github.com"
           git add docs/data/odds.json
+          if [ -f docs/data/futures.json ]; then git add docs/data/futures.json; fi
           git diff --cached --quiet || git commit -m "Update odds [skip ci]"
           git push
 
