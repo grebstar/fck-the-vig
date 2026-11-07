@@ -10,6 +10,10 @@
 // Line-move alerts: users save alerts here; the GitHub Action that refreshes odds checks them and calls
 // /api/alerts/fire, proving who it is with a GitHub Actions OIDC token (no shared secret to manage).
 // Alerts go out as web push (VAPID keys are generated once and kept in the config table) and/or email.
+//
+// Shared bets: POST /api/share stores a bet plus a preview picture the browser drew, and returns a short link
+// (/s/<id>). Texting apps read that page's preview tags and show the bet's own picture; people who open it are
+// sent on to the site with the bet loaded. Pictures are dropped after SHARE_IMG_DAYS (the link keeps working).
 
 const ORIGINS = ['https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io', 'capacitor://localhost'];  // last one = the iPhone app
 let allowed = new Set(ORIGINS);  // ALLOW_ORIGINS (comma-separated) overrides this, e.g. for local testing
@@ -26,6 +30,11 @@ const ALERT_MAIL_PER_USER_DAY = 10;
 const ALERT_MAIL_PER_DAY = 80;       // Resend's free plan allows 100/day; leave room for password resets
 const GITHUB_REPO = 'grebstar/fck-the-vig';
 const OIDC_AUDIENCE = 'fckvig-api';
+const SHARE_IMG_DAYS = 30;           // keep a shared bet's preview picture this long
+const SHARE_DAYS = 365;              // and the link itself this long
+const SHARE_MAX_IMG = 300000;        // bytes (the site sends a ~60-150 KB JPEG)
+const SHARE_MAX_IMGS = 2500;         // newest pictures kept in the database (~250 MB at most; D1 free allows 500 MB)
+const SHARE_MAX_LEGS = 12;
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pw TEXT NOT NULL, created_at INTEGER NOT NULL, failed INTEGER NOT NULL DEFAULT 0, locked_until INTEGER NOT NULL DEFAULT 0)`,
@@ -41,6 +50,8 @@ const SCHEMA = [
   `CREATE INDEX IF NOT EXISTS alerts_user ON alerts (user_id)`,
   `CREATE INDEX IF NOT EXISTS alerts_status ON alerts (status)`,
   `CREATE TABLE IF NOT EXISTS prefs (user_id INTEGER PRIMARY KEY, data TEXT NOT NULL, updated_at INTEGER NOT NULL)`,
+  `CREATE TABLE IF NOT EXISTS shares (id TEXT PRIMARY KEY, legs TEXT NOT NULL, stake REAL, title TEXT NOT NULL, descr TEXT NOT NULL, img TEXT, mime TEXT, created_at INTEGER NOT NULL)`,
+  `CREATE INDEX IF NOT EXISTS shares_created ON shares (created_at)`,
 ];
 let schemaReady = null;
 async function migrate(db) {
@@ -628,6 +639,107 @@ async function fireAlerts(req, db, env) {
   return json(req, out);
 }
 
+// ---------- shared bets with their own link preview ----------
+const SHARE_ID_RE = /^[A-Za-z0-9]{8,12}$/;
+const B62 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const shareId = () => [...crypto.getRandomValues(new Uint8Array(10))].map(b => B62[b % 62]).join('');
+const oneLine = (v, max) => String(v ?? '').replace(/[\u0000-\u001f\u007f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
+const siteUrl = env => (env.SITE_URL || 'https://www.fckvig.com').replace(/\/$/, '') + '/';
+
+// Same packed format the site uses in its #p= links: [eventId, market, name, point, desc].
+function cleanShareLegs(legs) {
+  if (!Array.isArray(legs) || !legs.length || legs.length > SHARE_MAX_LEGS) return null;
+  const out = [];
+  for (const l of legs) {
+    if (!Array.isArray(l) || l.length < 3 || l.length > 5) return null;
+    const [eventId, market, name, point = null, desc = null] = l;
+    if (!str(eventId, 100) || !/^[a-z0-9_]{1,60}$/.test(market) || !str(name, 120)) return null;
+    if (point !== null && !(typeof point === 'number' && Number.isFinite(point))) return null;
+    if (desc !== null && !str(desc, 120)) return null;
+    out.push([eventId, market, name, point, desc]);
+  }
+  return out;
+}
+function imgBytes(b64s, mime) {
+  if (typeof b64s !== 'string' || !b64s.length || b64s.length > Math.ceil(SHARE_MAX_IMG * 4 / 3) + 4) return null;
+  let bytes;
+  try { bytes = unb64(b64s); } catch { return null; }
+  const jpeg = bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  const png = bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47;
+  if (mime === 'image/jpeg' ? !jpeg : mime === 'image/png' ? !png : true) return null;
+  return bytes.length <= SHARE_MAX_IMG ? bytes : null;
+}
+
+async function createShare(req, db) {
+  await limit(db, 'share:' + await ipKey(req), 40, 3600e3);
+  await limit(db, 'share:all', 1500, 864e5);
+  const b = await body(req);
+  const legs = cleanShareLegs(b.legs);
+  if (!legs) throw new HttpError(400, "That bet can't be shared.");
+  const stake = typeof b.stake === 'number' && b.stake > 0 && b.stake <= 1e6 ? Math.round(b.stake * 100) / 100 : null;
+  const title = oneLine(b.title, 140) || 'A bet on fck the vig';
+  const descr = oneLine(b.desc, 300);
+  const mime = b.mime === 'image/png' ? 'image/png' : 'image/jpeg';
+  const img = b.img == null ? null : imgBytes(b.img, mime);
+  if (b.img != null && !img) throw new HttpError(400, "That preview picture didn't come through.");
+  const id = shareId();
+  const now = Date.now();
+  await db.batch([
+    db.prepare('INSERT INTO shares (id, legs, stake, title, descr, img, mime, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(id, JSON.stringify(legs), stake, title, descr, img ? b.img : null, img ? mime : null, now),
+    // Keep the table small: pictures go after SHARE_IMG_DAYS or once there are more than SHARE_MAX_IMGS of them.
+    db.prepare('UPDATE shares SET img = NULL, mime = NULL WHERE img IS NOT NULL AND (created_at < ? OR id IN (SELECT id FROM shares WHERE img IS NOT NULL ORDER BY created_at DESC LIMIT -1 OFFSET ?))')
+      .bind(now - SHARE_IMG_DAYS * 864e5, SHARE_MAX_IMGS),
+    db.prepare('DELETE FROM shares WHERE created_at < ?').bind(now - SHARE_DAYS * 864e5),
+  ]);
+  return json(req, { id, url: `${new URL(req.url).origin}/s/${id}` });
+}
+
+// Link-preview fetchers (iMessage sends "facebookexternalhit ... Twitterbot"). They get the preview tags with no
+// redirect; people get the same page plus an instant redirect to the site with the bet loaded.
+const PREVIEW_BOT = /bot\b|crawler|spider|facebookexternalhit|facebot|twitterbot|slackbot|discordbot|whatsapp|telegrambot|linkedinbot|pinterest|embedly|iframely|redditbot|applebot|skypeuripreview|google-pagerenderer|vkshare|snapchat|bitlybot|mastodon|preview/i;
+
+async function sharePage(req, db, env, id) {
+  const site = siteUrl(env);
+  const row = SHARE_ID_RE.test(id) ? await db.prepare('SELECT id, legs, stake, title, descr, mime, created_at FROM shares WHERE id = ?').bind(id).first() : null;
+  if (!row) return Response.redirect(site, 302);
+  const target = `${site}#p=${b64url(enc.encode(row.legs))}${row.stake > 0 ? `&s=${row.stake}` : ''}`;
+  const origin = new URL(req.url).origin;
+  const image = row.mime ? `${origin}/s/${row.id}.${row.mime === 'image/png' ? 'png' : 'jpg'}` : `${site}og.png`;
+  const bot = PREVIEW_BOT.test(req.headers.get('User-Agent') || '');
+  const t = escHtml(row.title), d = escHtml(row.descr), u = escHtml(`${origin}/s/${row.id}`), img = escHtml(image), go = escHtml(target);
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${t}</title>
+<meta name="description" content="${d}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="fck the vig">
+<meta property="og:url" content="${u}">
+<meta property="og:title" content="${t}">
+<meta property="og:description" content="${d}">
+<meta property="og:image" content="${img}">
+<meta property="og:image:secure_url" content="${img}">
+<meta property="og:image:type" content="${row.mime || 'image/png'}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${t}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${t}">
+<meta name="twitter:description" content="${d}">
+<meta name="twitter:image" content="${img}">
+<meta name="theme-color" content="#110a24">
+${bot ? '' : `<meta http-equiv="refresh" content="0;url=${go}">\n<script>location.replace(${JSON.stringify(target).replace(/</g, '\\u003c')})</script>`}
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#110a24;color:#f6f3ff;font:600 17px system-ui,sans-serif;text-align:center;padding:16px}a{color:#9b74ff}</style>
+</head><body><p>${t}<br><a href="${go}">Open it on fck the vig</a></p></body></html>`;
+  return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer' } });
+}
+
+async function shareImage(req, db, env, id, ext) {
+  const row = SHARE_ID_RE.test(id) ? await db.prepare('SELECT img, mime FROM shares WHERE id = ?').bind(id).first() : null;
+  if (!row?.img || (ext === 'png') !== (row.mime === 'image/png')) return Response.redirect(`${siteUrl(env)}og.png`, 302);
+  return new Response(unb64(row.img), { headers: { 'Content-Type': row.mime, 'Cache-Control': 'public, max-age=2592000, immutable', 'X-Content-Type-Options': 'nosniff', 'Access-Control-Allow-Origin': '*' } });
+}
+
 const ROUTES = {
   'GET /api/health': (req) => json(req, { ok: true }),
   'POST /api/signup': signup,
@@ -650,6 +762,7 @@ const ROUTES = {
   'POST /api/alerts/delete': deleteAlert,
   'GET /api/alerts/active': activeAlerts,
   'POST /api/alerts/fire': fireAlerts,
+  'POST /api/share': createShare,
 };
 
 export default {
@@ -657,6 +770,16 @@ export default {
     if (env.ALLOW_ORIGINS) allowed = new Set(env.ALLOW_ORIGINS.split(',').map(x => x.trim()));
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(req) });
     const url = new URL(req.url);
+    const sm = (req.method === 'GET' || req.method === 'HEAD') && url.pathname.match(/^\/s\/([A-Za-z0-9]+)(?:\.(jpg|png))?\/?$/);
+    if (sm) {
+      try {
+        await ensureSchema(env.DB);
+        return await (sm[2] ? shareImage(req, env.DB, env, sm[1], sm[2]) : sharePage(req, env.DB, env, sm[1]));
+      } catch (err) {
+        console.error(err);
+        return Response.redirect(siteUrl(env), 302);
+      }
+    }
     const handler = ROUTES[`${req.method} ${url.pathname}`];
     if (!handler) return fail(req, 404, 'Not found.');
     if (req.method === 'POST' && !/^application\/json/.test(req.headers.get('Content-Type') || '')) return fail(req, 415, 'Send JSON.');
