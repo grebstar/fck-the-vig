@@ -11,7 +11,7 @@
 // /api/alerts/fire, proving who it is with a GitHub Actions OIDC token (no shared secret to manage).
 // Alerts go out as web push (VAPID keys are generated once and kept in the config table) and/or email.
 
-const ORIGINS = ['https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io'];
+const ORIGINS = ['https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io', 'capacitor://localhost'];  // last one = the iPhone app
 let allowed = new Set(ORIGINS);  // ALLOW_ORIGINS (comma-separated) overrides this, e.g. for local testing
 const SESSION_DAYS = 90;
 const PBKDF2_ITER = 100000;          // Workers' maximum
