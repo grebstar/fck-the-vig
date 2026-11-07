@@ -57,6 +57,11 @@ const PROP_WINDOW_H = int(env.PROP_WINDOW_HOURS, 30);   // only games starting w
 const LINES_RESERVE = int(env.MIN_REMAINING, 15);       // never go below this many credits
 const LINES_EVERY_DAYS = int(env.LINES_EVERY_DAYS, 2);  // must match the workflow schedule
 const PROPS_RUNS_PER_DAY = int(env.PROPS_RUNS_PER_DAY, 1);
+// When game lines refresh on every run (paid plan), how many runs a day that is. 0 = use LINES_EVERY_DAYS.
+const LINES_RUNS_PER_DAY = int(env.LINES_RUNS_PER_DAY, 0);
+const RUN_EVERY_HOURS = int(env.RUN_EVERY_HOURS, 0);     // 0 = one run a day; must match the workflow cron
+const RUN_MINUTE = int(env.RUN_MINUTE, 47);             // minute past the hour (UTC) the cron fires
+const QUOTA_RESET_DAY = int(env.QUOTA_RESET_DAY, 1);    // day of the month The Odds API credits reset
 const FUTURES_PER_WEEK = int(env.FUTURES_PER_WEEK, 5);  // sportsbook futures (fetch-futures.mjs), ~1 credit each, weekly
 
 const SPORT_TITLES = {
@@ -156,14 +161,23 @@ async function updateLines(out, prevSports, active) {
   }
 }
 
-// Credits props may spend on this run: what's left after reserving every remaining game-line run and the
-// weekly futures until credits reset on the 1st, split evenly across the props runs left this month.
-export function propsBudget(remaining, now, { sports, linesCost, linesEvery = 2, runsPerDay = 1, futuresPerWeek = 6, reserve = 15 }) {
-  if (remaining == null) return Infinity;
+// Next time credits reset: the resetDay of this month if it's still ahead, otherwise of next month.
+export function nextReset(now, resetDay = 1) {
   const d = new Date(now);
-  const reset = Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+  const at = m => Date.UTC(d.getUTCFullYear(), m, Math.min(resetDay, new Date(Date.UTC(d.getUTCFullYear(), m + 1, 0)).getUTCDate()));
+  const thisMonth = at(d.getUTCMonth());
+  return thisMonth > now ? thisMonth : at(d.getUTCMonth() + 1);
+}
+
+// Credits props may spend on this run: what's left after reserving every remaining game-line run and the
+// weekly futures until credits reset, split evenly across the props runs left in the cycle.
+export function propsBudget(remaining, now, { sports, linesCost, linesEvery = 2, linesPerDay = 0, runsPerDay = 1, futuresPerWeek = 6, reserve = 15, resetDay = 1 }) {
+  if (remaining == null) return Infinity;
+  const reset = nextReset(now, resetDay);
   const daysLeft = Math.max(1, Math.ceil((reset - now) / 864e5));            // includes today
-  const linesRunsLeft = Math.ceil((daysLeft - 1) / linesEvery);              // after this run
+  const linesRunsLeft = linesPerDay > 0
+    ? Math.max(0, Math.ceil((reset - now) / 864e5 * linesPerDay) - 1)       // after this run
+    : Math.ceil((daysLeft - 1) / linesEvery);
   const held = linesRunsLeft * sports * linesCost + Math.ceil(daysLeft / 7) * futuresPerWeek + reserve;
   return Math.max(0, Math.floor((remaining - held) / (daysLeft * runsPerDay)));
 }
@@ -172,8 +186,8 @@ async function updateProps(out) {
   const now = Date.now();
   const inSeason = out.sports.filter(sp => sp.in_season).length;
   let budget = propsBudget(quota?.remaining ?? null, now, {
-    sports: inSeason, linesCost: MARKETS.length * groups, linesEvery: LINES_EVERY_DAYS,
-    runsPerDay: PROPS_RUNS_PER_DAY, futuresPerWeek: FUTURES_PER_WEEK, reserve: LINES_RESERVE,
+    sports: inSeason, linesCost: MARKETS.length * groups, linesEvery: LINES_EVERY_DAYS, linesPerDay: LINES_RUNS_PER_DAY,
+    runsPerDay: PROPS_RUNS_PER_DAY, futuresPerWeek: FUTURES_PER_WEEK, reserve: LINES_RESERVE, resetDay: QUOTA_RESET_DAY,
   });
   console.log(`Props budget this run: ${budget === Infinity ? 'unlimited' : budget} credits`);
   // Queue games per sport, then take them round-robin so one busy sport can't use the whole budget.
@@ -184,7 +198,10 @@ async function updateProps(out) {
     if (!sp.in_season || !markets.length || !n) continue;
     const targets = sp.events
       .filter(e => { const t = new Date(e.commence_time).getTime(); return t > now && t - now < PROP_WINDOW_H * 3600e3; })
-      .slice(0, n);
+      .slice(0, n)
+      // Stalest props first (never loaded, then oldest), so when the budget can't cover every game in one run,
+      // the next runs rotate through the rest instead of re-pricing the same games.
+      .sort((a, b) => (a.props_at ? Date.parse(a.props_at) : 0) - (b.props_at ? Date.parse(b.props_at) : 0));
     if (targets.length) queues.push({ sp, markets, targets });
   }
   let skipped = 0;
@@ -233,7 +250,8 @@ async function main() {
     // right when the Actions variables or the plan change.
     config: {
       days_ahead: DAYS_AHEAD, lines_hours: LINES_HOURS, min_books: MIN_BOOKS,
-      lines_every_days: LINES_EVERY_DAYS, props_runs_per_day: PROPS_RUNS_PER_DAY,
+      lines_every_days: LINES_EVERY_DAYS, props_runs_per_day: PROPS_RUNS_PER_DAY, lines_runs_per_day: LINES_RUNS_PER_DAY,
+      run_every_hours: RUN_EVERY_HOURS, run_minute: RUN_MINUTE, quota_reset_day: QUOTA_RESET_DAY,
       prop_window_hours: PROP_WINDOW_H, prop_games: PROP_GAMES, prop_markets: PROP_MARKETS, markets: MARKETS,
     },
   };
