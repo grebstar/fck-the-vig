@@ -1,8 +1,9 @@
 /* FCK The Vig — parlay price check across sportsbooks and prediction markets (docs/js/main.js).
    Reads data/odds.json and data/futures.json (written by the GitHub Action) and data/states.json (where each book is legal).
    Saved bets live in this browser and, when signed in, sync to the accounts API (worker/index.js). */
-import { gradeBets, settle } from './grade.js?v=6';
-import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } from './bets.js?v=6';
+import { gradeBets, settle } from './grade.js?v=8';
+import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize, breakdown } from './bets.js?v=8';
+import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, arbStakes, bestOffer } from './odds-math.js?v=8';
 
 (() => {
   'use strict';
@@ -17,6 +18,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
   const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
   const API_BASE = LOCAL ? 'http://localhost:8787' : 'https://api.fckvig.com';
   const GAME_TABS = new Set(['today', 'build', 'results']);
+  const VIEWS = new Set(['games', 'season', 'bets', 'money']);
 
   const BOOK_COLORS = {
     draftkings: '#1f9d55', fanduel: '#1f6feb', betmgm: '#a8852f', espnbet: '#e5532d', betrivers: '#1688c9',
@@ -27,9 +29,10 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
   const ICONS = {
     football: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><ellipse cx="12" cy="12" rx="9.5" ry="5.6" transform="rotate(-35 12 12)" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.6 14.4l4.8-4.8M10.4 11.2l1.4 1.4M11.8 9.8l1.4 1.4M9 12.6l1.4 1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
     basketball: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3v18M5.7 5.7c3 3 3 9.6 0 12.6M18.3 5.7c-3 3-3 9.6 0 12.6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
+    bell: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    share: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     person: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
   };
-  const sportIcon = key => (key.startsWith('basketball') ? ICONS.basketball : ICONS.football);
 
   const S = {
     data: null, source: null, avail: null, sport: null,
@@ -37,6 +40,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     view: 'games', lastGameTab: 'today',
     futures: null, seasonSport: null, market: null, marketSearch: '',
     bets: [], betFilter: 'open', user: null, syncAt: null, syncErr: null, gradedAt: null,
+    statsTab: 'sport', moneyTotal: 100, q: '', alerts: null, alertsErr: null, metaAt: null,
   };
 
   const $ = sel => document.querySelector(sel);
@@ -93,6 +97,19 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     for (const ev of S.events.values()) for (const k of Object.keys(ev.books)) keys.add(k);
     return keys;
   }
+  // Some deep links come with placeholders ({state}, {wagerAmount}...). Fill in the state; for anything else, link
+  // to the game page instead of a half-filled bet slip.
+  function cleanLink(url) {
+    if (!url) return null;
+    let u = String(url);
+    if (u.includes('{state}')) {
+      if (S.state === 'ALL') return null;
+      u = u.split('{state}').join(S.state.toLowerCase());
+    }
+    const i = u.indexOf('{');
+    if (i >= 0) u = u.slice(0, i).replace(/\/oddsapi\/?$/, '').replace(/[?&#][^?&#=]*=?$/, '').replace(/[|/?&=#]+$/, '');
+    try { return /^https?:$/.test(new URL(u).protocol) ? u : null; } catch { return null; }
+  }
   const allowedBooks = () => new Set([...allBookKeys()].filter(k => availability(k) !== 'no'));
   const stateName = st => (st === 'ALL' ? 'All states' : S.avail?.states?.[st] || st);
   const noOnlineBooks = st => !!S.avail && !Object.values(S.avail.books).some(b => b.states.includes(st));
@@ -109,14 +126,6 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
   }
 
   // ---------- markets ----------
-  const MARKET_LABELS = {
-    player_pass_yds: 'Pass Yds', player_rush_yds: 'Rush Yds', player_reception_yds: 'Rec Yds',
-    player_receptions: 'Receptions', player_pass_tds: 'Pass TDs', player_anytime_td: 'Anytime TD',
-    player_points: 'Points', player_rebounds: 'Rebounds', player_assists: 'Assists', player_threes: 'Threes',
-    player_points_rebounds_assists: 'Pts+Reb+Ast',
-  };
-  const isProp = mk => mk.startsWith('player_');
-  const mLabel = mk => MARKET_LABELS[mk] || mk.replace(/^player_/, '').replace(/_/g, ' ');
   const same = (o, name, desc) => o.name === name && (o.desc || null) === (desc || null);
   // Exchanges often list a ladder of lines for one side (o9.5, o16.5, o19.5...).
   // Pick the exact line if offered, otherwise the closest one.
@@ -168,7 +177,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
         const sameLine = leg.point == null || o.point === leg.point;
         if (!sameLine) exact = false;
         dec *= toDec(o.price);
-        legs.push({ price: o.price, point: o.point, same: sameLine, link: o.link || null });
+        legs.push({ price: o.price, point: o.point, same: sameLine, link: cleanLink(o.link) });
       }
       if (!ok) { missing.push(bk); continue; }
       const off = legs.reduce((t, l, k) => t + (l.same ? 0 : Math.abs((l.point ?? 0) - (S.legs[k].point ?? 0))), 0);
@@ -180,16 +189,6 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       alt: alt.sort((a, b) => a.off - b.off || b.dec - a.dec),
       missing,
     };
-  }
-
-  function legLabel(leg) {
-    if (isProp(leg.market)) {
-      if (leg.point == null) return `${leg.desc} ${mLabel(leg.market)}${leg.name === 'Yes' ? '' : ` (${leg.name})`}`;
-      return `${leg.desc} ${leg.name === 'Over' ? 'o' : 'u'}${leg.point} ${mLabel(leg.market)}`;
-    }
-    if (leg.market === 'h2h') return `${leg.name} ML`;
-    if (leg.market === 'spreads') return `${leg.name} ${fmtPt(leg.point)}`;
-    return `${leg.name} ${leg.point}`;
   }
 
   function toggleLeg(eventId, market, name, point, desc) {
@@ -360,33 +359,112 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       <span class="ln">${esc(ln)}</span><span class="pr${c.price > 0 ? ' plus' : ''}">${fmtAm(c.price)}</span><span class="bb">${esc(info.short)}</span></button>`;
   }
 
-  function renderGames() {
-    const sp = S.data.sports.find(s => s.key === S.sport);
-    const box = $('#games');
-    if (!sp || sp.in_season === false) { box.innerHTML = `<div class="game empty-msg">${esc(sp?.title || '')} is out of season.</div>`; return; }
-    if (!sp.events.length) { box.innerHTML = `<div class="game empty-msg">No games in the next week.</div>`; return; }
-    const allowed = allowedBooks();
-    if (!allowed.size) { box.innerHTML = `<div class="game empty-msg">None of the books in this feed operate in ${esc(stateName(S.state))}.</div>`; return; }
-    let lastDay = '', html = '';
-    for (const e of sp.events) {
-      const ev = S.events.get(e.id);
-      const when = new Date(ev.commence_time);
-      const day = dayFmt.format(when);
-      if (day !== lastDay) { html += `<div class="day">${esc(day)}</div>`; lastDay = day; }
-      const started = when < new Date();
-      const nBooks = Object.keys(ev.books).filter(k => allowed.has(k)).length;
-      const hasProps = propMarkets(ev, allowed).length > 0;
-      html += `<article class="game">
-        <div class="game-meta"><span class="chip-time">${esc(timeFmt.format(when))}</span>${started ? '<span class="chip-live">● Started</span>' : ''}${hasProps ? '<span class="chip-props">Props</span>' : ''}<span class="books-count">${nBooks} books</span></div>
-        <div class="grid">
+  // One game: a "Team bets" tab (spread / moneyline / total) and a "Player props" tab.
+  function gameCard(ev, allowed) {
+    const when = new Date(ev.commence_time);
+    const started = when < new Date();
+    const nBooks = Object.keys(ev.books).filter(k => allowed.has(k)).length;
+    const mks = propMarkets(ev, allowed);
+    const tab = S.openProps.get(ev.id) ? 'props' : 'team';
+    const nPicked = S.legs.filter(l => l.eventId === ev.id && isProp(l.market)).length;
+    const tabBtn = (k, label) => `<button class="gtab${k === 'props' && !mks.length ? ' none' : ''}" role="tab" data-gtab="${k}" data-gtev="${esc(ev.id)}" aria-selected="${tab === k}">${label}</button>`;
+    const body = tab === 'team' ? `<div class="grid">
           <span></span><span class="h">Spread</span><span class="h">Money</span><span class="h">Total</span>
           <span class="team">${avatar(ev.away)}<span class="nm">${teamName(ev.away)}</span></span>
           ${pickBtn(ev, 'spreads', ev.away, allowed)}${pickBtn(ev, 'h2h', ev.away, allowed)}${pickBtn(ev, 'totals', 'Over', allowed, 'O')}
           <span class="team">${avatar(ev.home)}<span class="nm"><span class="at">@ </span>${teamName(ev.home)}</span></span>
           ${pickBtn(ev, 'spreads', ev.home, allowed)}${pickBtn(ev, 'h2h', ev.home, allowed)}${pickBtn(ev, 'totals', 'Under', allowed, 'U')}
-        </div>${propsHtml(ev, allowed)}</article>`;
+        </div>` : propsBody(ev, allowed, mks);
+    return `<article class="game" data-game="${esc(ev.id)}">
+        <div class="game-meta"><span class="chip-time">${esc(timeFmt.format(when))}</span>${started ? '<span class="chip-live">● Started</span>' : ''}<span class="books-count">${nBooks} books</span></div>
+        <div class="gtabs" role="tablist" aria-label="${esc(ev.away)} at ${esc(ev.home)}">
+          <span class="gtitle">${esc(ev.away)} <span class="at">@</span> ${esc(ev.home)}</span>
+          ${tabBtn('team', 'Team bets')}${tabBtn('props', `${ICONS.person}Player props${mks.length ? `<span class="count">${nPicked ? `${nPicked} picked` : mks.length}</span>` : ''}`)}
+        </div>
+        ${body}</article>`;
+  }
+
+  function renderGames() {
+    if (!S.data) return;
+    const box = $('#games');
+    const allowed = allowedBooks();
+    renderSearchNote();
+    if (S.q.length >= 2) { box.innerHTML = searchHtml(allowed); return; }
+    const sp = S.data.sports.find(s => s.key === S.sport);
+    if (!sp || sp.in_season === false) { box.innerHTML = `<div class="game empty-msg">${esc(sp?.title || '')} is out of season.</div>`; return; }
+    if (!sp.events.length) { box.innerHTML = `<div class="game empty-msg">No games in the next week.</div>`; return; }
+    if (!allowed.size) { box.innerHTML = `<div class="game empty-msg">None of the books in this feed operate in ${esc(stateName(S.state))}.</div>`; return; }
+    let lastDay = '', html = '';
+    for (const e of sp.events) {
+      const ev = S.events.get(e.id);
+      const day = dayFmt.format(new Date(ev.commence_time));
+      if (day !== lastDay) { html += `<div class="day">${esc(day)}</div>`; lastDay = day; }
+      html += gameCard(ev, allowed);
     }
     box.innerHTML = html;
+  }
+
+  // ---------- search: type a team or player, across every sport ----------
+  const normQ = v => String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  function renderSearchNote() {
+    const note = $('#searchNote');
+    if (!note) return;
+    note.hidden = S.q.length < 2;
+    if (!note.hidden) note.innerHTML = `Results for <b>${esc(S.q)}</b> across every sport · <button class="link-btn" data-clearq>Clear</button>`;
+    $('#sportTabs')?.classList.toggle('dim', S.q.length >= 2);
+  }
+  function searchHtml(allowed) {
+    const q = normQ(S.q);
+    const sportOrder = new Map(S.data.sports.map((sp, i) => [sp.key, i]));
+    const evs = [...S.events.values()].sort((a, b) => (sportOrder.get(a.sport) - sportOrder.get(b.sport)) || a.commence_time.localeCompare(b.commence_time));
+    const games = evs.filter(ev => normQ(ev.home).includes(q) || normQ(ev.away).includes(q)).slice(0, 12);
+    // Players: every prop market a matching player appears in, per game.
+    const players = [];
+    for (const ev of evs) {
+      const found = new Map();
+      for (const [bk, b] of Object.entries(ev.books)) {
+        if (!allowed.has(bk)) continue;
+        for (const [mk, outs] of Object.entries(b.markets)) {
+          if (!isProp(mk)) continue;
+          for (const o of outs) {
+            if (!o.desc || !normQ(o.desc).includes(q)) continue;
+            const k = `${o.desc}|${mk}`;
+            if (!found.has(k)) found.set(k, { ev, desc: o.desc, mk, names: new Set() });
+            found.get(k).names.add(o.name);
+          }
+        }
+      }
+      players.push(...found.values());
+      if (players.length >= 40) break;
+    }
+    if (!games.length && !players.length) {
+      return `<div class="game empty-msg">Nothing matches "${esc(S.q)}". Try a team name ("Lakers") or a player's last name. Player props only cover the next few games in each sport.</div>`;
+    }
+    let html = '';
+    if (players.length) {
+      const order = Object.keys(MARKET_LABELS);
+      const byPlayer = new Map();
+      for (const p of players) {
+        const k = `${p.ev.id}|${p.desc}`;
+        if (!byPlayer.has(k)) byPlayer.set(k, { ev: p.ev, desc: p.desc, rows: [] });
+        byPlayer.get(k).rows.push(p);
+      }
+      html += `<div class="day">Players</div>`;
+      for (const { ev, desc, rows } of byPlayer.values()) {
+        rows.sort((a, b) => order.indexOf(a.mk) - order.indexOf(b.mk));
+        html += `<article class="game"><div class="game-meta"><span class="chip-time">${esc(SPORT_NAMES[ev.sport] || '')}</span><span>${esc(ev.away)} @ ${esc(ev.home)} · ${esc(whenFmt.format(new Date(ev.commence_time)))}</span></div>
+          <div class="sr-player">${ICONS.person}<b>${esc(desc)}</b></div><div class="prop-grid sr">${rows.map(r => {
+            const yn = r.names.has('Yes') && !r.names.has('Over');
+            return `<span class="player">${esc(mLabel(r.mk))}</span>${yn ? pickBtn(ev, r.mk, 'Yes', allowed, 'Yes', desc) + '<span></span>'
+              : pickBtn(ev, r.mk, 'Over', allowed, 'O', desc) + pickBtn(ev, r.mk, 'Under', allowed, 'U', desc)}`;
+          }).join('')}</div></article>`;
+      }
+    }
+    if (games.length) {
+      html += `<div class="day">Games</div>`;
+      for (const ev of games) html += gameCard(ev, allowed);
+    }
+    return html;
   }
 
   function propMarkets(ev, allowed) {
@@ -396,14 +474,14 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     return [...mks].sort((a, b) => order.indexOf(a) - order.indexOf(b));
   }
 
-  function propsHtml(ev, allowed) {
-    const mks = propMarkets(ev, allowed);
-    if (!mks.length) return '';
+  function propsBody(ev, allowed, mks) {
+    if (!mks.length) {
+      const hrs = (new Date(ev.commence_time) - Date.now()) / 3600e3;
+      return `<div class="props-empty">${ICONS.person}<div><b>No player props for this game yet.</b><br>
+        <span class="muted small">${hrs > 30 ? 'Props show up about a day before the game. ' : ''}On our current plan we load props for the next few games in each sport once a day${ev.sport === 'basketball_ncaab' ? ' (college basketball props are off for now)' : ''}.</span></div></div>`;
+    }
     const open = S.openProps.get(ev.id);
-    const nPicked = S.legs.filter(l => l.eventId === ev.id && isProp(l.market)).length;
-    let html = `<button class="props-toggle" data-props="${esc(ev.id)}" aria-expanded="${!!open}">${ICONS.person}
-      Player props <span class="count">${mks.length} markets${nPicked ? ` · ${nPicked} in parlay` : ''}</span><span class="chev">${open ? '▴' : '▾'}</span></button>`;
-    if (!open) return html;
+    let html = '';
     const mk = mks.includes(open) ? open : mks[0];
     const q = (S.propSearch.get(ev.id) || '').toLowerCase();
     html += `<div class="props"><div class="props-tools"><div class="chips">${mks.map(k => `<button class="chip" data-pev="${esc(ev.id)}" data-pmk="${esc(k)}" aria-pressed="${k === mk}">${esc(mLabel(k))}</button>`).join('')}</div>
@@ -468,6 +546,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       const b = bestFor(l);
       return `<li class="leg"><span><span class="what">${esc(legLabel(l))}</span><span class="game-l">${esc(ev.away)} @ ${esc(ev.home)}</span></span>
         <span class="best">${b == null ? '' : fmtAm(b)}</span>
+        <button class="bell" data-alert="${i}" aria-label="Alert me when ${esc(legLabel(l))} moves" title="Alert me when this moves">${ICONS.bell}</button>
         <button class="x" data-rm="${i}" aria-label="Remove ${esc(legLabel(l))}">×</button></li>`;
     }).join('');
     $('#empty').hidden = n > 0;
@@ -526,7 +605,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
 
   function setTab(t) {
     S.tab = t;
-    S.view = GAME_TABS.has(t) ? 'games' : t;
+    S.view = GAME_TABS.has(t) ? 'games' : VIEWS.has(t) ? t : 'games';
     if (GAME_TABS.has(t)) S.lastGameTab = t;
     const app = $('.app');
     app.dataset.tab = t;
@@ -538,7 +617,8 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       if (b.dataset.view === S.view) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
     }
     if (S.view === 'season') renderSeason();
-    if (S.view === 'bets') renderBets();
+    if (S.view === 'bets') { renderBets(); if (S.user) loadAlerts(); }
+    if (S.view === 'money') renderMoney();
     if (window.matchMedia('(max-width: 860px)').matches) window.scrollTo(0, 0);
   }
   const setView = v => setTab(v === 'games' ? (S.lastGameTab || 'today') : v);
@@ -552,6 +632,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     renderSlip();
     renderSeason();
     renderBets();
+    renderMoney();
   }
 
   // ---------- state picker ----------
@@ -623,9 +704,9 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
   }
 
   // ---------- season-long markets ----------
-  const SAVE_BTN = '<button class="cta ghost save-bet" data-save="parlay">Save to My bets</button>';
-  const SPORT_ORDER = ['americanfootball_nfl', 'basketball_nba', 'americanfootball_ncaaf'];
-  const SPORT_NAMES = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'College Football' };
+  const SAVE_BTN = `<div class="cta-row"><button class="cta ghost save-bet" data-save="parlay">Save to My bets</button><button class="cta ghost share-bet" data-share="parlay">${ICONS.share}<span>Share</span></button></div>`;
+  const SPORT_ORDER = ['americanfootball_nfl', 'basketball_nba', 'americanfootball_ncaaf', 'basketball_ncaab'];
+  const SPORT_NAMES = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball' };
   const GROUP_ORDER = ['Champion', 'Awards', 'Stat leaders', 'Win totals'];
   const MAX_ROWS = 80;
   const impl = a => (a > 0 ? 100 / (a + 100) : -a / (-a + 100));
@@ -697,7 +778,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       <div class="frows">${shown.map(({ o, i, ps }) => {
         const [bk, am] = ps[0];
         const info = futuresBookInfo(bk);
-        const link = o.links?.[bk] || (bk === 'kalshi' ? m.links?.kalshi : null);
+        const link = cleanLink(o.links?.[bk] || (bk === 'kalshi' ? m.links?.kalshi : null));
         const others = ps.slice(1, 7).map(([k, a]) => `<span class="lp" title="${esc(futuresBookInfo(k).name)}">${esc(futuresBookInfo(k).short)} ${fmtAm(a)}</span>`).join('');
         return `<div class="frow">
           <span class="fname">${esc(o.name)}</span>
@@ -847,6 +928,8 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       <div class="stat"><span class="k">ROI</span><span class="v">${s.roi == null ? '—' : `${s.roi > 0 ? '+' : ''}${s.roi.toFixed(1)}%`}</span></div>
       <div class="stat"><span class="k">Open</span><span class="v">${s.open}</span></div>` : '';
     $('#betStats').hidden = !all.length;
+    renderBreakdown();
+    renderAlerts();
     for (const b of document.querySelectorAll('#betFilter [data-bfilter]')) {
       b.setAttribute('aria-pressed', b.dataset.bfilter === S.betFilter);
       const n = b.dataset.bfilter === 'open' ? open.length : b.dataset.bfilter === 'settled' ? done.length : all.length;
@@ -890,6 +973,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       <div class="bet-actions">
         ${b.manual ? `<button class="link-btn" data-bact="auto" data-bid="${esc(b.id)}">Undo result</button>` : `<details class="settle"><summary class="link-btn">Settle by hand</summary><div class="chips">${settleBtns}</div></details>`}
         <button class="link-btn" data-bact="edit" data-bid="${esc(b.id)}">Edit</button>
+        ${b.kind !== 'future' && b.status === 'open' ? `<button class="link-btn" data-bact="share" data-bid="${esc(b.id)}">Share</button>` : ''}
         <button class="link-btn danger" data-bact="delete" data-bid="${esc(b.id)}">Delete</button>
       </div>
       <form class="bet-edit" data-editform="${esc(b.id)}" hidden>
@@ -916,6 +1000,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       toast('Bet deleted');
       return;
     }
+    if (act === 'share') return shareLegs(b.legs.filter(l => l.t === 'game' || l.t === 'prop'), b.stake);
     if (act === 'edit') {
       const f = document.querySelector(`[data-editform="${CSS.escape(id)}"]`);
       if (f) f.hidden = !f.hidden;
@@ -1118,6 +1203,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     renderBets();
     await syncNow();
     if (!email) refreshMe();
+    loadAlerts();
   }
 
   async function submitAcct() {
@@ -1135,7 +1221,9 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     try {
       if (acctMode === 'delete') {
         await api('/api/account/delete', { password: v.pass });
+        try { const sub = await currentSub(); if (sub) await sub.unsubscribe(); } catch { /* ignore */ }
         setSession(null);
+        S.alerts = null;
         S.bets = []; saveBets(S.bets); S.syncAt = null; S.syncErr = null;
         $('#acctDialog').close();
         renderBets();
@@ -1176,12 +1264,330 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
 
   async function signOut() {
     const synced = await syncNow();
+    await disablePush();
+    S.alerts = null;
     try { await api('/api/logout', {}); } catch { /* token may already be gone */ }
     setSession(null);
     S.syncAt = null; S.syncErr = null;
     if (synced) { S.bets = []; saveBets(S.bets); }
     renderBets();
     toast(synced ? 'Signed out. Your bets are saved in your account.' : 'Signed out. Bets that didn\'t sync are still on this device.');
+  }
+
+  // ---------- sharing a parlay ----------
+  const b64u = str => { let bin = ''; for (const b of new TextEncoder().encode(str)) bin += String.fromCharCode(b); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+  const unb64u = str => new TextDecoder().decode(Uint8Array.from(atob(str.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)));
+  const SITE = LOCAL ? `${location.origin}${location.pathname}` : 'https://www.fckvig.com/';
+
+  function shareUrl(legs, stake) {
+    const packed = legs.map(l => [l.eventId, l.market, l.name, l.point ?? null, l.desc || null]);
+    return `${SITE}#p=${b64u(JSON.stringify(packed))}${stake > 0 ? `&s=${stake}` : ''}`;
+  }
+
+  async function shareLegs(legs, stake) {
+    legs = legs.filter(l => l.eventId && l.market && l.name);
+    if (!legs.length) return toast('Nothing to share');
+    const url = shareUrl(legs, stake);
+    const text = legs.length === 1 ? legLabel(legs[0]) : `${legs.length}-leg parlay: ${legs.map(legLabel).join(' · ')}`;
+    if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+      try { await navigator.share({ title: 'fck the vig', text: `${text}. Compare the payout at every book:`, url }); return; }
+      catch (e) { if (e.name === 'AbortError') return; }
+    }
+    $('#shareText').textContent = text;
+    $('#shareUrl').value = url;
+    $('#shareCopy').textContent = 'Copy link';
+    const d = $('#shareDialog');
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+    setTimeout(() => $('#shareUrl').select(), 50);
+  }
+
+  async function copyShare() {
+    const input = $('#shareUrl');
+    try { await navigator.clipboard.writeText(input.value); }
+    catch { input.select(); try { document.execCommand('copy'); } catch { /* user can copy by hand */ } }
+    $('#shareCopy').textContent = 'Copied ✓';
+  }
+
+  // A shared link looks like https://www.fckvig.com/#p=<legs>&s=<stake>. Legs load once the odds are in.
+  let pendingShare = null;
+  function readShareHash() {
+    const h = location.hash.replace(/^#/, '');
+    if (!h.startsWith('p=')) return false;
+    const q = new URLSearchParams(h);
+    try {
+      const legs = JSON.parse(unb64u(q.get('p') || ''));
+      if (Array.isArray(legs) && legs.length) pendingShare = { legs: legs.slice(0, MAX_LEGS), stake: Number(q.get('s')) || null };
+    } catch { toast('That share link looks broken.'); }
+    history.replaceState(null, '', location.pathname + location.search);
+    return true;
+  }
+  function applyShare() {
+    if (!pendingShare || !S.data) return;
+    const { legs, stake } = pendingShare;
+    pendingShare = null;
+    const next = [];
+    for (const x of legs) {
+      if (!Array.isArray(x)) continue;
+      const [eventId, market, name, point, desc] = x;
+      if (typeof eventId !== 'string' || typeof market !== 'string' || typeof name !== 'string' || !S.events.has(eventId)) continue;
+      if (next.some(l => l.eventId === eventId && l.market === market && l.desc === (desc || null))) continue;
+      const pt = point == null || point === '' ? null : Number(point);
+      next.push({ eventId, market, name, point: Number.isFinite(pt) ? pt : null, desc: typeof desc === 'string' ? desc : null });
+    }
+    S.legs = next;
+    if (stake > 0 && stake <= 1e6) { S.stake = stake; $('#stake').value = stake; }
+    if (next.length) S.sport = S.events.get(next[0].eventId).sport;
+    render();
+    setTab('results');
+    const miss = legs.length - next.length;
+    if (!next.length) toast("Those games aren't on the board anymore (they've started or finished).");
+    else toast(miss ? `Loaded ${next.length} of ${legs.length} legs. ${miss} game${miss > 1 ? 's are' : ' is'} no longer on the board.` : `Loaded a shared ${next.length === 1 ? 'bet' : `${next.length}-leg parlay`}`);
+  }
+
+  // ---------- stats breakdown ----------
+  function renderBreakdown() {
+    const box = $('#betBreakdown');
+    if (!box) return;
+    const bd = breakdown(S.bets, mLabel);
+    if (!bd.count && !bd.props.length) { box.hidden = true; box.innerHTML = ''; return; }
+    box.hidden = false;
+    const tabs = [['sport', 'By sport'], ['type', 'By bet type'], ['props', 'Player props']];
+    if (!tabs.some(([k]) => k === S.statsTab)) S.statsTab = 'sport';
+    const sign = n => (n > 0.004 ? '+' : n < -0.004 ? '−' : '') + money(Math.abs(n));
+    const cls = n => (n > 0.004 ? 'up' : n < -0.004 ? 'down' : '');
+    const rec = r => `${r.won}–${r.lost}${r.push ? `–${r.push}` : ''}`;
+    let table;
+    if (S.statsTab === 'props') {
+      const rows = [...bd.props, ...(bd.sides.length ? [{ sep: true }] : []), ...bd.sides];
+      table = bd.props.length ? `<table class="bd-table"><thead><tr><th>Stat</th><th>Legs hit</th><th>Hit rate</th></tr></thead><tbody>${rows.map(r => r.sep ? '<tr class="sep"><td colspan="3"></td></tr>'
+        : `<tr><td>${esc(r.key)}</td><td>${r.won} of ${r.won + r.lost}</td><td class="${r.rate >= 50 ? 'up' : 'down'}">${r.rate == null ? '—' : `${Math.round(r.rate)}%`}</td></tr>`).join('')}</tbody></table>
+        <p class="hint">Every graded player-prop leg you placed, including legs inside parlays. Pushes and voids aren't counted.</p>`
+        : '<p class="muted small">No graded player props yet.</p>';
+    } else {
+      const rows = S.statsTab === 'sport' ? bd.bySport : bd.byType;
+      table = rows.length ? `<table class="bd-table"><thead><tr><th>${S.statsTab === 'sport' ? 'Sport' : 'Bet type'}</th><th>Record</th><th>Staked</th><th>Profit</th><th>ROI</th></tr></thead><tbody>${rows.map(r =>
+        `<tr><td>${esc(r.key)}</td><td>${rec(r)}</td><td>${money(r.staked)}</td><td class="${cls(r.profit)}">${sign(r.profit)}</td><td class="${cls(r.profit)}">${r.roi == null ? '—' : `${r.roi > 0 ? '+' : ''}${r.roi.toFixed(1)}%`}</td></tr>`).join('')}</tbody></table>
+        <p class="hint">Settled bets you placed. Bets you're only tracking don't count.</p>`
+        : '<p class="muted small">No settled bets yet.</p>';
+    }
+    box.innerHTML = `<div class="bd-head"><h3>Breakdown</h3><div class="chips">${tabs.map(([k, t]) => `<button class="chip" data-stats="${k}" aria-pressed="${k === S.statsTab}">${t}</button>`).join('')}</div></div>${table}`;
+  }
+
+  // ---------- free money board ----------
+  const SPORT_SHORT = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'CFB', basketball_ncaab: 'CBB' };
+  const whenFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+  const pct = (x, d = 1) => `${(x * 100).toFixed(d)}%`;
+  const MK_NAME = { h2h: 'Moneyline', spreads: 'Spread', totals: 'Total' };
+  const exNote = bk => (bk === 'kalshi' ? 'incl. est. fee' : bookInfo(bk).ex ? 'before fees' : '');
+
+  function moneyBookCell(o) {
+    const info = bookInfo(o.bk);
+    const link = cleanLink(o.link);
+    const name = `${bchip(info)}<span class="mb-name">${esc(info.name)}</span>`;
+    return link ? `<a class="mb-book" href="${esc(link)}" target="_blank" rel="noopener">${name}<span class="ext">↗</span></a>` : `<span class="mb-book">${name}</span>`;
+  }
+
+  function renderMoney() {
+    const box = $('#moneyBody');
+    if (!box) return;
+    if (!S.data) { box.innerHTML = '<p class="muted">Loading odds…</p>'; return; }
+    const allowed = allowedBooks();
+    const events = [...S.events.values()];
+    const arbs = findArbs(events, allowed).slice(0, 25);
+    const values = findValue(events, allowed).slice(0, 25);
+    const total = S.moneyTotal > 0 ? S.moneyTotal : 100;
+    const asOf = S.data.generated_at ? `${timeFmt.format(new Date(S.data.generated_at))} (${ago(S.data.generated_at)})` : 'unknown';
+    $('#moneySub').textContent = `${stateName(S.state)} · ${allowed.size} books · odds from ${asOf}`;
+    const sideRow = (ev, mk, o, stake) => `<div class="mb-side">
+        <span class="mb-pick"><b>${esc(legLabel({ market: mk, name: o.name, desc: o.desc, point: o.point }))}</b></span>
+        <span class="mb-price">${fmtAm(o.price)}${exNote(o.bk) ? `<span class="mb-fee">${exNote(o.bk)}</span>` : ''}</span>
+        ${moneyBookCell(o)}
+        ${stake != null ? `<span class="mb-stake">Bet <b>${money(stake)}</b></span>` : ''}
+      </div>`;
+    const game = ev => `${esc(ev.away)} @ ${esc(ev.home)} · ${esc(SPORT_SHORT[ev.sport] || '')} · ${esc(whenFmt.format(new Date(ev.commence_time)))}`;
+    const arbHtml = arbs.length ? arbs.map(a => {
+      const split = arbStakes(a.sides, total);
+      return `<article class="mb-card">
+        <div class="mb-top"><span class="mb-game">${game(a.ev)}</span><span class="mb-badge">+${pct(a.profit, 2)} locked</span></div>
+        <div class="mb-mk">${esc(MK_NAME[a.mk] || mLabel(a.mk))}</div>
+        ${a.sides.map((o, i) => sideRow(a.ev, a.mk, o, split.stakes[i])).join('')}
+        <div class="mb-foot">Either way you get back about <b>${money(split.minReturn)}</b> on ${money(split.spent)}: <b class="up">+${money(Math.max(0, split.profit))}</b></div>
+      </article>`;
+    }).join('') : `<p class="none">No sure things at books legal in ${esc(stateName(S.state))} right now. They're rare and usually close within minutes, so check back after the next odds update.</p>`;
+    const valueHtml = values.length ? values.map(v => {
+      const o = v.offer;
+      const spec = { market: v.mk, name: o.name, desc: o.desc, point: o.point };
+      const on = S.legs.some(l => l.eventId === v.ev.id && l.market === v.mk && l.name === o.name && l.desc === (o.desc || null));
+      return `<article class="mb-card value">
+        <div class="mb-top"><span class="mb-game">${game(v.ev)}</span><span class="mb-badge">+${pct(v.edge)} edge</span></div>
+        ${sideRow(v.ev, v.mk, o, null)}
+        <div class="mb-foot">Fair price ${fmtAm(v.fairAm)} (no-vig average of ${v.books} books) · ${esc(legLabel(spec))} wins ${pct(v.fair, 0)} of the time if the market's right.</div>
+        <div class="mb-actions"><button class="chip" data-vadd="${esc(v.ev.id)}" data-mk="${esc(v.mk)}" data-nm="${esc(o.name)}" data-pt="${o.point ?? ''}" data-ds="${esc(o.desc || '')}" aria-pressed="${on}">${on ? 'In your parlay' : 'Add to parlay'}</button>
+          <button class="link-btn" data-valert="${esc(v.ev.id)}" data-mk="${esc(v.mk)}" data-nm="${esc(o.name)}" data-pt="${o.point ?? ''}" data-ds="${esc(o.desc || '')}">${ICONS.bell} Alert me</button></div>
+      </article>`;
+    }).join('') : '<p class="none">No prices beat the market by 2% or more right now.</p>';
+    box.innerHTML = `
+      <div class="note warn"><strong>Odds from ${esc(asOf)}.</strong> These come from our last odds update, and books move fast. Open both apps and check the prices before you bet a dollar.</div>
+      <section class="mb-sec">
+        <div class="mb-sec-h"><div><h3>Sure things</h3><p class="muted small">Back both sides at different books and profit whichever side wins (arbitrage).</p></div>
+          <label class="stake-wrap mb-total">Total $<input id="moneyTotal" type="number" min="1" step="1" value="${total}" inputmode="decimal" aria-label="Total to split across both bets"></label></div>
+        <div class="mb-list">${arbHtml}</div>
+      </section>
+      <section class="mb-sec">
+        <div class="mb-sec-h"><div><h3>Beat the market</h3><p class="muted small">Prices better than the fair odds every other book implies. Not guaranteed, but bets like these win you money over time.</p></div></div>
+        <div class="mb-list">${valueHtml}</div>
+      </section>
+      <p class="hint">Kalshi prices include its estimated trading fee (about 7% × price × (1 − price) per contract). Other prediction markets are shown before their fees. Books can limit or void bets on obvious errors.</p>`;
+  }
+
+  // ---------- line-move alerts ----------
+  const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const STANDALONE = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const keyBytes = k => Uint8Array.from(atob(k.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+  const sameKey = (buf, k) => { if (!buf) return false; const a = new Uint8Array(buf), b = keyBytes(k); return a.length === b.length && a.every((x, i) => x === b[i]); };
+  let pushState = 'unknown';   // 'on' | 'off' | 'blocked' | 'unsupported' | 'ios-home'
+
+  async function currentSub() {
+    if (!pushSupported()) return null;
+    try { const reg = await navigator.serviceWorker.getRegistration(); return reg ? await reg.pushManager.getSubscription() : null; } catch { return null; }
+  }
+  async function refreshPushState() {
+    if (!pushSupported()) pushState = IS_IOS && !STANDALONE ? 'ios-home' : 'unsupported';
+    else if (Notification.permission === 'denied') pushState = 'blocked';
+    else pushState = (await currentSub()) ? 'on' : 'off';
+    return pushState;
+  }
+  // Must start from a tap: browsers only show the permission prompt in response to one.
+  async function enablePush() {
+    if (!pushSupported()) throw new Error(IS_IOS && !STANDALONE
+      ? 'On iPhone, add fckvig to your Home Screen first (Share → Add to Home Screen), open it from there, then turn alerts on.'
+      : "This browser can't show push notifications. Use email alerts instead.");
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') throw new Error('Notifications are blocked for this site. Allow them in your browser settings, then try again.');
+    const reg = await navigator.serviceWorker.register('sw.js');
+    await navigator.serviceWorker.ready;
+    const { key } = await api('/api/push/key');
+    let sub = await reg.pushManager.getSubscription();
+    if (sub && !sameKey(sub.options?.applicationServerKey, key)) { await sub.unsubscribe(); sub = null; }
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(key) });
+    await api('/api/push/subscribe', sub.toJSON());
+    pushState = 'on';
+    return sub;
+  }
+  async function disablePush() {
+    const sub = await currentSub();
+    if (sub) {
+      try { await api('/api/push/unsubscribe', { endpoint: sub.endpoint }); } catch { /* signed out already */ }
+      try { await sub.unsubscribe(); } catch { /* ignore */ }
+    }
+    pushState = pushSupported() ? 'off' : pushState;
+  }
+
+  async function loadAlerts() {
+    if (!S.user) { S.alerts = null; return renderAlerts(); }
+    try { const r = await api('/api/alerts'); S.alerts = r.alerts || []; S.alertsErr = null; }
+    catch (err) { S.alertsErr = err.status === 401 ? null : "Couldn't load your alerts right now."; if (err.status === 401) { setSession(null); renderBets(); } }
+    await refreshPushState();
+    renderAlerts();
+  }
+
+  const ALERT_STATUS = { active: 'Watching', sent: 'Sent', expired: 'Game started' };
+  function renderAlerts() {
+    const box = $('#alertsBox');
+    if (!box) return;
+    if (!S.user) { box.hidden = true; box.innerHTML = ''; return; }
+    box.hidden = false;
+    const list = S.alerts || [];
+    const pushLine = {
+      on: 'Push is <b>on</b> for this device. <button class="link-btn" data-push="test">Send a test</button> · <button class="link-btn" data-push="off">Turn off</button>',
+      off: 'Push is <b>off</b> for this device. <button class="link-btn" data-push="on">Turn on</button>',
+      blocked: 'Notifications are blocked for this site in your browser settings.',
+      unsupported: "This browser can't do push notifications, so alerts come by email.",
+      'ios-home': 'On iPhone, add fckvig to your Home Screen (Share → Add to Home Screen) and open it from there to get push alerts.',
+      unknown: '',
+    }[pushState] || '';
+    const items = list.map(a => {
+      const st = a.status === 'active' ? 'active' : a.status;
+      const what = a.mode === 'target' ? `When the best price reaches ${fmtAm(a.target)} or better` : 'When the line or price moves';
+      const sub = a.status === 'sent' ? `${esc(a.message || '')} · ${esc(ago(new Date(a.sent_at).toISOString()) || '')}` : `${what} · ${esc(a.spec.away)} @ ${esc(a.spec.home)}`;
+      return `<li class="al st-${st}"><span class="al-main"><span class="al-l">${esc(a.spec.label || legLabel(a.spec))}</span><span class="al-s">${sub}</span></span>
+        <span class="al-badge">${esc(ALERT_STATUS[a.status] || a.status)}</span>
+        <button class="x" data-aldel="${a.id}" aria-label="Delete alert">×</button></li>`;
+    }).join('');
+    box.innerHTML = `<div class="al-head"><h3>${ICONS.bell} Line-move alerts</h3></div>
+      <p class="muted small">${pushLine}${S.user.email ? ` Email alerts go to ${esc(S.user.email)}.` : ' Add an email to your account to get alerts by email.'}</p>
+      ${S.alertsErr ? `<p class="form-err">${esc(S.alertsErr)}</p>` : ''}
+      ${list.length ? `<ul class="al-list">${items}</ul>` : '<p class="muted small">No alerts yet. Tap the bell next to any leg in your parlay, or on a Free money pick.</p>'}
+      <p class="hint">We check your alerts every time the odds update (right now that's once a day), so a move can take a few hours to reach you.</p>`;
+  }
+
+  let alertDraft = null;
+  function openAlert(leg) {
+    const ev = S.events.get(leg.eventId);
+    if (!ev) return;
+    const allowed = allowedBooks();
+    const best = bestOffer(ev, leg, allowed) || bestOffer(ev, { ...leg, point: null }, allowed);
+    alertDraft = { leg: { ...leg, point: leg.point ?? best?.point ?? null }, ev, best };
+    const d = $('#alertDialog');
+    $('#alertLeg').textContent = legLabel(alertDraft.leg);
+    $('#alertGame').textContent = `${ev.away} @ ${ev.home} · ${whenFmt.format(new Date(ev.commence_time))}`;
+    $('#alertErr').textContent = '';
+    const signedOut = !S.user;
+    $('#alertSignin').hidden = !signedOut;
+    $('#alertForm').querySelectorAll('.al-field').forEach(el => { el.hidden = signedOut; });
+    $('#alertSubmit').hidden = signedOut;
+    if (!signedOut) {
+      $('#alertBest').textContent = best ? `Best right now: ${fmtAm(best.price)} at ${bookInfo(best.bk).name}` : 'No book is pricing this right now.';
+      const target = best ? (best.price > 0 ? best.price + 10 : best.price + 10 >= -100 ? 100 : best.price + 10) : 100;
+      $('#alertTarget').value = fmtAm(target);
+      $('#alertModeTarget').checked = true;
+      const push = $('#alertPush'), mail = $('#alertEmail');
+      push.disabled = pushState === 'unsupported' || pushState === 'blocked';
+      push.checked = !push.disabled;
+      $('#alertPushNote').textContent = pushState === 'ios-home' ? 'iPhone: add fckvig to your Home Screen first.' : pushState === 'blocked' ? 'Blocked in your browser settings.' : pushState === 'unsupported' ? 'Not supported in this browser.' : '';
+      mail.disabled = !S.user.email;
+      mail.checked = !!S.user.email && push.disabled;
+      $('#alertEmailNote').textContent = S.user.email ? S.user.email : 'Add an email to your account first.';
+    }
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+
+  async function submitAlert() {
+    if (!alertDraft || !S.user) return;
+    const btn = $('#alertSubmit');
+    const err = $('#alertErr');
+    err.textContent = '';
+    const mode = $('#alertModeMove').checked ? 'move' : 'target';
+    const target = mode === 'target' ? parseAm($('#alertTarget').value) : null;
+    if (mode === 'target' && target == null) { err.textContent = 'Enter American odds like -105 or +150.'; return; }
+    const channels = [];
+    if ($('#alertPush').checked) channels.push('push');
+    if ($('#alertEmail').checked) channels.push('email');
+    if (!channels.length) { err.textContent = 'Pick push, email or both.'; return; }
+    btn.disabled = true;
+    try {
+      if (channels.includes('push') && pushState !== 'on') await enablePush();
+      const { leg, ev, best } = alertDraft;
+      const spec = { sport: ev.sport, eventId: ev.id, home: ev.home, away: ev.away, commence: ev.commence_time,
+        market: leg.market, name: leg.name, desc: leg.desc || null, point: leg.point ?? null, label: legLabel(leg) };
+      await api('/api/alerts', { spec, mode, target, base_price: best?.price ?? null, base_point: leg.point ?? null,
+        books: [...allowedBooks()], channels });
+      $('#alertDialog').close();
+      toast(mode === 'target' ? `We'll tell you when it hits ${fmtAm(target)}` : "We'll tell you when it moves");
+      loadAlerts();
+    } catch (e) {
+      err.textContent = e.status ? e.message : e.message || "Couldn't save the alert. Try again.";
+    } finally { btn.disabled = false; }
+  }
+
+  async function pushAction(what) {
+    try {
+      if (what === 'on') { await enablePush(); toast('Push alerts are on for this device'); }
+      else if (what === 'off') { await disablePush(); toast('Push alerts are off for this device'); }
+      else if (what === 'test') { const r = await api('/api/push/test', {}); toast(r.sent ? 'Test sent. It should pop up in a few seconds.' : 'No devices to send to. Turn push on first.'); }
+    } catch (e) { toast(e.message || 'Something went wrong'); }
+    renderAlerts();
   }
 
   // ---------- toast ----------
@@ -1202,16 +1608,18 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       const pt = pick.dataset.pt === '' ? null : Number(pick.dataset.pt);
       return toggleLeg(pick.dataset.ev, pick.dataset.mk, pick.dataset.nm, pt, pick.dataset.ds || null);
     }
-    const pt = e.target.closest('[data-props]');
-    if (pt) {
-      const id = pt.dataset.props;
-      if (S.openProps.has(id)) S.openProps.delete(id); else S.openProps.set(id, true);
+    const gt = e.target.closest('[data-gtab]');
+    if (gt) {
+      const id = gt.dataset.gtev;
+      if (gt.dataset.gtab === 'props') { if (!S.openProps.get(id)) S.openProps.set(id, true); }
+      else S.openProps.delete(id);
       return renderGames();
     }
+    if (e.target.closest('[data-clearq]')) { S.q = ''; $('#boardSearch').value = ''; return renderGames(); }
     const chip = e.target.closest('[data-pmk]');
     if (chip) { S.openProps.set(chip.dataset.pev, chip.dataset.pmk); return renderGames(); }
     const tab = e.target.closest('.tab[data-sport]');
-    if (tab) { S.sport = tab.dataset.sport; return render(); }
+    if (tab) { S.sport = tab.dataset.sport; S.q = ''; $('#boardSearch').value = ''; return render(); }
     const rm = e.target.closest('[data-rm]');
     if (rm) { S.legs.splice(Number(rm.dataset.rm), 1); return render(); }
     const sc = e.target.closest('[data-stake]');
@@ -1230,6 +1638,26 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     const vw = e.target.closest('.views [data-view]');
     if (vw) return setView(vw.dataset.view);
     if (e.target.closest('[data-save="parlay"]')) return openSaveParlay();
+    if (e.target.closest('[data-share="parlay"]')) return shareLegs(S.legs, S.stake);
+    if (e.target.closest('#shareCopy')) return copyShare();
+    if (e.target.closest('#shareClose')) return $('#shareDialog').close();
+    const st = e.target.closest('[data-stats]');
+    if (st) { S.statsTab = st.dataset.stats; return renderBreakdown(); }
+    const al = e.target.closest('[data-alert]');
+    if (al) { const leg = S.legs[Number(al.dataset.alert)]; return leg && openAlert(leg); }
+    const va = e.target.closest('[data-valert], [data-vadd]');
+    if (va) {
+      const leg = { eventId: va.dataset.valert || va.dataset.vadd, market: va.dataset.mk, name: va.dataset.nm, point: va.dataset.pt === '' ? null : Number(va.dataset.pt), desc: va.dataset.ds || null };
+      if (va.dataset.valert) return openAlert(leg);
+      toggleLeg(leg.eventId, leg.market, leg.name, leg.point, leg.desc);
+      return toast(S.legs.some(l => l.eventId === leg.eventId && l.market === leg.market && l.name === leg.name) ? 'Added to your parlay' : 'Removed from your parlay');
+    }
+    const ad = e.target.closest('[data-aldel]');
+    if (ad) { ad.disabled = true; return api('/api/alerts/delete', { id: Number(ad.dataset.aldel) }).then(loadAlerts).catch(err => { ad.disabled = false; toast(err.message); }); }
+    const pa = e.target.closest('[data-push]');
+    if (pa) return pushAction(pa.dataset.push);
+    if (e.target.closest('#alertCancel, .al-cancel')) { alertDraft = null; return $('#alertDialog').close(); }
+    if (e.target.closest('#alertSigninBtn')) { $('#alertDialog').close(); return openAcct('signin'); }
     const ss = e.target.closest('[data-ssport]');
     if (ss) { S.seasonSport = ss.dataset.ssport; S.market = null; S.marketSearch = ''; return renderSeason(); }
     const mi = e.target.closest('[data-market]');
@@ -1256,6 +1684,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     const f = e.target;
     if (f.id === 'saveForm') { e.preventDefault(); if (commitSave()) $('#saveDialog').close(); return; }
     if (f.id === 'acctForm') { e.preventDefault(); return submitAcct(); }
+    if (f.id === 'alertForm') { e.preventDefault(); return submitAlert(); }
     if (f.dataset.editform) { e.preventDefault(); return saveEdit(f); }
   });
   document.addEventListener('input', e => {
@@ -1268,6 +1697,20 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       return;
     }
     if (e.target.id === 'saveStake' || e.target.id === 'saveOdds') return updateSaveDialog();
+    if (e.target.id === 'moneyTotal') {
+      const v = Number(e.target.value);
+      if (!(v > 0)) return;
+      S.moneyTotal = Math.min(v, 1e6);
+      const pos = e.target.selectionStart;
+      renderMoney();
+      const again = $('#moneyTotal');
+      if (again) { again.focus(); try { again.setSelectionRange(pos, pos); } catch { /* number inputs */ } }
+      return;
+    }
+    if (e.target.id === 'boardSearch') {
+      S.q = e.target.value.trim();
+      return renderGames();
+    }
     const ps = e.target.closest('[data-psearch]');
     if (!ps) return;
     S.propSearch.set(ps.dataset.psearch, ps.value);
@@ -1290,8 +1733,24 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
   });
 
   // ---------- boot + polling ----------
+  // data/meta.json is tiny and says when odds.json / futures.json last changed, so the page only downloads the
+  // big files when there's something new. Without it (older deploys), fall back to a full reload every 10 minutes.
+  let lastFull = 0;
+  async function whatChanged() {
+    try {
+      const m = await loadJson('data/meta.json');
+      return { meta: true, odds: m.odds_at !== S.data?.generated_at, futures: !!m.futures_at && m.futures_at !== S.futures?.generated_at };
+    } catch { return { meta: false, odds: Date.now() - lastFull > 10 * 60_000, futures: false }; }
+  }
+
   async function refresh(first) {
     try {
+      if (!first && S.data) {
+        const c = await whatChanged();
+        if (c.futures) loadFutures();
+        if (!c.odds) { renderStatus(); return; }
+      }
+      lastFull = Date.now();
       const { d, source } = await loadOdds();
       if (!first && S.data && d.generated_at === S.data.generated_at) { renderStatus(); return; }
       S.data = d; S.source = source;
@@ -1300,6 +1759,7 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
         S.sport = (S.data.sports.find(s => s.in_season !== false && s.events.length) || S.data.sports[0])?.key;
       }
       render();
+      applyShare();
     } catch (err) {
       console.error(err);
       if (first) {
@@ -1333,9 +1793,10 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     renderAcctBtn();
     renderBetsBadge();
     const hash = location.hash.replace('#', '');
-    if (hash === 'bets' || hash === 'season') setTab(hash);
+    if (hash === 'bets' || hash === 'season' || hash === 'money') setTab(hash);
     checkResetLink();
-    window.addEventListener('hashchange', checkResetLink);
+    readShareHash();
+    window.addEventListener('hashchange', () => { checkResetLink(); if (readShareHash()) applyShare(); });
     try {
       S.avail = await loadJson('data/states.json');
       const sel = $('#stateSel');
@@ -1349,10 +1810,10 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     if (S.avail && !lsGet(STATE_KEY) && !resetToken) openStateDialog(); // first visit: ask where they're betting from
     await loadFutures();
     runGrading(false);
-    if (S.user) { syncNow(); refreshMe(); }
+    if (S.user) { syncNow(); refreshMe(); loadAlerts(); } else refreshPushState();
     setInterval(() => refresh(false), POLL_MS);
     setInterval(renderStatus, 30_000);
-    setInterval(loadFutures, 10 * 60_000);
+    setInterval(loadFutures, 30 * 60_000);
     setInterval(() => runGrading(false), GRADE_EVERY_MS);
     setInterval(() => { if (S.user) syncNow(); }, SYNC_EVERY_MS);
   })();
