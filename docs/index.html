@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=15">
 </head>
 <body>
 <header class="topbar">
@@ -39,6 +39,7 @@
   </nav>
   <div class="top-right">
     <div id="status" class="status" role="status"><span class="dot"></span><span id="statusText">Loading odds…</span></div>
+    <button id="knowBtn" class="state-btn know-btn" aria-haspopup="dialog" title="Good to know: what this site can and can't show"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.3" fill="currentColor"/></svg><span class="know-txt">Good to know</span></button>
     <button id="acctBtn" class="state-btn acct-btn" aria-haspopup="dialog"><span id="acctBtnText">Sign in</span></button>
     <button id="stateBtn" class="state-btn" aria-haspopup="dialog"><span id="stateBtnText">All states</span></button>
   </div>
@@ -52,6 +53,7 @@
     <h1 id="todayTitle">Biggest price gaps right now</h1>
     <nav id="dayStripToday" class="days days-today" aria-label="Pick a day"></nav>
     <p class="lede">Same bet, same line, different books: how much more you'd win at the best one. Tap to add it to your parlay.</p>
+    <button type="button" class="know-pill" data-know=""><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.3" fill="currentColor"/></svg>Good to know: how fresh these odds are</button>
     <div id="gaps" class="gaps"></div>
     <div class="vig-card">
       <h2>How much each one keeps</h2>
@@ -68,6 +70,7 @@
       <div id="fresh" class="fresh"></div>
     </div>
     <nav id="dayStrip" class="days" aria-label="Pick a day"></nav>
+    <button type="button" class="know-pill" data-know=""><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.3" fill="currentColor"/></svg>Good to know: when props show up, how fresh the odds are</button>
     <div class="board-search"><input id="boardSearch" class="bsearch" type="search" placeholder="Search a team or player" autocomplete="off" aria-label="Search a team or player across every sport"></div>
     <p id="searchNote" class="search-note" hidden></p>
     <div id="games" class="games"></div>
@@ -116,7 +119,7 @@
   <section id="money" class="panel panel-money" aria-labelledby="moneyTitle">
     <p class="eyebrow" id="moneySub">Loading…</p>
     <h2 id="moneyTitle" class="panel-title">Free money</h2>
-    <p class="lede">Spots where the books disagree enough that you can lock in a profit, or get a better price than the market says is fair.</p>
+    <p class="lede">Spots where the books disagree enough that you can lock in a profit, or get a better price than the market says is fair. <button class="link-btn" data-know="money">What to watch out for</button></p>
     <div id="moneyBody"></div>
   </section>
 
@@ -152,6 +155,7 @@
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
 <footer class="foot">
+  <p><button class="link-btn foot-know" data-know="">Good to know: how fresh the odds are, when props show up, and what we can't show yet</button></p>
   <p><b>How payouts are calculated.</b> Standard parlays pay the product of each leg's price, so that's what we show for every book. Same-game parlays, prediction-market trading fees and boosts aren't reflected. Always confirm the price in the app before you bet.</p>
   <p>Odds via <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a> and <a href="https://kalshi.com" target="_blank" rel="noopener">Kalshi</a> · results from ESPN box scores · <button class="link-btn" id="aboutData">Where each platform is legal or blocked, by state (sources)</button> · <button class="link-btn" id="privacyLink">Privacy</button></p>
   <p class="rg">21+ (18+ on some prediction markets). Gambling problem? Call 1-800-GAMBLER.</p>
@@ -175,6 +179,16 @@
     <select id="stateSel" aria-label="Your state"><option value="ALL">Show every book (all states)</option></select>
     <div id="statePreview" class="state-preview"></div>
     <div class="modal-actions"><button value="ok" class="cta">Show my odds</button></div>
+  </form>
+</dialog>
+
+<dialog id="knowDialog" class="modal">
+  <form method="dialog" class="modal-card wide know-card">
+    <h3>Good to know</h3>
+    <p class="muted">What this site can and can't show you yet. The book's app always has the final price.</p>
+    <nav id="knowJump" class="know-jump" aria-label="Jump to a topic"></nav>
+    <div id="knowBody"></div>
+    <div class="modal-actions"><button value="ok" class="cta">Got it</button></div>
   </form>
 </dialog>
 
@@ -282,12 +296,12 @@
       <label class="chk"><input type="checkbox" id="alertPush"> Push notification on this device <span class="muted small" id="alertPushNote"></span></label>
       <label class="chk"><input type="checkbox" id="alertEmail"> Email <span class="muted small" id="alertEmailNote"></span></label>
     </fieldset>
-    <p class="al-field hint">Texts aren't offered because US carriers block betting messages.</p>
+    <p class="al-field hint">Alerts are checked each time our odds update (about once a day), so they aren't instant. <button type="button" class="link-btn" data-know="bets">More</button> Texts aren't offered because US carriers block betting messages.</p>
     <p id="alertErr" class="form-err" role="alert"></p>
     <div class="modal-actions al-field"><button type="button" class="link-btn al-cancel">Cancel</button><button type="submit" id="alertSubmit" class="cta">Create alert</button></div>
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=11"></script>
+<script type="module" src="js/main.js?v=12"></script>
 </body>
 </html>
