@@ -523,3 +523,41 @@ a.lp:hover { color: var(--text); }
   .topbar .state-btn { padding: 10px 12px; font-size: 13px; }
   .acct-btn { max-width: 96px; }
 }
+
+/* ---------- my books + bet slip (v9) ---------- */
+.mine-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 4px 0 12px; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 3px; }
+.seg button { border: 0; background: none; color: var(--muted); border-radius: 999px; padding: 8px 13px; min-height: 36px; font: 600 13px var(--font); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.row .bk .betbtn { margin-left: auto; border: 0; border-radius: 999px; background: var(--accent-soft); color: var(--text); font: 700 12px var(--font); padding: 6px 12px; min-height: 30px; cursor: pointer; }
+.row .bk .betbtn:hover { background: var(--accent); color: var(--accent-ink); }
+.row.best .bk .betbtn { background: var(--accent); color: var(--accent-ink); }
+button.open-best { font-family: var(--font); }
+.mybooks-line { flex-basis: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 10px; }
+.slip-h { font-size: 13px; color: var(--muted); font-weight: 600; margin: 16px 0 6px; }
+.slip-legs { list-style: none; margin: 0; padding: 0; counter-reset: sl; }
+.slip-legs li { counter-increment: sl; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.slip-legs li::before { content: counter(sl); width: 24px; height: 24px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+.sl-what { display: grid; gap: 2px; min-width: 0; }
+.sl-what b { font-size: 14px; overflow-wrap: anywhere; }
+.sl-px { font-weight: 700; font-size: 14px; }
+.slip-add { text-decoration: none; color: var(--text); display: inline-grid; place-items: center; white-space: nowrap; }
+.slip-add.done { background: var(--accent-soft); color: var(--muted); }
+.slip-all { margin-top: 14px; }
+.hl { color: var(--accent); }
+.slip-actions { gap: 10px; flex-wrap: wrap; align-items: center; }
+.slip-actions .cta.ghost { margin-top: 0; width: auto; padding: 12px 16px; min-height: 44px; font-size: 14px; }
+.mb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.mb-item { display: flex; align-items: center; gap: 9px; background: var(--surface-2); border-radius: 14px; padding: 9px 11px; cursor: pointer; min-height: 48px; flex-wrap: wrap; }
+.mb-item input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; margin: 0; }
+.mb-item .bchip { width: 26px; height: 26px; border-radius: 8px; font-size: 9px; grid-row: auto; flex: none; }
+.mb-item .mb-name { font-weight: 600; font-size: 14px; }
+.mb-item.na { opacity: .7; }
+.mb-item:has(input:checked) { outline: 2px solid var(--accent); }
+#myBooksDialog .modal-card, #betDialog .modal-card { max-height: 88vh; overflow: auto; }
+@media (max-width: 480px) {
+  .mb-grid { grid-template-columns: 1fr; }
+  .slip-legs li { grid-template-columns: 24px minmax(0, 1fr) auto; }
+  .slip-legs li .slip-add, .slip-legs li > .muted { grid-column: 2 / -1; justify-self: start; }
+  .modal-card { padding: 20px 18px; }
+}
