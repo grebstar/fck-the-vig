@@ -1,14 +1,13 @@
 name: Update odds and deploy site
 
 on:
-  # One run per day at 16:47 UTC (10:47 AM Central). Odd days: game lines + props. Even days: props only.
+  # Every 2 hours at :17 UTC (12:17 AM, 2:17 AM, ... Central): game lines + props on every run.
   # Every run also refreshes season-long markets from Kalshi (free); sportsbook futures refresh about once a week (~4 credits).
-  # Budget on the free plan (500 credits/month, reset on the 1st): ~190 for lines (4 sports x 3 credits, every other day),
-  # ~20 for futures, and props get the rest. fetch-odds.mjs paces props so the month never runs out.
-  # On a bigger plan, replace both lines with e.g. "17 */2 * * *", set MODE below to "all" and LINES_EVERY_DAYS to 1.
+  # Budget on the $30 plan (20,000 credits/month, resets on the 7th, the day we upgraded): ~4,300 for lines
+  # (4 sports x 3 credits x 12 runs a day), ~20 for futures, and props get the rest. fetch-odds.mjs paces props
+  # so the cycle never runs out. If you change the cron, change RUN_EVERY_HOURS / RUN_MINUTE / *_RUNS_PER_DAY below too.
   schedule:
-    - cron: "47 16 1-31/2 * *"   # lines + props
-    - cron: "47 16 2-30/2 * *"   # props only
+    - cron: "17 */2 * * *"
   workflow_dispatch:             # "Run workflow" button on the Actions tab
     inputs:
       mode:
@@ -45,18 +44,26 @@ jobs:
         if: github.event_name != 'push' && !(github.event_name == 'workflow_dispatch' && inputs.mode == 'futures')
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-          MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '47 16 2-30/2 * *' && 'props' || 'all') }}
+          MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'all' }}
           # Optional overrides: Settings -> Secrets and variables -> Actions -> Variables
           SPORTS: ${{ vars.SPORTS }}
           BOOKMAKERS: ${{ vars.BOOKMAKERS }}
           MARKETS: ${{ vars.MARKETS }}
           DAYS_AHEAD: ${{ vars.DAYS_AHEAD }}
-          PROP_GAMES_NFL: ${{ vars.PROP_GAMES_NFL }}
-          PROP_GAMES_NBA: ${{ vars.PROP_GAMES_NBA }}
-          PROP_GAMES_NCAAF: ${{ vars.PROP_GAMES_NCAAF }}
+          # How many games per sport can get props. The credit budget decides how many are refreshed each run;
+          # the stalest go first, so every game in the window gets fresh props every few hours.
+          PROP_GAMES_NFL: ${{ vars.PROP_GAMES_NFL || '16' }}
+          PROP_GAMES_NBA: ${{ vars.PROP_GAMES_NBA || '15' }}
+          PROP_GAMES_NCAAF: ${{ vars.PROP_GAMES_NCAAF || '12' }}
           PROP_GAMES_NCAAB: ${{ vars.PROP_GAMES_NCAAB }}
-          LINES_EVERY_DAYS: ${{ vars.LINES_EVERY_DAYS }}
           PROP_WINDOW_HOURS: ${{ vars.PROP_WINDOW_HOURS }}
+          # Must match the cron above.
+          LINES_EVERY_DAYS: ${{ vars.LINES_EVERY_DAYS || '1' }}
+          LINES_RUNS_PER_DAY: ${{ vars.LINES_RUNS_PER_DAY || '12' }}
+          PROPS_RUNS_PER_DAY: ${{ vars.PROPS_RUNS_PER_DAY || '12' }}
+          RUN_EVERY_HOURS: '2'
+          RUN_MINUTE: '17'
+          QUOTA_RESET_DAY: ${{ vars.QUOTA_RESET_DAY || '7' }}
         run: node scripts/fetch-odds.mjs
 
       - name: Fetch season-long markets (futures, awards, win totals)
