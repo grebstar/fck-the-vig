@@ -229,6 +229,13 @@ async function main() {
     quota: null,
     sports: [],
     notes: [],
+    // What this run was set up to fetch. The site's "Good to know" panel reads it, so its numbers stay
+    // right when the Actions variables or the plan change.
+    config: {
+      days_ahead: DAYS_AHEAD, lines_hours: LINES_HOURS, min_books: MIN_BOOKS,
+      lines_every_days: LINES_EVERY_DAYS, props_runs_per_day: PROPS_RUNS_PER_DAY,
+      prop_window_hours: PROP_WINDOW_H, prop_games: PROP_GAMES, prop_markets: PROP_MARKETS, markets: MARKETS,
+    },
   };
 
   const { data: sportList } = await getJson('/v4/sports', {}); // free
