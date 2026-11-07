@@ -1,6 +1,11 @@
 // fck the vig — accounts API (Cloudflare Worker + D1 database bound as DB).
-// Stores a username, a salted PBKDF2 password hash, login sessions and each user's saved bets.
-// No email or other personal details are collected.
+// Stores a username, an email address (only used for password resets), a salted PBKDF2 password hash,
+// login sessions and each user's saved bets.
+//
+// Password-reset emails go out through whichever of these is set up (first one wins):
+//   - a Cloudflare Email Service binding named EMAIL (needs the Workers Paid plan), or
+//   - a Resend API key in the secret RESEND_API_KEY (free plan: 100 emails/day).
+// MAIL_FROM sets the sender (default "fck the vig <noreply@fckvig.com>"); SITE_URL the link target.
 
 const ORIGINS = ['https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io'];
 let allowed = new Set(ORIGINS);  // ALLOW_ORIGINS (comma-separated) overrides this, e.g. for local testing
@@ -10,6 +15,8 @@ const MAX_BETS = 1000;
 const MAX_BET_BYTES = 8000;
 const MAX_BODY = 600000;
 const USER_RE = /^[a-z0-9_]{3,20}$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const RESET_MINUTES = 60;
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pw TEXT NOT NULL, created_at INTEGER NOT NULL, failed INTEGER NOT NULL DEFAULT 0, locked_until INTEGER NOT NULL DEFAULT 0)`,
@@ -17,9 +24,17 @@ const SCHEMA = [
   `CREATE INDEX IF NOT EXISTS sessions_user ON sessions (user_id)`,
   `CREATE TABLE IF NOT EXISTS bets (user_id INTEGER NOT NULL, id TEXT NOT NULL, data TEXT NOT NULL, updated_at INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (user_id, id))`,
   `CREATE TABLE IF NOT EXISTS rate (k TEXT PRIMARY KEY, n INTEGER NOT NULL, reset_at INTEGER NOT NULL)`,
+  `CREATE TABLE IF NOT EXISTS resets (token_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL, created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL)`,
 ];
 let schemaReady = null;
-const ensureSchema = db => (schemaReady ||= db.batch(SCHEMA.map(s => db.prepare(s))).catch(e => { schemaReady = null; throw e; }));
+async function migrate(db) {
+  await db.batch(SCHEMA.map(s => db.prepare(s)));
+  // users.email was added after launch; add it to databases created before that.
+  const cols = await db.prepare('PRAGMA table_info(users)').all();
+  if (!(cols.results || []).some(c => c.name === 'email')) await db.prepare('ALTER TABLE users ADD COLUMN email TEXT').run();
+  await db.prepare('CREATE UNIQUE INDEX IF NOT EXISTS users_email ON users (email)').run();
+}
+const ensureSchema = db => (schemaReady ||= migrate(db).catch(e => { schemaReady = null; throw e; }));
 
 // ---------- helpers ----------
 const enc = new TextEncoder();
@@ -107,6 +122,11 @@ function cleanUsername(u) {
   if (!USER_RE.test(v)) throw new HttpError(400, 'Usernames are 3–20 letters, numbers or underscores.');
   return v;
 }
+function cleanEmail(e) {
+  const v = String(e ?? '').trim().toLowerCase();
+  if (v.length > 254 || !EMAIL_RE.test(v)) throw new HttpError(400, 'Enter a valid email address.');
+  return v;
+}
 function cleanPassword(p) {
   const v = String(p ?? '');
   if (v.length < 8 || v.length > 200) throw new HttpError(400, 'Passwords need at least 8 characters.');
@@ -117,13 +137,16 @@ function cleanPassword(p) {
 async function signup(req, db) {
   const b = await body(req);
   const username = cleanUsername(b.username);
+  const email = cleanEmail(b.email);
   const password = cleanPassword(b.password);
   if (b.adult !== true) throw new HttpError(400, 'You need to confirm you are of legal betting age.');
-  await limit(db, 'signup:' + await ipKey(req), 5, 3600e3);
+  await limit(db, 'signup:' + await ipKey(req), 10, 3600e3);
   const exists = await db.prepare('SELECT 1 FROM users WHERE username = ?').bind(username).first();
   if (exists) throw new HttpError(409, 'That username is taken.');
+  const used = await db.prepare('SELECT 1 FROM users WHERE email = ?').bind(email).first();
+  if (used) throw new HttpError(409, 'That email already has an account. Use "Forgot password?" to get back in.');
   const pw = await hashPassword(password);
-  const res = await db.prepare('INSERT INTO users (username, pw, created_at) VALUES (?, ?, ?)').bind(username, pw, Date.now()).run();
+  const res = await db.prepare('INSERT INTO users (username, email, pw, created_at) VALUES (?, ?, ?, ?)').bind(username, email, pw, Date.now()).run();
   const id = res.meta.last_row_id;
   return json(req, { token: await newSession(db, id), username });
 }
@@ -132,21 +155,16 @@ async function login(req, db) {
   const b = await body(req);
   const username = String(b.username ?? '').trim().toLowerCase();
   const password = String(b.password ?? '');
-  await limit(db, 'login:' + await ipKey(req), 30, 15 * 60e3);
-  const u = USER_RE.test(username) ? await db.prepare('SELECT id, pw, failed, locked_until FROM users WHERE username = ?').bind(username).first() : null;
-  if (u && u.locked_until > Date.now()) throw new HttpError(429, 'Too many wrong passwords. Try again in 15 minutes.');
+  // No account lockout. The only brake is per network: 100 tries in 10 minutes, which stops password-guessing bots
+  // without ever getting in a person's way.
+  await limit(db, 'login:' + await ipKey(req), 100, 10 * 60e3);
+  const byEmail = username.includes('@');
+  const u = byEmail || USER_RE.test(username)
+    ? await db.prepare(`SELECT id, username, pw FROM users WHERE ${byEmail ? 'email' : 'username'} = ?`).bind(username).first() : null;
   const ok = u ? await checkPassword(password, u.pw) : (await pbkdf2(password, new Uint8Array(16), PBKDF2_ITER), false);
-  if (!ok) {
-    if (u) {
-      const failed = u.failed + 1;
-      await db.prepare('UPDATE users SET failed = ?, locked_until = ? WHERE id = ?')
-        .bind(failed >= 10 ? 0 : failed, failed >= 10 ? Date.now() + 15 * 60e3 : 0, u.id).run();
-    }
-    throw new HttpError(401, 'Wrong username or password.');
-  }
-  if (u.failed) await db.prepare('UPDATE users SET failed = 0, locked_until = 0 WHERE id = ?').bind(u.id).run();
+  if (!ok) throw new HttpError(401, 'Wrong username or password.');
   await db.prepare('DELETE FROM sessions WHERE user_id = ? AND expires_at < ?').bind(u.id, Date.now()).run();
-  return json(req, { token: await newSession(db, u.id), username });
+  return json(req, { token: await newSession(db, u.id), username: u.username });
 }
 
 async function logout(req, db) {
@@ -158,7 +176,87 @@ async function logout(req, db) {
 async function me(req, db) {
   const u = await auth(req, db);
   const n = await db.prepare('SELECT COUNT(*) AS n FROM bets WHERE user_id = ? AND deleted = 0').bind(u.id).first();
-  return json(req, { username: u.username, created_at: u.created_at, bets: n?.n || 0 });
+  const e = await db.prepare('SELECT email FROM users WHERE id = ?').bind(u.id).first();
+  return json(req, { username: u.username, email: e?.email || null, created_at: u.created_at, bets: n?.n || 0 });
+}
+
+async function changeEmail(req, db) {
+  const u = await auth(req, db);
+  const b = await body(req);
+  const email = cleanEmail(b.email);
+  const row = await db.prepare('SELECT pw FROM users WHERE id = ?').bind(u.id).first();
+  if (!row || !(await checkPassword(String(b.password ?? ''), row.pw))) throw new HttpError(401, 'Wrong password.');
+  const used = await db.prepare('SELECT id FROM users WHERE email = ?').bind(email).first();
+  if (used && used.id !== u.id) throw new HttpError(409, 'That email is already on another account.');
+  await db.prepare('UPDATE users SET email = ? WHERE id = ?').bind(email, u.id).run();
+  return json(req, { ok: true, email });
+}
+
+// ---------- password reset by email ----------
+function mailerReady(env) { return !!(env.EMAIL || env.RESEND_API_KEY); }
+
+async function sendMail(env, { to, subject, text, html }) {
+  const from = env.MAIL_FROM || 'fck the vig <noreply@fckvig.com>';
+  if (env.EMAIL) {
+    const m = /^(.*)<(.+)>$/.exec(from);
+    await env.EMAIL.send({ from: m ? { name: m[1].trim(), email: m[2].trim() } : from, to, subject, text, html });
+    return;
+  }
+  const res = await fetch(env.RESEND_URL || 'https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from, to: [to], subject, text, html }),
+  });
+  if (!res.ok) throw new Error(`Resend ${res.status}: ${(await res.text()).slice(0, 200)}`);
+}
+
+async function forgot(req, db, env) {
+  const b = await body(req);
+  const who = String(b.who ?? '').trim().toLowerCase();
+  if (!who) throw new HttpError(400, 'Enter your email or username.');
+  if (!mailerReady(env)) throw new HttpError(503, "Password reset emails aren't switched on yet. Please try again later.");
+  await limit(db, 'forgot:' + await ipKey(req), 10, 3600e3);
+  const u = await db.prepare(`SELECT id, username, email FROM users WHERE ${who.includes('@') ? 'email' : 'username'} = ?`).bind(who).first();
+  // Same answer whether or not the account exists, so this can't be used to look up who has an account.
+  const done = json(req, { ok: true });
+  if (!u || !u.email) return done;
+  try { await limit(db, 'forgot-user:' + u.id, 5, 3600e3); } catch { return done; }
+  const token = b64url(crypto.getRandomValues(new Uint8Array(32)));
+  const now = Date.now();
+  await db.batch([
+    db.prepare('DELETE FROM resets WHERE user_id = ? OR expires_at < ?').bind(u.id, now),
+    db.prepare('INSERT INTO resets (token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)').bind(await sha256(token), u.id, now, now + RESET_MINUTES * 60e3),
+  ]);
+  const link = `${(env.SITE_URL || 'https://www.fckvig.com').replace(/\/$/, '')}/#reset=${token}`;
+  const text = `Hi ${u.username},\n\nSomeone (hopefully you) asked to reset the password for your fck the vig account.\n\nSet a new password here (the link works for ${RESET_MINUTES} minutes):\n${link}\n\nIf you didn't ask for this, ignore this email. Your password won't change.\n`;
+  const html = `<div style="font-family:system-ui,sans-serif;font-size:16px;line-height:1.5;color:#14062e">
+<p>Hi ${u.username},</p>
+<p>Someone (hopefully you) asked to reset the password for your <b>fck the vig</b> account.</p>
+<p><a href="${link}" style="display:inline-block;background:#9b74ff;color:#14062e;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">Set a new password</a></p>
+<p style="font-size:14px;color:#555">The link works for ${RESET_MINUTES} minutes. If you didn't ask for this, ignore this email. Your password won't change.</p></div>`;
+  try {
+    await sendMail(env, { to: u.email, subject: 'Reset your fck the vig password', text, html });
+  } catch (err) {
+    console.error('reset email failed', err);
+    throw new HttpError(502, "We couldn't send the email just now. Please try again in a few minutes.");
+  }
+  return done;
+}
+
+async function resetPassword(req, db) {
+  const b = await body(req);
+  const token = String(b.token ?? '');
+  const password = cleanPassword(b.password);
+  if (!/^[A-Za-z0-9_-]{20,}$/.test(token)) throw new HttpError(400, 'This reset link is broken. Ask for a new one.');
+  const th = await sha256(token);
+  const row = await db.prepare('SELECT r.user_id, r.expires_at, u.username FROM resets r JOIN users u ON u.id = r.user_id WHERE r.token_hash = ?').bind(th).first();
+  if (!row || row.expires_at < Date.now()) throw new HttpError(400, 'This reset link has expired or was already used. Ask for a new one.');
+  await db.batch([
+    db.prepare('UPDATE users SET pw = ? WHERE id = ?').bind(await hashPassword(password), row.user_id),
+    db.prepare('DELETE FROM resets WHERE user_id = ?').bind(row.user_id),
+    db.prepare('DELETE FROM sessions WHERE user_id = ?').bind(row.user_id),   // sign out everywhere else
+  ]);
+  return json(req, { token: await newSession(db, row.user_id), username: row.username });
 }
 
 // Merge the client's bets with the stored ones (newest `updated` wins) and return everything.
@@ -193,6 +291,7 @@ async function deleteAccount(req, db) {
   if (!row || !(await checkPassword(String(b.password ?? ''), row.pw))) throw new HttpError(401, 'Wrong password.');
   await db.batch([
     db.prepare('DELETE FROM bets WHERE user_id = ?').bind(u.id),
+    db.prepare('DELETE FROM resets WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM sessions WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM users WHERE id = ?').bind(u.id),
   ]);
@@ -207,6 +306,9 @@ const ROUTES = {
   'GET /api/me': me,
   'POST /api/bets/sync': syncBets,
   'POST /api/account/delete': deleteAccount,
+  'POST /api/account/email': changeEmail,
+  'POST /api/password/forgot': forgot,
+  'POST /api/password/reset': resetPassword,
 };
 
 export default {
@@ -219,7 +321,7 @@ export default {
     if (req.method === 'POST' && !/^application\/json/.test(req.headers.get('Content-Type') || '')) return fail(req, 415, 'Send JSON.');
     try {
       await ensureSchema(env.DB);
-      return await handler(req, env.DB);
+      return await handler(req, env.DB, env);
     } catch (err) {
       if (err instanceof HttpError) return fail(req, err.status, err.message);
       console.error(err);
