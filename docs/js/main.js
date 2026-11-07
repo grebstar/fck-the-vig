@@ -48,7 +48,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     futures: null, seasonSport: null, market: null, marketSearch: '',
     bets: [], betFilter: 'open', user: null, syncAt: null, syncErr: null, gradedAt: null,
     statsTab: 'sport', moneyTotal: 100, q: '', alerts: null, alertsErr: null, metaAt: null,
-    myBooks: null, myBooksAt: 0, onlyMine: true,
+    myBooks: null, myBooksAt: 0, onlyMine: true, day: null,
   };
 
   const $ = sel => document.querySelector(sel);
@@ -269,6 +269,77 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     return m < 1 ? 'just now' : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)} hr ago` : `${Math.round(m / 1440)} d ago`;
   };
 
+  // ---------- date picker: Today, Tomorrow, ... as far ahead as the books have posted lines ----------
+  const MAX_DAYS = 21;
+  const pad2 = n => String(n).padStart(2, '0');
+  const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; };
+  const keyDate = k => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d, 12); };
+  const todayKey = () => dayKey(Date.now());
+  // A game that started before midnight and is still on the board counts as today.
+  const evDay = ev => { const k = dayKey(ev.commence_time), t = todayKey(); return k < t ? t : k; };
+  const onDay = (ev, day = S.day) => day === 'all' || evDay(ev) === day;
+  function normDay() {
+    if (S.day !== 'all' && (!S.day || S.day < todayKey())) S.day = todayKey();
+    return S.day;
+  }
+  // Every day from today through the last day with a game in any sport.
+  function dayList() {
+    const t = todayKey();
+    let last = t;
+    for (const ev of S.events.values()) { const k = evDay(ev); if (k > last) last = k; }
+    const out = [], d = keyDate(t);
+    for (let i = 0; i < MAX_DAYS; i++) {
+      const k = dayKey(d);
+      out.push(k);
+      if (k >= last) break;
+      d.setDate(d.getDate() + 1);
+    }
+    return out;
+  }
+  const wkShort = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
+  const wkLong = new Intl.DateTimeFormat('en-US', { weekday: 'long' });
+  const mdFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+  function dayName(k, long) {
+    if (k === 'all') return 'All days';
+    const t = todayKey();
+    if (k === t) return 'Today';
+    const tm = keyDate(t); tm.setDate(tm.getDate() + 1);
+    if (k === dayKey(tm)) return 'Tomorrow';
+    return (long ? wkLong : wkShort).format(keyDate(k));
+  }
+  const dayLong = k => (k === 'all' ? 'All days' : `${dayName(k, true)}, ${mdFmt.format(keyDate(k))}`);
+  function countOn(day, sportKey) {
+    let n = 0;
+    for (const ev of S.events.values()) if ((!sportKey || ev.sport === sportKey) && onDay(ev, day)) n++;
+    return n;
+  }
+  // Build strip counts games in the chosen sport; the phone Today strip counts every sport.
+  function stripHtml(sportKey) {
+    const days = dayList();
+    const chip = (k, top, bottom, n) => `<button class="dchip${n ? '' : ' zero'}" data-day="${k}" aria-pressed="${k === S.day}" title="${esc(dayLong(k))}: ${n} game${n === 1 ? '' : 's'}">
+        <span class="d-top">${esc(top)}</span><span class="d-bot">${esc(bottom)}<b>${n}</b></span></button>`;
+    return days.map(k => chip(k, dayName(k), mdFmt.format(keyDate(k)), countOn(k, sportKey))).join('')
+      + chip('all', 'All', `${days.length} days`, countOn('all', sportKey));
+  }
+  function renderDays() {
+    normDay();
+    for (const [el, sport] of [[$('#dayStrip'), S.sport], [$('#dayStripToday'), null]]) {
+      if (!el) continue;
+      const keep = el.scrollLeft;
+      el.innerHTML = stripHtml(sport);
+      el.scrollLeft = keep;
+      // Only scroll when the chosen day is out of view, and leave the chip before it peeking in.
+      const on = el.querySelector('[aria-pressed="true"]');
+      if (!on || !el.clientWidth) continue;
+      const x = on.offsetLeft - el.offsetLeft;
+      if (x < el.scrollLeft || x + on.offsetWidth > el.scrollLeft + el.clientWidth) el.scrollLeft = Math.max(0, x - 48);
+    }
+  }
+  function setDay(k) {
+    S.day = k;
+    render();
+  }
+
   // ---------- rendering ----------
   function renderStatus() {
     const el = $('#status'), t = $('#statusText');
@@ -286,7 +357,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
   function priceGaps(allowed) {
     const now = Date.now(), out = [];
     for (const ev of S.events.values()) {
-      if (new Date(ev.commence_time).getTime() <= now) continue;
+      if (new Date(ev.commence_time).getTime() <= now || !onDay(ev)) continue;
       const sides = new Map();
       for (const [bk, b] of Object.entries(ev.books)) {
         if (!allowed.has(bk)) continue;
@@ -347,9 +418,11 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
 
   function renderToday() {
     const allowed = allowedBooks();
-    const games = S.data.sports.reduce((n, s) => n + s.events.length, 0);
-    const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date());
-    $('#todaySub').textContent = `${day} · ${games} games · ${allowed.size} books${S.state !== 'ALL' ? ' in ' + stateName(S.state) : ''}`;
+    const games = countOn(S.day);
+    const day = S.day === todayKey() ? wkLong.format(new Date()) : dayLong(S.day);
+    $('#todaySub').textContent = `${day} · ${games} game${games === 1 ? '' : 's'} · ${allowed.size} books${S.state !== 'ALL' ? ' in ' + stateName(S.state) : ''}`;
+    $('#todayTitle').textContent = S.day === todayKey() ? 'Biggest price gaps right now'
+      : S.day === 'all' ? 'Biggest price gaps, all days' : `Biggest price gaps ${dayName(S.day, true) === 'Tomorrow' ? 'tomorrow' : 'on ' + dayName(S.day, true)}`;
     const gaps = priceGaps(allowed);
     $('#gaps').innerHTML = gaps.length ? gaps.map(g => {
       const leg = { market: g.mk, name: g.name, point: g.point, desc: g.desc };
@@ -360,7 +433,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
         <span class="gap-game">${esc(g.ev.away)} @ ${esc(g.ev.home)} · ${esc(when)}</span>
         <span class="gap-row"><span>Best <strong>${fmtAm(g.best.price)} ${esc(bookInfo(g.best.bk).name)}</strong></span><span>Worst <strong>${fmtAm(g.worst.price)} ${esc(bookInfo(g.worst.bk).name)}</strong></span></span>
       </button>`;
-    }).join('') : '<p class="none">No price gaps to show right now.</p>';
+    }).join('') : `<p class="none">No price gaps to show ${S.day === todayKey() ? 'right now' : S.day === 'all' ? 'yet' : dayName(S.day) === 'Tomorrow' ? 'for tomorrow' : 'for ' + esc(dayLong(S.day))}.</p>`;
     const vig = vigByBook(allowed);
     const max = Math.max(...vig.map(v => v.vig), 1);
     $('#vigList').innerHTML = vig.map(v => `<li class="${v.vig < 2 ? 'low' : ''}"><span>${esc(bookInfo(v.bk).name)}${bookInfo(v.bk).ex ? ' <span class="muted small">exchange</span>' : ''}</span><span class="pct">${v.vig.toFixed(1)}%</span><span class="bar"><i style="width:${Math.max(4, v.vig / max * 100).toFixed(0)}%"></i></span></li>`).join('');
@@ -386,7 +459,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
 
   function renderTabs() {
     $('#sportTabs').innerHTML = S.data.sports.map(sp => {
-      const count = sp.in_season === false ? 'off' : sp.events.length;
+      const count = sp.in_season === false ? 'off' : sp.events.filter(e => onDay(e)).length;
       return `<button class="tab" role="tab" data-sport="${esc(sp.key)}" aria-selected="${sp.key === S.sport}">${esc(sp.title)}<span class="count">${count}</span></button>`;
     }).join('');
     const sp = S.data.sports.find(s => s.key === S.sport);
@@ -441,10 +514,17 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     if (S.q.length >= 2) { box.innerHTML = searchHtml(allowed); return; }
     const sp = S.data.sports.find(s => s.key === S.sport);
     if (!sp || sp.in_season === false) { box.innerHTML = `<div class="game empty-msg">${esc(sp?.title || '')} is out of season.</div>`; return; }
-    if (!sp.events.length) { box.innerHTML = `<div class="game empty-msg">No games in the next week.</div>`; return; }
+    if (!sp.events.length) { box.innerHTML = `<div class="game empty-msg">No ${esc(sp.title)} lines posted yet.</div>`; return; }
     if (!allowed.size) { box.innerHTML = `<div class="game empty-msg">None of the books in this feed operate in ${esc(stateName(S.state))}.</div>`; return; }
+    const evs = sp.events.filter(e => onDay(e));
+    if (!evs.length) {
+      const next = sp.events.map(e => evDay(e)).filter(k => k > S.day).sort()[0];
+      const when = S.day === todayKey() ? 'left today' : dayName(S.day) === 'Tomorrow' ? `tomorrow (${mdFmt.format(keyDate(S.day))})` : 'on ' + dayLong(S.day);
+      box.innerHTML = `<div class="game empty-msg">No ${esc(sp.title)} games ${esc(when)}.${next ? ` <button class="link-btn jump" data-day="${next}">Next games: ${esc(dayLong(next))} →</button>` : ''}</div>`;
+      return;
+    }
     let lastDay = '', html = '';
-    for (const e of sp.events) {
+    for (const e of evs) {
       const ev = S.events.get(e.id);
       const day = dayFmt.format(new Date(ev.commence_time));
       if (day !== lastDay) { html += `<div class="day">${esc(day)}</div>`; lastDay = day; }
@@ -695,6 +775,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
   const setView = v => setTab(v === 'games' ? (S.lastGameTab || 'today') : v);
 
   function render() {
+    renderDays();
     renderStatus();
     renderToday();
     renderBanner();
@@ -1421,7 +1502,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     }
     S.legs = next;
     if (stake > 0 && stake <= 1e6) { S.stake = stake; $('#stake').value = stake; }
-    if (next.length) S.sport = S.events.get(next[0].eventId).sport;
+    if (next.length) { const ev0 = S.events.get(next[0].eventId); S.sport = ev0.sport; S.day = evDay(ev0); }
     render();
     setTab('results');
     const miss = legs.length - next.length;
@@ -1806,6 +1887,8 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     if (e.target.closest('[data-clearq]')) { S.q = ''; $('#boardSearch').value = ''; return renderGames(); }
     const chip = e.target.closest('[data-pmk]');
     if (chip) { S.openProps.set(chip.dataset.pev, chip.dataset.pmk); return renderGames(); }
+    const dc = e.target.closest('[data-day]');
+    if (dc) { S.q = ''; $('#boardSearch').value = ''; return setDay(dc.dataset.day); }
     const tab = e.target.closest('.tab[data-sport]');
     if (tab) { S.sport = tab.dataset.sport; S.q = ''; $('#boardSearch').value = ''; return render(); }
     const rm = e.target.closest('[data-rm]');
@@ -1957,8 +2040,10 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
       if (!first && S.data && d.generated_at === S.data.generated_at) { renderStatus(); return; }
       S.data = d; S.source = source;
       indexEvents();
+      normDay();
       if (!S.sport || !S.data.sports.some(s => s.key === S.sport)) {
-        S.sport = (S.data.sports.find(s => s.in_season !== false && s.events.length) || S.data.sports[0])?.key;
+        S.sport = (S.data.sports.find(s => s.in_season !== false && s.events.some(e => onDay(e)))
+          || S.data.sports.find(s => s.in_season !== false && s.events.length) || S.data.sports[0])?.key;
       }
       render();
       applyShare();
