@@ -19,8 +19,9 @@ const BOOKMAKERS = (env.BOOKMAKERS && env.BOOKMAKERS.trim() ? env.BOOKMAKERS : '
   .split(',').map(s => s.trim()).filter(Boolean);
 const OUTRIGHT_EVERY_H = Number(env.OUTRIGHT_EVERY_HOURS || 156);   // about 6.5 days
 const OUTRIGHT_RESERVE = Number(env.OUTRIGHT_RESERVE || 80);       // leave this many credits for game lines
-const MAX_OUTRIGHTS = Number(env.MAX_OUTRIGHTS || 4);
-const SPORT_PREFIXES = ['americanfootball_nfl', 'americanfootball_ncaaf', 'basketball_nba'];
+const MAX_OUTRIGHTS = Number(env.MAX_OUTRIGHTS || 5);
+const SPORT_PREFIXES = ['americanfootball_nfl', 'americanfootball_ncaaf', 'basketball_nba', 'basketball_ncaab'];
+const COLLEGE = new Set(['americanfootball_ncaaf', 'basketball_ncaab']);
 
 // [sport, Kalshi series, title, group, type, matching Odds API outright key]
 const SERIES = [
@@ -57,6 +58,9 @@ const SERIES = [
   ['americanfootball_ncaaf', 'KXNCAAF', 'National champion', 'Champion', 'team', 'americanfootball_ncaaf_championship_winner'],
   ['americanfootball_ncaaf', 'KXHEISMAN', 'Heisman Trophy', 'Awards', 'player'],
   ['americanfootball_ncaaf', 'KXNCAAFWINS', 'Regular-season win totals', 'Win totals', 'ladder'],
+  ['basketball_ncaab', 'KXMARMAD', 'National champion', 'Champion', 'team', 'basketball_ncaab_championship_winner'],
+  ['basketball_ncaab', 'KXNCAAMBNAISMITH', 'Naismith Player of the Year', 'Awards', 'player'],
+  ['basketball_ncaab', 'KXNCAAMBCOTY', 'Naismith Coach of the Year', 'Awards', 'player'],
 ];
 
 // Kalshi lists pro teams by city ("Los Angeles C"). Full names let us line them up with sportsbook futures.
@@ -227,7 +231,7 @@ function combine(markets, raw) {
     const names = Object.keys(book.outcomes);
     const matched = new Set();
     for (const o of mk.outcomes) {
-      const hit = names.includes(o.name) ? o.name : mk.sport === 'americanfootball_ncaaf' ? matchCollege(o.name, names) : null;
+      const hit = names.includes(o.name) ? o.name : COLLEGE.has(mk.sport) ? matchCollege(o.name, names) : null;
       if (!hit || matched.has(hit)) continue;
       matched.add(hit);
       const direct = o.prices.kalshi; // Kalshi's own feed is fresher than the weekly sportsbook snapshot
