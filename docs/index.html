@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 <header class="topbar">
@@ -156,6 +156,16 @@
   <p class="rg">© 2026 GrebStar Ventures LLC. fck the vig is operated by GrebStar Ventures LLC.</p>
 </footer>
 
+<dialog id="ageDialog" class="modal">
+  <form method="dialog" class="modal-card">
+    <h3>Are you 21 or older?</h3>
+    <p class="muted">fck the vig compares sports betting odds. It's only for adults 21 and older (18+ on some prediction markets). We don't take bets; you place them with the sportsbook.</p>
+    <div id="ageBtns" class="modal-actions age-btns"><button class="link-btn" data-age="no" type="button">I'm under 21</button><button class="cta" data-age="yes" type="button">I'm 21 or older</button></div>
+    <p id="ageNo" class="note warn" hidden><strong>Sorry, this app is only for adults 21 and older.</strong></p>
+    <p class="rg">Gambling problem? Call <a href="tel:18004262537">1-800-GAMBLER</a>.</p>
+  </form>
+</dialog>
+
 <dialog id="stateDialog" class="modal">
   <form method="dialog" class="modal-card">
     <h3>Where are you betting from?</h3>
@@ -276,6 +286,6 @@
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=9"></script>
+<script type="module" src="js/main.js?v=10"></script>
 </body>
 </html>
