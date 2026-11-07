@@ -44,7 +44,7 @@ According to The Odds API docs, each market costs 1 credit per region, and up to
 
 **Default schedule (free plan, 500 credits/month).** One run per day at 10:47 AM Central:
 
-- **Odd days: game lines + props.** Game lines for every NFL, NBA and college football game in the next 7 days, plus college basketball games in the next 50 hours, cost about 12 credits.
+- **Odd days: game lines + props.** Game lines for every NFL, NBA and college football game in the next 14 days, plus college basketball games in the next 7 days, cost about 12 credits (a wider window costs no extra credits; the site's date picker shows every day that has lines).
 - **Every day: props** for the next games that start within 30 hours: 3 NFL games (pass, rush and receiving yards, anytime TD), 2 NBA games (points, rebounds, assists) and 1 college game. That costs roughly 3–4 credits per game. `fetch-odds.mjs` paces props: it sets aside credits for every remaining game-line run and the weekly futures until credits reset on the 1st, and spends only the rest, so the month never runs dry.
 
 That works out to roughly 135 credits a month for lines and 350 for props. The script stops props first when credits run low, so game lines keep updating.
@@ -64,7 +64,7 @@ You can override the defaults with repository variables (Settings → Secrets an
 | `SPORTS` | `americanfootball_nfl,basketball_nba,americanfootball_ncaaf` |
 | `BOOKMAKERS` | `draftkings,fanduel,betmgm,espnbet,betrivers,hardrockbet,kalshi,polymarket_us,novig,prophetx` |
 | `MARKETS` | `h2h,spreads,totals` |
-| `DAYS_AHEAD` | `7` |
+| `DAYS_AHEAD` | `14` |
 | `PROP_GAMES_NFL` / `PROP_GAMES_NBA` / `PROP_GAMES_NCAAF` | `3` / `2` / `1` |
 | `PROP_WINDOW_HOURS` | `30` (only fetch props for games starting this soon) |
 
