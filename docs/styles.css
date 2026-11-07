@@ -585,3 +585,9 @@ button.open-best { font-family: var(--font); }
   .slip-legs li .slip-add, .slip-legs li > .muted { grid-column: 2 / -1; justify-self: start; }
   .modal-card { padding: 20px 18px; }
 }
+
+/* iPhone notch / status bar: keep the top bar clear of it (installed web app and the iPhone app) */
+.topbar { padding-top: calc(10px + env(safe-area-inset-top, 0px)); }
+/* 21+ gate (iPhone app) */
+.age-btns { gap: 14px; align-items: center; }
+#ageDialog .rg { margin-top: 16px; font-size: 12.5px; }
