@@ -1036,72 +1036,137 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     const box = $('#acctBox');
     if (!box) return;
     if (S.user) {
-      box.innerHTML = `<div><b>Signed in as @${esc(S.user.username)}</b><span class="muted small">${S.syncErr ? esc(S.syncErr) : S.syncAt ? `Synced ${esc(ago(new Date(S.syncAt).toISOString()))}` : 'Syncing…'}</span></div>
-        <div class="acct-actions"><button class="link-btn" data-acct="signout">Sign out</button><button class="link-btn danger" data-acct="delete">Delete account</button></div>`;
+      const status = S.syncErr ? esc(S.syncErr) : S.syncAt ? `Synced ${esc(ago(new Date(S.syncAt).toISOString()))}` : 'Syncing…';
+      box.innerHTML = `<div><b>Signed in as @${esc(S.user.username)}</b><span class="muted small">${S.user.email ? `${esc(S.user.email)} · ` : ''}${status}</span></div>
+        <div class="acct-actions"><button class="link-btn" data-acct="email">${S.user.email ? 'Change email' : 'Add email'}</button><button class="link-btn" data-acct="signout">Sign out</button><button class="link-btn danger" data-acct="delete">Delete account</button></div>`;
     } else {
-      box.innerHTML = `<div><b>Keep your bets on every device</b><span class="muted small">${S.syncErr ? esc(S.syncErr) : 'Right now they\'re saved in this browser only. A free account syncs them. No email needed.'}</span></div>
+      box.innerHTML = `<div><b>Keep your bets on every device</b><span class="muted small">${S.syncErr ? esc(S.syncErr) : 'Right now they\'re saved in this browser only. A free account syncs them.'}</span></div>
         <div class="acct-actions"><button class="chip" data-acct="signup">Create account</button><button class="link-btn" data-acct="signin">Sign in</button></div>`;
     }
   }
 
+  // Fill in the account's email (login responses don't include it).
+  async function refreshMe() {
+    if (!S.user) return;
+    try {
+      const me = await api('/api/me');
+      if (S.user && me.email !== S.user.email) { setSession({ ...S.user, email: me.email || null }); renderBets(); }
+    } catch (err) { if (err.status === 401) { setSession(null); renderBets(); } }
+  }
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const ACCT = {
+    signin: { title: 'Sign in', lede: 'Sign in to sync your saved bets.', submit: 'Sign in', user: 'Username or email', pass: 'Password', fields: ['user', 'pass'] },
+    signup: { title: 'Create your account', lede: 'Pick a username and password, and add your email so you can reset your password if you ever forget it. We only use your email for that.', submit: 'Create account', user: 'Username', pass: 'Password (8+ characters)', fields: ['user', 'email', 'pass', 'adult'] },
+    forgot: { title: 'Reset your password', lede: 'Enter the email or username on your account. We\'ll email you a link to set a new password.', submit: 'Email me a reset link', user: 'Email or username', fields: ['user'] },
+    reset: { title: 'Set a new password', lede: 'Choose a new password. This also signs you out on your other devices.', submit: 'Save new password', pass: 'New password (8+ characters)', fields: ['pass', 'pass2'] },
+    email: { title: 'Your email', lede: 'This is where password reset links go. Enter your password to confirm.', submit: 'Save email', pass: 'Password', fields: ['email', 'pass'] },
+    delete: { title: 'Delete your account', lede: 'This permanently deletes your account and every bet saved to it, on all devices. Enter your password to confirm.', submit: 'Delete everything', pass: 'Password', fields: ['pass'] },
+  };
+
   let acctMode = 'signin';
+  let resetToken = null;
   function openAcct(mode) {
+    const c = ACCT[mode];
+    if (!c || !$('#acctEmailWrap')) return;   // page still loading the new layout
     acctMode = mode;
-    const f = $('#acctForm');
-    f.reset();
-    $('#acctTitle').textContent = mode === 'signup' ? 'Create your account' : mode === 'delete' ? 'Delete your account' : 'Sign in';
-    $('#acctLede').textContent = mode === 'delete'
-      ? 'This permanently deletes your account and every bet saved to it, on all devices. Enter your password to confirm.'
-      : mode === 'signup' ? 'Just a username and password. We don\'t ask for your email, so we can\'t reset a forgotten password. Pick one you\'ll remember.'
-        : 'Sign in to sync your saved bets.';
-    $('#acctUserWrap').hidden = mode === 'delete';
-    $('#acctUser').required = mode !== 'delete';
-    $('#acctAdultWrap').hidden = mode !== 'signup';
-    $('#acctAdult').required = mode === 'signup';
-    $('#acctPass').autocomplete = mode === 'signup' ? 'new-password' : 'current-password';
-    $('#acctSubmit').textContent = mode === 'signup' ? 'Create account' : mode === 'delete' ? 'Delete everything' : 'Sign in';
+    $('#acctForm').reset();
+    $('#acctTitle').textContent = c.title;
+    $('#acctLede').textContent = c.lede;
+    const show = { user: '#acctUserWrap', email: '#acctEmailWrap', pass: '#acctPassWrap', pass2: '#acctPass2Wrap', adult: '#acctAdultWrap' };
+    for (const [k, sel] of Object.entries(show)) $(sel).hidden = !c.fields.includes(k);
+    if (c.user) $('#acctUserLabel').textContent = c.user;
+    if (c.pass) $('#acctPassLabel').textContent = c.pass;
+    $('#acctUser').autocomplete = mode === 'signup' ? 'username' : 'username email';
+    $('#acctPass').autocomplete = mode === 'signup' || mode === 'reset' ? 'new-password' : 'current-password';
+    if (mode === 'email' && S.user?.email) $('#acctEmail').value = S.user.email;
+    $('#acctSubmit').textContent = c.submit;
+    $('#acctSubmit').hidden = false;
     $('#acctSubmit').classList.toggle('danger-cta', mode === 'delete');
     $('#acctSwitch').innerHTML = mode === 'signup' ? 'Have an account? <button type="button" class="link-btn" data-acct="signin">Sign in</button>'
-      : mode === 'signin' ? 'New here? <button type="button" class="link-btn" data-acct="signup">Create an account</button>' : '';
+      : mode === 'signin' ? '<button type="button" class="link-btn" data-acct="forgot">Forgot password?</button> · New here? <button type="button" class="link-btn" data-acct="signup">Create an account</button>'
+        : mode === 'forgot' ? 'Remembered it? <button type="button" class="link-btn" data-acct="signin">Sign in</button>' : '';
     $('#acctErr').textContent = '';
+    $('#acctMsg').textContent = '';
     const d = $('#acctDialog');
     if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
-    setTimeout(() => (mode === 'delete' ? $('#acctPass') : $('#acctUser')).focus(), 50);
+    const first = { user: '#acctUser', email: '#acctEmail', pass: '#acctPass' }[c.fields[0]];
+    setTimeout(() => $(first)?.focus(), 50);
+  }
+
+  function acctProblem(v) {
+    const f = ACCT[acctMode].fields;
+    if (f.includes('user')) {
+      if (acctMode === 'signup' && !/^[a-z0-9_]{3,20}$/i.test(v.user)) return 'Usernames are 3–20 letters, numbers or underscores.';
+      if (!v.user) return acctMode === 'forgot' ? 'Enter your email or username.' : 'Enter your username or email.';
+    }
+    if (f.includes('email') && !EMAIL_RE.test(v.email)) return 'Enter a valid email address.';
+    if (f.includes('pass')) {
+      if (!v.pass) return 'Enter your password.';
+      if ((acctMode === 'signup' || acctMode === 'reset') && v.pass.length < 8) return 'Passwords need at least 8 characters.';
+    }
+    if (f.includes('pass2') && v.pass !== v.pass2) return "The two passwords don't match.";
+    if (f.includes('adult') && !v.adult) return 'Please confirm you are of legal betting age.';
+    return '';
+  }
+
+  async function signedIn(data, email, message) {
+    setSession({ username: data.username, token: data.token, email: email || null });
+    S.syncErr = null;
+    $('#acctDialog').close();
+    toast(message);
+    renderBets();
+    await syncNow();
+    if (!email) refreshMe();
   }
 
   async function submitAcct() {
     const btn = $('#acctSubmit');
-    const username = $('#acctUser').value.trim();
-    const password = $('#acctPass').value;
+    const v = {
+      user: $('#acctUser').value.trim(), email: $('#acctEmail').value.trim(), pass: $('#acctPass').value,
+      pass2: $('#acctPass2').value, adult: $('#acctAdult').checked,
+    };
     $('#acctErr').textContent = '';
-    const problem = acctMode === 'delete' ? (!password ? 'Enter your password.' : '')
-      : !/^[a-z0-9_]{3,20}$/i.test(username) ? 'Usernames are 3–20 letters, numbers or underscores.'
-        : acctMode === 'signup' && password.length < 8 ? 'Passwords need at least 8 characters.'
-          : !password ? 'Enter your password.'
-            : acctMode === 'signup' && !$('#acctAdult').checked ? 'Please confirm you are of legal betting age.' : '';
+    $('#acctMsg').textContent = '';
+    const problem = acctProblem(v);
     if (problem) { $('#acctErr').textContent = problem; return; }
     btn.disabled = true;
+    const prev = S.user;
     try {
       if (acctMode === 'delete') {
-        await api('/api/account/delete', { password });
+        await api('/api/account/delete', { password: v.pass });
         setSession(null);
         S.bets = []; saveBets(S.bets); S.syncAt = null; S.syncErr = null;
         $('#acctDialog').close();
         renderBets();
         toast('Account deleted');
-        return;
+      } else if (acctMode === 'email') {
+        const r = await api('/api/account/email', { email: v.email, password: v.pass });
+        setSession({ ...S.user, email: r.email });
+        $('#acctDialog').close();
+        renderBets();
+        toast('Email saved');
+      } else if (acctMode === 'forgot') {
+        S.user = null;
+        try { await api('/api/password/forgot', { who: v.user }); } finally { S.user = prev; }
+        $('#acctMsg').textContent = "If that account exists, we've emailed a reset link. It works for 60 minutes, so check your inbox (and spam) now.";
+        btn.hidden = true;
+      } else if (acctMode === 'reset') {
+        S.user = null;
+        let data;
+        try { data = await api('/api/password/reset', { token: resetToken, password: v.pass }); } catch (e) { S.user = prev; throw e; }
+        resetToken = null;
+        await signedIn(data, null, `Password updated. Signed in as @${data.username}`);
+      } else {
+        const signup = acctMode === 'signup';
+        S.user = null;   // never send an old token with a login
+        let data;
+        try {
+          data = await api(signup ? '/api/signup' : '/api/login',
+            signup ? { username: v.user, email: v.email, password: v.pass, adult: v.adult } : { username: v.user, password: v.pass });
+        } catch (e) { S.user = prev; throw e; }
+        await signedIn(data, signup ? v.email.toLowerCase() : null, signup ? `Welcome, @${data.username}` : `Signed in as @${data.username}`);
       }
-      const path = acctMode === 'signup' ? '/api/signup' : '/api/login';
-      const body = acctMode === 'signup' ? { username, password, adult: $('#acctAdult').checked } : { username, password };
-      const prev = S.user; S.user = null;   // never send an old token with a login
-      let data;
-      try { data = await api(path, body); } catch (e) { S.user = prev; throw e; }
-      setSession({ username: data.username, token: data.token });
-      S.syncErr = null;
-      $('#acctDialog').close();
-      toast(acctMode === 'signup' ? `Welcome, @${data.username}` : `Signed in as @${data.username}`);
-      renderBets();
-      await syncNow();
     } catch (err) {
       $('#acctErr').textContent = err.status ? err.message : "Couldn't reach the server. Check your connection and try again.";
     } finally {
@@ -1244,6 +1309,15 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     }
   }
 
+  // Password reset links look like https://www.fckvig.com/#reset=<token>.
+  function checkResetLink() {
+    const h = location.hash.replace('#', '');
+    if (!h.startsWith('reset=')) return;
+    resetToken = h.slice(6);
+    history.replaceState(null, '', location.pathname + location.search);   // keep the one-time link out of history
+    openAcct('reset');
+  }
+
   async function loadFutures() {
     try {
       const f = await loadJson('data/futures.json');
@@ -1260,6 +1334,8 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
     renderBetsBadge();
     const hash = location.hash.replace('#', '');
     if (hash === 'bets' || hash === 'season') setTab(hash);
+    checkResetLink();
+    window.addEventListener('hashchange', checkResetLink);
     try {
       S.avail = await loadJson('data/states.json');
       const sel = $('#stateSel');
@@ -1270,10 +1346,10 @@ import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize } f
       if (saved && (saved === 'ALL' || S.avail.states[saved])) S.state = saved;
     } catch (err) { console.error('states.json', err); }
     await refresh(true);
-    if (S.avail && !lsGet(STATE_KEY)) openStateDialog(); // first visit: ask where they're betting from
+    if (S.avail && !lsGet(STATE_KEY) && !resetToken) openStateDialog(); // first visit: ask where they're betting from
     await loadFutures();
     runGrading(false);
-    if (S.user) syncNow();
+    if (S.user) { syncNow(); refreshMe(); }
     setInterval(() => refresh(false), POLL_MS);
     setInterval(renderStatus, 30_000);
     setInterval(loadFutures, 10 * 60_000);
