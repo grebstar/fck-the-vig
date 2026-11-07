@@ -611,7 +611,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (!mks.length) {
       const hrs = (new Date(ev.commence_time) - Date.now()) / 3600e3;
       return `<div class="props-empty">${ICONS.person}<div><b>No player props for this game yet.</b><br>
-        <span class="muted small">${hrs > 30 ? 'Props show up about a day before the game. ' : ''}On our current plan we load props for the next few games in each sport once a day${ev.sport === 'basketball_ncaab' ? ' (college basketball props are off for now)' : ''}. <button type="button" class="link-btn" data-know="props">When do props show up?</button></span></div></div>`;
+        <span class="muted small">${hrs > 30 ? 'Props show up about a day before the game. ' : ''}We load props for upcoming games ${esc(pullFreq())}${ev.sport === 'basketball_ncaab' ? ' (college basketball props are off for now)' : ''}. <button type="button" class="link-btn" data-know="props">When do props show up?</button></span></div></div>`;
     }
     const open = S.openProps.get(ev.id);
     let html = '';
@@ -865,8 +865,9 @@ import { drawShareCard } from './share-card.js?v=1';
   // variables and the plan. The defaults below are only used until a file with `config` exists.
   const KNOW_DEFAULTS = {
     days_ahead: 14, lines_hours: { basketball_ncaab: 168 }, min_books: { basketball_ncaab: 3 },
-    lines_every_days: 2, props_runs_per_day: 1, prop_window_hours: 30,
-    prop_games: { americanfootball_nfl: 3, basketball_nba: 2, americanfootball_ncaaf: 1, basketball_ncaab: 0 },
+    lines_every_days: 1, props_runs_per_day: 12, lines_runs_per_day: 12, prop_window_hours: 30,
+    run_every_hours: 2, run_minute: 17, quota_reset_day: 7,
+    prop_games: { americanfootball_nfl: 16, basketball_nba: 15, americanfootball_ncaaf: 12, basketball_ncaab: 0 },
     prop_markets: {
       americanfootball_nfl: ['player_pass_yds', 'player_rush_yds', 'player_reception_yds', 'player_anytime_td'],
       basketball_nba: ['player_points', 'player_rebounds', 'player_assists'],
@@ -874,7 +875,11 @@ import { drawShareCard } from './share-card.js?v=1';
       basketball_ncaab: ['player_points', 'player_rebounds', 'player_assists'],
     },
   };
-  const RUN_UTC = [16, 47];   // the daily run in .github/workflows/update-odds.yml (16:47 UTC)
+  const RUN_UTC = [16, 47];   // the old once-a-day run (16:47 UTC), used only if config has no run_every_hours
+  const knowConf = () => ({ ...KNOW_DEFAULTS, ...(S.data?.config || {}) });
+  // "every 2 hours" / "once a day": how often the odds update, for copy around the site.
+  const pullFreq = (C = knowConf()) => (C.run_every_hours > 0 ? (C.run_every_hours === 1 ? 'every hour' : `every ${C.run_every_hours} hours`) : 'once a day');
+  const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
   const KNOW_SPORTS = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'college football', basketball_ncaab: 'college basketball' };
   const KNOW_SPORT_LIST = Object.keys(KNOW_SPORTS);
   const PROP_WORDS = {
@@ -891,6 +896,11 @@ import { drawShareCard } from './share-card.js?v=1';
   // Next scheduled run (lines only run on odd days of the month when they refresh every other day).
   function nextRun(linesOnly, C) {
     const now = new Date();
+    if (C.run_every_hours > 0) {   // runs at :run_minute UTC on every hour divisible by run_every_hours
+      const t = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), C.run_minute ?? 0));
+      while (t <= now || t.getUTCHours() % C.run_every_hours) t.setUTCHours(t.getUTCHours() + 1);
+      return t;
+    }
     for (let i = 0; i < 40; i++) {
       const t = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + i, RUN_UTC[0], RUN_UTC[1]));
       if (t <= now) continue;
@@ -918,7 +928,10 @@ import { drawShareCard } from './share-card.js?v=1';
       rows.push(`<li><b>${esc(name)}</b><span>Lines ${esc(ago(sp.lines_at) || 'not loaded')} · ${propsTxt}</span></li>`);
     }
     let next = '';
-    if (C.props_runs_per_day === 1 && [1, 2].includes(C.lines_every_days)) {
+    if (C.run_every_hours > 0) {
+      const t = nextRun(false, C);
+      if (t) next = `<p class="muted small">Next update: lines and props ${esc(knowWhen.format(t))} (your time; it can run a few minutes late).</p>`;
+    } else if (C.props_runs_per_day === 1 && [1, 2].includes(C.lines_every_days)) {
       const p = nextRun(false, C), l = nextRun(true, C);
       if (p && l) next = `<p class="muted small">Next update: ${p.getTime() === l.getTime() ? `lines and props ${esc(knowWhen.format(p))}` : `props ${esc(knowWhen.format(p))}, game lines ${esc(knowWhen.format(l))}`} (your time; it can run a few minutes late).</p>`;
     }
@@ -927,8 +940,10 @@ import { drawShareCard } from './share-card.js?v=1';
 
   function knowSections(C) {
     const runLocal = knowTime.format(nextRun(false, C) || new Date());
-    const linesFreq = C.lines_every_days === 1 ? 'every day' : C.lines_every_days === 2 ? 'every other day' : `every ${C.lines_every_days} days`;
-    const propsFreq = C.props_runs_per_day === 1 ? 'every day' : `${C.props_runs_per_day} times a day`;
+    const often = C.run_every_hours > 0;
+    const linesFreq = often && C.lines_runs_per_day > 0 ? pullFreq(C) : C.lines_every_days === 1 ? 'every day' : C.lines_every_days === 2 ? 'every other day' : `every ${C.lines_every_days} days`;
+    const propsFreq = often ? pullFreq(C) : C.props_runs_per_day === 1 ? 'every day' : `${C.props_runs_per_day} times a day`;
+    const resetTxt = ordinal(C.quota_reset_day || 1);
     const ncaabDays = Math.round((C.lines_hours?.basketball_ncaab ?? C.days_ahead * 24) / 24);
     const minBooks = C.min_books?.basketball_ncaab ?? 1;
     const win = C.prop_window_hours;
@@ -957,18 +972,24 @@ import { drawShareCard } from './share-card.js?v=1';
 
     return [
       { id: 'odds', title: 'How fresh the odds are', items: [
-        ['It’s a snapshot, not a live feed.', `We pull prices once a day at about ${esc(runLocal)} your time: ${pullTxt}. Lines can move a lot in between, especially after injury news, so check the “updated” time above each board.`],
+        ['It’s a snapshot, not a live feed.', often
+          ? `We pull prices ${esc(pullFreq(C))} (next at about ${esc(runLocal)} your time): ${pullTxt}. Lines can move in between, especially after injury news, so check the “updated” time above each board.`
+          : `We pull prices once a day at about ${esc(runLocal)} your time: ${pullTxt}. Lines can move a lot in between, especially after injury news, so check the “updated” time above each board.`],
         ['No live in-game odds.', 'Once a game starts, the prices here are pre-game and out of date. Don’t use them to bet live.'],
         ['Future days fill in as the books post them.', `We show game lines up to ${C.days_ahead} days out (${ncaabDays} for college basketball), but each book posts on its own schedule. NBA lines are often only a day or two out and NFL about a week, so a day that looks empty usually just hasn’t been posted yet.`],
         ['Main game lines only.', 'Moneyline, spread and total for the full game. No alternate lines, halves, quarters or team totals yet.'],
         ...(minBooks > 1 ? [['Small college basketball games are hidden.', `Games with fewer than ${minBooks} books pricing them don’t appear.`]] : []),
-        ['Season-long bets update on their own clock.', 'Kalshi futures refresh every day; sportsbook futures about once a week.'],
+        ['Season-long bets update on their own clock.', `Kalshi futures refresh ${often ? esc(pullFreq(C)) : 'every day'}; sportsbook futures about once a week.`],
       ] },
       { id: 'props', title: 'Player props', items: [
-        [`Props show up ${propsAhead} before the game.`, `We only load props for games that start within ${win} hours of our daily pull.${win <= 36 ? ` So Sunday’s NFL props appear on Saturday or Sunday morning, and a night NBA game’s props appear that morning.` : ''} Books often post props earlier; this is our limit, not theirs.`],
-        ['Only the next few games in each sport.', `Each pull loads props for the next ${gamesTxt || 'few games'} starting in that window.${off.length ? ` ${cap(andList(off.map(k => KNOW_SPORTS[k])))} props are off for now.` : ''} On a busy day most games won’t have props here, even when the books have them.`],
+        [`Props show up ${propsAhead} before the game.`, often
+          ? `We load props for games that start within the next ${win} hours. Books often post props earlier; this is our limit, not theirs.`
+          : `We only load props for games that start within ${win} hours of our daily pull.${win <= 36 ? ` So Sunday’s NFL props appear on Saturday or Sunday morning, and a night NBA game’s props appear that morning.` : ''} Books often post props earlier; this is our limit, not theirs.`],
+        often
+          ? ['Props refresh in rotation.', `We cover up to ${gamesTxt || 'a set number of games'} in that window. Each pull refreshes the games whose props are oldest, so on a busy slate some games’ props can be a few hours old.${off.length ? ` ${cap(andList(off.map(k => KNOW_SPORTS[k])))} props are off for now.` : ''}`]
+          : ['Only the next few games in each sport.', `Each pull loads props for the next ${gamesTxt || 'few games'} starting in that window.${off.length ? ` ${cap(andList(off.map(k => KNOW_SPORTS[k])))} props are off for now.` : ''} On a busy day most games won’t have props here, even when the books have them.`],
         ['A short list of prop types.', `${esc(typesTxt)}.${` Not loaded yet: ${andList([...notYet, 'first TD scorer', 'alternate prop lines'])}.`}`],
-        ['Late in the month we may load fewer.', 'Our data plan resets on the 1st. If it runs low, we skip some prop games so the rest of the board keeps updating.'],
+        ['Late in the month we may load fewer.', `Our data plan resets on the ${resetTxt} of each month. If it runs low, we skip some prop games so the rest of the board keeps updating.`],
       ] },
       { id: 'parlay', title: 'Parlay payouts', items: [
         ['Standard parlay math.', 'We multiply each leg’s price, which is how books pay a regular parlay. If the prices haven’t moved, the payout should match.'],
@@ -991,7 +1012,7 @@ import { drawShareCard } from './share-card.js?v=1';
         ['Grading happens while fckvig is open.', 'About 2½ hours after the start we check ESPN’s final box scores, then every 10 minutes while the site is open. If it’s closed, your bets are graded the next time you open it.'],
         ['Some bets need you.', 'Postponed games, players who didn’t play and anything we can’t confirm are marked Needs review. Futures settle by hand. Each book has its own rules for these, and the book’s result is the one that counts.'],
         ['Without an account, bets stay in this browser.', 'Clearing your browser data deletes them. Sign in to keep them on every device.'],
-        ['Alerts aren’t instant.', 'We check alerts right after each odds update, so about once a day. A line can move and move back in between. On iPhone, push alerts need fckvig added to your Home Screen.'],
+        ['Alerts aren’t instant.', `We check alerts right after each odds update, so about ${esc(pullFreq(C))}. A line can move and move back in between. On iPhone, push alerts need fckvig added to your Home Screen.`],
       ] },
     ];
   }
@@ -1941,7 +1962,7 @@ import { drawShareCard } from './share-card.js?v=1';
       <p class="muted small">${pushLine}${S.user.email ? ` Email alerts go to ${esc(S.user.email)}.` : ' Add an email to your account to get alerts by email.'}</p>
       ${S.alertsErr ? `<p class="form-err">${esc(S.alertsErr)}</p>` : ''}
       ${list.length ? `<ul class="al-list">${items}</ul>` : '<p class="muted small">No alerts yet. Tap the bell next to any leg in your parlay, or on a Free money pick.</p>'}
-      <p class="hint">We check your alerts every time the odds update (right now that's once a day), so a move can take a few hours to reach you.</p>`;
+      <p class="hint">We check your alerts every time the odds update (right now that's ${esc(pullFreq())}), so a move can take ${knowConf().run_every_hours > 0 ? 'up to a couple of hours' : 'a few hours'} to reach you.</p>`;
   }
 
   let alertDraft = null;
