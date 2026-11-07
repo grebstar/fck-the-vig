@@ -276,9 +276,12 @@ import { drawShareCard } from './share-card.js?v=1';
   const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; };
   const keyDate = k => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d, 12); };
   const todayKey = () => dayKey(Date.now());
-  // A game that started before midnight and is still on the board counts as today.
-  const evDay = ev => { const k = dayKey(ev.commence_time), t = todayKey(); return k < t ? t : k; };
-  const onDay = (ev, day = S.day) => day === 'all' || evDay(ev) === day;
+  const evDay = ev => dayKey(ev.commence_time);
+  // Games that have already started leave the board: our prices are pregame and we don't carry live odds.
+  // (They stay in S.events so parlay legs, shared links and My bets can still find them.)
+  const hasStarted = ev => new Date(ev.commence_time).getTime() <= Date.now();
+  const onDay = (ev, day = S.day) => !hasStarted(ev) && (day === 'all' || evDay(ev) === day);
+  const upcomingCount = () => { let n = 0; for (const ev of S.events.values()) if (!hasStarted(ev)) n++; return n; };
   function normDay() {
     if (S.day !== 'all' && (!S.day || S.day < todayKey())) S.day = todayKey();
     return S.day;
@@ -519,7 +522,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (!allowed.size) { box.innerHTML = `<div class="game empty-msg">None of the books in this feed operate in ${esc(stateName(S.state))}.</div>`; return; }
     const evs = sp.events.filter(e => onDay(e));
     if (!evs.length) {
-      const next = sp.events.map(e => evDay(e)).filter(k => k > S.day).sort()[0];
+      const next = sp.events.filter(e => !hasStarted(e)).map(e => evDay(e)).filter(k => k > S.day).sort()[0];
       const when = S.day === todayKey() ? 'left today' : dayName(S.day) === 'Tomorrow' ? `tomorrow (${mdFmt.format(keyDate(S.day))})` : 'on ' + dayLong(S.day);
       box.innerHTML = `<div class="game empty-msg">No ${esc(sp.title)} games ${esc(when)}.${next ? ` <button class="link-btn jump" data-day="${next}">Next games: ${esc(dayLong(next))} →</button>` : ''}</div>`;
       return;
@@ -546,7 +549,7 @@ import { drawShareCard } from './share-card.js?v=1';
   function searchHtml(allowed) {
     const q = normQ(S.q);
     const sportOrder = new Map(S.data.sports.map((sp, i) => [sp.key, i]));
-    const evs = [...S.events.values()].sort((a, b) => (sportOrder.get(a.sport) - sportOrder.get(b.sport)) || a.commence_time.localeCompare(b.commence_time));
+    const evs = [...S.events.values()].filter(ev => !hasStarted(ev)).sort((a, b) => (sportOrder.get(a.sport) - sportOrder.get(b.sport)) || a.commence_time.localeCompare(b.commence_time));
     const games = evs.filter(ev => normQ(ev.home).includes(q) || normQ(ev.away).includes(q)).slice(0, 12);
     // Players: every prop market a matching player appears in, per game.
     const players = [];
@@ -2378,6 +2381,9 @@ import { drawShareCard } from './share-card.js?v=1';
     if (S.user) { syncNow(); refreshMe(); loadAlerts(); pullPrefs(); } else refreshPushState();
     setInterval(() => refresh(false), POLL_MS);
     setInterval(renderStatus, 30_000);
+    // Take games off the board as they tip off, even when no new odds file has landed.
+    let upcoming = upcomingCount();
+    setInterval(() => { const n = upcomingCount(); if (n !== upcoming) { upcoming = n; render(); } }, 60_000);
     setInterval(loadFutures, 30 * 60_000);
     setInterval(() => runGrading(false), GRADE_EVERY_MS);
     setInterval(() => { if (S.user) syncNow(); }, SYNC_EVERY_MS);
