@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body>
 <header class="topbar">
@@ -50,6 +50,7 @@
   <section id="today" class="panel panel-today" aria-labelledby="todayTitle">
     <p class="eyebrow" id="todaySub">Loading…</p>
     <h1 id="todayTitle">Biggest price gaps right now</h1>
+    <nav id="dayStripToday" class="days days-today" aria-label="Pick a day"></nav>
     <p class="lede">Same bet, same line, different books: how much more you'd win at the best one. Tap to add it to your parlay.</p>
     <div id="gaps" class="gaps"></div>
     <div class="vig-card">
@@ -66,6 +67,7 @@
       <nav id="sportTabs" class="tabs" role="tablist" aria-label="Sports"></nav>
       <div id="fresh" class="fresh"></div>
     </div>
+    <nav id="dayStrip" class="days" aria-label="Pick a day"></nav>
     <div class="board-search"><input id="boardSearch" class="bsearch" type="search" placeholder="Search a team or player" autocomplete="off" aria-label="Search a team or player across every sport"></div>
     <p id="searchNote" class="search-note" hidden></p>
     <div id="games" class="games"></div>
@@ -286,6 +288,6 @@
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=10"></script>
+<script type="module" src="js/main.js?v=11"></script>
 </body>
 </html>
