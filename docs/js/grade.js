@@ -7,7 +7,10 @@ export const LEAGUE_PATH = {
   americanfootball_nfl: 'football/nfl',
   americanfootball_ncaaf: 'football/college-football',
   basketball_nba: 'basketball/nba',
+  basketball_ncaab: 'basketball/mens-college-basketball',
 };
+// ESPN only lists ranked/featured college games unless you ask for all of Division I.
+const BOARD_EXTRA = { americanfootball_ncaaf: '&groups=80&limit=300', basketball_ncaab: '&groups=50&limit=400' };
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/';
 export const FINAL = new Set(['won', 'lost', 'push', 'void']);
 
@@ -189,7 +192,7 @@ export async function gradeBets(bets, getJson, now = Date.now()) {
   const board = async (sport, day) => {
     const k = `${sport}|${day}`;
     if (!boards.has(k)) {
-      const extra = sport === 'americanfootball_ncaaf' ? '&groups=80&limit=300' : '';
+      const extra = BOARD_EXTRA[sport] || '';
       boards.set(k, getJson(`${ESPN}${LEAGUE_PATH[sport]}/scoreboard?dates=${day}${extra}`).then(d => d.events || []).catch(() => null));
     }
     return boards.get(k);
