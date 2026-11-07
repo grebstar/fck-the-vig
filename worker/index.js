@@ -40,6 +40,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS alerts (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, created_at INTEGER NOT NULL, spec TEXT NOT NULL, mode TEXT NOT NULL, target INTEGER, base_price INTEGER, base_point REAL, books TEXT NOT NULL, channels TEXT NOT NULL, commence INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'active', sent_at INTEGER, message TEXT)`,
   `CREATE INDEX IF NOT EXISTS alerts_user ON alerts (user_id)`,
   `CREATE INDEX IF NOT EXISTS alerts_status ON alerts (status)`,
+  `CREATE TABLE IF NOT EXISTS prefs (user_id INTEGER PRIMARY KEY, data TEXT NOT NULL, updated_at INTEGER NOT NULL)`,
 ];
 let schemaReady = null;
 async function migrate(db) {
@@ -301,6 +302,35 @@ async function syncBets(req, db) {
   return json(req, { bets });
 }
 
+// Profile settings. Right now that's "My books": the sportsbooks and exchanges the user has accounts with.
+const BOOK_KEY_RE = /^[a-z0-9_]{2,30}$/;
+const MAX_PREF_BOOKS = 40;
+function cleanPrefs(p) {
+  const books = Array.isArray(p?.books) ? [...new Set(p.books.filter(k => typeof k === 'string' && BOOK_KEY_RE.test(k)))].slice(0, MAX_PREF_BOOKS) : [];
+  return { books };
+}
+async function getPrefs(req, db) {
+  const u = await auth(req, db);
+  const row = await db.prepare('SELECT data, updated_at FROM prefs WHERE user_id = ?').bind(u.id).first();
+  let prefs = null;
+  if (row) { try { prefs = cleanPrefs(JSON.parse(row.data)); } catch { prefs = null; } }
+  return json(req, { prefs, updated_at: row?.updated_at || 0 });
+}
+// Newest `updated_at` wins, same as bets, so an old tab can't overwrite a newer choice.
+async function putPrefs(req, db) {
+  const u = await auth(req, db);
+  const b = await body(req);
+  const prefs = cleanPrefs(b.prefs);
+  let updated = Math.floor(Number(b.updated_at));
+  if (!Number.isFinite(updated) || updated <= 0) updated = Date.now();
+  updated = Math.min(updated, Date.now() + 60_000);
+  await db.prepare(
+    `INSERT INTO prefs (user_id, data, updated_at) VALUES (?, ?, ?)
+     ON CONFLICT(user_id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at WHERE excluded.updated_at > prefs.updated_at`,
+  ).bind(u.id, JSON.stringify(prefs), updated).run();
+  return getPrefs(req, db);
+}
+
 async function deleteAccount(req, db) {
   const u = await auth(req, db);
   const b = await body(req);
@@ -311,6 +341,7 @@ async function deleteAccount(req, db) {
     db.prepare('DELETE FROM resets WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM alerts WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM push_subs WHERE user_id = ?').bind(u.id),
+    db.prepare('DELETE FROM prefs WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM sessions WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM users WHERE id = ?').bind(u.id),
   ]);
@@ -604,6 +635,8 @@ const ROUTES = {
   'POST /api/logout': logout,
   'GET /api/me': me,
   'POST /api/bets/sync': syncBets,
+  'GET /api/prefs': getPrefs,
+  'POST /api/prefs': putPrefs,
   'POST /api/account/delete': deleteAccount,
   'POST /api/account/email': changeEmail,
   'POST /api/password/forgot': forgot,
