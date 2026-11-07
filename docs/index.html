@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 <header class="topbar">
@@ -202,6 +202,7 @@
     <p><b>Without an account</b>, your saved bets and your state stay in this browser. Nothing is sent to us.</p>
     <p><b>With an account</b>, we store your username, your email, a salted hash of your password (never the password itself) and the bets you save, so they sync across your devices. Your email is only used to send password reset links. We don't send marketing, we don't collect your name or payment details, and we don't sell or share anything.</p>
     <p><b>For line-move alerts</b>, we store what each alert is watching and, if you turn on push, a push address for each device you allow. It only works for sending you notifications. Turning push off or signing out removes it.</p>
+    <p><b>My books</b> is the list of books you picked. It stays in this browser, and in your account if you're signed in. We never connect to or see your sportsbook accounts.</p>
     <p><b>Shared links</b> only contain the bets in the parlay, nothing about you.</p>
     <p><b>To grade bets</b>, your browser loads public final scores from ESPN. Odds come from The Odds API and Kalshi.</p>
     <p>You can delete your account and everything in it any time from <b>My bets</b>.</p>
@@ -217,6 +218,23 @@
     <p class="muted small">Anyone who opens it sees the same legs priced at every book legal in their own state.</p>
     <div class="modal-actions"><button type="button" id="shareClose" class="link-btn">Close</button><button type="button" id="shareCopy" class="cta">Copy link</button></div>
   </div>
+</dialog>
+
+<dialog id="betDialog" class="modal">
+  <div class="modal-card">
+    <div id="betBody"></div>
+    <div class="modal-actions slip-actions"><button type="button" id="betClose" class="link-btn">Done</button><button type="button" id="betCopy" class="cta ghost">Copy slip</button><button type="button" id="betSave" class="cta ghost">Save to My bets</button></div>
+  </div>
+</dialog>
+
+<dialog id="myBooksDialog" class="modal">
+  <form id="myBooksForm" class="modal-card">
+    <h3>My books</h3>
+    <p class="muted">Check the sportsbooks and prediction markets you have accounts with. We'll price your parlays there first, and tell you when a book you don't have pays more.</p>
+    <div id="mbList"></div>
+    <p id="mbNote" class="muted small"></p>
+    <div class="modal-actions slip-actions"><button type="button" id="mbClear" class="link-btn">Clear all</button><button type="button" id="mbCancel" class="link-btn">Cancel</button><button type="submit" class="cta">Save my books</button></div>
+  </form>
 </dialog>
 
 <dialog id="alertDialog" class="modal">
@@ -245,6 +263,6 @@
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=8"></script>
+<script type="module" src="js/main.js?v=9"></script>
 </body>
 </html>
