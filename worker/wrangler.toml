@@ -1,0 +1,12 @@
+# Local testing only (npx wrangler dev). The live worker was set up in the Cloudflare dashboard.
+name = "fckvig-api"
+main = "index.js"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fckvig-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+[vars]
+ALLOW_ORIGINS = "http://localhost:8000"
