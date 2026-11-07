@@ -5,9 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>fck the vig — parlay price check</title>
 <meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state. Compare futures, save your bets and track your record.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="fck the vig">
+<meta property="og:title" content="fck the vig — same bet, best price, every book">
+<meta property="og:description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state.">
+<meta property="og:image" content="https://www.fckvig.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Same parlay, bigger payout: an example $10 parlay priced at five books, with the best one paying $12.40 more.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#110a24">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="fckvig">
@@ -15,11 +25,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="./" aria-label="fck the vig home">fck the vig<span>.</span></a>
+  <a class="brand" href="./" aria-label="fck the vig home"><img class="brand-mark" src="logo.svg" alt="" width="30" height="30">fck the vig<span>.</span></a>
   <nav class="views" aria-label="Sections">
     <button data-view="games" aria-current="page">Games</button>
     <button data-view="money">Free money</button>
@@ -69,6 +79,7 @@
     </div>
     <ol id="legs" class="legs"></ol>
     <div id="empty" class="empty">
+      <p class="empty-head"><img src="logo.svg" alt="" width="48" height="48"><span><b>No legs yet.</b> Here's how it works:</span></p>
       <ol class="steps">
         <li><span><b>Pick your legs.</b> Tap a price gap, spread, moneyline, total or player prop.</span></li>
         <li><span><b>We price every book.</b> Each sportsbook and prediction market legal in your state.</span></li>

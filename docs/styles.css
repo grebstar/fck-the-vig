@@ -34,7 +34,8 @@ button { font: inherit; color: inherit; }
   position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 12px 28px; background: rgba(17, 10, 36, .88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line);
 }
-.brand { font-weight: 800; font-size: 22px; letter-spacing: -.5px; text-decoration: none; }
+.brand { font-weight: 800; font-size: 22px; letter-spacing: -.5px; text-decoration: none; display: inline-flex; align-items: center; }
+.brand-mark { width: 30px; height: 30px; flex: none; margin-right: 9px; }
 .brand span { color: var(--accent); }
 .top-right { display: flex; align-items: center; gap: 10px; }
 .state-btn { background: var(--surface); border: 0; border-radius: 999px; padding: 11px 16px; min-height: 44px; font-size: 14px; font-weight: 600; cursor: pointer; }
@@ -154,6 +155,9 @@ h1 { font-size: 30px; }
 .leg .bell { width: 44px; height: 44px; border-radius: 14px; border: 0; background: var(--bg); color: var(--muted); cursor: pointer; display: grid; place-items: center; }
 .leg .bell:hover { color: var(--accent); }
 .empty { color: var(--muted); font-size: 14px; }
+.empty-head { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.empty-head img { width: 48px; height: 48px; flex: none; }
+.empty-head b { color: var(--text); }
 .steps { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 12px; }
 .steps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; }
 .steps li::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: var(--accent); color: var(--accent-ink); }
@@ -520,8 +524,13 @@ a.lp:hover { color: var(--text); }
 .al-modes .chk input.al-target { width: 84px; height: auto; margin: 0 2px; accent-color: auto; }
 @media (max-width: 380px) {
   .brand { font-size: 19px; white-space: nowrap; }
+  .brand-mark { width: 26px; height: 26px; margin-right: 7px; }
   .topbar .state-btn { padding: 10px 12px; font-size: 13px; }
   .acct-btn { max-width: 96px; }
+}
+@media (max-width: 340px) {
+  .brand { font-size: 0; }
+  .brand-mark { width: 32px; height: 32px; margin-right: 0; }
 }
 
 /* ---------- my books + bet slip (v9) ---------- */
