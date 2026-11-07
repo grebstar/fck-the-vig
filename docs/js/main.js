@@ -18,7 +18,11 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
   const ONLYMINE_KEY = 'ftv-onlymine';
   const GRADE_EVERY_MS = 10 * 60_000;
   const SYNC_EVERY_MS = 5 * 60_000;
-  const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
+  const NATIVE = location.protocol === 'capacitor:';   // running inside the iPhone app (Capacitor serves it from capacitor://localhost)
+  const LOCAL = !NATIVE && ['localhost', '127.0.0.1'].includes(location.hostname);
+  const DATA_BASE = NATIVE ? 'https://www.fckvig.com/' : '';   // the app reads the same live odds files as the site
+  const AGE_KEY = 'ftv-21';
+  if (NATIVE) document.documentElement.classList.add('native');
   const API_BASE = LOCAL ? 'http://localhost:8787' : 'https://api.fckvig.com';
   const GAME_TABS = new Set(['today', 'build', 'results']);
   const VIEWS = new Set(['games', 'season', 'bets', 'money']);
@@ -61,7 +65,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
 
   // ---------- data ----------
   async function loadJson(path) {
-    const r = await fetch(`${path}?t=${Date.now()}`, { cache: 'no-store' });
+    const r = await fetch(`${DATA_BASE}${path}?t=${Date.now()}`, { cache: 'no-store' });
     if (!r.ok) throw new Error(`${path}: ${r.status}`);
     return r.json();
   }
@@ -1534,14 +1538,14 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     try { const reg = await navigator.serviceWorker.getRegistration(); return reg ? await reg.pushManager.getSubscription() : null; } catch { return null; }
   }
   async function refreshPushState() {
-    if (!pushSupported()) pushState = IS_IOS && !STANDALONE ? 'ios-home' : 'unsupported';
+    if (!pushSupported()) pushState = NATIVE ? 'app' : IS_IOS && !STANDALONE ? 'ios-home' : 'unsupported';
     else if (Notification.permission === 'denied') pushState = 'blocked';
     else pushState = (await currentSub()) ? 'on' : 'off';
     return pushState;
   }
   // Must start from a tap: browsers only show the permission prompt in response to one.
   async function enablePush() {
-    if (!pushSupported()) throw new Error(IS_IOS && !STANDALONE
+    if (!pushSupported()) throw new Error(NATIVE ? 'Push alerts in the app are coming in the next update. Use email alerts for now.' : IS_IOS && !STANDALONE
       ? 'On iPhone, add fckvig to your Home Screen first (Share → Add to Home Screen), open it from there, then turn alerts on.'
       : "This browser can't show push notifications. Use email alerts instead.");
     const perm = await Notification.requestPermission();
@@ -1585,6 +1589,7 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
       off: 'Push is <b>off</b> for this device. <button class="link-btn" data-push="on">Turn on</button>',
       blocked: 'Notifications are blocked for this site in your browser settings.',
       unsupported: "This browser can't do push notifications, so alerts come by email.",
+      app: 'Push alerts in the app are coming in the next update. Alerts come by email for now.',
       'ios-home': 'On iPhone, add fckvig to your Home Screen (Share → Add to Home Screen) and open it from there to get push alerts.',
       unknown: '',
     }[pushState] || '';
@@ -1624,9 +1629,9 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
       $('#alertTarget').value = fmtAm(target);
       $('#alertModeTarget').checked = true;
       const push = $('#alertPush'), mail = $('#alertEmail');
-      push.disabled = pushState === 'unsupported' || pushState === 'blocked';
+      push.disabled = pushState === 'unsupported' || pushState === 'blocked' || pushState === 'app';
       push.checked = !push.disabled;
-      $('#alertPushNote').textContent = pushState === 'ios-home' ? 'iPhone: add fckvig to your Home Screen first.' : pushState === 'blocked' ? 'Blocked in your browser settings.' : pushState === 'unsupported' ? 'Not supported in this browser.' : '';
+      $('#alertPushNote').textContent = pushState === 'app' ? 'Coming in the next app update.' : pushState === 'ios-home' ? 'iPhone: add fckvig to your Home Screen first.' : pushState === 'blocked' ? 'Blocked in your browser settings.' : pushState === 'unsupported' ? 'Not supported in this browser.' : '';
       mail.disabled = !S.user.email;
       mail.checked = !!S.user.email && push.disabled;
       $('#alertEmailNote').textContent = S.user.email ? S.user.email : 'Add an email to your account first.';
@@ -1984,7 +1989,25 @@ import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
     }
   }
 
+  // ---------- 21+ gate (iPhone app only; the site shows 21+ in the footer) ----------
+  function ageGate() {
+    if (!NATIVE || lsGet(AGE_KEY) === '1') return Promise.resolve();
+    const d = $('#ageDialog');
+    d.addEventListener('cancel', e => e.preventDefault());   // no Escape / swipe-away
+    return new Promise(resolve => {
+      d.addEventListener('click', e => {
+        const b = e.target.closest('[data-age]');
+        if (!b) return;
+        e.preventDefault();
+        if (b.dataset.age === 'yes') { lsSet(AGE_KEY, '1'); d.close(); resolve(); }
+        else { $('#ageNo').hidden = false; $('#ageBtns').hidden = true; }
+      });
+      d.showModal ? d.showModal() : d.setAttribute('open', '');
+    });
+  }
+
   (async () => {
+    await ageGate();
     S.bets = loadBets();
     loadSession();
     loadMyBooks();
