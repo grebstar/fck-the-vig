@@ -347,6 +347,8 @@ a.lp:hover { color: var(--text); }
 .save-legs { margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
 .save-win { margin: 12px 0 0; font-weight: 700; color: var(--accent); min-height: 1em; }
 .form-err { margin: 8px 0 0; color: var(--bad); font-size: 13.5px; min-height: 1em; }
+.form-ok { margin: 8px 0 0; color: var(--accent); font-size: 14px; font-weight: 600; }
+.form-ok:empty { display: none; }
 .modal-actions { gap: 16px; align-items: center; }
 .modal-card p { line-height: 1.5; }
 
