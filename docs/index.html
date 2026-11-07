@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 <header class="topbar">
@@ -165,10 +165,13 @@
   <form id="acctForm" class="modal-card" novalidate>
     <h3 id="acctTitle">Sign in</h3>
     <p id="acctLede" class="muted"></p>
-    <label class="field" id="acctUserWrap">Username<input id="acctUser" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" placeholder="letters, numbers, _"></label>
-    <label class="field">Password<input id="acctPass" name="password" type="password" minlength="8" maxlength="200" autocomplete="current-password" required></label>
+    <label class="field" id="acctUserWrap"><span id="acctUserLabel">Username</span><input id="acctUser" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="254"></label>
+    <label class="field" id="acctEmailWrap">Email<input id="acctEmail" name="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="you@example.com"></label>
+    <label class="field" id="acctPassWrap"><span id="acctPassLabel">Password</span><input id="acctPass" name="password" type="password" maxlength="200" autocomplete="current-password"></label>
+    <label class="field" id="acctPass2Wrap">Type it again<input id="acctPass2" name="password2" type="password" maxlength="200" autocomplete="new-password"></label>
     <label class="chk" id="acctAdultWrap"><input id="acctAdult" type="checkbox"> I'm 21 or older (18+ where prediction markets allow it).</label>
     <p id="acctErr" class="form-err" role="alert"></p>
+    <p id="acctMsg" class="form-ok" role="status"></p>
     <p id="acctSwitch" class="muted small"></p>
     <div class="modal-actions"><button type="button" id="acctCancel" class="link-btn">Cancel</button><button type="submit" id="acctSubmit" class="cta">Sign in</button></div>
   </form>
@@ -178,13 +181,13 @@
   <form method="dialog" class="modal-card">
     <h3>Privacy</h3>
     <p><b>Without an account</b>, your saved bets and your state stay in this browser. Nothing is sent to us.</p>
-    <p><b>With an account</b>, we store your username, a salted hash of your password (never the password itself) and the bets you save, so they sync across your devices. We don't collect your email, name or payment details, and we don't sell or share anything.</p>
+    <p><b>With an account</b>, we store your username, your email, a salted hash of your password (never the password itself) and the bets you save, so they sync across your devices. Your email is only used to send password reset links. We don't send marketing, we don't collect your name or payment details, and we don't sell or share anything.</p>
     <p><b>To grade bets</b>, your browser loads public final scores from ESPN. Odds come from The Odds API and Kalshi.</p>
     <p>You can delete your account and everything in it any time from <b>My bets</b>.</p>
     <div class="modal-actions"><button value="ok" class="cta">Got it</button></div>
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=6"></script>
+<script type="module" src="js/main.js?v=7"></script>
 </body>
 </html>
