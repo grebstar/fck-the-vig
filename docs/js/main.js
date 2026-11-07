@@ -1,9 +1,10 @@
 /* FCK The Vig — parlay price check across sportsbooks and prediction markets (docs/js/main.js).
    Reads data/odds.json and data/futures.json (written by the GitHub Action) and data/states.json (where each book is legal).
    Saved bets live in this browser and, when signed in, sync to the accounts API (worker/index.js). */
-import { gradeBets, settle } from './grade.js?v=8';
-import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize, breakdown } from './bets.js?v=8';
-import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, arbStakes, bestOffer } from './odds-math.js?v=8';
+import { gradeBets, settle } from './grade.js?v=9';
+import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize, breakdown } from './bets.js?v=9';
+import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, arbStakes, bestOffer } from './odds-math.js?v=9';
+import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
 
 (() => {
   'use strict';
@@ -13,6 +14,8 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
   const MAX_LEGS = 12;
   const STATE_KEY = 'ftv-state';
   const SESSION_KEY = 'ftv-session';
+  const MYBOOKS_KEY = 'ftv-mybooks';   // {books: [...], at: ms} — the books the user has accounts with
+  const ONLYMINE_KEY = 'ftv-onlymine';
   const GRADE_EVERY_MS = 10 * 60_000;
   const SYNC_EVERY_MS = 5 * 60_000;
   const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -41,6 +44,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     futures: null, seasonSport: null, market: null, marketSearch: '',
     bets: [], betFilter: 'open', user: null, syncAt: null, syncErr: null, gradedAt: null,
     statsTab: 'sport', moneyTotal: 100, q: '', alerts: null, alertsErr: null, metaAt: null,
+    myBooks: null, myBooksAt: 0, onlyMine: true,
   };
 
   const $ = sel => document.querySelector(sel);
@@ -111,6 +115,48 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     try { return /^https?:$/.test(new URL(u).protocol) ? u : null; } catch { return null; }
   }
   const allowedBooks = () => new Set([...allBookKeys()].filter(k => availability(k) !== 'no'));
+
+  // ---------- my books ----------
+  // The books the user has accounts with. Saved in this browser and, when signed in, in their profile.
+  const hasMine = () => !!S.myBooks && S.myBooks.size > 0;
+  const mineOn = () => hasMine() && S.onlyMine;
+  // The books we price a parlay at: legal in the chosen state and, with "My books" on, ones the user has.
+  const pricedBooks = () => { const a = allowedBooks(); return mineOn() ? new Set([...a].filter(k => S.myBooks.has(k))) : a; };
+  const BOOK_KEY_RE = /^[a-z0-9_]{2,30}$/;
+  function loadMyBooks() {
+    try {
+      const v = JSON.parse(lsGet(MYBOOKS_KEY) || 'null');
+      S.myBooks = Array.isArray(v?.books) ? new Set(v.books.filter(k => BOOK_KEY_RE.test(k))) : null;
+      S.myBooksAt = Math.min(Number(v?.at) || 0, Date.now());   // a clock that ran fast once can't stay "newest" forever
+    } catch { S.myBooks = null; S.myBooksAt = 0; }
+    S.onlyMine = lsGet(ONLYMINE_KEY) !== '0';
+  }
+  function setMyBooks(keys, at = Date.now()) {
+    S.myBooks = new Set(keys);
+    S.myBooksAt = at;
+    lsSet(MYBOOKS_KEY, JSON.stringify({ books: [...S.myBooks], at }));
+  }
+  function setOnlyMine(on) { S.onlyMine = on; lsSet(ONLYMINE_KEY, on ? '1' : '0'); }
+  async function pushPrefs() {
+    if (!S.user || !S.myBooks) return;
+    try {
+      const r = await api('/api/prefs', { prefs: { books: [...S.myBooks] }, updated_at: S.myBooksAt });
+      // The account keeps whichever copy is newest; if that isn't ours, switch to it.
+      if (r?.prefs && r.updated_at !== S.myBooksAt) { setMyBooks(r.prefs.books, r.updated_at); render(); }
+    } catch (err) { if (err.status === 401) setSession(null); }
+  }
+  // Newest choice wins: the account's copy, or this browser's if it was changed more recently.
+  async function pullPrefs() {
+    if (!S.user) return;
+    try {
+      const r = await api('/api/prefs');
+      if (r.prefs && r.updated_at > S.myBooksAt) { setMyBooks(r.prefs.books, r.updated_at); render(); renderAcctBox(); }
+      else if (S.myBooks && S.myBooksAt > (r.updated_at || 0)) pushPrefs();
+    } catch { /* older API or offline: keep this browser's copy */ }
+  }
+  function myBookNames() {
+    return hasMine() ? [...S.myBooks].map(k => bookInfo(k).name).sort((a, b) => a.localeCompare(b)) : [];
+  }
   const stateName = st => (st === 'ALL' ? 'All states' : S.avail?.states?.[st] || st);
   const noOnlineBooks = st => !!S.avail && !Object.values(S.avail.books).some(b => b.states.includes(st));
   // Platforms that are NOT available in a state (and why), plus ones whose status is unclear.
@@ -164,8 +210,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
   }
 
   // ---------- parlay ----------
-  function priceParlay() {
-    const allowed = allowedBooks();
+  function priceParlay(allowed = pricedBooks()) {
     const full = [], alt = [], missing = [];
     for (const bk of allowed) {
       let dec = 1, exact = true, ok = true;
@@ -523,7 +568,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     const age = r.ex && r.minAge ? ` ${r.minAge}+` : '';
     return `<div class="row${i === 0 && isBestGroup ? ' best' : ''}">
       ${bchip(r)}
-      <span class="bk"><span class="n">${esc(r.name)}</span><span class="badge ${r.ex ? 'ex' : 'book'}">${r.ex ? 'Exchange' + age : 'Book'}</span>${r.avail === 'check' ? '<span class="badge chk" title="Availability in your state is unclear right now">Verify</span>' : ''}</span>
+      <span class="bk"><span class="n">${esc(r.name)}</span><span class="badge ${r.ex ? 'ex' : 'book'}">${r.ex ? 'Exchange' + age : 'Book'}</span>${r.avail === 'check' ? '<span class="badge chk" title="Availability in your state is unclear right now">Verify</span>' : ''}<button class="betbtn" data-betbook="${esc(r.key)}" aria-label="Bet this at ${esc(r.name)}">Bet</button></span>
       <span class="money"><span class="pay">${money(r.payout)}</span><span class="odds">${fmtAm(r.am)}</span></span>
       <span class="meter"><span class="bar"><i style="width:${pct.toFixed(1)}%"></i></span><span class="legp">${legs}</span></span>
     </div>`;
@@ -532,11 +577,29 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
   // Best price for one leg (exact line) across books legal here.
   function bestFor(leg) {
     let best = null;
-    for (const bk of allowedBooks()) {
+    for (const bk of pricedBooks()) {
       const o = S.events.get(leg.eventId)?.books[bk]?.markets?.[leg.market]?.find(x => same(x, leg.name, leg.desc) && (leg.point == null || x.point === leg.point));
       if (o && (!best || toDec(o.price) > toDec(best))) best = o.price;
     }
     return best;
+  }
+
+  // "Pricing my books / all books" switch above the parlay results.
+  function booksBar() {
+    if (!hasMine()) {
+      return `<div class="mine-bar"><span class="muted small">Pricing every book legal in ${esc(stateName(S.state))}.</span><button class="link-btn" data-mybooks>Pick my books</button></div>`;
+    }
+    const on = mineOn();
+    return `<div class="mine-bar"><div class="seg" role="group" aria-label="Which books to price">
+        <button data-mine="1" aria-pressed="${on}">My books · ${S.myBooks.size}</button><button data-mine="0" aria-pressed="${!on}">All books</button></div>
+      <button class="link-btn" data-mybooks>Edit my books</button></div>`;
+  }
+  // With "My books" on, say so when a book the user doesn't have would pay more.
+  function missedHtml(top) {
+    if (!mineOn()) return '';
+    const best = priceParlay(allowedBooks()).full[0];
+    if (!best || S.myBooks.has(best.key) || best.payout - top.payout < 0.005) return '';
+    return `<div class="note info"><strong>Best anywhere: ${esc(best.name)} pays ${money(best.payout)}</strong>, ${money(best.payout - top.payout)} more than your best book. <button class="link-btn" data-mine="0">Compare all books</button></div>`;
   }
 
   function renderSlip() {
@@ -566,7 +629,11 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
 
     let res = '', seeBest = '';
     if (n > 0) {
+      res += booksBar();
       const { full, alt, missing } = priceParlay();
+      if (mineOn() && !full.length && !alt.length) {
+        res += `<div class="note info">None of your books (${esc(myBookNames().join(', '))}) offer every leg in ${esc(stateName(S.state))}. <button class="link-btn" data-mine="0">Compare all books</button></div>`;
+      }
       if (full.length) {
         const top = full[0], worst = full[full.length - 1];
         const edge = top.payout - worst.payout;
@@ -577,19 +644,19 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
           <span class="sub">${full.length > 1 && edge > 0.005 ? `+${money(edge)} more than ${esc(worst.name)}` : 'Only book with every leg at these lines'} · ${fmtAm(top.am)}</span>
         </div>`;
         res += `<div class="rank"><h3><span>Same lines</span><span>${full.length} book${full.length === 1 ? '' : 's'}</span></h3>${full.map((r, i) => rowHtml(r, i, true, top.payout)).join('')}</div>`;
-        const link = top.legs.find(l => l.link)?.link;
-        if (link) res += `<a class="cta light open-best" href="${esc(link)}" target="_blank" rel="noopener">Open ${esc(top.name)}</a>`;
+        res += missedHtml(top);
+        res += `<button class="cta light open-best" data-betbook="${esc(top.key)}">Bet this at ${esc(top.name)}</button>`;
         res += SAVE_BTN;
       } else {
-        res += `<div class="note info">No book in ${esc(stateName(S.state))} has every leg at the exact same line.</div>`;
+        if (!(mineOn() && !alt.length)) res += `<div class="note info">No ${mineOn() ? 'book of yours' : 'book'} in ${esc(stateName(S.state))} has every leg at the exact same line.</div>`;
       }
       if (alt.length) {
         const ref = full[0]?.payout || alt.reduce((m, r) => Math.max(m, r.payout), 0);
         res += `<div class="rank"><h3><span>Different line on a leg</span><span>${alt.length}</span></h3>${alt.map((r, i) => rowHtml(r, i, false, ref)).join('')}</div>`;
         if (!full.length) res += SAVE_BTN;
       }
-      if ([...full, ...alt].some(r => r.legs.some(l => l.link))) {
-        res += `<p class="hint">Tap a price with ↗ to add that leg to the book's bet slip (each book takes one leg per link).</p>`;
+      if (full.length || alt.length) {
+        res += `<p class="hint">Tap <b>Bet</b> on any book to fill in its bet slip. You place the bet in that book's app, where you're already signed in. A price with ↗ adds just that leg.</p>`;
       }
       if (missing.length) res += `<p class="missing">Not offering every leg: ${missing.map(k => esc(bookInfo(k).name)).join(', ')}</p>`;
       if ([...full, ...alt].some(r => r.ex)) {
@@ -633,6 +700,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     renderSeason();
     renderBets();
     renderMoney();
+    if ($('#betDialog')?.open) renderBetDialog();
   }
 
   // ---------- state picker ----------
@@ -798,8 +866,8 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     return Number.isFinite(n) && Math.abs(n) >= 100 ? Math.round(n) : null;
   };
 
-  function openSaveParlay() {
-    const { full, alt } = priceParlay();
+  function openSaveParlay(bookKey) {
+    const { full, alt } = priceParlay(allowedBooks());
     const rows = [...full, ...alt];
     if (!rows.length || !S.legs.length) return;
     pending = {
@@ -807,6 +875,8 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
       legs: S.legs.map(l => ({ ...l })),
       opts: rows.map(r => ({ key: r.key, name: r.name, am: r.am, legs: r.legs, diff: !full.includes(r) })),
     };
+    pending.best = pending.opts[0];
+    if (bookKey) { const i = pending.opts.findIndex(o => o.key === bookKey); if (i > 0) pending.opts.unshift(...pending.opts.splice(i, 1)); }
     openSaveDialog(S.legs.length === 1 ? legLabel(S.legs[0]) : `${S.legs.length}-leg parlay`, S.legs.map(legLabel));
   }
 
@@ -838,7 +908,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     if (!pending) return;
     const sel = $('#saveBook').value;
     const watch = sel === 'watch';
-    const opt = watch ? pending.opts[0] : pending.opts.find(o => o.key === sel);
+    const opt = watch ? (pending.best || pending.opts[0]) : pending.opts.find(o => o.key === sel);
     if (fromBook) $('#saveOdds').value = fmtAm(opt.am);
     $('#saveOdds').disabled = watch;
     $('#saveOddsWrap').hidden = watch;
@@ -853,7 +923,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     if (!pending) return false;
     const sel = $('#saveBook').value;
     const watch = sel === 'watch';
-    const opt = watch ? pending.opts[0] : pending.opts.find(o => o.key === sel);
+    const opt = watch ? (pending.best || pending.opts[0]) : pending.opts.find(o => o.key === sel);
     const stake = Math.round(Number($('#saveStake').value) * 100) / 100;
     if (!(stake > 0) || stake > 1e7) { $('#saveErr').textContent = 'Enter a stake above $0.'; return false; }
     const am = watch ? opt.am : parseAm($('#saveOdds').value);
@@ -1123,11 +1193,16 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     if (S.user) {
       const status = S.syncErr ? esc(S.syncErr) : S.syncAt ? `Synced ${esc(ago(new Date(S.syncAt).toISOString()))}` : 'Syncing…';
       box.innerHTML = `<div><b>Signed in as @${esc(S.user.username)}</b><span class="muted small">${S.user.email ? `${esc(S.user.email)} · ` : ''}${status}</span></div>
-        <div class="acct-actions"><button class="link-btn" data-acct="email">${S.user.email ? 'Change email' : 'Add email'}</button><button class="link-btn" data-acct="signout">Sign out</button><button class="link-btn danger" data-acct="delete">Delete account</button></div>`;
+        <div class="acct-actions"><button class="link-btn" data-acct="email">${S.user.email ? 'Change email' : 'Add email'}</button><button class="link-btn" data-acct="signout">Sign out</button><button class="link-btn danger" data-acct="delete">Delete account</button></div>${myBooksLine()}`;
     } else {
       box.innerHTML = `<div><b>Keep your bets on every device</b><span class="muted small">${S.syncErr ? esc(S.syncErr) : 'Right now they\'re saved in this browser only. A free account syncs them.'}</span></div>
-        <div class="acct-actions"><button class="chip" data-acct="signup">Create account</button><button class="link-btn" data-acct="signin">Sign in</button></div>`;
+        <div class="acct-actions"><button class="chip" data-acct="signup">Create account</button><button class="link-btn" data-acct="signin">Sign in</button></div>${myBooksLine()}`;
     }
+  }
+  function myBooksLine() {
+    const names = myBookNames();
+    return `<div class="mybooks-line"><span class="small"><b>My books:</b> <span class="muted">${names.length ? esc(names.join(', ')) : 'none picked yet. Pick the ones you have and we\'ll price parlays there.'}</span></span>
+      <button class="chip" data-mybooks>${names.length ? 'Edit' : 'Pick my books'}</button></div>`;
   }
 
   // Fill in the account's email (login responses don't include it).
@@ -1204,6 +1279,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     await syncNow();
     if (!email) refreshMe();
     loadAlerts();
+    pullPrefs();
   }
 
   async function submitAcct() {
@@ -1269,7 +1345,12 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     try { await api('/api/logout', {}); } catch { /* token may already be gone */ }
     setSession(null);
     S.syncAt = null; S.syncErr = null;
-    if (synced) { S.bets = []; saveBets(S.bets); }
+    if (synced) {
+      S.bets = []; saveBets(S.bets);
+      S.myBooks = null; S.myBooksAt = 0;   // they're saved in the account; don't hand them to the next person on this browser
+      try { localStorage.removeItem(MYBOOKS_KEY); } catch { /* private mode */ }
+      render();
+    }
     renderBets();
     toast(synced ? 'Signed out. Your bets are saved in your account.' : 'Signed out. Bets that didn\'t sync are still on this device.');
   }
@@ -1590,6 +1671,108 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     renderAlerts();
   }
 
+  // ---------- bet slip: fill in a book's slip for the current parlay ----------
+  let betKey = null;
+  const betAdded = new Set();
+  function betRow(key) {
+    const { full, alt } = priceParlay(allowedBooks());
+    return [...full, ...alt].find(r => r.key === key) || null;
+  }
+  function openBet(key) {
+    betKey = key;
+    betAdded.clear();
+    if (!renderBetDialog()) return;
+    const d = $('#betDialog');
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+  function legLine(lg, l) {
+    if (l.point == null) return '';
+    return lg.market === 'spreads' ? fmtPt(l.point) : `${lg.name === 'Over' ? 'o' : 'u'}${l.point}`;
+  }
+  function renderBetDialog() {
+    const r = betRow(betKey);
+    const n = S.legs.length;
+    if (!r || !n) { $('#betDialog').close?.(); return false; }
+    const combo = n > 1 ? comboLink(r.key, r.legs.map(l => l.link)) : null;
+    const beta = combo && !COMBO_BOOKS[r.key]?.tested;
+    const what = n === 1 ? 'Straight bet' : `${n}-leg parlay`;
+    const links = r.legs.filter(l => l.link).length;
+    const items = r.legs.map((l, i) => {
+      const lg = S.legs[i];
+      const ev = S.events.get(lg.eventId);
+      const off = l.same ? '' : ` · ${esc(r.name)} has ${esc(legLine(lg, l))}`;
+      const done = betAdded.has(i);
+      const btn = l.link
+        ? `<a class="chip slip-add${done ? ' done' : ''}" href="${esc(l.link)}" target="_blank" rel="noopener" data-slipleg="${i}">${done ? 'Added ✓' : 'Add ↗'}</a>`
+        : '<span class="muted small">Find it in the app</span>';
+      return `<li><span class="sl-what"><b>${esc(legLabel(lg))}</b><span class="muted small">${ev ? `${esc(ev.away)} @ ${esc(ev.home)}` : ''}${off}</span></span><span class="sl-px">${fmtAm(l.price)}</span>${btn}</li>`;
+    }).join('');
+    const how = r.ex
+      ? `On ${esc(r.name)} each leg is its own trade, so check each price before you buy.`
+      : n > 1
+        ? `${esc(r.name)} keeps your slip between taps. When every leg is on it, pick <b>Parlay</b>, check the odds, enter ${money(S.stake)} and place it.`
+        : `Check the odds on ${esc(r.name)}'s slip, enter ${money(S.stake)} and place it.`;
+    $('#betBody').innerHTML = `
+      <h3>Bet this at ${esc(r.name)}</h3>
+      <p class="muted">${what} · ${money(S.stake)} pays <b class="hl">${money(r.payout)}</b> (${fmtAm(r.am)})</p>
+      ${combo ? `<a class="cta slip-all" href="${esc(combo)}" target="_blank" rel="noopener">Put all ${n} legs on the slip ↗</a>
+        ${beta ? `<p class="muted small">New: we're still confirming this one-tap link with ${esc(r.name)}. If any leg is missing from the slip, add it below.</p>` : ''}` : ''}
+      <h4 class="slip-h">${combo ? 'Or add them one at a time' : n > 1 ? 'Add each leg to your slip' : 'Add it to your slip'}</h4>
+      <ol class="slip-legs">${items}</ol>
+      ${links ? '' : `<p class="note info">${esc(r.name)} doesn't give us bet slip links, so search for each leg in the app. Copy slip puts the list on your clipboard.</p>`}
+      <p class="muted small">${how} You're signed in to ${esc(r.name)} on your own phone or computer. We never see your account.</p>`;
+    return true;
+  }
+  function slipText() {
+    const r = betRow(betKey);
+    if (!r) return '';
+    const lines = r.legs.map((l, i) => {
+      const lg = S.legs[i], ev = S.events.get(lg.eventId);
+      return `${i + 1}. ${legLabel(lg)}${l.same ? '' : ` (${legLine(lg, l)} here)`}${ev ? ` (${ev.away} @ ${ev.home})` : ''} ${fmtAm(l.price)}`;
+    });
+    const n = S.legs.length;
+    return [`${r.name} · ${n === 1 ? 'straight bet' : `${n}-leg parlay`} · ${fmtAm(r.am)}`, ...lines,
+      `${money(S.stake)} pays ${money(r.payout)}`, 'Compared on fckvig.com'].join('\n');
+  }
+  async function copySlip() {
+    const text = slipText();
+    if (!text) return;
+    try { await navigator.clipboard.writeText(text); toast('Slip copied'); }
+    catch { toast("Couldn't copy. Your browser blocked it."); }
+  }
+
+  // ---------- my books picker ----------
+  function myBooksList() {
+    const keys = new Map();   // key -> exchange?
+    for (const k of Object.keys(S.avail?.books || {})) keys.set(k, false);
+    for (const k of Object.keys(S.avail?.exchanges || {})) keys.set(k, true);
+    for (const k of allBookKeys()) if (!keys.has(k)) keys.set(k, bookInfo(k).ex);
+    const list = [...keys].map(([k, ex]) => ({ ...bookInfo(k), ex, avail: availability(k) }));
+    return list.sort((a, b) => a.ex - b.ex || a.name.localeCompare(b.name));
+  }
+  function openMyBooks() {
+    const list = myBooksList();
+    const box = b => `<label class="mb-item${b.avail === 'no' ? ' na' : ''}"><input type="checkbox" name="mb" value="${esc(b.key)}"${S.myBooks?.has(b.key) ? ' checked' : ''}>
+      ${bchip(b)}<span class="mb-name">${esc(b.name)}</span>${b.avail === 'no' ? `<span class="muted small">Not in ${esc(S.state)}</span>` : ''}</label>`;
+    const books = list.filter(b => !b.ex), exch = list.filter(b => b.ex);
+    $('#mbList').innerHTML = `<h4 class="slip-h">Sportsbooks</h4><div class="mb-grid">${books.map(box).join('')}</div>`
+      + (exch.length ? `<h4 class="slip-h">Prediction markets</h4><div class="mb-grid">${exch.map(box).join('')}</div>` : '');
+    $('#mbNote').textContent = S.user ? `Saved to your profile (@${S.user.username}), so it follows you to every device.`
+      : 'Saved in this browser. Sign in to keep it on every device.';
+    const d = $('#myBooksDialog');
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+  function saveMyBooksForm() {
+    const keys = [...document.querySelectorAll('#mbList input[name="mb"]:checked')].map(i => i.value).filter(k => BOOK_KEY_RE.test(k));
+    setMyBooks(keys);
+    setOnlyMine(keys.length > 0);
+    $('#myBooksDialog').close();
+    render();
+    renderAcctBox();
+    pushPrefs();
+    toast(keys.length ? `Saved. Parlays now price your ${keys.length} book${keys.length === 1 ? '' : 's'}.` : 'Cleared. Parlays price every book again.');
+  }
+
   // ---------- toast ----------
   let toastTimer = null;
   function toast(msg) {
@@ -1638,6 +1821,18 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     const vw = e.target.closest('.views [data-view]');
     if (vw) return setView(vw.dataset.view);
     if (e.target.closest('[data-save="parlay"]')) return openSaveParlay();
+    const bt = e.target.closest('[data-betbook]');
+    if (bt) return openBet(bt.dataset.betbook);
+    const sa = e.target.closest('.slip-add[data-slipleg]');
+    if (sa) { betAdded.add(Number(sa.dataset.slipleg)); setTimeout(renderBetDialog, 0); return; }   // let the link open first
+    if (e.target.closest('#betCopy')) return copySlip();
+    if (e.target.closest('#betSave')) { const k = betKey; $('#betDialog').close(); return openSaveParlay(k); }
+    if (e.target.closest('#betClose')) return $('#betDialog').close();
+    const mo = e.target.closest('[data-mine]');
+    if (mo) { setOnlyMine(mo.dataset.mine === '1'); return render(); }
+    if (e.target.closest('[data-mybooks]')) return openMyBooks();
+    if (e.target.closest('#mbCancel')) return $('#myBooksDialog').close();
+    if (e.target.closest('#mbClear')) { for (const i of document.querySelectorAll('#mbList input[name="mb"]')) i.checked = false; return; }
     if (e.target.closest('[data-share="parlay"]')) return shareLegs(S.legs, S.stake);
     if (e.target.closest('#shareCopy')) return copyShare();
     if (e.target.closest('#shareClose')) return $('#shareDialog').close();
@@ -1685,6 +1880,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     if (f.id === 'saveForm') { e.preventDefault(); if (commitSave()) $('#saveDialog').close(); return; }
     if (f.id === 'acctForm') { e.preventDefault(); return submitAcct(); }
     if (f.id === 'alertForm') { e.preventDefault(); return submitAlert(); }
+    if (f.id === 'myBooksForm') { e.preventDefault(); return saveMyBooksForm(); }
     if (f.dataset.editform) { e.preventDefault(); return saveEdit(f); }
   });
   document.addEventListener('input', e => {
@@ -1730,6 +1926,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
   window.addEventListener('storage', e => {
     if (e.key === 'ftv-bets') { S.bets = loadBets(); renderBets(); }
     if (e.key === SESSION_KEY) { loadSession(); if (!lsGet(SESSION_KEY)) S.user = null; renderBets(); }
+    if (e.key === MYBOOKS_KEY || e.key === ONLYMINE_KEY) { loadMyBooks(); render(); }
   });
 
   // ---------- boot + polling ----------
@@ -1790,6 +1987,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
   (async () => {
     S.bets = loadBets();
     loadSession();
+    loadMyBooks();
     renderAcctBtn();
     renderBetsBadge();
     const hash = location.hash.replace('#', '');
@@ -1810,7 +2008,7 @@ import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, a
     if (S.avail && !lsGet(STATE_KEY) && !resetToken) openStateDialog(); // first visit: ask where they're betting from
     await loadFutures();
     runGrading(false);
-    if (S.user) { syncNow(); refreshMe(); loadAlerts(); } else refreshPushState();
+    if (S.user) { syncNow(); refreshMe(); loadAlerts(); pullPrefs(); } else refreshPushState();
     setInterval(() => refresh(false), POLL_MS);
     setInterval(renderStatus, 30_000);
     setInterval(loadFutures, 30 * 60_000);
