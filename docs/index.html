@@ -4,25 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>fck the vig — parlay price check</title>
-<meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state.">
+<meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state. Compare futures, save your bets and track your record.">
 <meta name="theme-color" content="#110a24">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <header class="topbar">
   <a class="brand" href="./" aria-label="fck the vig home">fck the vig<span>.</span></a>
+  <nav class="views" aria-label="Sections">
+    <button data-view="games" aria-current="page">Games</button>
+    <button data-view="season">Season</button>
+    <button data-view="bets">My bets <span class="tab-badge bets-count" hidden>0</span></button>
+  </nav>
   <div class="top-right">
     <div id="status" class="status" role="status"><span class="dot"></span><span id="statusText">Loading odds…</span></div>
+    <button id="acctBtn" class="state-btn acct-btn" aria-haspopup="dialog"><span id="acctBtnText">Sign in</span></button>
     <button id="stateBtn" class="state-btn" aria-haspopup="dialog"><span id="stateBtnText">All states</span></button>
   </div>
 </header>
 
 <div id="banner" class="banner" hidden></div>
 
-<main class="app" data-tab="today">
+<main class="app" data-tab="today" data-view="games">
   <section id="today" class="panel panel-today" aria-labelledby="todayTitle">
     <p class="eyebrow" id="todaySub">Loading…</p>
     <h1 id="todayTitle">Biggest price gaps right now</h1>
@@ -70,17 +76,51 @@
     <div id="warnings"></div>
     <div id="out"></div>
   </section>
+
+  <section id="season" class="panel panel-season" aria-labelledby="seasonTitle">
+    <p class="eyebrow">Futures, awards, stat leaders and win totals</p>
+    <h2 id="seasonTitle" class="panel-title">Season-long bets</h2>
+    <div class="board-head">
+      <nav id="seasonSports" class="tabs" role="tablist" aria-label="Sports"></nav>
+      <div id="seasonFresh" class="fresh"></div>
+    </div>
+    <div class="season-grid">
+      <div id="marketList" class="market-list"></div>
+      <div id="marketView" class="market-view"></div>
+    </div>
+  </section>
+
+  <section id="bets" class="panel panel-bets" aria-labelledby="betsTitle">
+    <p class="eyebrow" id="betsSub">Saved on this device</p>
+    <h2 id="betsTitle" class="panel-title">My bets</h2>
+    <div id="acctBox" class="acct-box"></div>
+    <div id="betStats" class="bet-stats" hidden></div>
+    <div id="betTools" class="bets-tools" hidden>
+      <div id="betFilter" class="chips">
+        <button class="chip" data-bfilter="open" aria-pressed="true">Open <span class="count">0</span></button>
+        <button class="chip" data-bfilter="settled" aria-pressed="false">Settled <span class="count">0</span></button>
+        <button class="chip" data-bfilter="all" aria-pressed="false">All <span class="count">0</span></button>
+      </div>
+      <button id="regrade" class="link-btn">Check results now</button>
+    </div>
+    <div id="betList" class="bet-list"></div>
+    <p class="hint">Game lines and player props are graded automatically from final box scores. Anything we can't confirm is marked <b>Needs review</b> so you can settle it yourself. Futures settle by hand at season end.</p>
+  </section>
 </main>
 
 <nav class="tabbar" aria-label="Screens">
   <button data-tab="today" aria-current="page">Today</button>
   <button data-tab="build">Build</button>
-  <button data-tab="results">Results <span id="tabBadge" class="tab-badge" hidden>0</span></button>
+  <button data-tab="results">Parlay <span id="tabBadge" class="tab-badge" hidden>0</span></button>
+  <button data-tab="season">Season</button>
+  <button data-tab="bets">Bets <span class="tab-badge bets-count" hidden>0</span></button>
 </nav>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
 <footer class="foot">
   <p><b>How payouts are calculated.</b> Standard parlays pay the product of each leg's price, so that's what we show for every book. Same-game parlays, prediction-market trading fees and boosts aren't reflected. Always confirm the price in the app before you bet.</p>
-  <p>Odds via <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a> · <button class="link-btn" id="aboutData">Where each platform is legal or blocked, by state (sources)</button></p>
+  <p>Odds via <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a> and <a href="https://kalshi.com" target="_blank" rel="noopener">Kalshi</a> · results from ESPN box scores · <button class="link-btn" id="aboutData">Where each platform is legal or blocked, by state (sources)</button> · <button class="link-btn" id="privacyLink">Privacy</button></p>
   <p class="rg">21+ (18+ on some prediction markets). Gambling problem? Call 1-800-GAMBLER.</p>
 </footer>
 
@@ -102,6 +142,49 @@
   </form>
 </dialog>
 
-<script src="app.js?v=5"></script>
+<dialog id="saveDialog" class="modal">
+  <form id="saveForm" class="modal-card" novalidate>
+    <h3>Save bet</h3>
+    <p class="save-title" id="saveTitle"></p>
+    <ul id="saveLegs" class="save-legs"></ul>
+    <label class="field">Where did you place it?
+      <select id="saveBook"></select>
+    </label>
+    <div class="field-row">
+      <label class="field">Stake ($)<input id="saveStake" type="number" min="0.01" step="0.01" inputmode="decimal"></label>
+      <label class="field" id="saveOddsWrap">Odds you got<input id="saveOdds" type="text" inputmode="text" autocomplete="off"></label>
+    </div>
+    <p id="saveWin" class="save-win"></p>
+    <p id="saveHint" class="muted small"></p>
+    <p id="saveErr" class="form-err" role="alert"></p>
+    <div class="modal-actions"><button type="button" id="saveCancel" class="link-btn">Cancel</button><button type="submit" class="cta">Save to My bets</button></div>
+  </form>
+</dialog>
+
+<dialog id="acctDialog" class="modal">
+  <form id="acctForm" class="modal-card" novalidate>
+    <h3 id="acctTitle">Sign in</h3>
+    <p id="acctLede" class="muted"></p>
+    <label class="field" id="acctUserWrap">Username<input id="acctUser" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20" placeholder="letters, numbers, _"></label>
+    <label class="field">Password<input id="acctPass" name="password" type="password" minlength="8" maxlength="200" autocomplete="current-password" required></label>
+    <label class="chk" id="acctAdultWrap"><input id="acctAdult" type="checkbox"> I'm 21 or older (18+ where prediction markets allow it).</label>
+    <p id="acctErr" class="form-err" role="alert"></p>
+    <p id="acctSwitch" class="muted small"></p>
+    <div class="modal-actions"><button type="button" id="acctCancel" class="link-btn">Cancel</button><button type="submit" id="acctSubmit" class="cta">Sign in</button></div>
+  </form>
+</dialog>
+
+<dialog id="privacyDialog" class="modal">
+  <form method="dialog" class="modal-card">
+    <h3>Privacy</h3>
+    <p><b>Without an account</b>, your saved bets and your state stay in this browser. Nothing is sent to us.</p>
+    <p><b>With an account</b>, we store your username, a salted hash of your password (never the password itself) and the bets you save, so they sync across your devices. We don't collect your email, name or payment details, and we don't sell or share anything.</p>
+    <p><b>To grade bets</b>, your browser loads public final scores from ESPN. Odds come from The Odds API and Kalshi.</p>
+    <p>You can delete your account and everything in it any time from <b>My bets</b>.</p>
+    <div class="modal-actions"><button value="ok" class="cta">Got it</button></div>
+  </form>
+</dialog>
+
+<script type="module" src="js/main.js?v=6"></script>
 </body>
 </html>
