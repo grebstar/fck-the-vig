@@ -42,16 +42,16 @@ Your API key stays in GitHub Secrets and never reaches the browser.
 
 According to The Odds API docs, each market costs 1 credit per region, and up to 10 bookmakers count as 1 region. Player props have to be requested one game at a time and cost 1 credit per prop market returned. Requests that return nothing are free.
 
-**Default schedule (free plan, 500 credits/month).** One run per day at 10:47 AM Central:
+**Current schedule ($30 plan, 20,000 credits/month, resets on the 7th).** One run every 2 hours at :17 past the hour (UTC), so 12:17 AM, 2:17 AM, ... Central:
 
-- **Odd days: game lines + props.** Game lines for every NFL, NBA and college football game in the next 14 days, plus college basketball games in the next 7 days, cost about 12 credits (a wider window costs no extra credits; the site's date picker shows every day that has lines).
-- **Every day: props** for the next games that start within 30 hours: 3 NFL games (pass, rush and receiving yards, anytime TD), 2 NBA games (points, rebounds, assists) and 1 college game. That costs roughly 3–4 credits per game. `fetch-odds.mjs` paces props: it sets aside credits for every remaining game-line run and the weekly futures until credits reset on the 1st, and spends only the rest, so the month never runs dry.
+- **Every run: game lines + props.** Game lines for every NFL, NBA and college football game in the next 14 days, plus college basketball games in the next 7 days, cost about 12 credits a run (about 4,300 a month).
+- **Props** for games that start within 30 hours: up to 16 NFL games (pass, rush and receiving yards, anytime TD), 15 NBA games (points, rebounds, assists) and 12 college football games, about 3–4 credits per game. `fetch-odds.mjs` paces props: it sets aside credits for every remaining game-line run and the weekly futures until the next reset (`QUOTA_RESET_DAY`), splits the rest across the remaining runs, and refreshes the games with the oldest props first, so on a busy slate it rotates through them.
 
-That works out to roughly 135 credits a month for lines and 350 for props. The script stops props first when credits run low, so game lines keep updating.
+The script stops props first when credits run low, so game lines keep updating.
 
 **Refresh now:** go to Actions → "Update odds and deploy site" → Run workflow, and pick all, lines or props.
 
-**On the $30 plan (20K credits)**, change both `cron:` lines in `.github/workflows/update-odds.yml` to one line, `"*/20 * * * *"`, so it runs every 20 minutes. Then raise `PROP_GAMES_NFL` and `PROP_GAMES_NBA` (see below). GitHub won't schedule a job more often than every 5 minutes, and scheduled runs can start a few minutes late.
+**Changing the schedule:** if you edit the `cron:` line in `.github/workflows/update-odds.yml`, also update `RUN_EVERY_HOURS`, `RUN_MINUTE`, `LINES_RUNS_PER_DAY` and `PROPS_RUNS_PER_DAY` in the same file so the pacing and the site's "Good to know" panel stay right. GitHub won't schedule a job more often than every 5 minutes, and scheduled runs can start a few minutes late. (The old free-plan setup was one run a day at 16:47 UTC, lines every other day.)
 
 The page itself checks for a newer odds file every 60 seconds.
 
@@ -65,7 +65,8 @@ You can override the defaults with repository variables (Settings → Secrets an
 | `BOOKMAKERS` | `draftkings,fanduel,betmgm,espnbet,betrivers,hardrockbet,kalshi,polymarket_us,novig,prophetx` |
 | `MARKETS` | `h2h,spreads,totals` |
 | `DAYS_AHEAD` | `14` |
-| `PROP_GAMES_NFL` / `PROP_GAMES_NBA` / `PROP_GAMES_NCAAF` | `3` / `2` / `1` |
+| `PROP_GAMES_NFL` / `PROP_GAMES_NBA` / `PROP_GAMES_NCAAF` | `16` / `15` / `12` |
+| `QUOTA_RESET_DAY` | `7` (day of the month your Odds API credits reset) |
 | `PROP_WINDOW_HOURS` | `30` (only fetch props for games starting this soon) |
 
 Adding an 11th to 20th bookmaker doubles the credit cost. Caesars (`williamhill_us`) and Fanatics are only available on paid plans.
