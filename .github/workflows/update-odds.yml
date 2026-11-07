@@ -2,9 +2,10 @@ name: Update odds and deploy site
 
 on:
   # One run per day at 16:47 UTC (10:47 AM Central). Odd days: game lines + props. Even days: props only.
-  # Every run also refreshes season-long markets from Kalshi (free); sportsbook futures refresh about once a week (~3 credits).
-  # Budget on the free plan (500 credits/month): ~135 for lines, ~350 for props, ~15 for futures.
-  # On the $30 plan (20K credits), replace both lines with e.g. "*/20 * * * *" and set MODE below to "all".
+  # Every run also refreshes season-long markets from Kalshi (free); sportsbook futures refresh about once a week (~4 credits).
+  # Budget on the free plan (500 credits/month, reset on the 1st): ~190 for lines (4 sports x 3 credits, every other day),
+  # ~20 for futures, and props get the rest. fetch-odds.mjs paces props so the month never runs out.
+  # On a bigger plan, replace both lines with e.g. "17 */2 * * *", set MODE below to "all" and LINES_EVERY_DAYS to 1.
   schedule:
     - cron: "47 16 1-31/2 * *"   # lines + props
     - cron: "47 16 2-30/2 * *"   # props only
@@ -53,6 +54,8 @@ jobs:
           PROP_GAMES_NFL: ${{ vars.PROP_GAMES_NFL }}
           PROP_GAMES_NBA: ${{ vars.PROP_GAMES_NBA }}
           PROP_GAMES_NCAAF: ${{ vars.PROP_GAMES_NCAAF }}
+          PROP_GAMES_NCAAB: ${{ vars.PROP_GAMES_NCAAB }}
+          LINES_EVERY_DAYS: ${{ vars.LINES_EVERY_DAYS }}
           PROP_WINDOW_HOURS: ${{ vars.PROP_WINDOW_HOURS }}
         run: node scripts/fetch-odds.mjs
 
@@ -65,12 +68,18 @@ jobs:
           BOOKMAKERS: ${{ vars.BOOKMAKERS }}
         run: node scripts/fetch-futures.mjs
 
+      - name: Check line-move alerts
+        if: github.event_name != 'push'
+        continue-on-error: true          # never block the odds update
+        run: node scripts/check-alerts.mjs
+
       - name: Save odds snapshot to the repo
         if: github.event_name != 'push'
         run: |
           git config user.name "odds-bot"
           git config user.email "odds-bot@users.noreply.github.com"
-          git add docs/data/odds.json
+          node -e "const fs=require('fs');const at=f=>{try{return JSON.parse(fs.readFileSync(f,'utf8')).generated_at||null}catch{return null}};fs.writeFileSync('docs/data/meta.json',JSON.stringify({odds_at:at('docs/data/odds.json'),futures_at:at('docs/data/futures.json')}))"
+          git add docs/data/odds.json docs/data/meta.json
           if [ -f docs/data/futures.json ]; then git add docs/data/futures.json; fi
           git diff --cached --quiet || git commit -m "Update odds [skip ci]"
           git push
