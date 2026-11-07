@@ -28,12 +28,13 @@ const MODE = (env.MODE || 'all').trim().toLowerCase();
 const SPORTS = list(env.SPORTS, 'americanfootball_nfl,basketball_nba,americanfootball_ncaaf,basketball_ncaab');
 const BOOKMAKERS = list(env.BOOKMAKERS, 'draftkings,fanduel,betmgm,espnbet,betrivers,hardrockbet,kalshi,polymarket_us,novig,prophetx');
 const MARKETS = list(env.MARKETS, 'h2h,spreads,totals');
-const DAYS_AHEAD = int(env.DAYS_AHEAD, 7);
+const DAYS_AHEAD = int(env.DAYS_AHEAD, 14);  // the site's date picker shows every day that has lines
 const OUT = env.OUT_FILE || 'docs/data/odds.json';
 
-// How far ahead to list games. College basketball has 100+ games a day, so it only covers the next ~2 days.
+// How far ahead to list games. A wider window costs no extra credits (game lines are billed per market, not
+// per game), only file size. College basketball has 100+ games a day, so it's held to a week.
 const LINES_HOURS = {
-  basketball_ncaab: int(env.LINES_HOURS_NCAAB, 50),
+  basketball_ncaab: int(env.LINES_HOURS_NCAAB, 168),
 };
 // Drop games that fewer than this many books are pricing (tiny college games).
 const MIN_BOOKS = { basketball_ncaab: int(env.MIN_BOOKS_NCAAB, 3), americanfootball_ncaaf: int(env.MIN_BOOKS_NCAAF, 1) };
