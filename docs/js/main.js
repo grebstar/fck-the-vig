@@ -568,7 +568,7 @@ import { drawShareCard } from './share-card.js?v=1';
       if (players.length >= 40) break;
     }
     if (!games.length && !players.length) {
-      return `<div class="game empty-msg">Nothing matches "${esc(S.q)}". Try a team name ("Lakers") or a player's last name. Player props only cover the next few games in each sport.</div>`;
+      return `<div class="game empty-msg">Nothing matches "${esc(S.q)}". Try a team name ("Lakers") or a player's last name. Player props only cover the next few games in each sport. <button type="button" class="link-btn" data-know="props">Why?</button></div>`;
     }
     let html = '';
     if (players.length) {
@@ -608,7 +608,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (!mks.length) {
       const hrs = (new Date(ev.commence_time) - Date.now()) / 3600e3;
       return `<div class="props-empty">${ICONS.person}<div><b>No player props for this game yet.</b><br>
-        <span class="muted small">${hrs > 30 ? 'Props show up about a day before the game. ' : ''}On our current plan we load props for the next few games in each sport once a day${ev.sport === 'basketball_ncaab' ? ' (college basketball props are off for now)' : ''}.</span></div></div>`;
+        <span class="muted small">${hrs > 30 ? 'Props show up about a day before the game. ' : ''}On our current plan we load props for the next few games in each sport once a day${ev.sport === 'basketball_ncaab' ? ' (college basketball props are off for now)' : ''}. <button type="button" class="link-btn" data-know="props">When do props show up?</button></span></div></div>`;
     }
     const open = S.openProps.get(ev.id);
     let html = '';
@@ -855,6 +855,161 @@ import { drawShareCard } from './share-card.js?v=1';
       <table class="about-table"><thead><tr><th>Platform</th><th>Where</th><th>Confidence</th><th>Sources</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
     const dlg = $('#aboutDialog');
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+
+  // ---------- "Good to know": what the data can and can't show ----------
+  // Numbers come from odds.json's `config` (written by scripts/fetch-odds.mjs), so the copy follows the Actions
+  // variables and the plan. The defaults below are only used until a file with `config` exists.
+  const KNOW_DEFAULTS = {
+    days_ahead: 14, lines_hours: { basketball_ncaab: 168 }, min_books: { basketball_ncaab: 3 },
+    lines_every_days: 2, props_runs_per_day: 1, prop_window_hours: 30,
+    prop_games: { americanfootball_nfl: 3, basketball_nba: 2, americanfootball_ncaaf: 1, basketball_ncaab: 0 },
+    prop_markets: {
+      americanfootball_nfl: ['player_pass_yds', 'player_rush_yds', 'player_reception_yds', 'player_anytime_td'],
+      basketball_nba: ['player_points', 'player_rebounds', 'player_assists'],
+      americanfootball_ncaaf: ['player_pass_yds', 'player_rush_yds', 'player_reception_yds', 'player_anytime_td'],
+      basketball_ncaab: ['player_points', 'player_rebounds', 'player_assists'],
+    },
+  };
+  const RUN_UTC = [16, 47];   // the daily run in .github/workflows/update-odds.yml (16:47 UTC)
+  const KNOW_SPORTS = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'college football', basketball_ncaab: 'college basketball' };
+  const KNOW_SPORT_LIST = Object.keys(KNOW_SPORTS);
+  const PROP_WORDS = {
+    player_pass_yds: 'passing yards', player_rush_yds: 'rushing yards', player_reception_yds: 'receiving yards',
+    player_receptions: 'receptions', player_pass_tds: 'passing TDs', player_anytime_td: 'anytime TD',
+    player_points: 'points', player_rebounds: 'rebounds', player_assists: 'assists', player_threes: 'threes',
+    player_points_rebounds_assists: 'points + rebounds + assists',
+  };
+  const knowWhen = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+  const knowTime = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+  const andList = a => (a.length < 3 ? a.join(' and ') : `${a.slice(0, -1).join(', ')} and ${a[a.length - 1]}`);
+  const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+
+  // Next scheduled run (lines only run on odd days of the month when they refresh every other day).
+  function nextRun(linesOnly, C) {
+    const now = new Date();
+    for (let i = 0; i < 40; i++) {
+      const t = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + i, RUN_UTC[0], RUN_UTC[1]));
+      if (t <= now) continue;
+      if (linesOnly && C.lines_every_days === 2 && t.getUTCDate() % 2 === 0) continue;
+      return t;
+    }
+    return null;
+  }
+
+  function knowNow(C) {
+    if (!S.data || S.source === 'sample') return '';
+    const now = Date.now();
+    const rows = [];
+    for (const key of KNOW_SPORT_LIST) {
+      const sp = S.data.sports?.find(s => s.key === key);
+      if (!sp) continue;
+      const name = SPORT_NAMES[key] || key;
+      if (!sp.in_season) { rows.push(`<li><b>${esc(name)}</b><span class="muted">Out of season</span></li>`); continue; }
+      const withProps = (sp.events || []).filter(e => new Date(e.commence_time).getTime() > now &&
+        Object.values(e.books || {}).some(b => Object.keys(b.markets || {}).some(isProp)));
+      const short = n => String(n).split(/\s+/).pop();
+      const propsTxt = withProps.length
+        ? `Props for ${esc(withProps.slice(0, 4).map(e => `${short(e.away)} @ ${short(e.home)}`).join(', '))}${withProps.length > 4 ? ` +${withProps.length - 4} more` : ''}`
+        : (C.prop_games?.[key] ? 'No props loaded right now' : 'Props off for now');
+      rows.push(`<li><b>${esc(name)}</b><span>Lines ${esc(ago(sp.lines_at) || 'not loaded')} · ${propsTxt}</span></li>`);
+    }
+    let next = '';
+    if (C.props_runs_per_day === 1 && [1, 2].includes(C.lines_every_days)) {
+      const p = nextRun(false, C), l = nextRun(true, C);
+      if (p && l) next = `<p class="muted small">Next update: ${p.getTime() === l.getTime() ? `lines and props ${esc(knowWhen.format(p))}` : `props ${esc(knowWhen.format(p))}, game lines ${esc(knowWhen.format(l))}`} (your time; it can run a few minutes late).</p>`;
+    }
+    return `<div class="know-now"><h4>Right now</h4><ul>${rows.join('')}</ul>${next}</div>`;
+  }
+
+  function knowSections(C) {
+    const runLocal = knowTime.format(nextRun(false, C) || new Date());
+    const linesFreq = C.lines_every_days === 1 ? 'every day' : C.lines_every_days === 2 ? 'every other day' : `every ${C.lines_every_days} days`;
+    const propsFreq = C.props_runs_per_day === 1 ? 'every day' : `${C.props_runs_per_day} times a day`;
+    const ncaabDays = Math.round((C.lines_hours?.basketball_ncaab ?? C.days_ahead * 24) / 24);
+    const minBooks = C.min_books?.basketball_ncaab ?? 1;
+    const win = C.prop_window_hours;
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+    const pullTxt = linesFreq === propsFreq ? `game lines and player props ${linesFreq}` : `game lines ${linesFreq}, player props ${propsFreq}`;
+    const propsAhead = win <= 36 ? 'about a day' : `about ${Math.round(win / 24)} days`;
+    const on = KNOW_SPORT_LIST.filter(k => (C.prop_games?.[k] || 0) > 0);
+    const off = KNOW_SPORT_LIST.filter(k => !(C.prop_games?.[k] > 0));
+    const gamesTxt = andList(on.map(k => `${plural(C.prop_games[k], `${KNOW_SPORTS[k]} game`)}`));
+    // Group sports that load the same prop types ("NFL and college football: ...").
+    const groups = new Map();
+    for (const k of on) {
+      const words = (C.prop_markets?.[k] || []).map(m => PROP_WORDS[m] || mLabel(m).toLowerCase());
+      const sig = words.join(', ');
+      if (!groups.has(sig)) groups.set(sig, []);
+      groups.get(sig).push(KNOW_SPORTS[k]);
+    }
+    const typesTxt = [...groups].map(([w, sps]) => `${cap(andList(sps))}: ${w}`).join('. ');
+    const loaded = new Set(on.flatMap(k => C.prop_markets?.[k] || []));
+    const notYet = ['player_receptions', 'player_threes', 'player_points_rebounds_assists'].filter(m => !loaded.has(m)).map(m => PROP_WORDS[m]);
+    const EXTRA_TITLES = { williamhill_us: 'Caesars', fanatics: 'Fanatics', bet365: 'bet365', ballybet: 'Bally Bet', fliff: 'Fliff', betparx: 'betPARX' };
+    const books = (S.data?.bookmakers || Object.keys(BOOK_TITLES)).map(k => BOOK_TITLES[k] || EXTRA_TITLES[k] || bookInfo(k).name);
+    const missingBooks = [['williamhill_us', 'Caesars'], ['fanatics', 'Fanatics']].filter(([k]) => !(S.data?.bookmakers || []).includes(k)).map(([, n]) => n);
+    const asOf = S.avail?.as_of && /^\d{4}-\d{2}-\d{2}$/.test(S.avail.as_of) ? new Date(S.avail.as_of + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : S.avail?.as_of;
+    const checked = asOf ? ` on ${esc(asOf)}` : '';
+
+    return [
+      { id: 'odds', title: 'How fresh the odds are', items: [
+        ['It’s a snapshot, not a live feed.', `We pull prices once a day at about ${esc(runLocal)} your time: ${pullTxt}. Lines can move a lot in between, especially after injury news, so check the “updated” time above each board.`],
+        ['No live in-game odds.', 'Once a game starts, the prices here are pre-game and out of date. Don’t use them to bet live.'],
+        ['Future days fill in as the books post them.', `We show game lines up to ${C.days_ahead} days out (${ncaabDays} for college basketball), but each book posts on its own schedule. NBA lines are often only a day or two out and NFL about a week, so a day that looks empty usually just hasn’t been posted yet.`],
+        ['Main game lines only.', 'Moneyline, spread and total for the full game. No alternate lines, halves, quarters or team totals yet.'],
+        ...(minBooks > 1 ? [['Small college basketball games are hidden.', `Games with fewer than ${minBooks} books pricing them don’t appear.`]] : []),
+        ['Season-long bets update on their own clock.', 'Kalshi futures refresh every day; sportsbook futures about once a week.'],
+      ] },
+      { id: 'props', title: 'Player props', items: [
+        [`Props show up ${propsAhead} before the game.`, `We only load props for games that start within ${win} hours of our daily pull.${win <= 36 ? ` So Sunday’s NFL props appear on Saturday or Sunday morning, and a night NBA game’s props appear that morning.` : ''} Books often post props earlier; this is our limit, not theirs.`],
+        ['Only the next few games in each sport.', `Each pull loads props for the next ${gamesTxt || 'few games'} starting in that window.${off.length ? ` ${cap(andList(off.map(k => KNOW_SPORTS[k])))} props are off for now.` : ''} On a busy day most games won’t have props here, even when the books have them.`],
+        ['A short list of prop types.', `${esc(typesTxt)}.${` Not loaded yet: ${andList([...notYet, 'first TD scorer', 'alternate prop lines'])}.`}`],
+        ['Late in the month we may load fewer.', 'Our data plan resets on the 1st. If it runs low, we skip some prop games so the rest of the board keeps updating.'],
+      ] },
+      { id: 'parlay', title: 'Parlay payouts', items: [
+        ['Standard parlay math.', 'We multiply each leg’s price, which is how books pay a regular parlay. If the prices haven’t moved, the payout should match.'],
+        ['Same-game parlays will differ.', 'Books price legs from the same game with their own models, and the real payout is usually lower than ours. We flag these on your parlay.'],
+        ['No boosts, promos or bonus bets.', 'Odds boosts, profit boosts, parlay insurance and each book’s maximum payout limits aren’t included.'],
+        ['Check your bet slip.', 'Bet links open the book with your pick when they can. Some only reach the game page, and the one-tap whole-parlay link is still in beta.'],
+      ] },
+      { id: 'books', title: 'Books and states', items: [
+        [`We compare ${books.length} books and exchanges.`, `${esc(andList(books))}.${missingBooks.length ? ` ${esc(andList([...missingBooks, 'some others']))} aren’t included yet.` : ''}`],
+        ['It’s where you are, not where you live.', 'Books check your location when you bet. Pick the state you’ll be in when you place it.'],
+        ['Laws change.', `We checked where each platform is legal${checked} and recheck about once a month. <button type="button" class="link-btn" id="knowStates">See every state and our sources</button>`],
+        ['Prediction markets have fees and limits.', 'Kalshi, Polymarket, Novig and ProphetX prices are shown before their trading fees (Free money adds Kalshi’s estimated fee). The price shown may only be there for a small amount; a bigger bet can fill at a worse price.'],
+      ] },
+      { id: 'money', title: 'Free money', items: [
+        ['These go fast.', 'Sure things and edges come from our last pull, and books often fix them within minutes. Check both prices in the apps before you bet either side.'],
+        ['Most involve prediction markets.', 'Their fees and small available amounts can wipe out a thin edge.'],
+        ['Books can limit you.', 'Sportsbooks sometimes cap or close accounts that regularly bet arbitrage.'],
+      ] },
+      { id: 'bets', title: 'My bets and alerts', items: [
+        ['Grading happens while fckvig is open.', 'About 2½ hours after the start we check ESPN’s final box scores, then every 10 minutes while the site is open. If it’s closed, your bets are graded the next time you open it.'],
+        ['Some bets need you.', 'Postponed games, players who didn’t play and anything we can’t confirm are marked Needs review. Futures settle by hand. Each book has its own rules for these, and the book’s result is the one that counts.'],
+        ['Without an account, bets stay in this browser.', 'Clearing your browser data deletes them. Sign in to keep them on every device.'],
+        ['Alerts aren’t instant.', 'We check alerts right after each odds update, so about once a day. A line can move and move back in between. On iPhone, push alerts need fckvig added to your Home Screen.'],
+      ] },
+    ];
+  }
+
+  function openKnow(section) {
+    const C = { ...KNOW_DEFAULTS, ...(S.data?.config || {}) };
+    const secs = knowSections(C);
+    $('#knowJump').innerHTML = secs.map(s => `<button type="button" class="chip" data-know-jump="${s.id}">${esc(s.title)}</button>`).join('');
+    $('#knowBody').innerHTML = knowNow(C) + secs.map(s => `<section class="know-sec" id="know-${s.id}"><h4 class="about-h">${esc(s.title)}</h4><ul class="know-list">${
+      s.items.map(([h, t]) => `<li><b>${esc(h)}</b> ${t}</li>`).join('')}</ul></section>`).join('') +
+      '<p class="muted small know-foot">Most of these limits come from our current data plan, which charges for every market we pull. We don’t take bets and aren’t affiliated with any book.</p>';
+    const dlg = $('#knowDialog');
+    if (!dlg.open) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+    knowJump(section);
+  }
+  function knowJump(id) {
+    const card = $('#knowDialog .modal-card');
+    const el = id && $(`#know-${id}`);
+    if (!el) { card.scrollTop = 0; return; }
+    card.scrollTop += el.getBoundingClientRect().top - card.getBoundingClientRect().top - 8;
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
   }
 
   // ---------- season-long markets ----------
@@ -1995,6 +2150,12 @@ import { drawShareCard } from './share-card.js?v=1';
     if (e.target.closest('#clearLegs')) { S.legs = []; return render(); }
     if (e.target.closest('#stateBtn')) return openStateDialog();
     if (e.target.closest('#aboutData')) return openAbout();
+    if (e.target.closest('#knowBtn')) return openKnow('');
+    const kn = e.target.closest('[data-know]');
+    if (kn) { e.preventDefault(); return openKnow(kn.dataset.know); }
+    const kj = e.target.closest('[data-know-jump]');
+    if (kj) return knowJump(kj.dataset.knowJump);
+    if (e.target.closest('#knowStates')) { e.preventDefault(); return openAbout(); }
     const tb = e.target.closest('.tabbar [data-tab]');
     if (tb) return setTab(tb.dataset.tab);
     if (e.target.closest('#seeBest')) return setTab('results');
