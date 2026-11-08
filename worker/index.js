@@ -596,6 +596,31 @@ async function adminOverview(req, db, env) {
   });
 }
 
+// Every account, newest first, with a search box (username or email). 100 per page.
+async function adminUsers(req, db, env) {
+  await adminAuth(req, db, env);
+  const url = new URL(req.url);
+  const q = String(url.searchParams.get('q') || '').trim().toLowerCase().replace(/^@/, '').slice(0, 80);
+  const page = Math.max(0, Math.min(1000, Number(url.searchParams.get('page')) || 0));
+  const per = 100;
+  const like = `%${q.replace(/[\\%_]/g, c => '\\' + c)}%`;
+  const where = q ? "WHERE u.username LIKE ? ESCAPE '\\' OR u.email LIKE ? ESCAPE '\\'" : '';
+  const args = q ? [like, like] : [];
+  const total = await db.prepare(`SELECT COUNT(*) AS n FROM users u ${where}`).bind(...args).first();
+  const rows = await db.prepare(`SELECT u.id, u.username, u.email, u.created_at, u.plan, u.plan_until, u.plan_source, u.stripe_status,
+      (SELECT COUNT(*) FROM bets b WHERE b.user_id = u.id AND b.deleted = 0) AS bets,
+      (SELECT MAX(created_at) FROM sessions s WHERE s.user_id = u.id) AS last_login,
+      (SELECT n FROM saves v WHERE v.user_id = u.id AND v.day = ?) AS saves_today
+    FROM users u ${where} ORDER BY u.created_at DESC LIMIT ? OFFSET ?`).bind(planDay(), ...args, per, page * per).all();
+  const now = Date.now();
+  const users = (rows.results || []).map(r => ({
+    username: r.username, email: r.email, created_at: r.created_at, bets: r.bets || 0, last_login: r.last_login || null,
+    saves_today: r.saves_today || 0, unlimited: isUnlimited(r, now), plan_source: isUnlimited(r, now) ? r.plan_source : null,
+    plan_until: isUnlimited(r, now) ? r.plan_until : null, stripe_status: r.stripe_status || null,
+  }));
+  return json(req, { total: total?.n || 0, page, per, users });
+}
+
 const posInt = (v, max) => { if (v == null || v === '') return null; const n = Number(v); if (!Number.isInteger(n) || n < 1 || n > max) throw new HttpError(400, `Use a whole number from 1 to ${max}.`); return n; };
 
 async function adminCreateCode(req, db, env) {
@@ -1169,6 +1194,7 @@ const ROUTES = {
   'POST /api/billing/portal': billingPortal,
   'POST /api/billing/webhook': stripeWebhook,
   'GET /api/admin/overview': adminOverview,
+  'GET /api/admin/users': adminUsers,
   'POST /api/admin/codes': adminCreateCode,
   'POST /api/admin/codes/revoke': adminRevokeCode,
   'POST /api/admin/grant': adminGrant,
