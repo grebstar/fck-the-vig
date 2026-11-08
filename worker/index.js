@@ -14,6 +14,12 @@
 // Shared bets: POST /api/share stores a bet plus a preview picture the browser drew, and returns a short link
 // (/s/<id>). Texting apps read that page's preview tags and show the bet's own picture; people who open it are
 // sent on to the site with the bet loaded. Pictures are dropped after SHARE_IMG_DAYS (the link keeps working).
+//
+// Membership: every account is Free (FREE_SAVES_PER_DAY saved bets a day, counted in Central time) or Unlimited.
+// Unlimited comes from a Stripe subscription (secrets STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, vars
+// STRIPE_PRICE_MONTHLY and optionally STRIPE_PRICE_ANNUAL), from a secret code the admin hands out, or from the
+// admin granting it by username. The admin is the account whose email is in ADMIN_EMAILS (default
+// cory@fckvig.com); the first account with that email to open the admin page is pinned as the admin.
 
 const ORIGINS = ['https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io', 'capacitor://localhost'];  // last one = the iPhone app
 let allowed = new Set(ORIGINS);  // ALLOW_ORIGINS (comma-separated) overrides this, e.g. for local testing
@@ -35,6 +41,12 @@ const SHARE_DAYS = 365;              // and the link itself this long
 const SHARE_MAX_IMG = 300000;        // bytes (the site sends a ~60-150 KB JPEG)
 const SHARE_MAX_IMGS = 2500;         // newest pictures kept in the database (~250 MB at most; D1 free allows 500 MB)
 const SHARE_MAX_LEGS = 12;
+const FREE_SAVES_PER_DAY = 2;        // env FREE_SAVES_PER_DAY overrides
+const PLAN_TZ = 'America/Chicago';   // the free daily count resets at midnight here
+const ADMIN_EMAILS = 'cory@fckvig.com';
+const STRIPE_GRACE_DAYS = 3;         // keep Unlimited this long past a period end while Stripe retries a card
+const CODE_RE = /^[A-Z0-9-]{4,32}$/;
+const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   // no 0/O or 1/I
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, pw TEXT NOT NULL, created_at INTEGER NOT NULL, failed INTEGER NOT NULL DEFAULT 0, locked_until INTEGER NOT NULL DEFAULT 0)`,
@@ -52,14 +64,32 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS prefs (user_id INTEGER PRIMARY KEY, data TEXT NOT NULL, updated_at INTEGER NOT NULL)`,
   `CREATE TABLE IF NOT EXISTS shares (id TEXT PRIMARY KEY, legs TEXT NOT NULL, stake REAL, title TEXT NOT NULL, descr TEXT NOT NULL, img TEXT, mime TEXT, created_at INTEGER NOT NULL)`,
   `CREATE INDEX IF NOT EXISTS shares_created ON shares (created_at)`,
+  `CREATE TABLE IF NOT EXISTS saves (user_id INTEGER NOT NULL, day TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (user_id, day))`,
+  `CREATE TABLE IF NOT EXISTS codes (id INTEGER PRIMARY KEY AUTOINCREMENT, code_hash TEXT NOT NULL UNIQUE, hint TEXT NOT NULL, label TEXT NOT NULL, max_uses INTEGER, uses INTEGER NOT NULL DEFAULT 0, grant_days INTEGER, expires_at INTEGER, revoked INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL)`,
+  `CREATE TABLE IF NOT EXISTS redemptions (code_id INTEGER NOT NULL, user_id INTEGER NOT NULL, at INTEGER NOT NULL, PRIMARY KEY (code_id, user_id))`,
+  `CREATE INDEX IF NOT EXISTS redemptions_user ON redemptions (user_id)`,
+];
+// Columns added to users after launch: [name, SQL type].
+const USER_COLS = [
+  ['email', 'TEXT'],
+  ['plan', "TEXT NOT NULL DEFAULT 'free'"],   // 'free' | 'unlimited'
+  ['plan_until', 'INTEGER'],                  // ms; NULL with plan 'unlimited' = no end date
+  ['plan_source', 'TEXT'],                    // 'stripe' | 'code' | 'admin'
+  ['plan_code', 'INTEGER'],                   // codes.id when plan_source = 'code'
+  ['stripe_customer', 'TEXT'],
+  ['stripe_sub', 'TEXT'],
+  ['stripe_status', 'TEXT'],
 ];
 let schemaReady = null;
 async function migrate(db) {
   await db.batch(SCHEMA.map(s => db.prepare(s)));
-  // users.email was added after launch; add it to databases created before that.
-  const cols = await db.prepare('PRAGMA table_info(users)').all();
-  if (!(cols.results || []).some(c => c.name === 'email')) await db.prepare('ALTER TABLE users ADD COLUMN email TEXT').run();
+  // Add columns that came after launch to databases created before them.
+  const cols = new Set(((await db.prepare('PRAGMA table_info(users)').all()).results || []).map(c => c.name));
+  for (const [name, type] of USER_COLS) if (!cols.has(name)) await db.prepare(`ALTER TABLE users ADD COLUMN ${name} ${type}`).run();
   await db.prepare('CREATE UNIQUE INDEX IF NOT EXISTS users_email ON users (email)').run();
+  await db.prepare('CREATE INDEX IF NOT EXISTS users_stripe ON users (stripe_customer)').run();
+  // When daily limits switched on. Bets made before this (saved in a browser while signed out) merge in free.
+  await db.prepare("INSERT OR IGNORE INTO config (k, v) VALUES ('limits_start', ?)").bind(String(Date.now())).run();
 }
 const ensureSchema = db => (schemaReady ||= migrate(db).catch(e => { schemaReady = null; throw e; }));
 
@@ -202,11 +232,14 @@ async function logout(req, db) {
   return json(req, { ok: true });
 }
 
-async function me(req, db) {
+async function me(req, db, env) {
   const u = await auth(req, db);
   const n = await db.prepare('SELECT COUNT(*) AS n FROM bets WHERE user_id = ? AND deleted = 0').bind(u.id).first();
-  const e = await db.prepare('SELECT email FROM users WHERE id = ?').bind(u.id).first();
-  return json(req, { username: u.username, email: e?.email || null, created_at: u.created_at, bets: n?.n || 0 });
+  const row = await userRow(db, u.id);
+  return json(req, {
+    username: u.username, email: row?.email || null, created_at: u.created_at, bets: n?.n || 0,
+    ...(await membership(db, env, row)),
+  });
 }
 
 async function changeEmail(req, db) {
@@ -289,28 +322,70 @@ async function resetPassword(req, db) {
 }
 
 // Merge the client's bets with the stored ones (newest `updated` wins) and return everything.
-async function syncBets(req, db) {
+async function syncBets(req, db, env) {
   const u = await auth(req, db);
   const b = await body(req);
   const incoming = Array.isArray(b.bets) ? b.bets : [];
   if (incoming.length > MAX_BETS + 200) throw new HttpError(413, 'Too many bets.');
-  const stmts = [];
-  for (const bet of incoming) {
-    if (!bet || typeof bet.id !== 'string' || !/^[A-Za-z0-9_-]{4,40}$/.test(bet.id)) continue;
-    const updated = Number(bet.updated);
-    if (!Number.isFinite(updated) || updated <= 0) continue;
-    const data = JSON.stringify(bet);
-    if (data.length > MAX_BET_BYTES) continue;
-    stmts.push(db.prepare(
-      `INSERT INTO bets (user_id, id, data, updated_at, deleted) VALUES (?, ?, ?, ?, ?)
-       ON CONFLICT(user_id, id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at, deleted = excluded.deleted
-       WHERE excluded.updated_at > bets.updated_at`,
-    ).bind(u.id, bet.id, data, Math.floor(updated), bet.deleted ? 1 : 0));
+  const valid = incoming.map(cleanBet).filter(Boolean);
+  // Bets the server hasn't seen before are new saves. Edits, grades and deletes of known bets never count.
+  const known = new Set();
+  for (let i = 0; i < valid.length; i += 50) {
+    const ids = valid.slice(i, i + 50).map(x => x.bet.id);
+    const r = await db.prepare(`SELECT id FROM bets WHERE user_id = ? AND id IN (${ids.map(() => '?').join(',')})`).bind(u.id, ...ids).all();
+    for (const row of r.results || []) known.add(row.id);
   }
+  const fresh = valid.filter(x => !known.has(x.bet.id) && !x.bet.deleted);
+  const rejected = [];
+  if (fresh.length) {
+    const row = await userRow(db, u.id);
+    if (!isUnlimited(row)) {
+      const start = await limitsStart(db);
+      for (const x of fresh) {
+        if (isLegacyBet(x.bet, start)) continue;               // saved in a browser before limits started
+        if (!(await claimSave(db, env, u.id))) { rejected.push(x.bet.id); x.skip = true; }
+      }
+    }
+  }
+  const stmts = valid.filter(x => !x.skip).map(x => upsertBet(db, u.id, x));
   for (let i = 0; i < stmts.length; i += 50) await db.batch(stmts.slice(i, i + 50));
   const rows = await db.prepare('SELECT data FROM bets WHERE user_id = ? ORDER BY updated_at DESC LIMIT ?').bind(u.id, MAX_BETS + 200).all();
   const bets = (rows.results || []).map(r => { try { return JSON.parse(r.data); } catch { return null; } }).filter(Boolean);
-  return json(req, { bets });
+  return json(req, { bets, rejected, quota: await quota(db, env, await userRow(db, u.id)) });
+}
+
+function cleanBet(bet) {
+  if (!bet || typeof bet !== 'object' || typeof bet.id !== 'string' || !/^[A-Za-z0-9_-]{4,40}$/.test(bet.id)) return null;
+  const updated = Number(bet.updated);
+  if (!Number.isFinite(updated) || updated <= 0) return null;
+  const data = JSON.stringify(bet);
+  if (data.length > MAX_BET_BYTES) return null;
+  return { bet, data, updated: Math.floor(updated) };
+}
+const upsertBet = (db, userId, x) => db.prepare(
+  `INSERT INTO bets (user_id, id, data, updated_at, deleted) VALUES (?, ?, ?, ?, ?)
+   ON CONFLICT(user_id, id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at, deleted = excluded.deleted
+   WHERE excluded.updated_at > bets.updated_at`,
+).bind(userId, x.bet.id, x.data, x.updated, x.bet.deleted ? 1 : 0);
+
+// Save one new bet. This is where the free daily limit applies: 402 when today's saves are used up.
+async function saveBet(req, db, env) {
+  const u = await auth(req, db);
+  const b = await body(req);
+  const x = cleanBet(b.bet);
+  if (!x || x.bet.deleted) throw new HttpError(400, "That bet couldn't be saved.");
+  const exists = await db.prepare('SELECT 1 FROM bets WHERE user_id = ? AND id = ?').bind(u.id, x.bet.id).first();
+  const row = await userRow(db, u.id);
+  if (!exists && !isUnlimited(row)) {
+    const n = await db.prepare('SELECT COUNT(*) AS n FROM bets WHERE user_id = ?').bind(u.id).first();
+    if ((n?.n || 0) >= MAX_BETS + 150) throw new HttpError(400, 'Your bet history is full. Delete some old bets first.');
+    if (!(await claimSave(db, env, u.id))) {
+      const q = await quota(db, env, row);
+      return json(req, { error: `Free accounts can save ${q.limit} bets a day. Go Unlimited to save as many as you want.`, code: 'limit', quota: q }, 402);
+    }
+  }
+  await upsertBet(db, u.id, x).run();
+  return json(req, { ok: true, quota: await quota(db, env, row) });
 }
 
 // Profile settings. Right now that's "My books": the sportsbooks and exchanges the user has accounts with.
@@ -342,12 +417,21 @@ async function putPrefs(req, db) {
   return getPrefs(req, db);
 }
 
-async function deleteAccount(req, db) {
+async function deleteAccount(req, db, env) {
   const u = await auth(req, db);
   const b = await body(req);
-  const row = await db.prepare('SELECT pw FROM users WHERE id = ?').bind(u.id).first();
+  const row = await db.prepare('SELECT pw, stripe_sub, stripe_status FROM users WHERE id = ?').bind(u.id).first();
   if (!row || !(await checkPassword(String(b.password ?? ''), row.pw))) throw new HttpError(401, 'Wrong password.');
+  // Never leave a deleted account still being charged.
+  if (row.stripe_sub && !['canceled', 'incomplete_expired'].includes(row.stripe_status)) {
+    if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "We couldn't cancel your subscription right now. Email cory@fckvig.com and we'll take care of it.");
+    try { await stripe(env, 'DELETE', `/v1/subscriptions/${encodeURIComponent(row.stripe_sub)}`); } catch (err) {
+      if (err.status !== 404) { console.error('cancel on delete', err); throw new HttpError(502, "We couldn't cancel your subscription just now, so nothing was deleted. Please try again."); }
+    }
+  }
   await db.batch([
+    db.prepare('DELETE FROM saves WHERE user_id = ?').bind(u.id),
+    db.prepare('DELETE FROM redemptions WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM bets WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM resets WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM alerts WHERE user_id = ?').bind(u.id),
@@ -359,6 +443,321 @@ async function deleteAccount(req, db) {
   return json(req, { ok: true });
 }
 
+// ---------- membership: plans and the free daily limit ----------
+const userRow = (db, id) => db.prepare('SELECT id, username, email, created_at, plan, plan_until, plan_source, plan_code, stripe_customer, stripe_sub, stripe_status FROM users WHERE id = ?').bind(id).first();
+const isUnlimited = (row, now = Date.now()) => !!row && row.plan === 'unlimited' && (row.plan_until == null || row.plan_until > now);
+const freeLimit = env => { const n = Number(env.FREE_SAVES_PER_DAY); return Number.isInteger(n) && n >= 0 ? n : FREE_SAVES_PER_DAY; };
+
+// Calendar date and time in Central time.
+const tzParts = (ms, tz = PLAN_TZ) => {
+  const o = {};
+  for (const p of new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date(ms))) o[p.type] = Number(p.value);
+  return o;
+};
+const planDay = (ms = Date.now()) => { const p = tzParts(ms); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
+// The next Central-time midnight after `ms`.
+function nextMidnight(ms = Date.now()) {
+  const p = tzParts(ms);
+  let t = Date.UTC(p.year, p.month - 1, p.day + 1, 6);       // midnight CST is 06:00 UTC
+  const q = tzParts(t);
+  t -= (q.hour * 60 + q.minute) * 60e3;                      // 01:00 there means daylight time: step back
+  return t;
+}
+
+let limitsStartCache = null;
+async function limitsStart(db) {
+  if (limitsStartCache) return limitsStartCache;
+  const row = await db.prepare("SELECT v FROM config WHERE k = 'limits_start'").first();
+  return (limitsStartCache = Number(row?.v) || Date.now());
+}
+// A bet saved in a browser (signed out) before limits started merges into an account for free. Lines only go
+// about two weeks out, so a bet that claims to be that old can't have legs much later than that.
+function isLegacyBet(bet, start) {
+  const created = Date.parse(bet.created);
+  if (!Number.isFinite(created) || created >= start) return false;
+  return (Array.isArray(bet.legs) ? bet.legs : []).every(l => !l?.commence || Date.parse(l.commence) < start + 15 * 864e5);
+}
+
+// Use one of today's free saves. False when they're used up. The check and the +1 happen in one statement.
+async function claimSave(db, env, userId) {
+  const max = freeLimit(env);
+  if (max <= 0) return false;
+  const r = await db.prepare('INSERT INTO saves (user_id, day, n) VALUES (?, ?, 1) ON CONFLICT(user_id, day) DO UPDATE SET n = n + 1 WHERE n < ?')
+    .bind(userId, planDay(), max).run();
+  return (r.meta?.changes || 0) > 0;
+}
+
+async function quota(db, env, row) {
+  if (isUnlimited(row)) return { unlimited: true };
+  const r = await db.prepare('SELECT n FROM saves WHERE user_id = ? AND day = ?').bind(row.id, planDay()).first();
+  const limit = freeLimit(env), used = Math.min(r?.n || 0, limit);
+  return { unlimited: false, limit, used, left: limit - used, resets_at: nextMidnight() };
+}
+
+async function isAdmin(db, env, row) {
+  if (!row?.email) return false;
+  const emails = String(env.ADMIN_EMAILS || ADMIN_EMAILS).toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
+  if (!emails.includes(row.email)) return false;
+  // The first account with an admin email to ask is pinned, so an email swap later can't hand over admin.
+  await db.prepare("INSERT OR IGNORE INTO config (k, v) VALUES ('admin_ids', ?)").bind(String(row.id)).run();
+  const pinned = await db.prepare("SELECT v FROM config WHERE k = 'admin_ids'").first();
+  return String(pinned?.v || '').split(',').includes(String(row.id));
+}
+
+const billingReady = env => !!(env.STRIPE_SECRET_KEY && env.STRIPE_WEBHOOK_SECRET && env.STRIPE_PRICE_MONTHLY);
+
+async function membership(db, env, row) {
+  const unlimited = isUnlimited(row);
+  return {
+    plan: {
+      name: unlimited ? 'unlimited' : 'free',
+      source: unlimited ? row.plan_source || null : null,
+      until: unlimited ? row.plan_until ?? null : null,
+      stripe_status: row?.stripe_status || null,
+      paid_through: unlimited && row.plan_source === 'stripe' && row.plan_until ? row.plan_until - STRIPE_GRACE_DAYS * 864e5 : null,
+      renews: unlimited && row.plan_source === 'stripe' && ['active', 'trialing'].includes(row.stripe_status),
+      manage: !!(row?.stripe_sub && env.STRIPE_SECRET_KEY),
+    },
+    quota: await quota(db, env, row),
+    billing: { ready: billingReady(env), annual: !!env.STRIPE_PRICE_ANNUAL },
+    admin: await isAdmin(db, env, row),
+  };
+}
+
+async function getPlan(req, db, env) {
+  const u = await auth(req, db);
+  return json(req, await membership(db, env, await userRow(db, u.id)));
+}
+
+// ---------- secret codes ----------
+const normCode = c => String(c ?? '').toUpperCase().replace(/[\s_]+/g, '').replace(/[–—]/g, '-');
+const codeHash = c => sha256('code:' + normCode(c).replace(/-/g, ''));   // dashes are optional when typing
+const codeHint = c => { const v = normCode(c); return v.length <= 6 ? `${v[0]}…` : `${v.slice(0, 3)}…${v.slice(-2)}`; };
+function randomCode() {
+  const pick = n => [...crypto.getRandomValues(new Uint8Array(n))].map(b => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('');
+  return `VIG-${pick(4)}-${pick(4)}`;
+}
+
+async function redeemCode(req, db, env) {
+  const u = await auth(req, db);
+  const b = await body(req);
+  const code = normCode(b.code);
+  if (!CODE_RE.test(code)) throw new HttpError(400, "That doesn't look like a code. Check it and try again.");
+  await limit(db, 'redeem:' + u.id, 5, 3600e3);
+  await limit(db, 'redeem:' + await ipKey(req), 20, 3600e3);
+  const now = Date.now();
+  const c = await db.prepare('SELECT * FROM codes WHERE code_hash = ?').bind(await codeHash(code)).first();
+  if (!c || c.revoked) throw new HttpError(404, "That code isn't valid.");
+  if (c.expires_at && c.expires_at < now) throw new HttpError(410, 'That code has expired.');
+  if (c.max_uses != null && c.uses >= c.max_uses) throw new HttpError(410, 'That code has already been used up.');
+  if (await db.prepare('SELECT 1 FROM redemptions WHERE code_id = ? AND user_id = ?').bind(c.id, u.id).first()) throw new HttpError(409, "You've already used this code.");
+  const row = await userRow(db, u.id);
+  if (isUnlimited(row) && row.plan_until == null && row.plan_source !== 'stripe') throw new HttpError(409, 'You already have Unlimited with no end date.');
+  if (isUnlimited(row) && row.plan_source === 'stripe' && ['active', 'trialing', 'past_due', 'canceling'].includes(row.stripe_status)) {
+    throw new HttpError(409, "You're already paying for Unlimited. Cancel it under Manage billing first, then redeem the code.");
+  }
+  const took = await db.prepare('UPDATE codes SET uses = uses + 1 WHERE id = ? AND revoked = 0 AND (max_uses IS NULL OR uses < max_uses)').bind(c.id).run();
+  if (!took.meta?.changes) throw new HttpError(410, 'That code has already been used up.');
+  const base = isUnlimited(row) && row.plan_until ? Math.max(row.plan_until, now) : now;   // time-limited codes stack
+  const until = c.grant_days ? base + c.grant_days * 864e5 : null;
+  await db.batch([
+    db.prepare('INSERT INTO redemptions (code_id, user_id, at) VALUES (?, ?, ?)').bind(c.id, u.id, now),
+    db.prepare("UPDATE users SET plan = 'unlimited', plan_until = ?, plan_source = 'code', plan_code = ? WHERE id = ?").bind(until, c.id, u.id),
+  ]);
+  return json(req, { ok: true, ...(await membership(db, env, await userRow(db, u.id))) });
+}
+
+// ---------- admin (codes, grants, numbers) ----------
+async function adminAuth(req, db, env) {
+  const u = await auth(req, db);
+  const row = await userRow(db, u.id);
+  if (!(await isAdmin(db, env, row))) throw new HttpError(403, 'Admins only.');
+  return row;
+}
+
+async function adminOverview(req, db, env) {
+  await adminAuth(req, db, env);
+  const now = Date.now();
+  const users = await db.prepare(`SELECT COUNT(*) AS total,
+      SUM(CASE WHEN plan = 'unlimited' AND (plan_until IS NULL OR plan_until > ?) THEN 1 ELSE 0 END) AS unlimited,
+      SUM(CASE WHEN plan = 'unlimited' AND (plan_until IS NULL OR plan_until > ?) AND plan_source = 'stripe' THEN 1 ELSE 0 END) AS paying,
+      SUM(CASE WHEN plan = 'unlimited' AND (plan_until IS NULL OR plan_until > ?) AND plan_source = 'code' THEN 1 ELSE 0 END) AS by_code,
+      SUM(CASE WHEN plan = 'unlimited' AND (plan_until IS NULL OR plan_until > ?) AND plan_source = 'admin' THEN 1 ELSE 0 END) AS by_admin,
+      SUM(CASE WHEN created_at > ? THEN 1 ELSE 0 END) AS new_7d FROM users`).bind(now, now, now, now, now - 7 * 864e5).first();
+  const saves = await db.prepare('SELECT COALESCE(SUM(n), 0) AS n FROM saves WHERE day = ?').bind(planDay()).first();
+  const codes = await db.prepare('SELECT id, hint, label, max_uses, uses, grant_days, expires_at, revoked, created_at FROM codes ORDER BY revoked, created_at DESC LIMIT 300').all();
+  const recent = await db.prepare(`SELECT r.at, u.username, c.label, c.hint FROM redemptions r JOIN users u ON u.id = r.user_id JOIN codes c ON c.id = r.code_id ORDER BY r.at DESC LIMIT 50`).all();
+  const members = await db.prepare(`SELECT username, email, plan_source, plan_until, stripe_status, created_at FROM users
+      WHERE plan = 'unlimited' AND (plan_until IS NULL OR plan_until > ?) ORDER BY created_at DESC LIMIT 300`).bind(now).all();
+  return json(req, {
+    users: { total: users?.total || 0, unlimited: users?.unlimited || 0, paying: users?.paying || 0, by_code: users?.by_code || 0, by_admin: users?.by_admin || 0, new_7d: users?.new_7d || 0 },
+    saves_today: saves?.n || 0, free_limit: freeLimit(env), billing_ready: billingReady(env),
+    codes: codes.results || [], redemptions: recent.results || [], members: members.results || [],
+  });
+}
+
+const posInt = (v, max) => { if (v == null || v === '') return null; const n = Number(v); if (!Number.isInteger(n) || n < 1 || n > max) throw new HttpError(400, `Use a whole number from 1 to ${max}.`); return n; };
+
+async function adminCreateCode(req, db, env) {
+  await adminAuth(req, db, env);
+  const b = await body(req);
+  const code = b.code ? normCode(b.code) : randomCode();
+  if (!CODE_RE.test(code)) throw new HttpError(400, 'Codes are 4–32 letters, numbers or dashes.');
+  const label = oneLine(b.label, 80);
+  if (!label) throw new HttpError(400, "Add a note so you remember who it's for.");
+  const maxUses = posInt(b.max_uses, 100000);
+  const days = posInt(b.grant_days, 3650);
+  let expires = null;
+  if (b.expires) {
+    expires = Date.parse(`${b.expires}T23:59:59-06:00`);   // end of that day, Central (close enough across DST)
+    if (!Number.isFinite(expires) || expires < Date.now()) throw new HttpError(400, 'Pick a last day that is in the future.');
+  }
+  const h = await codeHash(code);
+  if (await db.prepare('SELECT 1 FROM codes WHERE code_hash = ?').bind(h).first()) throw new HttpError(409, 'That code already exists. Pick another.');
+  await db.prepare('INSERT INTO codes (code_hash, hint, label, max_uses, grant_days, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    .bind(h, codeHint(code), label, maxUses, days, expires, Date.now()).run();
+  return json(req, { ok: true, code });   // the only time the full code is shown
+}
+
+async function adminRevokeCode(req, db, env) {
+  await adminAuth(req, db, env);
+  const b = await body(req);
+  const id = Number(b.id) || 0;
+  const r = await db.prepare('UPDATE codes SET revoked = 1 WHERE id = ?').bind(id).run();
+  if (!r.meta?.changes) throw new HttpError(404, 'No such code.');
+  let dropped = 0;
+  if (b.downgrade) {
+    const d = await db.prepare("UPDATE users SET plan = 'free', plan_until = NULL, plan_source = NULL, plan_code = NULL WHERE plan_source = 'code' AND plan_code = ?").bind(id).run();
+    dropped = d.meta?.changes || 0;
+  }
+  return json(req, { ok: true, dropped });
+}
+
+async function adminGrant(req, db, env) {
+  await adminAuth(req, db, env);
+  const b = await body(req);
+  const who = String(b.username ?? '').trim().toLowerCase().replace(/^@/, '');
+  const u = await db.prepare(`SELECT id, username, plan, plan_until, plan_source, stripe_status FROM users WHERE ${who.includes('@') ? 'email' : 'username'} = ?`).bind(who).first();
+  if (!u) throw new HttpError(404, 'No account with that username or email.');
+  const paying = u.plan_source === 'stripe' && ['active', 'trialing', 'past_due', 'canceling'].includes(u.stripe_status);
+  if (b.remove) {
+    if (paying) throw new HttpError(409, `@${u.username} pays through Stripe. Cancel it in your Stripe dashboard instead.`);
+    await db.prepare("UPDATE users SET plan = 'free', plan_until = NULL, plan_source = NULL, plan_code = NULL WHERE id = ?").bind(u.id).run();
+    return json(req, { ok: true, username: u.username, plan: 'free' });
+  }
+  if (paying) throw new HttpError(409, `@${u.username} already pays for Unlimited.`);
+  const days = posInt(b.days, 3650);
+  const until = days ? Date.now() + days * 864e5 : null;
+  await db.prepare("UPDATE users SET plan = 'unlimited', plan_until = ?, plan_source = 'admin', plan_code = NULL WHERE id = ?").bind(until, u.id).run();
+  return json(req, { ok: true, username: u.username, plan: 'unlimited', until });
+}
+
+// ---------- Stripe billing ----------
+// Stripe's API takes form-encoded bodies with bracketed keys: line_items[0][price]=...
+function formEncode(obj, prefix = '', out = new URLSearchParams()) {
+  for (const [k, v] of Object.entries(obj)) {
+    if (v == null) continue;
+    const key = prefix ? `${prefix}[${k}]` : k;
+    if (typeof v === 'object') formEncode(v, key, out); else out.append(key, String(v));
+  }
+  return out;
+}
+async function stripe(env, method, path, params) {
+  const res = await fetch((env.STRIPE_API || 'https://api.stripe.com') + path + (method === 'GET' && params ? `?${formEncode(params)}` : ''), {
+    method,
+    headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`, ...(method === 'POST' ? { 'Content-Type': 'application/x-www-form-urlencoded' } : {}) },
+    body: method === 'POST' && params ? formEncode(params).toString() : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) { const e = new Error(`Stripe ${res.status}: ${data?.error?.message || ''}`); e.status = res.status; throw e; }
+  return data;
+}
+
+async function checkout(req, db, env) {
+  const u = await auth(req, db);
+  if (!billingReady(env)) throw new HttpError(503, "Payments aren't switched on yet. Check back soon.");
+  const b = await body(req);
+  const annual = b.interval === 'year' && env.STRIPE_PRICE_ANNUAL;
+  const row = await userRow(db, u.id);
+  if (isUnlimited(row) && (row.plan_until == null || row.plan_source === 'stripe')) throw new HttpError(409, 'You already have Unlimited.');
+  await limit(db, 'checkout:' + u.id, 20, 3600e3);
+  let customer = row.stripe_customer;
+  if (!customer) {
+    const c = await stripe(env, 'POST', '/v1/customers', { email: row.email || undefined, metadata: { user_id: u.id, username: u.username } });
+    customer = c.id;
+    await db.prepare('UPDATE users SET stripe_customer = ? WHERE id = ?').bind(customer, u.id).run();
+  }
+  const site = siteUrl(env);
+  const s = await stripe(env, 'POST', '/v1/checkout/sessions', {
+    mode: 'subscription', customer, client_reference_id: u.id,
+    line_items: { 0: { price: annual ? env.STRIPE_PRICE_ANNUAL : env.STRIPE_PRICE_MONTHLY, quantity: 1 } },
+    subscription_data: { metadata: { user_id: u.id } },
+    allow_promotion_codes: 'true',
+    success_url: `${site}#upgraded`, cancel_url: `${site}#bets`,
+  });
+  return json(req, { url: s.url });
+}
+
+async function billingPortal(req, db, env) {
+  const u = await auth(req, db);
+  const row = await userRow(db, u.id);
+  if (!env.STRIPE_SECRET_KEY || !row.stripe_customer) throw new HttpError(400, 'There is no billing on this account.');
+  const s = await stripe(env, 'POST', '/v1/billing_portal/sessions', { customer: row.stripe_customer, return_url: `${siteUrl(env)}#bets` });
+  return json(req, { url: s.url });
+}
+
+// Stripe signs each webhook: header "t=<unix>,v1=<hex hmac of `${t}.${body}`>".
+async function verifyStripe(raw, header, secret, now = Date.now()) {
+  const t = /(?:^|,)t=(\d+)/.exec(header || '')?.[1];
+  const sigs = [...String(header || '').matchAll(/(?:^|,)v1=([0-9a-f]{64})/g)].map(m => m[1]);
+  if (!t || !sigs.length || Math.abs(now / 1000 - Number(t)) > 300) return false;
+  const want = hex(await hmac(enc.encode(secret), enc.encode(`${t}.${raw}`)));
+  return sigs.some(s => { let d = 0; for (let i = 0; i < 64; i++) d |= s.charCodeAt(i) ^ want.charCodeAt(i); return d === 0; });
+}
+
+// Put a subscription's state on its account. Always re-reads the subscription from Stripe, so events that
+// arrive out of order or twice can't leave the account wrong.
+async function applySubscription(db, env, subId, hintUserId) {
+  const sub = await stripe(env, 'GET', `/v1/subscriptions/${encodeURIComponent(subId)}`);
+  let row = await db.prepare('SELECT id, plan_source FROM users WHERE stripe_customer = ?').bind(sub.customer).first();
+  const uid = row?.id || Number(sub.metadata?.user_id || hintUserId) || 0;
+  if (!row && uid) {
+    row = await db.prepare('SELECT id, plan_source FROM users WHERE id = ?').bind(uid).first();
+    if (row) await db.prepare('UPDATE users SET stripe_customer = ? WHERE id = ?').bind(sub.customer, row.id).run();
+  }
+  if (!row) { console.error('stripe: no account for', sub.customer); return; }
+  const end = (sub.current_period_end ?? sub.items?.data?.[0]?.current_period_end ?? 0) * 1000;
+  const live = ['active', 'trialing', 'past_due'].includes(sub.status);
+  // 'canceling' = still paid up, but set to end at the period end (so it isn't shown as renewing).
+  const status = live && (sub.cancel_at_period_end || sub.cancel_at) ? 'canceling' : sub.status;
+  if (live) {
+    await db.prepare("UPDATE users SET plan = 'unlimited', plan_until = ?, plan_source = 'stripe', plan_code = NULL, stripe_sub = ?, stripe_status = ? WHERE id = ?")
+      .bind(end ? end + STRIPE_GRACE_DAYS * 864e5 : null, sub.id, status, row.id).run();
+  } else if (row.plan_source === 'stripe') {
+    await db.prepare("UPDATE users SET plan = 'free', plan_until = NULL, plan_source = NULL, stripe_sub = ?, stripe_status = ? WHERE id = ?").bind(sub.id, sub.status, row.id).run();
+  } else {
+    await db.prepare('UPDATE users SET stripe_sub = ?, stripe_status = ? WHERE id = ?').bind(sub.id, sub.status, row.id).run();
+  }
+}
+
+async function stripeWebhook(req, db, env) {
+  if (!env.STRIPE_WEBHOOK_SECRET || !env.STRIPE_SECRET_KEY) throw new HttpError(503, 'Billing is not set up.');
+  const raw = await req.text();
+  if (raw.length > MAX_BODY) throw new HttpError(413, 'Too much data.');
+  if (!(await verifyStripe(raw, req.headers.get('Stripe-Signature'), env.STRIPE_WEBHOOK_SECRET))) throw new HttpError(400, 'Bad signature.');
+  let ev;
+  try { ev = JSON.parse(raw); } catch { throw new HttpError(400, 'Bad request.'); }
+  const o = ev.data?.object || {};
+  if (ev.type === 'checkout.session.completed' && o.mode === 'subscription' && o.subscription) {
+    await applySubscription(db, env, o.subscription, o.client_reference_id);
+  } else if (/^customer\.subscription\.(created|updated|deleted|paused|resumed)$/.test(ev.type) && o.id) {
+    await applySubscription(db, env, o.id, o.metadata?.user_id);
+  } else if (/^invoice\.(paid|payment_failed)$/.test(ev.type)) {
+    const subId = o.subscription || o.parent?.subscription_details?.subscription;
+    if (subId) await applySubscription(db, env, subId);
+  }
+  return json(req, { received: true });
+}
 
 // ---------- web push ----------
 // <push-crypto>  (tests extract this block and check it against the web-push library)
@@ -763,6 +1162,16 @@ const ROUTES = {
   'GET /api/alerts/active': activeAlerts,
   'POST /api/alerts/fire': fireAlerts,
   'POST /api/share': createShare,
+  'POST /api/bets/save': saveBet,
+  'GET /api/plan': getPlan,
+  'POST /api/redeem': redeemCode,
+  'POST /api/billing/checkout': checkout,
+  'POST /api/billing/portal': billingPortal,
+  'POST /api/billing/webhook': stripeWebhook,
+  'GET /api/admin/overview': adminOverview,
+  'POST /api/admin/codes': adminCreateCode,
+  'POST /api/admin/codes/revoke': adminRevokeCode,
+  'POST /api/admin/grant': adminGrant,
 };
 
 export default {
