@@ -94,11 +94,30 @@ cd docs && python3 -m http.server 8000  # open http://localhost:8000
 
 ## Saved bets, season-long markets and accounts
 
-- **My bets.** Tap *Save to My bets* on a parlay (or *Save* on a season-long market) and pick the book you used. Bets are stored in the browser (`localStorage`). Game lines and player props are graded automatically from ESPN's public final scores and box scores (`docs/js/grade.js`). If a team or player can't be matched, or a game is postponed, the leg is marked *Needs review* instead of guessing. Futures are settled by hand.
+- **My bets.** Tap *Save to My bets* on a parlay (or *Save* on a season-long market) and pick the book you used. Saving needs a free account (see Membership below); bets are kept in the browser (`localStorage`) and in the account. Game lines and player props are graded automatically from ESPN's public final scores and box scores (`docs/js/grade.js`). If a team or player can't be matched, or a game is postponed, the leg is marked *Needs review* instead of guessing. Futures are settled by hand.
 - **Season.** `scripts/fetch-futures.mjs` writes `docs/data/futures.json` on every scheduled run: championships, awards, stat leaders and win totals from Kalshi's public market data (free), plus sportsbook championship futures from The Odds API about once a week (about 3 credits). Run it on demand with Actions → Run workflow → `futures`.
-- **Accounts.** Optional. `worker/index.js` is a Cloudflare Worker with a D1 database (binding `DB`) served at `https://api.fckvig.com`. It stores a username, an email (used only for password resets), a salted PBKDF2 password hash and each user's bets, and syncs them across devices (newest edit wins). There's no account lockout; logins are only throttled per network (100 tries in 10 minutes). Password reset emails need either a Cloudflare Email Service binding named `EMAIL` (Workers Paid plan) or a Resend API key stored as the worker secret `RESEND_API_KEY`; until one is set, "Forgot password?" says resets aren't switched on yet. Local testing: `cd worker && npx wrangler dev --local --port 8787`, then serve `docs/` on `http://localhost:8000`.
+- **Accounts.** Needed to save bets. `worker/index.js` is a Cloudflare Worker with a D1 database (binding `DB`) served at `https://api.fckvig.com`. It stores a username, an email (used only for password resets), a salted PBKDF2 password hash and each user's bets, and syncs them across devices (newest edit wins). There's no account lockout; logins are only throttled per network (100 tries in 10 minutes). Password reset emails need either a Cloudflare Email Service binding named `EMAIL` (Workers Paid plan) or a Resend API key stored as the worker secret `RESEND_API_KEY`; until one is set, "Forgot password?" says resets aren't switched on yet. Local testing: `cd worker && npx wrangler dev --local --port 8787`, then serve `docs/` on `http://localhost:8000`.
 
 Tests: `node test/grade-test.mjs` (grading rules), `node test/api-test.mjs` (accounts API against wrangler dev), `node test/features-test.mjs` (end to end in Playwright).
+
+## Membership: Free and Unlimited
+
+- **Free accounts** save 2 bets a day (worker constant `FREE_SAVES_PER_DAY`, or the worker variable of the same name). The count resets at midnight Central. Browsing odds, pricing parlays, alerts and grading are never limited. Saving a bet needs an account. The worker counts saves in `POST /api/bets/save` and in `/api/bets/sync` (bets it hasn't seen before), so the limit can't be skipped from the browser. Editing, grading or deleting a saved bet never counts. Bets saved in a browser before limits switched on (the `limits_start` row in `config`) merge into an account for free.
+- **Unlimited** comes from one of three places, shown as `plan_source` on the user:
+  - `stripe`: a subscription bought through Stripe Checkout. The webhook (`POST /api/billing/webhook`) re-reads the subscription from Stripe on every event and keeps Unlimited until 3 days past the paid period. Members manage or cancel through Stripe's customer portal. Deleting an account cancels its subscription first.
+  - `code`: a secret code made on the admin page. Codes are stored hashed and shown in full only once. They aren't case-sensitive, and dashes are optional when typed. Each person can use a code once. A code can be single-use, limited to N people, or open to everyone, and can last forever or N days, with an optional last day to redeem.
+  - `admin`: given by hand on the admin page.
+- **Admin page:** `https://www.fckvig.com/admin.html`. It only works for the account whose email is in `ADMIN_EMAILS` (default `cory@fckvig.com`). The first such account to use it is pinned in `config.admin_ids`.
+- **Prices on the site** are labels in `docs/js/main.js` (`PLAN_PRICE`, plus `COMPETITORS` for the comparison table). The amount actually charged is whatever price is set in Stripe, so keep the two in step.
+- **iPhone app:** the app shows plan status only. It has no checkout and no code box, because App Store rules require Apple's in-app purchase for digital subscriptions sold inside an app and bar unlock codes there. Unlimited bought or redeemed on the website still works in the app.
+
+### Turning on card payments (Stripe)
+1. Create a Stripe account for GrebStar Ventures LLC. Describe the business accurately (odds comparison data subscription, takes no bets).
+2. Products → add *fck the vig Unlimited* with a monthly recurring price (and an annual one if wanted). Copy the price IDs (`price_…`).
+3. Settings → Billing → Customer portal: turn it on (let customers cancel and update cards).
+4. Developers → Webhooks → add endpoint `https://api.fckvig.com/api/billing/webhook` with events `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`. Copy its signing secret (`whsec_…`).
+5. Cloudflare → Workers → `fckvig-api` → Settings → Variables and Secrets: add secrets `STRIPE_SECRET_KEY` (`sk_live_…`) and `STRIPE_WEBHOOK_SECRET`, and variables `STRIPE_PRICE_MONTHLY` (and `STRIPE_PRICE_ANNUAL`).
+Until all of these are set, the upgrade button says "Payments open soon", and codes and gifts still work. Test the whole flow with Stripe's test-mode keys first.
 
 ## Free money, search, sharing and alerts
 
