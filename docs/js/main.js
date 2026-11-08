@@ -26,6 +26,13 @@ import { drawShareCard } from './share-card.js?v=1';
   if (NATIVE) document.documentElement.classList.add('native');
   const API_BASE = LOCAL ? 'http://localhost:8787' : 'https://api.fckvig.com';
   const GAME_TABS = new Set(['today', 'build', 'results']);
+  // Membership. The real charge is whatever Price is set in Stripe; keep these labels in step with it.
+  const PLAN_PRICE = { month: '$9.99', year: '$79.99', yearPerMonth: '$6.67', yearSave: '33%' };
+  const COMPETITORS = [   // their App Store prices (App Pricing Lab / App Store listings, checked Apr–May 2026)
+    ['Pikkit Pro', '$29.99/mo'],
+    ['Action Network PRO', 'from $19.99/mo'],
+    ['OddsJam (cheapest plan)', '$19.99/mo'],
+  ];
   const VIEWS = new Set(['games', 'season', 'bets', 'money']);
 
   const BOOK_COLORS = {
@@ -50,6 +57,7 @@ import { drawShareCard } from './share-card.js?v=1';
     bets: [], betFilter: 'open', user: null, syncAt: null, syncErr: null, gradedAt: null,
     statsTab: 'sport', moneyTotal: 100, q: '', alerts: null, alertsErr: null, metaAt: null,
     myBooks: null, myBooksAt: 0, onlyMine: true, day: null,
+    plan: null, quota: null, billing: null, admin: false, planInterval: 'month',
   };
 
   const $ = sel => document.querySelector(sel);
@@ -1156,6 +1164,13 @@ import { drawShareCard } from './share-card.js?v=1';
   }
 
   function openSaveDialog(title, lines) {
+    if (!S.user) {   // saving needs an account (free accounts save a few a day)
+      afterAuth = () => { if (pending) openSaveDialog(title, lines); };
+      return openAcct('signup', `Create a free account to save bets. We'll grade them automatically and keep them on every device. Free accounts save ${FREE_N()} bets a day.`);
+    }
+    const q = S.quota;
+    if (q && !q.unlimited && q.left <= 0 && Date.now() < q.resets_at) { pending = null; return openPlan('limit'); }
+    $('#saveQuota').textContent = q && !q.unlimited ? `${q.left} of ${q.limit} free saves left today.` : '';
     $('#saveTitle').textContent = title;
     $('#saveLegs').innerHTML = lines.map(l => `<li>${esc(l)}</li>`).join('');
     $('#saveBook').innerHTML = pending.opts.map(o => `<option value="${esc(o.key)}">${esc(o.name)} · ${fmtAm(o.am)}${o.diff ? ' (different line)' : ''}</option>`).join('')
@@ -1184,8 +1199,9 @@ import { drawShareCard } from './share-card.js?v=1';
       : pending.kind === 'parlay' && S.legs.length > 1 ? 'If the book quoted a different total (same-game parlays, boosts), type the odds you actually got.' : '';
   }
 
-  function commitSave() {
+  async function commitSave() {
     if (!pending) return false;
+    if (!S.user) { afterAuth = null; openAcct('signin'); return true; }
     const sel = $('#saveBook').value;
     const watch = sel === 'watch';
     const opt = watch ? (pending.best || pending.opts[0]) : pending.opts.find(o => o.key === sel);
@@ -1217,11 +1233,129 @@ import { drawShareCard } from './share-card.js?v=1';
       stake, odds: am, oddsEdited: !watch && am !== opt.am,
       status: 'open', payout: null, settledAt: null, manual: false, legs,
     };
+    const btn = $('#saveSubmit');
+    btn.disabled = true;
+    try {
+      const r = await api('/api/bets/save', { bet });
+      if (r.quota) S.quota = r.quota;
+    } catch (err) {
+      if (err.status === 402) {
+        if (err.data?.quota) S.quota = err.data.quota;
+        pending = null;
+        $('#saveDialog').close();
+        renderBets();
+        openPlan('limit');
+        return false;
+      }
+      if (err.status === 401) { setSession(null); renderBets(); $('#saveDialog').close(); openAcct('signin', 'Your session expired. Sign in again to save this bet.'); return false; }
+      $('#saveErr').textContent = err.status ? err.message : "Couldn't reach the server, so this bet isn't saved yet. Check your connection and try again.";
+      return false;
+    } finally { btn.disabled = false; }
     S.bets = mergeBets(S.bets, [bet]);
     persistBets();
     pending = null;
-    toast(watch ? 'Saved. Tracking it in My bets' : 'Saved to My bets');
+    const q = S.quota;
+    const left = q && !q.unlimited ? ` · ${q.left ? `${q.left} free save${q.left === 1 ? '' : 's'} left today` : 'that was today\'s last free save'}` : '';
+    toast((watch ? 'Saved. Tracking it in My bets' : 'Saved to My bets') + left);
     return true;
+  }
+
+  // ---------- membership ----------
+  function setMembership(m) {
+    if (!m || !m.plan) return;
+    S.plan = m.plan; S.quota = m.quota; S.billing = m.billing; S.admin = !!m.admin;
+  }
+
+  function openPlan(why) {
+    const d = $('#planDialog');
+    if (!d) return;
+    const q = S.quota;
+    $('#planKicker').textContent = why === 'limit' && q ? `You've used today's ${q.limit} free saves. They reset at midnight Central.` : '';
+    $('#planKicker').hidden = !$('#planKicker').textContent;
+    $('#planErr').textContent = '';
+    $('#planMsg').textContent = '';
+    $('#planCode').value = '';
+    $('#planCompare').innerHTML = `<tr class="me"><th scope="row">fck the vig Unlimited</th><td>${esc(PLAN_PRICE.month)}/mo</td></tr>`
+      + COMPETITORS.map(([n, p]) => `<tr><th scope="row">${esc(n)}</th><td>${esc(p)}</td></tr>`).join('');
+    renderPlan();
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+  }
+
+  function renderPlan() {
+    if (!$('#planDialog')) return;
+    const unlimited = S.plan?.name === 'unlimited';
+    const annual = !!S.billing?.annual;
+    if (!annual) S.planInterval = 'month';
+    $('#planIntervals').hidden = unlimited || !annual;
+    for (const b of document.querySelectorAll('[data-interval]')) b.setAttribute('aria-pressed', b.dataset.interval === S.planInterval);
+    $('#planYearLabel').textContent = `${PLAN_PRICE.year}/yr`;
+    $('#planYearSub').textContent = `${PLAN_PRICE.yearPerMonth}/mo · save ${PLAN_PRICE.yearSave}`;
+    $('#planMonthLabel').textContent = `${PLAN_PRICE.month}/mo`;
+    $('#planFreeN').textContent = FREE_N();
+    const buy = $('#planBuy');
+    buy.disabled = false;
+    if (unlimited) { buy.textContent = "You're on Unlimited"; buy.disabled = true; }
+    else if (!S.user) buy.textContent = 'Create a free account first';
+    else if (!S.billing?.ready) { buy.textContent = 'Payments open soon'; buy.disabled = true; }
+    else buy.textContent = S.planInterval === 'year' ? `Go Unlimited · ${PLAN_PRICE.year}/year` : `Go Unlimited · ${PLAN_PRICE.month}/month`;
+    $('#planBuyNote').textContent = unlimited ? '' : !S.user ? '' : S.billing?.ready ? 'Secure checkout by Stripe. Cancel anytime.' : 'Card payments are coming soon. Have a code? Enter it below.';
+    $('#planCodeWrap').hidden = unlimited;
+    if (NATIVE) {   // App Store rules: no outside payments or unlock codes inside the app
+      for (const id of ['#planIntervals', '#planBuy', '#planCodeWrap', '#planCompareWrap']) $(id).hidden = true;
+      $('#planBuyNote').textContent = unlimited ? '' : "Unlimited isn't available in the iPhone app yet.";
+    }
+  }
+
+  async function startCheckout() {
+    if (!S.user) { $('#planDialog').close(); afterAuth = () => openPlan(); return openAcct('signup', 'Create your free account, then you can go Unlimited.'); }
+    const btn = $('#planBuy');
+    btn.disabled = true;
+    $('#planErr').textContent = '';
+    try {
+      const { url } = await api('/api/billing/checkout', { interval: S.planInterval });
+      location.href = url;
+    } catch (err) {
+      $('#planErr').textContent = err.status ? err.message : "Couldn't reach the server. Try again.";
+      btn.disabled = false;
+    }
+  }
+
+  async function openBillingPortal(btn) {
+    if (btn) btn.disabled = true;
+    try { const { url } = await api('/api/billing/portal', {}); location.href = url; }
+    catch (err) { toast(err.status ? err.message : "Couldn't reach the server. Try again."); if (btn) btn.disabled = false; }
+  }
+
+  async function redeem() {
+    if (!S.user) { $('#planDialog').close(); afterAuth = () => openPlan(); return openAcct('signin', 'Sign in (or create a free account) to use your code.'); }
+    const code = $('#planCode').value.trim();
+    $('#planErr').textContent = ''; $('#planMsg').textContent = '';
+    if (!code) { $('#planErr').textContent = 'Type your code first.'; return; }
+    const btn = $('#planRedeem');
+    btn.disabled = true;
+    try {
+      const m = await api('/api/redeem', { code });
+      setMembership(m);
+      renderBets(); renderPlan();
+      $('#planMsg').textContent = m.plan.until ? `Code accepted. You're on Unlimited through ${longDate.format(new Date(m.plan.until))}.` : "Code accepted. You're on Unlimited.";
+      toast("You're on Unlimited");
+    } catch (err) {
+      $('#planErr').textContent = err.status ? err.message : "Couldn't reach the server. Try again.";
+    } finally { btn.disabled = false; }
+  }
+
+  // Back from Stripe Checkout (#upgraded). The webhook can land a few seconds after the redirect.
+  async function welcomeBack() {
+    history.replaceState(null, '', location.pathname + location.search);
+    setTab('bets');
+    if (!S.user) return;
+    toast('Payment received. Turning on Unlimited…');
+    for (let i = 0; i < 15; i++) {
+      const me = await refreshMe();
+      if (me?.plan?.name === 'unlimited') { toast("You're on Unlimited. Save as many bets as you want."); return; }
+      await new Promise(r => setTimeout(r, 2000));
+    }
+    toast("Your payment went through. Unlimited can take a minute to switch on. Refresh soon.");
   }
 
   // ---------- my bets ----------
@@ -1415,7 +1549,7 @@ import { drawShareCard } from './share-card.js?v=1';
     });
     let data = null;
     try { data = await res.json(); } catch { /* empty */ }
-    if (!res.ok) { const e = new Error(data?.error || `Server error (${res.status})`); e.status = res.status; throw e; }
+    if (!res.ok) { const e = new Error(data?.error || `Server error (${res.status})`); e.status = res.status; e.data = data; throw e; }
     return data;
   }
 
@@ -1431,7 +1565,13 @@ import { drawShareCard } from './share-card.js?v=1';
     syncing = (async () => {
       try {
         const sent = S.bets;
-        const { bets } = await api('/api/bets/sync', { bets: sent });
+        const { bets, rejected, quota } = await api('/api/bets/sync', { bets: sent });
+        if (quota) S.quota = quota;
+        if (rejected?.length) {   // new bets over today's free limit never reached the account
+          const drop = new Set(rejected);
+          S.bets = S.bets.filter(b => !drop.has(b.id));
+          toast(`${rejected.length === 1 ? '1 bet wasn\'t' : `${rejected.length} bets weren't`} saved: that's past today's free limit.`);
+        }
         S.bets = mergeBets(S.bets, bets);
         saveBets(S.bets);
         S.syncAt = Date.now(); S.syncErr = null;
@@ -1458,12 +1598,30 @@ import { drawShareCard } from './share-card.js?v=1';
     if (S.user) {
       const status = S.syncErr ? esc(S.syncErr) : S.syncAt ? `Synced ${esc(ago(new Date(S.syncAt).toISOString()))}` : 'Syncing…';
       box.innerHTML = `<div><b>Signed in as @${esc(S.user.username)}</b><span class="muted small">${S.user.email ? `${esc(S.user.email)} · ` : ''}${status}</span></div>
-        <div class="acct-actions"><button class="link-btn" data-acct="email">${S.user.email ? 'Change email' : 'Add email'}</button><button class="link-btn" data-acct="signout">Sign out</button><button class="link-btn danger" data-acct="delete">Delete account</button></div>${myBooksLine()}`;
+        <div class="acct-actions"><button class="link-btn" data-acct="email">${S.user.email ? 'Change email' : 'Add email'}</button><button class="link-btn" data-acct="signout">Sign out</button><button class="link-btn danger" data-acct="delete">Delete account</button></div>${planLine()}${myBooksLine()}`;
     } else {
-      box.innerHTML = `<div><b>Keep your bets on every device</b><span class="muted small">${S.syncErr ? esc(S.syncErr) : 'Right now they\'re saved in this browser only. A free account syncs them.'}</span></div>
+      box.innerHTML = `<div><b>Save and track your bets</b><span class="muted small">${S.syncErr ? esc(S.syncErr) : `A free account saves ${FREE_N()} bets a day and grades them for you on every device. Unlimited saves as many as you want.`}</span></div>
         <div class="acct-actions"><button class="chip" data-acct="signup">Create account</button><button class="link-btn" data-acct="signin">Sign in</button></div>${myBooksLine()}`;
     }
   }
+  const FREE_N = () => S.quota?.limit ?? 2;
+  const longDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  function planLine() {
+    const p = S.plan, q = S.quota;
+    if (!p) return '';
+    const admin = S.admin && !NATIVE ? '<a class="link-btn" href="admin.html">Admin</a>' : '';
+    if (p.name === 'unlimited') {
+      const end = p.paid_through || p.until;
+      const until = end ? `${p.renews ? 'renews' : 'through'} ${longDate.format(new Date(end))}` : 'no end date';
+      const how = p.source === 'stripe' ? '' : p.source === 'code' ? ' · from a code' : ' · on the house';
+      return `<div class="plan-line"><span class="small"><b class="plan-badge">Unlimited</b> <span class="muted">${esc(until)}${how}</span></span>
+        <span class="acct-actions">${p.manage && !NATIVE ? '<button class="link-btn" data-plan="manage">Manage billing</button>' : ''}${admin}</span></div>`;
+    }
+    const left = q && !q.unlimited ? `${q.left} of ${q.limit} free saves left today` : 'Free plan';
+    return `<div class="plan-line"><span class="small"><b>Free plan</b> <span class="muted">· ${esc(left)}</span></span>
+      <span class="acct-actions">${admin}${NATIVE ? '' : '<button class="chip plan-chip" data-plan="open">Go Unlimited</button>'}</span></div>`;
+  }
+
   function myBooksLine() {
     const names = myBookNames();
     return `<div class="mybooks-line"><span class="small"><b>My books:</b> <span class="muted">${names.length ? esc(names.join(', ')) : 'none picked yet. Pick the ones you have and we\'ll price parlays there.'}</span></span>
@@ -1475,7 +1633,11 @@ import { drawShareCard } from './share-card.js?v=1';
     if (!S.user) return;
     try {
       const me = await api('/api/me');
-      if (S.user && me.email !== S.user.email) { setSession({ ...S.user, email: me.email || null }); renderBets(); }
+      if (!S.user) return;
+      setMembership(me);
+      if (me.email !== S.user.email) setSession({ ...S.user, email: me.email || null });
+      renderBets();
+      return me;
     } catch (err) { if (err.status === 401) { setSession(null); renderBets(); } }
   }
 
@@ -1491,13 +1653,14 @@ import { drawShareCard } from './share-card.js?v=1';
 
   let acctMode = 'signin';
   let resetToken = null;
-  function openAcct(mode) {
+  let afterAuth = null;   // e.g. reopen the Save dialog once the person has an account
+  function openAcct(mode, lede) {
     const c = ACCT[mode];
     if (!c || !$('#acctEmailWrap')) return;   // page still loading the new layout
     acctMode = mode;
     $('#acctForm').reset();
     $('#acctTitle').textContent = c.title;
-    $('#acctLede').textContent = c.lede;
+    $('#acctLede').textContent = lede || c.lede;
     const show = { user: '#acctUserWrap', email: '#acctEmailWrap', pass: '#acctPassWrap', pass2: '#acctPass2Wrap', adult: '#acctAdultWrap' };
     for (const [k, sel] of Object.entries(show)) $(sel).hidden = !c.fields.includes(k);
     if (c.user) $('#acctUserLabel').textContent = c.user;
@@ -1542,9 +1705,11 @@ import { drawShareCard } from './share-card.js?v=1';
     toast(message);
     renderBets();
     await syncNow();
-    if (!email) refreshMe();
+    await refreshMe();
     loadAlerts();
     pullPrefs();
+    const next = afterAuth; afterAuth = null;
+    if (next) next();
   }
 
   async function submitAcct() {
@@ -1610,6 +1775,7 @@ import { drawShareCard } from './share-card.js?v=1';
     try { await api('/api/logout', {}); } catch { /* token may already be gone */ }
     setSession(null);
     S.syncAt = null; S.syncErr = null;
+    S.plan = S.quota = S.billing = null; S.admin = false;
     if (synced) {
       S.bets = []; saveBets(S.bets);
       S.myBooks = null; S.myBooksAt = 0;   // they're saved in the account; don't hand them to the next person on this browser
@@ -2244,11 +2410,23 @@ import { drawShareCard } from './share-card.js?v=1';
     }
     if (e.target.closest('#privacyLink')) { const d = $('#privacyDialog'); return d.showModal ? d.showModal() : d.setAttribute('open', ''); }
     if (e.target.closest('#saveCancel')) { pending = null; return $('#saveDialog').close(); }
-    if (e.target.closest('#acctCancel')) return $('#acctDialog').close();
+    if (e.target.closest('#acctCancel')) { afterAuth = null; return $('#acctDialog').close(); }
+    const pl = e.target.closest('[data-plan]');
+    if (pl) {
+      const a = pl.dataset.plan;
+      if (a === 'open') return openPlan();
+      if (a === 'manage') return openBillingPortal(pl);
+      if (a === 'close') return $('#planDialog').close();
+    }
+    const iv = e.target.closest('[data-interval]');
+    if (iv) { S.planInterval = iv.dataset.interval; return renderPlan(); }
+    if (e.target.closest('#planBuy')) return startCheckout();
+    if (e.target.closest('#planRedeem')) return redeem();
   });
   document.addEventListener('submit', e => {
     const f = e.target;
-    if (f.id === 'saveForm') { e.preventDefault(); if (commitSave()) $('#saveDialog').close(); return; }
+    if (f.id === 'saveForm') { e.preventDefault(); commitSave().then(ok => { if (ok) $('#saveDialog').close(); }); return; }
+    if (f.id === 'planForm') { e.preventDefault(); return redeem(); }
     if (f.id === 'acctForm') { e.preventDefault(); return submitAcct(); }
     if (f.id === 'alertForm') { e.preventDefault(); return submitAlert(); }
     if (f.id === 'myBooksForm') { e.preventDefault(); return saveMyBooksForm(); }
@@ -2385,6 +2563,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (hash === 'bets' || hash === 'season' || hash === 'money') setTab(hash);
     checkResetLink();
     readShareHash();
+    const upgraded = hash === 'upgraded';
     window.addEventListener('hashchange', () => { checkResetLink(); if (readShareHash()) applyShare(); });
     try {
       S.avail = await loadJson('data/states.json');
@@ -2399,7 +2578,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (S.avail && !lsGet(STATE_KEY) && !resetToken) openStateDialog(); // first visit: ask where they're betting from
     await loadFutures();
     runGrading(false);
-    if (S.user) { syncNow(); refreshMe(); loadAlerts(); pullPrefs(); } else refreshPushState();
+    if (S.user) { syncNow(); if (upgraded) welcomeBack(); else refreshMe(); loadAlerts(); pullPrefs(); } else { refreshPushState(); if (upgraded) welcomeBack(); }
     setInterval(() => refresh(false), POLL_MS);
     setInterval(renderStatus, 30_000);
     // Take games off the board as they tip off, even when no new odds file has landed.
