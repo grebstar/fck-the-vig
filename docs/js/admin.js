@@ -43,7 +43,48 @@ async function load() {
   $('#gate').hidden = true;
   $('#app').hidden = false;
   render();
+  loadUsers();
 }
+
+// ---------- all accounts ----------
+let users = [], usersPage = 0, usersTotal = 0, usersQ = '', usersSeq = 0;
+async function loadUsers(more) {
+  const seq = ++usersSeq;
+  if (!more) usersPage = 0;
+  $('#usersErr').textContent = '';
+  try {
+    const r = await api(`/api/admin/users?q=${encodeURIComponent(usersQ)}&page=${usersPage}`);
+    if (seq !== usersSeq) return;   // a newer search already started
+    users = more ? users.concat(r.users) : r.users;
+    usersTotal = r.total;
+    renderUsers();
+  } catch (err) { if (seq === usersSeq) $('#usersErr').textContent = err.message; }
+}
+const ago = ms => {
+  if (!ms) return '<span class="muted">Never</span>';
+  const d = (Date.now() - ms) / 864e5;
+  return esc(d < 1 ? 'Today' : d < 2 ? 'Yesterday' : d < 30 ? `${Math.floor(d)} days ago` : fmtDay(ms));
+};
+function renderUsers() {
+  $('#usersCount').textContent = usersQ ? `· ${usersTotal} found` : `· ${usersTotal} total`;
+  $('#users').innerHTML = users.length ? users.map(u => {
+    const plan = u.unlimited
+      ? `<span class="pill on">Unlimited</span><br><span class="hint">${esc(howLabel[u.plan_source] || '')}${u.plan_until ? ` · until ${esc(fmtDay(u.plan_until))}` : ''}</span>`
+      : `<span class="pill">Free</span>${u.saves_today ? `<br><span class="hint">${u.saves_today} saved today</span>` : ''}`;
+    const act = u.plan_source === 'stripe' ? '<span class="hint">Pays by card</span>'
+      : u.unlimited ? `<button class="link-btn danger" data-ugrant="${esc(u.username)}" data-remove="1">Move to Free</button>`
+        : `<button class="chip" data-ugrant="${esc(u.username)}">Give Unlimited</button>`;
+    return `<tr><td><b>@${esc(u.username)}</b><br><span class="hint">${esc(u.email || 'no email')}</span></td><td data-l="Joined">${esc(fmtDay(u.created_at))}</td>
+      <td data-l="Last sign-in">${ago(u.last_login)}</td><td data-l="Saved bets">${esc(u.bets)}</td><td data-l="Plan">${plan}</td><td>${act}</td></tr>`;
+  }).join('') : `<tr><td colspan="6" class="muted">${usersQ ? 'Nobody matches that.' : 'No accounts yet.'}</td></tr>`;
+  $('#usersMore').hidden = users.length >= usersTotal;
+}
+let searchTimer = null;
+$('#uSearch').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { usersQ = e.target.value.trim(); loadUsers(); }, 250);
+});
+$('#usersMore').addEventListener('click', () => { usersPage++; loadUsers(true); });
 
 function render() {
   const u = data.users;
@@ -120,6 +161,16 @@ document.addEventListener('click', async e => {
   const cp = e.target.closest('[data-copy]');
   if (cp) {
     try { await navigator.clipboard.writeText(cp.dataset.copy); cp.textContent = 'Copied'; } catch { cp.textContent = 'Select it and copy'; }
+    return;
+  }
+  const ug = e.target.closest('[data-ugrant]');
+  if (ug) {
+    ug.disabled = true;
+    try {
+      const r = await api('/api/admin/grant', ug.dataset.remove ? { username: ug.dataset.ugrant, remove: true } : { username: ug.dataset.ugrant, days: null });
+      await load();
+      alertLine(ug.dataset.remove ? `@${r.username} is back on Free.` : `@${r.username} is on Unlimited forever.`);
+    } catch (err) { ug.disabled = false; $('#usersErr').textContent = err.message; }
     return;
   }
   const rv = e.target.closest('[data-revoke]');
