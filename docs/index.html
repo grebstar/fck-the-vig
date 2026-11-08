@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=16">
+<link rel="stylesheet" href="styles.css?v=17">
 </head>
 <body>
 <header class="topbar">
@@ -214,8 +214,9 @@
     </div>
     <p id="saveWin" class="save-win"></p>
     <p id="saveHint" class="muted small"></p>
+    <p id="saveQuota" class="muted small save-quota"></p>
     <p id="saveErr" class="form-err" role="alert"></p>
-    <div class="modal-actions"><button type="button" id="saveCancel" class="link-btn">Cancel</button><button type="submit" class="cta">Save to My bets</button></div>
+    <div class="modal-actions"><button type="button" id="saveCancel" class="link-btn">Cancel</button><button type="submit" id="saveSubmit" class="cta">Save to My bets</button></div>
   </form>
 </dialog>
 
@@ -235,11 +236,39 @@
   </form>
 </dialog>
 
+<dialog id="planDialog" class="modal">
+  <form id="planForm" class="modal-card plan-card" novalidate>
+    <p id="planKicker" class="plan-kicker" hidden></p>
+    <h3>Go Unlimited</h3>
+    <p class="muted">Free accounts save <span id="planFreeN">2</span> bets a day. Unlimited saves every bet you want, each one graded automatically, with your record, profit and ROI on every device.</p>
+    <div id="planIntervals" class="plan-intervals" role="group" aria-label="Billing">
+      <button type="button" class="plan-int" data-interval="month" aria-pressed="true"><b id="planMonthLabel">$9.99/mo</b><span>Monthly</span></button>
+      <button type="button" class="plan-int" data-interval="year" aria-pressed="false"><b id="planYearLabel">$79.99/yr</b><span id="planYearSub">$6.67/mo · save 33%</span></button>
+    </div>
+    <button type="button" id="planBuy" class="cta">Go Unlimited</button>
+    <p id="planBuyNote" class="muted small plan-note"></p>
+    <p id="planErr" class="form-err" role="alert"></p>
+    <p id="planMsg" class="form-ok" role="status"></p>
+    <div id="planCompareWrap">
+      <h4 class="plan-h">What other betting tools charge</h4>
+      <table class="plan-compare"><tbody id="planCompare"></tbody></table>
+      <p class="muted small">Their App Store prices, checked April–May 2026. They offer different features than we do.</p>
+    </div>
+    <div id="planCodeWrap" class="plan-code">
+      <label class="field">Have a code?
+        <span class="plan-code-row"><input id="planCode" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" placeholder="VIG-XXXX-XXXX"><button type="button" id="planRedeem" class="chip">Redeem</button></span>
+      </label>
+    </div>
+    <div class="modal-actions"><button type="button" class="link-btn" data-plan="close">Not now</button></div>
+  </form>
+</dialog>
+
 <dialog id="privacyDialog" class="modal">
   <form method="dialog" class="modal-card">
     <h3>Privacy</h3>
-    <p><b>Without an account</b>, your saved bets and your state stay in this browser. Nothing is sent to us.</p>
-    <p><b>With an account</b>, we store your username, your email, a salted hash of your password (never the password itself) and the bets you save, so they sync across your devices. Your email is only used to send password reset links. We don't send marketing, we don't collect your name or payment details, and we don't sell or share anything.</p>
+    <p><b>Without an account</b>, your state and My books stay in this browser. Nothing is sent to us. Saving bets needs a free account.</p>
+    <p><b>With an account</b>, we store your username, your email, a salted hash of your password (never the password itself) and the bets you save, so they sync across your devices. Your email is only used to send password reset links and alerts you turn on. We don't send marketing, and we don't sell or share anything. We count how many bets you save each day for the free plan's limit.</p>
+    <p><b>If you go Unlimited</b>, Stripe handles the payment. Your card details go to Stripe, never to us. We keep the Stripe customer and subscription IDs, the plan's status and when it renews. If you used a code, we keep which code you used.</p>
     <p><b>For line-move alerts</b>, we store what each alert is watching and, if you turn on push, a push address for each device you allow. It only works for sending you notifications. Turning push off or signing out removes it.</p>
     <p><b>My books</b> is the list of books you picked. It stays in this browser, and in your account if you're signed in. We never connect to or see your sportsbook accounts.</p>
     <p><b>Shared links</b> only contain the bets in the parlay, nothing about you.</p>
@@ -303,6 +332,6 @@
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=15"></script>
+<script type="module" src="js/main.js?v=16"></script>
 </body>
 </html>
