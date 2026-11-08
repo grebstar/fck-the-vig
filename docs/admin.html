@@ -38,6 +38,13 @@
   .confirm { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
   .gate { text-align: center; padding: 40px 16px; }
   .hint { font-size: 12.5px; color: var(--dim); margin-top: 4px; }
+  @media (max-width: 640px) {
+    .tbl.cards thead { display: none; }
+    .tbl.cards tr { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .tbl.cards td { padding: 0; border: 0; }
+    .tbl.cards td:first-child, .tbl.cards td:last-child { grid-column: 1 / -1; }
+    .tbl.cards td[data-l]::before { content: attr(data-l); display: block; font-size: 11.5px; color: var(--muted); }
+  }
 </style>
 </head>
 <body>
@@ -54,6 +61,14 @@
       <h2>Members</h2>
       <div class="tiles" id="tiles"></div>
       <p class="muted small" id="billingNote"></p>
+    </section>
+
+    <section>
+      <h2>All accounts <span class="muted small" id="usersCount"></span></h2>
+      <label class="field">Search by username or email<input id="uSearch" type="search" autocapitalize="none" spellcheck="false" placeholder="Type a name or email"></label>
+      <p id="usersErr" class="form-err" role="alert"></p>
+      <div class="tbl-wrap"><table class="tbl cards"><thead><tr><th>User</th><th>Joined</th><th>Last sign-in</th><th>Saved bets</th><th>Plan</th><th></th></tr></thead><tbody id="users"></tbody></table></div>
+      <button class="chip" type="button" id="usersMore" hidden style="margin-top:12px">Show more</button>
     </section>
 
     <section>
@@ -112,6 +127,6 @@
     </section>
   </div>
 </main>
-<script type="module" src="js/admin.js?v=1"></script>
+<script type="module" src="js/admin.js?v=2"></script>
 </body>
 </html>
