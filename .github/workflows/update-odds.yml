@@ -80,6 +80,10 @@ jobs:
         continue-on-error: true          # never block the odds update
         run: node scripts/check-alerts.mjs
 
+      - name: Build price-gaps feed (docs/data/gaps.json, read by the Daily Poster agent)
+        continue-on-error: true          # never block the odds update
+        run: node scripts/build-gaps.mjs
+
       - name: Save odds snapshot to the repo
         if: github.event_name != 'push'
         run: |
@@ -88,6 +92,7 @@ jobs:
           node -e "const fs=require('fs');const at=f=>{try{return JSON.parse(fs.readFileSync(f,'utf8')).generated_at||null}catch{return null}};fs.writeFileSync('docs/data/meta.json',JSON.stringify({odds_at:at('docs/data/odds.json'),futures_at:at('docs/data/futures.json')}))"
           git add docs/data/odds.json docs/data/meta.json
           if [ -f docs/data/futures.json ]; then git add docs/data/futures.json; fi
+          if [ -f docs/data/gaps.json ]; then git add docs/data/gaps.json; fi
           git diff --cached --quiet || git commit -m "Update odds [skip ci]"
           git push
 
