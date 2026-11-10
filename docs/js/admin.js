@@ -1,4 +1,4 @@
-/* fck the vig admin page (docs/admin.html): secret codes, giving Unlimited by hand, member numbers.
+/* Screw the Vig admin page (docs/admin.html): secret codes, giving Unlimited by hand, member numbers.
    Uses the same sign-in as the site. The API only answers for the pinned admin account (worker/index.js). */
 const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
 const API_BASE = LOCAL ? 'http://localhost:8787' : 'https://api.fckvig.com';
@@ -131,7 +131,7 @@ $('#codeForm').addEventListener('submit', async e => {
   btn.disabled = true;
   try {
     const r = await api('/api/admin/codes', body);
-    const share = `Here's a code for free Unlimited on fck the vig: ${r.code}\nSign in at https://www.fckvig.com, tap your account, then Go Unlimited → Have a code?`;
+    const share = `Here's a code for free Unlimited on Screw the Vig: ${r.code}\nSign in at https://screwvig.com, tap your account, then Go Unlimited → Have a code?`;
     $('#newCode').hidden = false;
     $('#newCode').innerHTML = `<div class="small muted">New code for ${esc(body.label)}. Copy it now: this is the only time the whole code is shown.</div>
       <div class="code">${esc(r.code)}</div>
