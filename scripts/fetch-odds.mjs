@@ -25,7 +25,7 @@ const int = (v, d) => (v != null && String(v).trim() !== '' && !isNaN(+v) ? +v :
 const API_KEY = env.ODDS_API_KEY;
 const API_BASE = (env.ODDS_API_BASE || 'https://api.the-odds-api.com').replace(/\/$/, '');
 const MODE = (env.MODE || 'all').trim().toLowerCase();
-const SPORTS = list(env.SPORTS, 'americanfootball_nfl,basketball_nba,americanfootball_ncaaf,basketball_ncaab');
+const SPORTS = list(env.SPORTS, 'americanfootball_nfl,basketball_nba,americanfootball_ncaaf,basketball_ncaab,icehockey_nhl');
 const BOOKMAKERS = list(env.BOOKMAKERS, 'draftkings,fanduel,betmgm,espnbet,betrivers,hardrockbet,kalshi,polymarket_us,novig,prophetx');
 const MARKETS = list(env.MARKETS, 'h2h,spreads,totals');
 const DAYS_AHEAD = int(env.DAYS_AHEAD, 14);  // the site's date picker shows every day that has lines
@@ -46,12 +46,14 @@ const PROP_MARKETS = {
   basketball_nba: list(env.PROP_MARKETS_NBA, 'player_points,player_rebounds,player_assists'),
   americanfootball_ncaaf: list(env.PROP_MARKETS_NCAAF, 'player_pass_yds,player_rush_yds,player_reception_yds,player_anytime_td'),
   basketball_ncaab: list(env.PROP_MARKETS_NCAAB, 'player_points,player_rebounds,player_assists'),
+  icehockey_nhl: list(env.PROP_MARKETS_NHL, 'player_points,player_shots_on_goal,player_goal_scorer_anytime'),
 };
 const PROP_GAMES = {
   americanfootball_nfl: int(env.PROP_GAMES_NFL, 3),
   basketball_nba: int(env.PROP_GAMES_NBA, 2),
   americanfootball_ncaaf: int(env.PROP_GAMES_NCAAF, 1),
   basketball_ncaab: int(env.PROP_GAMES_NCAAB, 0),
+  icehockey_nhl: int(env.PROP_GAMES_NHL, 8),
 };
 const PROP_WINDOW_H = int(env.PROP_WINDOW_HOURS, 30);   // only games starting within this many hours
 const LINES_RESERVE = int(env.MIN_REMAINING, 15);       // never go below this many credits
@@ -66,7 +68,7 @@ const FUTURES_PER_WEEK = int(env.FUTURES_PER_WEEK, 5);  // sportsbook futures (f
 
 const SPORT_TITLES = {
   americanfootball_nfl: 'NFL', basketball_nba: 'NBA',
-  americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball',
+  americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball', icehockey_nhl: 'NHL',
 };
 
 
