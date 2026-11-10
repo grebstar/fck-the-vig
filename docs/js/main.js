@@ -1,4 +1,4 @@
-/* FCK The Vig — parlay price check across sportsbooks and prediction markets (docs/js/main.js).
+/* Screw the Vig — parlay price check across sportsbooks and prediction markets (docs/js/main.js).
    Reads data/odds.json and data/futures.json (written by the GitHub Action) and data/states.json (where each book is legal).
    Saved bets live in this browser and, when signed in, sync to the accounts API (worker/index.js). */
 import { gradeBets, settle } from './grade.js?v=9';
@@ -21,7 +21,7 @@ import { drawShareCard } from './share-card.js?v=1';
   const SYNC_EVERY_MS = 5 * 60_000;
   const NATIVE = location.protocol === 'capacitor:';   // running inside the iPhone app (Capacitor serves it from capacitor://localhost)
   const LOCAL = !NATIVE && ['localhost', '127.0.0.1'].includes(location.hostname);
-  const DATA_BASE = NATIVE ? 'https://www.fckvig.com/' : '';   // the app reads the same live odds files as the site
+  const DATA_BASE = NATIVE ? 'https://screwvig.com/' : '';   // the app reads the same live odds files as the site
   const AGE_KEY = 'ftv-21';
   if (NATIVE) document.documentElement.classList.add('native');
   const API_BASE = LOCAL ? 'http://localhost:8787' : 'https://api.fckvig.com';
@@ -1017,10 +1017,10 @@ import { drawShareCard } from './share-card.js?v=1';
         ['Books can limit you.', 'Sportsbooks sometimes cap or close accounts that regularly bet arbitrage.'],
       ] },
       { id: 'bets', title: 'My bets and alerts', items: [
-        ['Grading happens while fckvig is open.', 'About 2½ hours after the start we check ESPN’s final box scores, then every 10 minutes while the site is open. If it’s closed, your bets are graded the next time you open it.'],
+        ['Grading happens while Screw the Vig is open.', 'About 2½ hours after the start we check ESPN’s final box scores, then every 10 minutes while the site is open. If it’s closed, your bets are graded the next time you open it.'],
         ['Some bets need you.', 'Postponed games, players who didn’t play and anything we can’t confirm are marked Needs review. Futures settle by hand. Each book has its own rules for these, and the book’s result is the one that counts.'],
         ['Without an account, bets stay in this browser.', 'Clearing your browser data deletes them. Sign in to keep them on every device.'],
-        ['Alerts aren’t instant.', `We check alerts right after each odds update, so about ${esc(pullFreq(C))}. A line can move and move back in between. On iPhone, push alerts need fckvig added to your Home Screen.`],
+        ['Alerts aren’t instant.', `We check alerts right after each odds update, so about ${esc(pullFreq(C))}. A line can move and move back in between. On iPhone, push alerts need Screw the Vig added to your Home Screen.`],
       ] },
     ];
   }
@@ -1275,7 +1275,7 @@ import { drawShareCard } from './share-card.js?v=1';
     $('#planErr').textContent = '';
     $('#planMsg').textContent = '';
     $('#planCode').value = '';
-    $('#planCompare').innerHTML = `<tr class="me"><th scope="row">fck the vig Unlimited</th><td>${esc(PLAN_PRICE.month)}/mo</td></tr>`
+    $('#planCompare').innerHTML = `<tr class="me"><th scope="row">Screw the Vig Unlimited</th><td>${esc(PLAN_PRICE.month)}/mo</td></tr>`
       + COMPETITORS.map(([n, p]) => `<tr><th scope="row">${esc(n)}</th><td>${esc(p)}</td></tr>`).join('');
     renderPlan();
     if (d.showModal) d.showModal(); else d.setAttribute('open', '');
@@ -1789,7 +1789,7 @@ import { drawShareCard } from './share-card.js?v=1';
   // ---------- sharing a parlay ----------
   const b64u = str => { let bin = ''; for (const b of new TextEncoder().encode(str)) bin += String.fromCharCode(b); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
   const unb64u = str => new TextDecoder().decode(Uint8Array.from(atob(str.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)));
-  const SITE = LOCAL ? `${location.origin}${location.pathname}` : 'https://www.fckvig.com/';
+  const SITE = LOCAL ? `${location.origin}${location.pathname}` : 'https://screwvig.com/';
 
   function shareUrl(legs, stake) {
     const packed = legs.map(l => [l.eventId, l.market, l.name, l.point ?? null, l.desc || null]);
@@ -1833,7 +1833,7 @@ import { drawShareCard } from './share-card.js?v=1';
     const b = card.best;
     const title = card.kind === 'single'
       ? (b ? `${labels[0]}: ${fmtAm(b.am)} at ${b.name}` : labels[0])
-      : (b ? `${legs.length}-leg parlay: ${Number.isInteger(card.stake) ? `$${card.stake}` : money(card.stake)} pays ${money(b.payout)} at ${b.name}` : `${legs.length}-leg parlay on fck the vig`);
+      : (b ? `${legs.length}-leg parlay: ${Number.isInteger(card.stake) ? `$${card.stake}` : money(card.stake)} pays ${money(b.payout)} at ${b.name}` : `${legs.length}-leg parlay on Screw the Vig`);
     const desc = `${card.kind === 'single' ? (card.legs[0].sub ? card.legs[0].sub + '. ' : '') : labels.join(' · ') + '. '}Prices as of ${card.asOf}. Compare it at every book legal in your state.`;
     return { title, desc };
   }
@@ -1904,7 +1904,7 @@ import { drawShareCard } from './share-card.js?v=1';
   }
   async function nativeShare() {
     if (!shareNow?.url || !navigator.share) return;
-    try { await navigator.share({ title: 'fck the vig', text: `${shareNow.text}. Compare the payout at every book:`, url: shareNow.url }); }
+    try { await navigator.share({ title: 'Screw the Vig', text: `${shareNow.text}. Compare the payout at every book:`, url: shareNow.url }); }
     catch { /* cancelled */ }
   }
 
@@ -1916,7 +1916,7 @@ import { drawShareCard } from './share-card.js?v=1';
     $('#shareCopy').textContent = 'Copied ✓';
   }
 
-  // A shared link looks like https://www.fckvig.com/#p=<legs>&s=<stake>. Legs load once the odds are in.
+  // A shared link looks like https://screwvig.com/#p=<legs>&s=<stake>. Legs load once the odds are in.
   let pendingShare = null;
   function readShareHash() {
     const h = location.hash.replace(/^#/, '');
@@ -2069,7 +2069,7 @@ import { drawShareCard } from './share-card.js?v=1';
   // Must start from a tap: browsers only show the permission prompt in response to one.
   async function enablePush() {
     if (!pushSupported()) throw new Error(NATIVE ? 'Push alerts in the app are coming in the next update. Use email alerts for now.' : IS_IOS && !STANDALONE
-      ? 'On iPhone, add fckvig to your Home Screen first (Share → Add to Home Screen), open it from there, then turn alerts on.'
+      ? 'On iPhone, add Screw the Vig to your Home Screen first (Share → Add to Home Screen), open it from there, then turn alerts on.'
       : "This browser can't show push notifications. Use email alerts instead.");
     const perm = await Notification.requestPermission();
     if (perm !== 'granted') throw new Error('Notifications are blocked for this site. Allow them in your browser settings, then try again.');
@@ -2113,7 +2113,7 @@ import { drawShareCard } from './share-card.js?v=1';
       blocked: 'Notifications are blocked for this site in your browser settings.',
       unsupported: "This browser can't do push notifications, so alerts come by email.",
       app: 'Push alerts in the app are coming in the next update. Alerts come by email for now.',
-      'ios-home': 'On iPhone, add fckvig to your Home Screen (Share → Add to Home Screen) and open it from there to get push alerts.',
+      'ios-home': 'On iPhone, add Screw the Vig to your Home Screen (Share → Add to Home Screen) and open it from there to get push alerts.',
       unknown: '',
     }[pushState] || '';
     const items = list.map(a => {
@@ -2154,7 +2154,7 @@ import { drawShareCard } from './share-card.js?v=1';
       const push = $('#alertPush'), mail = $('#alertEmail');
       push.disabled = pushState === 'unsupported' || pushState === 'blocked' || pushState === 'app';
       push.checked = !push.disabled;
-      $('#alertPushNote').textContent = pushState === 'app' ? 'Coming in the next app update.' : pushState === 'ios-home' ? 'iPhone: add fckvig to your Home Screen first.' : pushState === 'blocked' ? 'Blocked in your browser settings.' : pushState === 'unsupported' ? 'Not supported in this browser.' : '';
+      $('#alertPushNote').textContent = pushState === 'app' ? 'Coming in the next app update.' : pushState === 'ios-home' ? 'iPhone: add Screw the Vig to your Home Screen first.' : pushState === 'blocked' ? 'Blocked in your browser settings.' : pushState === 'unsupported' ? 'Not supported in this browser.' : '';
       mail.disabled = !S.user.email;
       mail.checked = !!S.user.email && push.disabled;
       $('#alertEmailNote').textContent = S.user.email ? S.user.email : 'Add an email to your account first.';
@@ -2260,7 +2260,7 @@ import { drawShareCard } from './share-card.js?v=1';
     });
     const n = S.legs.length;
     return [`${r.name} · ${n === 1 ? 'straight bet' : `${n}-leg parlay`} · ${fmtAm(r.am)}`, ...lines,
-      `${money(S.stake)} pays ${money(r.payout)}`, 'Compared on fckvig.com'].join('\n');
+      `${money(S.stake)} pays ${money(r.payout)}`, 'Compared on screwvig.com'].join('\n');
   }
   async function copySlip() {
     const text = slipText();
@@ -2517,7 +2517,7 @@ import { drawShareCard } from './share-card.js?v=1';
     }
   }
 
-  // Password reset links look like https://www.fckvig.com/#reset=<token>.
+  // Password reset links look like https://screwvig.com/#reset=<token>.
   function checkResetLink() {
     const h = location.hash.replace('#', '');
     if (!h.startsWith('reset=')) return;
