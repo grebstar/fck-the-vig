@@ -18,6 +18,7 @@ export const MARKET_LABELS = {
   player_receptions: 'Receptions', player_pass_tds: 'Pass TDs', player_anytime_td: 'Anytime TD',
   player_points: 'Points', player_rebounds: 'Rebounds', player_assists: 'Assists', player_threes: 'Threes',
   player_points_rebounds_assists: 'Pts+Reb+Ast',
+  player_shots_on_goal: 'Shots on Goal', player_goal_scorer_anytime: 'Anytime Goal',
 };
 export const isProp = mk => mk.startsWith('player_');
 export const mLabel = mk => MARKET_LABELS[mk] || mk.replace(/^player_/, '').replace(/_/g, ' ');
