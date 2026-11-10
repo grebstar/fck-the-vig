@@ -5,7 +5,7 @@
 // Password-reset emails go out through whichever of these is set up (first one wins):
 //   - a Cloudflare Email Service binding named EMAIL (needs the Workers Paid plan), or
 //   - a Resend API key in the secret RESEND_API_KEY (free plan: 100 emails/day).
-// MAIL_FROM sets the sender (default "fck the vig <noreply@fckvig.com>"); SITE_URL the link target.
+// MAIL_FROM sets the sender (default "Screw the Vig <noreply@screwvig.com>"); SITE_URL the link target.
 //
 // Line-move alerts: users save alerts here; the GitHub Action that refreshes odds checks them and calls
 // /api/alerts/fire, proving who it is with a GitHub Actions OIDC token (no shared secret to manage).
@@ -43,7 +43,7 @@ const SHARE_MAX_IMGS = 2500;         // newest pictures kept in the database (~2
 const SHARE_MAX_LEGS = 12;
 const FREE_SAVES_PER_DAY = 2;        // env FREE_SAVES_PER_DAY overrides
 const PLAN_TZ = 'America/Chicago';   // the free daily count resets at midnight here
-const ADMIN_EMAILS = 'cory@fckvig.com';
+const ADMIN_EMAILS = 'cory@fckvig.com,cory@screwvig.com';
 const STRIPE_GRACE_DAYS = 3;         // keep Unlimited this long past a period end while Stripe retries a card
 const CODE_RE = /^[A-Z0-9-]{4,32}$/;
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   // no 0/O or 1/I
@@ -258,7 +258,7 @@ async function changeEmail(req, db) {
 function mailerReady(env) { return !!(env.EMAIL || env.RESEND_API_KEY); }
 
 async function sendMail(env, { to, subject, text, html }) {
-  const from = env.MAIL_FROM || 'fck the vig <noreply@fckvig.com>';
+  const from = env.MAIL_FROM || 'Screw the Vig <noreply@screwvig.com>';
   if (env.EMAIL) {
     const m = /^(.*)<(.+)>$/.exec(from);
     await env.EMAIL.send({ from: m ? { name: m[1].trim(), email: m[2].trim() } : from, to, subject, text, html });
@@ -289,15 +289,15 @@ async function forgot(req, db, env) {
     db.prepare('DELETE FROM resets WHERE user_id = ? OR expires_at < ?').bind(u.id, now),
     db.prepare('INSERT INTO resets (token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)').bind(await sha256(token), u.id, now, now + RESET_MINUTES * 60e3),
   ]);
-  const link = `${(env.SITE_URL || 'https://www.fckvig.com').replace(/\/$/, '')}/#reset=${token}`;
-  const text = `Hi ${u.username},\n\nSomeone (hopefully you) asked to reset the password for your fck the vig account.\n\nSet a new password here (the link works for ${RESET_MINUTES} minutes):\n${link}\n\nIf you didn't ask for this, ignore this email. Your password won't change.\n`;
+  const link = `${(env.SITE_URL || 'https://screwvig.com').replace(/\/$/, '')}/#reset=${token}`;
+  const text = `Hi ${u.username},\n\nSomeone (hopefully you) asked to reset the password for your Screw the Vig account.\n\nSet a new password here (the link works for ${RESET_MINUTES} minutes):\n${link}\n\nIf you didn't ask for this, ignore this email. Your password won't change.\n`;
   const html = `<div style="font-family:system-ui,sans-serif;font-size:16px;line-height:1.5;color:#14062e">
 <p>Hi ${u.username},</p>
-<p>Someone (hopefully you) asked to reset the password for your <b>fck the vig</b> account.</p>
+<p>Someone (hopefully you) asked to reset the password for your <b>Screw the Vig</b> account.</p>
 <p><a href="${link}" style="display:inline-block;background:#9b74ff;color:#14062e;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">Set a new password</a></p>
 <p style="font-size:14px;color:#555">The link works for ${RESET_MINUTES} minutes. If you didn't ask for this, ignore this email. Your password won't change.</p></div>`;
   try {
-    await sendMail(env, { to: u.email, subject: 'Reset your fck the vig password', text, html });
+    await sendMail(env, { to: u.email, subject: 'Reset your Screw the Vig password', text, html });
   } catch (err) {
     console.error('reset email failed', err);
     throw new HttpError(502, "We couldn't send the email just now. Please try again in a few minutes.");
@@ -424,7 +424,7 @@ async function deleteAccount(req, db, env) {
   if (!row || !(await checkPassword(String(b.password ?? ''), row.pw))) throw new HttpError(401, 'Wrong password.');
   // Never leave a deleted account still being charged.
   if (row.stripe_sub && !['canceled', 'incomplete_expired'].includes(row.stripe_status)) {
-    if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "We couldn't cancel your subscription right now. Email cory@fckvig.com and we'll take care of it.");
+    if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "We couldn't cancel your subscription right now. Email cory@screwvig.com and we'll take care of it.");
     try { await stripe(env, 'DELETE', `/v1/subscriptions/${encodeURIComponent(row.stripe_sub)}`); } catch (err) {
       if (err.status !== 404) { console.error('cancel on delete', err); throw new HttpError(502, "We couldn't cancel your subscription just now, so nothing was deleted. Please try again."); }
     }
@@ -843,7 +843,7 @@ async function vapidHeader(db, endpoint, env) {
   let hit = v.jwts.get(aud);
   if (!hit || hit.exp - 600 < now) {
     hit = { exp: now + 12 * 3600 };
-    hit.jwt = await vapidJwt(v.key, aud, env.VAPID_SUBJECT || 'https://www.fckvig.com', hit.exp);
+    hit.jwt = await vapidJwt(v.key, aud, env.VAPID_SUBJECT || 'https://screwvig.com', hit.exp);
     v.jwts.set(aud, hit);
   }
   return `vapid t=${hit.jwt}, k=${v.pub}`;
@@ -1021,7 +1021,7 @@ async function fireAlerts(req, db, env) {
   const b = await body(req);
   const fired = (Array.isArray(b.fired) ? b.fired : []).slice(0, 200);
   const expired = (Array.isArray(b.expired) ? b.expired : []).map(Number).filter(Number.isInteger).slice(0, 1000);
-  const site = (env.SITE_URL || 'https://www.fckvig.com').replace(/\/$/, '');
+  const site = (env.SITE_URL || 'https://screwvig.com').replace(/\/$/, '');
   const out = { sent: 0, pushes: 0, emails: 0, expired: 0 };
   for (const f of fired) {
     const id = Number(f?.id);
@@ -1068,7 +1068,7 @@ const SHARE_ID_RE = /^[A-Za-z0-9]{8,12}$/;
 const B62 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const shareId = () => [...crypto.getRandomValues(new Uint8Array(10))].map(b => B62[b % 62]).join('');
 const oneLine = (v, max) => String(v ?? '').replace(/[\u0000-\u001f\u007f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
-const siteUrl = env => (env.SITE_URL || 'https://www.fckvig.com').replace(/\/$/, '') + '/';
+const siteUrl = env => (env.SITE_URL || 'https://screwvig.com').replace(/\/$/, '') + '/';
 
 // Same packed format the site uses in its #p= links: [eventId, market, name, point, desc].
 function cleanShareLegs(legs) {
