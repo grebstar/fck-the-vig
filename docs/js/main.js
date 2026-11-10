@@ -1009,9 +1009,9 @@ import { drawShareCard } from './share-card.js?v=1';
         [`We compare ${books.length} books and exchanges.`, `${esc(andList(books))}.${missingBooks.length ? ` ${esc(andList([...missingBooks, 'some others']))} aren’t included yet.` : ''}`],
         ['It’s where you are, not where you live.', 'Books check your location when you bet. Pick the state you’ll be in when you place it.'],
         ['Laws change.', `We checked where each platform is legal${checked} and recheck about once a month. <button type="button" class="link-btn" id="knowStates">See every state and our sources</button>`],
-        ['Prediction markets have fees and limits.', 'Kalshi, Polymarket, Novig and ProphetX prices are shown before their trading fees (Free money adds Kalshi’s estimated fee). The price shown may only be there for a small amount; a bigger bet can fill at a worse price.'],
+        ['Prediction markets have fees and limits.', 'Kalshi, Polymarket, Novig and ProphetX prices are shown before their trading fees (Sports Book Arbitrage adds Kalshi’s estimated fee). The price shown may only be there for a small amount; a bigger bet can fill at a worse price.'],
       ] },
-      { id: 'money', title: 'Free money', items: [
+      { id: 'money', title: 'Sports Book Arbitrage', items: [
         ['These go fast.', 'Sure things and edges come from our last pull, and books often fix them within minutes. Check both prices in the apps before you bet either side.'],
         ['Most involve prediction markets.', 'Their fees and small available amounts can wipe out a thin edge.'],
         ['Books can limit you.', 'Sportsbooks sometimes cap or close accounts that regularly bet arbitrage.'],
@@ -1981,7 +1981,7 @@ import { drawShareCard } from './share-card.js?v=1';
     box.innerHTML = `<div class="bd-head"><h3>Breakdown</h3><div class="chips">${tabs.map(([k, t]) => `<button class="chip" data-stats="${k}" aria-pressed="${k === S.statsTab}">${t}</button>`).join('')}</div></div>${table}`;
   }
 
-  // ---------- free money board ----------
+  // ---------- sports book arbitrage board ----------
   const SPORT_SHORT = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'CFB', basketball_ncaab: 'CBB' };
   const whenFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
   const pct = (x, d = 1) => `${(x * 100).toFixed(d)}%`;
@@ -2127,7 +2127,7 @@ import { drawShareCard } from './share-card.js?v=1';
     box.innerHTML = `<div class="al-head"><h3>${ICONS.bell} Line-move alerts</h3></div>
       <p class="muted small">${pushLine}${S.user.email ? ` Email alerts go to ${esc(S.user.email)}.` : ' Add an email to your account to get alerts by email.'}</p>
       ${S.alertsErr ? `<p class="form-err">${esc(S.alertsErr)}</p>` : ''}
-      ${list.length ? `<ul class="al-list">${items}</ul>` : '<p class="muted small">No alerts yet. Tap the bell next to any leg in your parlay, or on a Free money pick.</p>'}
+      ${list.length ? `<ul class="al-list">${items}</ul>` : '<p class="muted small">No alerts yet. Tap the bell next to any leg in your parlay, or on a Sports Book Arbitrage pick.</p>'}
       <p class="hint">We check your alerts every time the odds update (right now that's ${esc(pullFreq())}), so a move can take ${knowConf().run_every_hours > 0 ? 'up to a couple of hours' : 'a few hours'} to reach you.</p>`;
   }
 
