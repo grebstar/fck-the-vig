@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>fck the vig — parlay price check</title>
+<title>Screw the Vig — parlay price check</title>
 <meta name="description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state. Compare futures, save your bets and track your record.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="fck the vig">
-<meta property="og:title" content="fck the vig — same bet, best price, every book">
+<meta property="og:site_name" content="Screw the Vig">
+<meta property="og:title" content="Screw the Vig — same bet, best price, every book">
 <meta property="og:description" content="Build a parlay once and see what it pays at every sportsbook and prediction market legal in your state.">
-<meta property="og:image" content="https://www.fckvig.com/og.png">
+<meta property="og:image" content="https://screwvig.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Same parlay, bigger payout: an example $10 parlay priced at five books, with the best one paying $12.40 more.">
@@ -21,16 +21,16 @@
 <link rel="icon" href="icons/icon-192.png?v=2" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="fckvig">
+<meta name="apple-mobile-web-app-title" content="Screw the Vig">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Anton&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=17">
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="./" aria-label="fck the vig home"><img class="brand-mark" src="logo.svg" alt="" width="68" height="68">fck the vig<span>.</span></a>
+  <a class="brand" href="./" aria-label="Screw the Vig home"><img class="brand-mark" src="logo.svg" alt="" width="68" height="68"><b class="brand-screw">SCREW</b>the vig<span>.</span></a>
   <nav class="views" aria-label="Sections">
     <button data-view="games" aria-current="page">Games</button>
     <button data-view="money">Sports Book Arbitrage</button>
@@ -159,13 +159,13 @@
   <p><b>How payouts are calculated.</b> Standard parlays pay the product of each leg's price, so that's what we show for every book. Same-game parlays, prediction-market trading fees and boosts aren't reflected. Always confirm the price in the app before you bet.</p>
   <p>Odds via <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a> and <a href="https://kalshi.com" target="_blank" rel="noopener">Kalshi</a> · results from ESPN box scores · <button class="link-btn" id="aboutData">Where each platform is legal or blocked, by state (sources)</button> · <button class="link-btn" id="privacyLink">Privacy</button></p>
   <p class="rg">21+ (18+ on some prediction markets). Gambling problem? Call 1-800-GAMBLER.</p>
-  <p class="rg">© 2026 GrebStar Ventures LLC. fck the vig is operated by GrebStar Ventures LLC.</p>
+  <p class="rg">© 2026 GrebStar Ventures LLC. Screw the Vig is operated by GrebStar Ventures LLC.</p>
 </footer>
 
 <dialog id="ageDialog" class="modal">
   <form method="dialog" class="modal-card">
     <h3>Are you 21 or older?</h3>
-    <p class="muted">fck the vig compares sports betting odds. It's only for adults 21 and older (18+ on some prediction markets). We don't take bets; you place them with the sportsbook.</p>
+    <p class="muted">Screw the Vig compares sports betting odds. It's only for adults 21 and older (18+ on some prediction markets). We don't take bets; you place them with the sportsbook.</p>
     <div id="ageBtns" class="modal-actions age-btns"><button class="link-btn" data-age="no" type="button">I'm under 21</button><button class="cta" data-age="yes" type="button">I'm 21 or older</button></div>
     <p id="ageNo" class="note warn" hidden><strong>Sorry, this app is only for adults 21 and older.</strong></p>
     <p class="rg">Gambling problem? Call <a href="tel:18004262537">1-800-GAMBLER</a>.</p>
