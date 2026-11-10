@@ -2,7 +2,7 @@
 
 Build a parlay once and see what it pays at every sportsbook and prediction market, ranked best to worst.
 
-- **Sports:** NFL, NBA, college football, college basketball: spreads, moneylines, totals, plus player props for the next few games (college basketball props are off on the free plan)
+- **Sports:** NFL, NBA, NHL, college football, college basketball: spreads, moneylines, totals, plus player props for the next few games (college basketball props are off on the free plan)
 - **Books (default):** DraftKings, FanDuel, BetMGM, theScore Bet, BetRivers, Hard Rock Bet
 - **Exchanges (default):** Kalshi, Polymarket (US), Novig, ProphetX
 - **Data:** [The Odds API](https://the-odds-api.com)
@@ -61,11 +61,11 @@ You can override the defaults with repository variables (Settings → Secrets an
 
 | Variable | Default |
 |---|---|
-| `SPORTS` | `americanfootball_nfl,basketball_nba,americanfootball_ncaaf` |
+| `SPORTS` | `americanfootball_nfl,basketball_nba,americanfootball_ncaaf,basketball_ncaab,icehockey_nhl` |
 | `BOOKMAKERS` | `draftkings,fanduel,betmgm,espnbet,betrivers,hardrockbet,kalshi,polymarket_us,novig,prophetx` |
 | `MARKETS` | `h2h,spreads,totals` |
 | `DAYS_AHEAD` | `14` |
-| `PROP_GAMES_NFL` / `PROP_GAMES_NBA` / `PROP_GAMES_NCAAF` | `16` / `15` / `12` |
+| `PROP_GAMES_NFL` / `PROP_GAMES_NBA` / `PROP_GAMES_NCAAF` / `PROP_GAMES_NHL` | `16` / `15` / `12` / `8` |
 | `QUOTA_RESET_DAY` | `7` (day of the month your Odds API credits reset) |
 | `PROP_WINDOW_HOURS` | `30` (only fetch props for games starting this soon) |
 
