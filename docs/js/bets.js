@@ -59,7 +59,7 @@ export function summarize(bets) {
 // ---------- breakdowns ----------
 export const SPORT_LABELS = {
   americanfootball_nfl: 'NFL', basketball_nba: 'NBA',
-  americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball',
+  americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball', icehockey_nhl: 'NHL',
 };
 const TYPE_LABELS = { h2h: 'Moneyline', spreads: 'Spread', totals: 'Total', prop: 'Player props', parlay: 'Parlays', future: 'Futures' };
 
