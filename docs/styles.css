@@ -1,4 +1,4 @@
-/* fck the vig — "Electric Violet" app design (direction D) */
+/* Screw the Vig — "Electric Violet" app design (direction D) */
 :root {
   --bg: #110a24;
   --bg-2: #0c0719;
@@ -37,6 +37,8 @@ button { font: inherit; color: inherit; }
 .brand { font-weight: 800; font-size: 50px; letter-spacing: -2px; line-height: 1; text-decoration: none; display: inline-flex; align-items: center; white-space: nowrap; }
 .brand-mark { width: 68px; height: 68px; flex: none; margin-right: 14px; filter: drop-shadow(0 4px 18px rgba(155, 116, 255, .4)); }
 .brand span { color: var(--accent); }
+/* SCREW: all caps, heavy condensed display face, accent glow so it pops next to the softer "the vig" */
+.brand .brand-screw { font-family: 'Anton', Impact, 'Arial Narrow', sans-serif; font-weight: 400; font-size: 1.1em; letter-spacing: .03em; line-height: 1; text-transform: uppercase; color: var(--accent); margin-right: .22em; text-shadow: 0 0 22px rgba(155, 116, 255, .55); }
 .top-right { display: flex; align-items: center; gap: 10px; }
 .state-btn { background: var(--surface); border: 0; border-radius: 999px; padding: 11px 16px; min-height: 44px; font-size: 14px; font-weight: 600; cursor: pointer; }
 .state-btn:hover { background: var(--surface-2); }
