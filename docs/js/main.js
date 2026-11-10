@@ -875,12 +875,13 @@ import { drawShareCard } from './share-card.js?v=1';
     days_ahead: 14, lines_hours: { basketball_ncaab: 168 }, min_books: { basketball_ncaab: 3 },
     lines_every_days: 1, props_runs_per_day: 12, lines_runs_per_day: 12, prop_window_hours: 30,
     run_every_hours: 2, run_minute: 17, quota_reset_day: 7,
-    prop_games: { americanfootball_nfl: 16, basketball_nba: 15, americanfootball_ncaaf: 12, basketball_ncaab: 0 },
+    prop_games: { americanfootball_nfl: 16, basketball_nba: 15, americanfootball_ncaaf: 12, basketball_ncaab: 0, icehockey_nhl: 8 },
     prop_markets: {
       americanfootball_nfl: ['player_pass_yds', 'player_rush_yds', 'player_reception_yds', 'player_anytime_td'],
       basketball_nba: ['player_points', 'player_rebounds', 'player_assists'],
       americanfootball_ncaaf: ['player_pass_yds', 'player_rush_yds', 'player_reception_yds', 'player_anytime_td'],
       basketball_ncaab: ['player_points', 'player_rebounds', 'player_assists'],
+      icehockey_nhl: ['player_points', 'player_shots_on_goal', 'player_goal_scorer_anytime'],
     },
   };
   const RUN_UTC = [16, 47];   // the old once-a-day run (16:47 UTC), used only if config has no run_every_hours
@@ -888,13 +889,14 @@ import { drawShareCard } from './share-card.js?v=1';
   // "every 2 hours" / "once a day": how often the odds update, for copy around the site.
   const pullFreq = (C = knowConf()) => (C.run_every_hours > 0 ? (C.run_every_hours === 1 ? 'every hour' : `every ${C.run_every_hours} hours`) : 'once a day');
   const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
-  const KNOW_SPORTS = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'college football', basketball_ncaab: 'college basketball' };
+  const KNOW_SPORTS = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'college football', basketball_ncaab: 'college basketball', icehockey_nhl: 'NHL' };
   const KNOW_SPORT_LIST = Object.keys(KNOW_SPORTS);
   const PROP_WORDS = {
     player_pass_yds: 'passing yards', player_rush_yds: 'rushing yards', player_reception_yds: 'receiving yards',
     player_receptions: 'receptions', player_pass_tds: 'passing TDs', player_anytime_td: 'anytime TD',
     player_points: 'points', player_rebounds: 'rebounds', player_assists: 'assists', player_threes: 'threes',
     player_points_rebounds_assists: 'points + rebounds + assists',
+    player_shots_on_goal: 'shots on goal', player_goal_scorer_anytime: 'anytime goal',
   };
   const knowWhen = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
   const knowTime = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
@@ -1046,8 +1048,8 @@ import { drawShareCard } from './share-card.js?v=1';
 
   // ---------- season-long markets ----------
   const SAVE_BTN = `<div class="cta-row"><button class="cta ghost save-bet" data-save="parlay">Save to My bets</button><button class="cta ghost share-bet" data-share="parlay">${ICONS.share}<span>Share</span></button></div>`;
-  const SPORT_ORDER = ['americanfootball_nfl', 'basketball_nba', 'americanfootball_ncaaf', 'basketball_ncaab'];
-  const SPORT_NAMES = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball' };
+  const SPORT_ORDER = ['americanfootball_nfl', 'basketball_nba', 'americanfootball_ncaaf', 'basketball_ncaab', 'icehockey_nhl'];
+  const SPORT_NAMES = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'College Football', basketball_ncaab: 'College Basketball', icehockey_nhl: 'NHL' };
   const GROUP_ORDER = ['Champion', 'Awards', 'Stat leaders', 'Win totals'];
   const MAX_ROWS = 80;
   const impl = a => (a > 0 ? 100 / (a + 100) : -a / (-a + 100));
@@ -1982,7 +1984,7 @@ import { drawShareCard } from './share-card.js?v=1';
   }
 
   // ---------- sports book arbitrage board ----------
-  const SPORT_SHORT = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'CFB', basketball_ncaab: 'CBB' };
+  const SPORT_SHORT = { americanfootball_nfl: 'NFL', basketball_nba: 'NBA', americanfootball_ncaaf: 'CFB', basketball_ncaab: 'CBB', icehockey_nhl: 'NHL' };
   const whenFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
   const pct = (x, d = 1) => `${(x * 100).toFixed(d)}%`;
   const MK_NAME = { h2h: 'Moneyline', spreads: 'Spread', totals: 'Total' };
