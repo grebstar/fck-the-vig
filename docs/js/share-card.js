@@ -1,4 +1,4 @@
-/* FCK The Vig — draws the 1200x630 preview picture for a shared bet (docs/js/share-card.js).
+/* Screw the Vig — draws the 1200x630 preview picture for a shared bet (docs/js/share-card.js).
    main.js hands it the legs and the prices it found; the picture is uploaded with the bet so texting apps
    (iMessage, WhatsApp, Slack...) show this bet instead of the generic site picture. */
 
@@ -64,11 +64,11 @@ export async function drawShareCard(card) {
   if (img) { ctx.save(); ctx.shadowColor = 'rgba(155,116,255,.45)'; ctx.shadowBlur = 24; ctx.drawImage(img, L, 40, 76, 76); ctx.restore(); }
   ctx.font = font(800, 44); ctx.fillStyle = C.text;
   const bx = img ? L + 94 : L;
-  ctx.fillText('fck the vig', bx, 94);
-  const bw = ctx.measureText('fck the vig').width;
+  ctx.fillText('Screw the Vig', bx, 94);
+  const bw = ctx.measureText('Screw the Vig').width;
   ctx.fillStyle = C.accent; ctx.fillText('.', bx + bw, 94);
   ctx.font = font(600, 21); ctx.fillStyle = C.dim; ctx.textAlign = 'right';
-  ctx.fillText('fckvig.com', W - 64, 88); ctx.textAlign = 'left';
+  ctx.fillText('screwvig.com', W - 64, 88); ctx.textAlign = 'left';
 
   // legs (left column)
   const colW = 600;
