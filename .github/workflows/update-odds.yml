@@ -3,8 +3,8 @@ name: Update odds and deploy site
 on:
   # Every 2 hours at :17 UTC (12:17 AM, 2:17 AM, ... Central): game lines + props on every run.
   # Every run also refreshes season-long markets from Kalshi (free); sportsbook futures refresh about once a week (~4 credits).
-  # Budget on the $30 plan (20,000 credits/month, resets on the 7th, the day we upgraded): ~4,300 for lines
-  # (4 sports x 3 credits x 12 runs a day), ~20 for futures, and props get the rest. fetch-odds.mjs paces props
+  # Budget on the $30 plan (20,000 credits/month, resets on the 7th, the day we upgraded): ~5,400 for lines
+  # (5 sports x 3 credits x 12 runs a day), ~20 for futures, and props get the rest. fetch-odds.mjs paces props
   # so the cycle never runs out. If you change the cron, change RUN_EVERY_HOURS / RUN_MINUTE / *_RUNS_PER_DAY below too.
   schedule:
     - cron: "17 */2 * * *"
@@ -56,6 +56,7 @@ jobs:
           PROP_GAMES_NBA: ${{ vars.PROP_GAMES_NBA || '15' }}
           PROP_GAMES_NCAAF: ${{ vars.PROP_GAMES_NCAAF || '12' }}
           PROP_GAMES_NCAAB: ${{ vars.PROP_GAMES_NCAAB }}
+          PROP_GAMES_NHL: ${{ vars.PROP_GAMES_NHL || '8' }}
           PROP_WINDOW_HOURS: ${{ vars.PROP_WINDOW_HOURS }}
           # Must match the cron above.
           LINES_EVERY_DAYS: ${{ vars.LINES_EVERY_DAYS || '1' }}
