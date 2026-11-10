@@ -21,7 +21,7 @@
 // admin granting it by username. The admin is the account whose email is in ADMIN_EMAILS (default
 // cory@fckvig.com); the first account with that email to open the admin page is pinned as the admin.
 
-const ORIGINS = ['https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io', 'capacitor://localhost'];  // last one = the iPhone app
+const ORIGINS = ['https://www.screwvig.com', 'https://screwvig.com', 'https://www.fckvig.com', 'https://fckvig.com', 'https://grebstar.github.io', 'capacitor://localhost'];  // last one = the iPhone app
 let allowed = new Set(ORIGINS);  // ALLOW_ORIGINS (comma-separated) overrides this, e.g. for local testing
 const SESSION_DAYS = 90;
 const PBKDF2_ITER = 100000;          // Workers' maximum
