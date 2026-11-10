@@ -8,6 +8,7 @@ export const LEAGUE_PATH = {
   americanfootball_ncaaf: 'football/college-football',
   basketball_nba: 'basketball/nba',
   basketball_ncaab: 'basketball/mens-college-basketball',
+  icehockey_nhl: 'hockey/nhl',   // team bets grade from final scores; player props fall back to "review"
 };
 // ESPN only lists ranked/featured college games unless you ask for all of Division I.
 const BOARD_EXTRA = { americanfootball_ncaaf: '&groups=80&limit=300', basketball_ncaab: '&groups=50&limit=400' };
