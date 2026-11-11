@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-11T01:55:15.851Z",
- "odds_generated_at": "2026-11-11T01:55:01.311Z",
+ "generated_at": "2026-11-11T02:18:19.361Z",
+ "odds_generated_at": "2026-11-11T02:18:04.878Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -10,7 +10,7 @@
    "commence_time": "2026-11-12T00:30:00Z",
    "market": "h2h",
    "bet": "Sam Houston St Bearkats moneyline",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "DraftKings",
     "price": "-110"
@@ -52,11 +52,11 @@
     "price": "+215"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "+176"
+    "book": "Hard Rock Bet",
+    "price": "+175"
    },
-   "extra_profit_per_100": 39,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 4.6
   },
   {
    "sport": "College Basketball",
@@ -82,7 +82,7 @@
    "commence_time": "2026-11-12T00:30:00Z",
    "market": "h2h",
    "bet": "Pepperdine Waves moneyline",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "BetRivers",
     "price": "+107"
@@ -172,7 +172,7 @@
    "commence_time": "2026-11-12T00:30:00Z",
    "market": "spreads",
    "bet": "Buffalo Bulls -2.5",
-   "books_compared": 5,
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
     "price": "-105"
