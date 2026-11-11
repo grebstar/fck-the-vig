@@ -1,62 +1,44 @@
 {
- "generated_at": "2026-11-11T08:18:17.149Z",
- "odds_generated_at": "2026-11-11T08:18:05.379Z",
+ "generated_at": "2026-11-11T09:20:58.236Z",
+ "odds_generated_at": "2026-11-11T09:20:48.824Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Marquette Golden Eagles @ Michigan Wolverines",
-   "commence_time": "2026-11-12T00:00:00Z",
+   "game": "Santa Clara Broncos @ North Texas Mean Green",
+   "commence_time": "2026-11-12T01:00:00Z",
    "market": "h2h",
-   "bet": "Marquette Golden Eagles moneyline",
-   "books_compared": 5,
+   "bet": "Santa Clara Broncos moneyline",
+   "books_compared": 4,
    "best": {
-    "book": "DraftKings",
-    "price": "+150"
+    "book": "FanDuel",
+    "price": "-142"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "+118"
+    "price": "-180"
    },
-   "extra_profit_per_100": 32,
-   "implied_gap_pts": 5.9
+   "extra_profit_per_100": 14.86,
+   "implied_gap_pts": 5.6
   },
   {
    "sport": "College Basketball",
-   "game": "Marquette Golden Eagles @ Michigan Wolverines",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "spreads",
-   "bet": "Marquette Golden Eagles +3.5",
-   "books_compared": 6,
+   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
+   "commence_time": "2026-11-12T01:00:00Z",
+   "market": "h2h",
+   "bet": "Stephen F. Austin Lumberjacks moneyline",
+   "books_compared": 3,
    "best": {
-    "book": "DraftKings",
-    "price": "-108"
+    "book": "BetMGM",
+    "price": "-175"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-134"
+    "price": "-225"
    },
-   "extra_profit_per_100": 17.96,
-   "implied_gap_pts": 5.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Marquette Golden Eagles @ Michigan Wolverines",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "spreads",
-   "bet": "Michigan Wolverines -3.5",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-112"
-   },
-   "extra_profit_per_100": 20.71,
-   "implied_gap_pts": 5.2
+   "extra_profit_per_100": 12.7,
+   "implied_gap_pts": 5.6
   },
   {
    "sport": "College Basketball",
@@ -100,7 +82,7 @@
    "commence_time": "2026-11-11T17:00:00Z",
    "market": "h2h",
    "bet": "UMKC Kangaroos moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "DraftKings",
     "price": "-230"
@@ -114,21 +96,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Marquette Golden Eagles @ Michigan Wolverines",
-   "commence_time": "2026-11-12T00:00:00Z",
+   "game": "Santa Clara Broncos @ North Texas Mean Green",
+   "commence_time": "2026-11-12T01:00:00Z",
    "market": "h2h",
-   "bet": "Michigan Wolverines moneyline",
-   "books_compared": 5,
+   "bet": "North Texas Mean Green moneyline",
+   "books_compared": 4,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "-150"
+    "book": "BetRivers",
+    "price": "+140"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "-180"
+    "book": "FanDuel",
+    "price": "+118"
    },
-   "extra_profit_per_100": 11.11,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 22,
+   "implied_gap_pts": 4.2
   },
   {
    "sport": "College Basketball",
@@ -150,21 +132,39 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Santa Clara Broncos @ North Texas Mean Green",
+   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
    "commence_time": "2026-11-12T01:00:00Z",
    "market": "h2h",
-   "bet": "North Texas Mean Green moneyline",
+   "bet": "Abilene Christian Wildcats moneyline",
    "books_compared": 3,
    "best": {
+    "book": "BetRivers",
+    "price": "+170"
+   },
+   "worst": {
     "book": "DraftKings",
-    "price": "+136"
+    "price": "+145"
+   },
+   "extra_profit_per_100": 25,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Pepperdine Waves @ Sam Houston St Bearkats",
+   "commence_time": "2026-11-12T00:30:00Z",
+   "market": "h2h",
+   "bet": "Sam Houston St Bearkats moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "+104"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "+116"
+    "price": "-112"
    },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 14.71,
+   "implied_gap_pts": 3.8
   },
   {
    "sport": "NBA",
@@ -172,7 +172,7 @@
    "commence_time": "2026-11-12T02:10:00Z",
    "market": "h2h",
    "bet": "Orlando Magic moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "-165"
