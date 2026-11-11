@@ -1,79 +1,133 @@
 {
- "generated_at": "2026-11-11T00:18:14.740Z",
- "odds_generated_at": "2026-11-11T00:18:04.126Z",
+ "generated_at": "2026-11-11T01:55:15.851Z",
+ "odds_generated_at": "2026-11-11T01:55:01.311Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NBA",
-   "game": "Miami Heat @ Utah Jazz",
-   "commence_time": "2026-11-11T02:10:00Z",
+   "sport": "College Basketball",
+   "game": "Pepperdine Waves @ Sam Houston St Bearkats",
+   "commence_time": "2026-11-12T00:30:00Z",
    "market": "h2h",
-   "bet": "Miami Heat moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-235"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-400"
-   },
-   "extra_profit_per_100": 17.55,
-   "implied_gap_pts": 9.9
-  },
-  {
-   "sport": "NBA",
-   "game": "Miami Heat @ Utah Jazz",
-   "commence_time": "2026-11-11T02:10:00Z",
-   "market": "h2h",
-   "bet": "Utah Jazz moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+325"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "+200"
-   },
-   "extra_profit_per_100": 125,
-   "implied_gap_pts": 9.8
-  },
-  {
-   "sport": "NBA",
-   "game": "Golden State Warriors @ Houston Rockets",
-   "commence_time": "2026-11-12T02:40:00Z",
-   "market": "h2h",
-   "bet": "Golden State Warriors moneyline",
+   "bet": "Sam Houston St Bearkats moneyline",
    "books_compared": 3,
    "best": {
-    "book": "FanDuel",
-    "price": "+180"
+    "book": "DraftKings",
+    "price": "-110"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "+155"
+    "book": "BetRivers",
+    "price": "-136"
    },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 17.38,
+   "implied_gap_pts": 5.2
+  },
+  {
+   "sport": "NHL",
+   "game": "Nashville Predators @ Los Angeles Kings",
+   "commence_time": "2026-11-11T03:10:00Z",
+   "market": "spreads",
+   "bet": "Nashville Predators +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-220"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-278"
+   },
+   "extra_profit_per_100": 9.48,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "NHL",
+   "game": "Nashville Predators @ Los Angeles Kings",
+   "commence_time": "2026-11-11T03:10:00Z",
+   "market": "spreads",
+   "bet": "Los Angeles Kings -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+176"
+   },
+   "extra_profit_per_100": 39,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "College Basketball",
-   "game": "Green Bay Phoenix @ Northern Iowa Panthers",
-   "commence_time": "2026-11-11T01:00:00Z",
+   "game": "Charleston Cougars @ Temple Owls",
+   "commence_time": "2026-11-11T23:30:00Z",
    "market": "h2h",
-   "bet": "Northern Iowa Panthers moneyline",
+   "bet": "Charleston Cougars moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "BetMGM",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-113"
+   },
+   "extra_profit_per_100": 16.5,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Pepperdine Waves @ Sam Houston St Bearkats",
+   "commence_time": "2026-11-12T00:30:00Z",
+   "market": "h2h",
+   "bet": "Pepperdine Waves moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "+107"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 16.09,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Charleston Cougars @ Temple Owls",
+   "commence_time": "2026-11-11T23:30:00Z",
+   "market": "h2h",
+   "bet": "Temple Owls moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-106"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-125"
+   },
+   "extra_profit_per_100": 14.34,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "NHL",
+   "game": "Nashville Predators @ Los Angeles Kings",
+   "commence_time": "2026-11-11T03:10:00Z",
+   "market": "h2h",
+   "bet": "Nashville Predators moneyline",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-155"
+    "price": "+115"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-180"
+    "book": "BetRivers",
+    "price": "+100"
    },
-   "extra_profit_per_100": 8.96,
+   "extra_profit_per_100": 15,
    "implied_gap_pts": 3.5
   },
   {
@@ -82,7 +136,7 @@
    "commence_time": "2026-11-12T03:10:00Z",
    "market": "spreads",
    "bet": "San Jose Sharks +1.5",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "BetMGM",
     "price": "-200"
@@ -95,29 +149,11 @@
    "implied_gap_pts": 3.5
   },
   {
-   "sport": "College Basketball",
-   "game": "Texas State Bobcats @ UT Rio Grande Valley Vaqueros",
-   "commence_time": "2026-11-11T00:30:00Z",
-   "market": "h2h",
-   "bet": "UT Rio Grande Valley Vaqueros moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+200"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+172"
-   },
-   "extra_profit_per_100": 28,
-   "implied_gap_pts": 3.4
-  },
-  {
    "sport": "NHL",
-   "game": "Detroit Red Wings @ St Louis Blues",
-   "commence_time": "2026-11-11T01:10:00Z",
+   "game": "Pittsburgh Penguins @ San Jose Sharks",
+   "commence_time": "2026-11-12T03:10:00Z",
    "market": "spreads",
-   "bet": "St Louis Blues -1.5",
+   "bet": "Pittsburgh Penguins -1.5",
    "books_compared": 6,
    "best": {
     "book": "BetRivers",
@@ -129,42 +165,6 @@
    },
    "extra_profit_per_100": 25,
    "implied_gap_pts": 3.4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Nicholls St Colonels @ Tulane Green Wave",
-   "commence_time": "2026-11-11T00:30:00Z",
-   "market": "h2h",
-   "bet": "Nicholls St Colonels moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+360"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+300"
-   },
-   "extra_profit_per_100": 60,
-   "implied_gap_pts": 3.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "San Diego Toreros @ Colorado Buffaloes",
-   "commence_time": "2026-11-11T02:00:00Z",
-   "market": "totals",
-   "bet": "Over 151.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-114"
-   },
-   "extra_profit_per_100": 12.28,
-   "implied_gap_pts": 3.3
   },
   {
    "sport": "College Football",
