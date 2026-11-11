@@ -1,188 +1,188 @@
 {
- "generated_at": "2026-11-11T18:18:16.589Z",
- "odds_generated_at": "2026-11-11T18:18:05.140Z",
+ "generated_at": "2026-11-11T22:18:12.720Z",
+ "odds_generated_at": "2026-11-11T22:18:03.372Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Campbell Fighting Camels @ East Tennessee St Buccaneers",
+   "game": "Marquette Golden Eagles @ Michigan Wolverines",
    "commence_time": "2026-11-12T00:00:00Z",
    "market": "h2h",
-   "bet": "East Tennessee St Buccaneers moneyline",
+   "bet": "Michigan Wolverines moneyline",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-215"
+    "price": "-145"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-265"
+    "price": "-180"
    },
-   "extra_profit_per_100": 8.77,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 13.41,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "College Basketball",
-   "game": "South Carolina St Bulldogs @ Notre Dame Fighting Irish",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "totals",
-   "bet": "Over 148.5",
-   "books_compared": 4,
+   "game": "Chicago St Cougars @ Cal Baptist Lancers",
+   "commence_time": "2026-11-12T03:00:00Z",
+   "market": "spreads",
+   "bet": "Cal Baptist Lancers -11.5",
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "+100"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-118"
+    "price": "-120"
    },
-   "extra_profit_per_100": 15.25,
+   "extra_profit_per_100": 16.67,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "James Madison Dukes @ Delaware Blue Hens",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "h2h",
+   "bet": "James Madison Dukes moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-150"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-182"
+   },
+   "extra_profit_per_100": 11.72,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UNC Asheville Bulldogs @ West Georgia Wolves",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "h2h",
+   "bet": "West Georgia Wolves moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-130"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-155"
+   },
+   "extra_profit_per_100": 12.4,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:00:00Z",
+   "market": "spreads",
+   "bet": "New York Islanders +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-225"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-278"
+   },
+   "extra_profit_per_100": 8.47,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Nevada Wolf Pack @ UC Santa Barbara Gauchos",
+   "commence_time": "2026-11-12T02:00:00Z",
+   "market": "h2h",
+   "bet": "UC Santa Barbara Gauchos moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 14.71,
    "implied_gap_pts": 4.1
   },
   {
    "sport": "College Basketball",
-   "game": "North Carolina Central Eagles @ VMI Keydets",
-   "commence_time": "2026-11-11T23:00:00Z",
-   "market": "h2h",
-   "bet": "North Carolina Central Eagles moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+350"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+285"
-   },
-   "extra_profit_per_100": 65,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Buffalo Sabres @ Chicago Blackhawks",
-   "commence_time": "2026-11-13T01:00:00Z",
+   "game": "Chicago St Cougars @ Cal Baptist Lancers",
+   "commence_time": "2026-11-12T03:00:00Z",
    "market": "spreads",
-   "bet": "Buffalo Sabres -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "+170"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "+145"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Southern Indiana Screaming Eagles @ IUPUI Jaguars",
-   "commence_time": "2026-11-11T23:30:00Z",
-   "market": "h2h",
-   "bet": "Southern Indiana Screaming Eagles moneyline",
+   "bet": "Chicago St Cougars +11.5",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "+315"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+260"
-   },
-   "extra_profit_per_100": 55,
-   "implied_gap_pts": 3.7
-  },
-  {
-   "sport": "College Basketball",
-   "game": "South Carolina St Bulldogs @ Notre Dame Fighting Irish",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "totals",
-   "bet": "Under 148.5",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-104"
+    "price": "-102"
    },
    "worst": {
     "book": "theScore Bet",
     "price": "-120"
    },
-   "extra_profit_per_100": 12.82,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Milwaukee Panthers @ Indiana St Sycamores",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "h2h",
-   "bet": "Indiana St Sycamores moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-175"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-205"
-   },
-   "extra_profit_per_100": 8.36,
-   "implied_gap_pts": 3.6
+   "extra_profit_per_100": 14.71,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "NHL",
-   "game": "Minnesota Wild @ Toronto Maple Leafs",
+   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
    "commence_time": "2026-11-13T00:00:00Z",
    "market": "spreads",
-   "bet": "Toronto Maple Leafs +1.5",
+   "bet": "Tampa Bay Lightning -1.5",
    "books_compared": 5,
    "best": {
-    "book": "BetMGM",
-    "price": "-175"
-   },
-   "worst": {
     "book": "BetRivers",
-    "price": "-205"
-   },
-   "extra_profit_per_100": 8.36,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "NHL",
-   "game": "Buffalo Sabres @ Chicago Blackhawks",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "spreads",
-   "bet": "Chicago Blackhawks +1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-175"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-205"
-   },
-   "extra_profit_per_100": 8.36,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Pacific Tigers @ Long Beach St 49ers",
-   "commence_time": "2026-11-12T03:00:00Z",
-   "market": "h2h",
-   "bet": "Pacific Tigers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-250"
+    "price": "+215"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-300"
+    "price": "+180"
    },
-   "extra_profit_per_100": 6.67,
-   "implied_gap_pts": 3.6
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:00:00Z",
+   "market": "spreads",
+   "bet": "Los Angeles Kings -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Furman Paladins @ Holy Cross Crusaders",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "spreads",
+   "bet": "Furman Paladins -12.5",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-110"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-129"
+   },
+   "extra_profit_per_100": 13.39,
+   "implied_gap_pts": 4
   }
  ]
 }
