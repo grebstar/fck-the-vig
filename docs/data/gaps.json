@@ -1,116 +1,134 @@
 {
- "generated_at": "2026-11-11T12:18:19.374Z",
- "odds_generated_at": "2026-11-11T12:18:04.807Z",
+ "generated_at": "2026-11-11T14:18:17.812Z",
+ "odds_generated_at": "2026-11-11T14:18:06.455Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
-   "commence_time": "2026-11-12T01:00:00Z",
+   "game": "South Florida Bulls @ Saint Joseph's Hawks",
+   "commence_time": "2026-11-11T20:00:00Z",
    "market": "h2h",
-   "bet": "Stephen F. Austin Lumberjacks moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-175"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-225"
-   },
-   "extra_profit_per_100": 12.7,
-   "implied_gap_pts": 5.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Southern Indiana Screaming Eagles @ IUPUI Jaguars",
-   "commence_time": "2026-11-11T23:30:00Z",
-   "market": "h2h",
-   "bet": "IUPUI Jaguars moneyline",
+   "bet": "Saint Joseph's Hawks moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-275"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-360"
-   },
-   "extra_profit_per_100": 8.58,
-   "implied_gap_pts": 4.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Pennsylvania Quakers @ Navy Midshipmen",
-   "commence_time": "2026-11-11T22:30:00Z",
-   "market": "h2h",
-   "bet": "Navy Midshipmen moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+330"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "+260"
-   },
-   "extra_profit_per_100": 70,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Charleston Cougars @ Temple Owls",
-   "commence_time": "2026-11-11T23:30:00Z",
-   "market": "spreads",
-   "bet": "Charleston Cougars +1.5",
-   "books_compared": 3,
-   "best": {
-    "book": "BetMGM",
-    "price": "-110"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 13.99,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Santa Clara Broncos @ North Texas Mean Green",
-   "commence_time": "2026-11-12T01:00:00Z",
-   "market": "h2h",
-   "bet": "Santa Clara Broncos moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-152"
-   },
-   "worst": {
     "book": "Hard Rock Bet",
-    "price": "-180"
+    "price": "+300"
    },
-   "extra_profit_per_100": 10.23,
+   "worst": {
+    "book": "FanDuel",
+    "price": "+245"
+   },
+   "extra_profit_per_100": 55,
    "implied_gap_pts": 4
   },
   {
    "sport": "College Basketball",
-   "game": "Southern Indiana Screaming Eagles @ IUPUI Jaguars",
-   "commence_time": "2026-11-11T23:30:00Z",
+   "game": "Pacific Tigers @ Long Beach St 49ers",
+   "commence_time": "2026-11-12T03:00:00Z",
    "market": "h2h",
-   "bet": "Southern Indiana Screaming Eagles moneyline",
+   "bet": "Pacific Tigers moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-245"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 7.49,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "James Madison Dukes @ Delaware Blue Hens",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "h2h",
+   "bet": "Delaware Blue Hens moneyline",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+265"
+    "book": "theScore Bet",
+    "price": "+150"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "+220"
+    "price": "+128"
    },
-   "extra_profit_per_100": 45,
+   "extra_profit_per_100": 22,
    "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Miss Valley St Delta Devils @ Oregon Ducks",
+   "commence_time": "2026-11-12T03:00:00Z",
+   "market": "totals",
+   "bet": "Under 148.5",
+   "books_compared": 3,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-117"
+   },
+   "extra_profit_per_100": 14.53,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "James Madison Dukes @ Delaware Blue Hens",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "h2h",
+   "bet": "James Madison Dukes moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-154"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-182"
+   },
+   "extra_profit_per_100": 9.99,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "NBA",
+   "game": "Cleveland Cavaliers @ New York Knicks",
+   "commence_time": "2026-11-12T00:10:00Z",
+   "market": "h2h",
+   "bet": "Cleveland Cavaliers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+164"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+140"
+   },
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Marquette Golden Eagles @ Michigan Wolverines",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "h2h",
+   "bet": "Michigan Wolverines moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-155"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-182"
+   },
+   "extra_profit_per_100": 9.57,
+   "implied_gap_pts": 3.8
   },
   {
    "sport": "College Basketball",
@@ -120,69 +138,51 @@
    "bet": "South Florida Bulls moneyline",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "-290"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-360"
-   },
-   "extra_profit_per_100": 6.7,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
-   "commence_time": "2026-11-12T01:00:00Z",
-   "market": "h2h",
-   "bet": "Abilene Christian Wildcats moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "BetRivers",
-    "price": "+170"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "+145"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Pepperdine Waves @ Sam Houston St Bearkats",
-   "commence_time": "2026-11-12T00:30:00Z",
-   "market": "h2h",
-   "bet": "Sam Houston St Bearkats moneyline",
-   "books_compared": 5,
-   "best": {
     "book": "FanDuel",
-    "price": "+104"
+    "price": "-310"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-112"
+    "price": "-385"
    },
-   "extra_profit_per_100": 14.71,
+   "extra_profit_per_100": 6.29,
    "implied_gap_pts": 3.8
   },
   {
    "sport": "College Basketball",
-   "game": "UMKC Kangaroos @ Florida A&M Rattlers",
-   "commence_time": "2026-11-11T17:00:00Z",
+   "game": "North Carolina Central Eagles @ VMI Keydets",
+   "commence_time": "2026-11-11T23:00:00Z",
    "market": "h2h",
-   "bet": "UMKC Kangaroos moneyline",
+   "bet": "North Carolina Central Eagles moneyline",
    "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "-230"
+    "book": "FanDuel",
+    "price": "+300"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+250"
+   },
+   "extra_profit_per_100": 50,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Cornell Big Red @ St. Bonaventure Bonnies",
+   "commence_time": "2026-11-12T00:00:00Z",
+   "market": "spreads",
+   "bet": "Cornell Big Red +8.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-102"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-278"
+    "price": "-118"
    },
-   "extra_profit_per_100": 7.51,
-   "implied_gap_pts": 3.8
+   "extra_profit_per_100": 13.29,
+   "implied_gap_pts": 3.6
   }
  ]
 }
