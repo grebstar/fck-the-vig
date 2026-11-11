@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-11T17:53:09.755Z",
- "odds_generated_at": "2026-11-11T17:53:00.114Z",
+ "generated_at": "2026-11-11T18:18:16.589Z",
+ "odds_generated_at": "2026-11-11T18:18:05.140Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -39,6 +39,24 @@
    },
    "extra_profit_per_100": 15.25,
    "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "North Carolina Central Eagles @ VMI Keydets",
+   "commence_time": "2026-11-11T23:00:00Z",
+   "market": "h2h",
+   "bet": "North Carolina Central Eagles moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+350"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+285"
+   },
+   "extra_profit_per_100": 65,
+   "implied_gap_pts": 3.8
   },
   {
    "sport": "NHL",
@@ -156,7 +174,7 @@
    "bet": "Pacific Tigers moneyline",
    "books_compared": 6,
    "best": {
-    "book": "BetMGM",
+    "book": "theScore Bet",
     "price": "-250"
    },
    "worst": {
@@ -165,24 +183,6 @@
    },
    "extra_profit_per_100": 6.67,
    "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Campbell Fighting Camels @ East Tennessee St Buccaneers",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "h2h",
-   "bet": "Campbell Fighting Camels moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+210"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 3.5
   }
  ]
 }
