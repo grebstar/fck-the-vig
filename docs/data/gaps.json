@@ -1,40 +1,40 @@
 {
- "generated_at": "2026-11-12T18:18:19.244Z",
- "odds_generated_at": "2026-11-12T18:18:05.336Z",
+ "generated_at": "2026-11-12T20:18:20.134Z",
+ "odds_generated_at": "2026-11-12T20:18:05.923Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "NHL",
-   "game": "Colorado Avalanche @ Ottawa Senators",
-   "commence_time": "2026-11-13T00:08:00Z",
+   "game": "Washington Capitals @ New Jersey Devils",
+   "commence_time": "2026-11-13T00:09:00Z",
    "market": "spreads",
-   "bet": "Colorado Avalanche +1.5",
-   "books_compared": 4,
+   "bet": "New Jersey Devils -1.5",
+   "books_compared": 6,
    "best": {
-    "book": "BetMGM",
-    "price": "-250"
+    "book": "FanDuel",
+    "price": "+164"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-300"
+    "price": "+140"
    },
-   "extra_profit_per_100": 6.67,
-   "implied_gap_pts": 3.6
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.8
   },
   {
-   "sport": "College Basketball",
-   "game": "Loyola Marymount Lions @ South Alabama Jaguars",
-   "commence_time": "2026-11-13T01:00:00Z",
+   "sport": "College Football",
+   "game": "Illinois Fighting Illini @ UCLA Bruins",
+   "commence_time": "2026-11-14T02:00:00Z",
    "market": "spreads",
-   "bet": "South Alabama Jaguars -1.5",
-   "books_compared": 6,
+   "bet": "UCLA Bruins -10.5",
+   "books_compared": 3,
    "best": {
-    "book": "Hard Rock Bet",
+    "book": "FanDuel",
     "price": "+100"
    },
    "worst": {
-    "book": "DraftKings",
+    "book": "Hard Rock Bet",
     "price": "-115"
    },
    "extra_profit_per_100": 13.04,
@@ -59,18 +59,54 @@
    "implied_gap_pts": 3.4
   },
   {
-   "sport": "College Basketball",
-   "game": "Loyola Marymount Lions @ South Alabama Jaguars",
-   "commence_time": "2026-11-13T01:00:00Z",
+   "sport": "NHL",
+   "game": "St Louis Blues @ Utah Mammoth",
+   "commence_time": "2026-11-13T02:10:00Z",
    "market": "spreads",
-   "bet": "Loyola Marymount Lions +1.5",
+   "bet": "Utah Mammoth +1.5",
    "books_compared": 6,
    "best": {
-    "book": "DraftKings",
+    "book": "BetMGM",
+    "price": "-225"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-265"
+   },
+   "extra_profit_per_100": 6.7,
+   "implied_gap_pts": 3.4
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:10:00Z",
+   "market": "spreads",
+   "bet": "New York Islanders +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-225"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-265"
+   },
+   "extra_profit_per_100": 6.7,
+   "implied_gap_pts": 3.4
+  },
+  {
+   "sport": "College Football",
+   "game": "Illinois Fighting Illini @ UCLA Bruins",
+   "commence_time": "2026-11-14T02:00:00Z",
+   "market": "spreads",
+   "bet": "Illinois Fighting Illini +10.5",
+   "books_compared": 3,
+   "best": {
+    "book": "Hard Rock Bet",
     "price": "-105"
    },
    "worst": {
-    "book": "Hard Rock Bet",
+    "book": "FanDuel",
     "price": "-120"
    },
    "extra_profit_per_100": 11.91,
@@ -78,21 +114,21 @@
   },
   {
    "sport": "NHL",
-   "game": "Washington Capitals @ New Jersey Devils",
-   "commence_time": "2026-11-13T00:09:00Z",
+   "game": "Colorado Avalanche @ Ottawa Senators",
+   "commence_time": "2026-11-13T00:08:00Z",
    "market": "spreads",
-   "bet": "New Jersey Devils -1.5",
-   "books_compared": 6,
+   "bet": "Ottawa Senators +1.5",
+   "books_compared": 3,
    "best": {
-    "book": "DraftKings",
-    "price": "+160"
+    "book": "BetMGM",
+    "price": "-250"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+140"
+    "book": "BetRivers",
+    "price": "-295"
    },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 3.2
+   "extra_profit_per_100": 6.1,
+   "implied_gap_pts": 3.3
   },
   {
    "sport": "NHL",
@@ -113,76 +149,40 @@
    "implied_gap_pts": 3.2
   },
   {
-   "sport": "College Football",
-   "game": "Memphis Tigers @ South Florida Bulls",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "spreads",
-   "bet": "South Florida Bulls +3.5",
-   "books_compared": 4,
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:10:00Z",
+   "market": "totals",
+   "bet": "Over 5.5",
+   "books_compared": 5,
    "best": {
-    "book": "FanDuel",
-    "price": "+100"
+    "book": "BetRivers",
+    "price": "-127"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-113"
+    "book": "Hard Rock Bet",
+    "price": "-145"
    },
-   "extra_profit_per_100": 11.5,
-   "implied_gap_pts": 3.1
+   "extra_profit_per_100": 9.77,
+   "implied_gap_pts": 3.2
   },
   {
    "sport": "College Basketball",
-   "game": "Montana St Bobcats @ BYU Cougars",
-   "commence_time": "2026-11-13T02:00:00Z",
-   "market": "spreads",
-   "bet": "Montana St Bobcats +22.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-108"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-122"
-   },
-   "extra_profit_per_100": 10.62,
-   "implied_gap_pts": 3
-  },
-  {
-   "sport": "NHL",
-   "game": "Montréal Canadiens @ Boston Bruins",
-   "commence_time": "2026-11-13T00:10:00Z",
-   "market": "spreads",
-   "bet": "Boston Bruins -1.5",
+   "game": "Western Michigan Broncos @ Fort Wayne Mastodons",
+   "commence_time": "2026-11-13T00:00:00Z",
+   "market": "h2h",
+   "bet": "Western Michigan Broncos moneyline",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+205"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 2.9
-  },
-  {
-   "sport": "NHL",
-   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
-   "commence_time": "2026-11-13T00:10:00Z",
-   "market": "spreads",
-   "bet": "Tampa Bay Lightning -1.5",
-   "books_compared": 5,
-   "best": {
     "book": "FanDuel",
-    "price": "+205"
+    "price": "-146"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
+    "book": "BetRivers",
+    "price": "-167"
    },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 2.9
+   "extra_profit_per_100": 8.61,
+   "implied_gap_pts": 3.2
   }
  ]
 }
