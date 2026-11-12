@@ -1,80 +1,26 @@
 {
- "generated_at": "2026-11-12T02:18:14.919Z",
- "odds_generated_at": "2026-11-12T02:18:03.769Z",
+ "generated_at": "2026-11-12T04:18:14.264Z",
+ "odds_generated_at": "2026-11-12T04:18:04.102Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "Utah Mammoth @ Vegas Golden Knights",
-   "commence_time": "2026-11-12T02:40:00Z",
-   "market": "spreads",
-   "bet": "Vegas Golden Knights -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+200"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+156"
-   },
-   "extra_profit_per_100": 44,
-   "implied_gap_pts": 5.7
-  },
-  {
    "sport": "College Basketball",
-   "game": "Pacific Tigers @ Long Beach St 49ers",
-   "commence_time": "2026-11-12T03:00:00Z",
+   "game": "Loyola Marymount Lions @ South Alabama Jaguars",
+   "commence_time": "2026-11-13T01:00:00Z",
    "market": "h2h",
-   "bet": "Pacific Tigers moneyline",
-   "books_compared": 6,
+   "bet": "Loyola Marymount Lions moneyline",
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
-    "price": "-225"
+    "price": "-105"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-295"
+    "price": "-129"
    },
-   "extra_profit_per_100": 10.54,
-   "implied_gap_pts": 5.5
-  },
-  {
-   "sport": "NHL",
-   "game": "Utah Mammoth @ Vegas Golden Knights",
-   "commence_time": "2026-11-12T02:40:00Z",
-   "market": "spreads",
-   "bet": "Utah Mammoth +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-194"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-250"
-   },
-   "extra_profit_per_100": 11.55,
-   "implied_gap_pts": 5.4
-  },
-  {
-   "sport": "NHL",
-   "game": "Pittsburgh Penguins @ San Jose Sharks",
-   "commence_time": "2026-11-12T03:10:00Z",
-   "market": "spreads",
-   "bet": "Pittsburgh Penguins -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+175"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+140"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 5.3
+   "extra_profit_per_100": 17.72,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "NHL",
@@ -113,40 +59,40 @@
    "implied_gap_pts": 4.5
   },
   {
-   "sport": "College Basketball",
-   "game": "Pacific Tigers @ Long Beach St 49ers",
-   "commence_time": "2026-11-12T03:00:00Z",
-   "market": "h2h",
-   "bet": "Long Beach St 49ers moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:00:00Z",
+   "market": "totals",
+   "bet": "Under 5.5",
+   "books_compared": 5,
    "best": {
-    "book": "BetRivers",
-    "price": "+225"
+    "book": "FanDuel",
+    "price": "+112"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "+184"
+    "book": "BetRivers",
+    "price": "-106"
    },
-   "extra_profit_per_100": 41,
-   "implied_gap_pts": 4.4
+   "extra_profit_per_100": 17.66,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "NHL",
-   "game": "Utah Mammoth @ Vegas Golden Knights",
-   "commence_time": "2026-11-12T02:40:00Z",
-   "market": "h2h",
-   "bet": "Vegas Golden Knights moneyline",
-   "books_compared": 6,
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:00:00Z",
+   "market": "totals",
+   "bet": "Over 5.5",
+   "books_compared": 5,
    "best": {
     "book": "BetRivers",
-    "price": "-125"
+    "price": "-118"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-150"
+    "price": "-140"
    },
-   "extra_profit_per_100": 13.33,
-   "implied_gap_pts": 4.4
+   "extra_profit_per_100": 13.32,
+   "implied_gap_pts": 4.2
   },
   {
    "sport": "NHL",
@@ -161,28 +107,82 @@
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-278"
+    "price": "-275"
    },
-   "extra_profit_per_100": 8.47,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 8.08,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "NHL",
-   "game": "Utah Mammoth @ Vegas Golden Knights",
-   "commence_time": "2026-11-12T02:40:00Z",
-   "market": "h2h",
-   "bet": "Utah Mammoth moneyline",
+   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
+   "commence_time": "2026-11-13T00:00:00Z",
+   "market": "spreads",
+   "bet": "Tampa Bay Lightning -1.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "+125"
+    "book": "BetRivers",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
+   "commence_time": "2026-11-13T00:00:00Z",
+   "market": "totals",
+   "bet": "Over 6.5",
+   "books_compared": 5,
+   "best": {
+    "book": "BetRivers",
+    "price": "+112"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-105"
+   },
+   "extra_profit_per_100": 16.76,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "St Louis Blues @ Utah Mammoth",
+   "commence_time": "2026-11-13T02:00:00Z",
+   "market": "spreads",
+   "bet": "St Louis Blues +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-220"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "+106"
+    "price": "-265"
    },
-   "extra_profit_per_100": 19,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 7.71,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "NHL",
+   "game": "Carolina Hurricanes @ Seattle Kraken",
+   "commence_time": "2026-11-12T17:00:00Z",
+   "market": "spreads",
+   "bet": "Carolina Hurricanes -1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "DraftKings",
+    "price": "-112"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 12.37,
+   "implied_gap_pts": 3.7
   }
  ]
 }
