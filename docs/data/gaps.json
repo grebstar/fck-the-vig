@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-12T09:47:20.016Z",
- "odds_generated_at": "2026-11-12T09:47:10.701Z",
+ "generated_at": "2026-11-12T10:18:13.508Z",
+ "odds_generated_at": "2026-11-12T10:18:04.530Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Tennessee Tech Golden Eagles @ Indiana Hoosiers",
-   "commence_time": "2026-11-12T23:30:00Z",
-   "market": "totals",
-   "bet": "Under 169.5",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "-108"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-129"
-   },
-   "extra_profit_per_100": 15.07,
-   "implied_gap_pts": 4.4
-  },
   {
    "sport": "NHL",
    "game": "New York Islanders @ Los Angeles Kings",
@@ -81,17 +63,17 @@
    "game": "Tennessee Tech Golden Eagles @ Indiana Hoosiers",
    "commence_time": "2026-11-12T23:30:00Z",
    "market": "totals",
-   "bet": "Over 169.5",
+   "bet": "Under 169.5",
    "books_compared": 6,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+105"
+    "book": "theScore Bet",
+    "price": "-110"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "-112"
+    "book": "BetRivers",
+    "price": "-129"
    },
-   "extra_profit_per_100": 15.71,
+   "extra_profit_per_100": 13.39,
    "implied_gap_pts": 4
   },
   {
@@ -182,6 +164,24 @@
     "price": "-105"
    },
    "extra_profit_per_100": 14.76,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Tennessee Tech Golden Eagles @ Indiana Hoosiers",
+   "commence_time": "2026-11-12T23:30:00Z",
+   "market": "totals",
+   "bet": "Over 169.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 14.09,
    "implied_gap_pts": 3.6
   }
  ]
