@@ -1,9 +1,63 @@
 {
- "generated_at": "2026-11-12T00:39:54.026Z",
- "odds_generated_at": "2026-11-12T00:39:40.094Z",
+ "generated_at": "2026-11-12T02:18:14.919Z",
+ "odds_generated_at": "2026-11-12T02:18:03.769Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "NHL",
+   "game": "Utah Mammoth @ Vegas Golden Knights",
+   "commence_time": "2026-11-12T02:40:00Z",
+   "market": "spreads",
+   "bet": "Vegas Golden Knights -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+200"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+156"
+   },
+   "extra_profit_per_100": 44,
+   "implied_gap_pts": 5.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Pacific Tigers @ Long Beach St 49ers",
+   "commence_time": "2026-11-12T03:00:00Z",
+   "market": "h2h",
+   "bet": "Pacific Tigers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-225"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-295"
+   },
+   "extra_profit_per_100": 10.54,
+   "implied_gap_pts": 5.5
+  },
+  {
+   "sport": "NHL",
+   "game": "Utah Mammoth @ Vegas Golden Knights",
+   "commence_time": "2026-11-12T02:40:00Z",
+   "market": "spreads",
+   "bet": "Utah Mammoth +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-194"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-250"
+   },
+   "extra_profit_per_100": 11.55,
+   "implied_gap_pts": 5.4
+  },
   {
    "sport": "NHL",
    "game": "Pittsburgh Penguins @ San Jose Sharks",
@@ -23,21 +77,21 @@
    "implied_gap_pts": 5.3
   },
   {
-   "sport": "College Basketball",
-   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
-   "commence_time": "2026-11-12T01:00:00Z",
-   "market": "h2h",
-   "bet": "Stephen F. Austin Lumberjacks moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
+   "commence_time": "2026-11-13T00:00:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 5,
    "best": {
     "book": "theScore Bet",
-    "price": "-240"
+    "price": "-115"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-305"
+    "price": "-139"
    },
-   "extra_profit_per_100": 8.88,
+   "extra_profit_per_100": 15.02,
    "implied_gap_pts": 4.7
   },
   {
@@ -59,130 +113,76 @@
    "implied_gap_pts": 4.5
   },
   {
-   "sport": "NHL",
-   "game": "New York Islanders @ Los Angeles Kings",
-   "commence_time": "2026-11-13T03:00:00Z",
-   "market": "totals",
-   "bet": "Under 5.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-107"
-   },
-   "extra_profit_per_100": 16.54,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NHL",
-   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
-   "commence_time": "2026-11-13T00:00:00Z",
-   "market": "spreads",
-   "bet": "Tampa Bay Lightning -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetRivers",
-    "price": "+215"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "NHL",
-   "game": "New York Islanders @ Los Angeles Kings",
-   "commence_time": "2026-11-13T03:00:00Z",
-   "market": "spreads",
-   "bet": "Los Angeles Kings -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+215"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 4
-  },
-  {
    "sport": "College Basketball",
-   "game": "Lindenwood Lions @ Nebraska Cornhuskers",
-   "commence_time": "2026-11-12T02:00:00Z",
-   "market": "spreads",
-   "bet": "Nebraska Cornhuskers -34.5",
+   "game": "Pacific Tigers @ Long Beach St 49ers",
+   "commence_time": "2026-11-12T03:00:00Z",
+   "market": "h2h",
+   "bet": "Long Beach St 49ers moneyline",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
     "book": "BetRivers",
-    "price": "-117"
-   },
-   "extra_profit_per_100": 14.53,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "NHL",
-   "game": "Pittsburgh Penguins @ San Jose Sharks",
-   "commence_time": "2026-11-12T03:10:00Z",
-   "market": "spreads",
-   "bet": "San Jose Sharks +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "-185"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-220"
-   },
-   "extra_profit_per_100": 8.6,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Carolina Hurricanes @ Seattle Kraken",
-   "commence_time": "2026-11-12T17:00:00Z",
-   "market": "spreads",
-   "bet": "Carolina Hurricanes -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-112"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 12.37,
-   "implied_gap_pts": 3.7
-  },
-  {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Toronto Maple Leafs",
-   "commence_time": "2026-11-13T00:00:00Z",
-   "market": "spreads",
-   "bet": "Toronto Maple Leafs +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "-160"
+    "price": "+225"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-188"
+    "price": "+184"
    },
-   "extra_profit_per_100": 9.31,
-   "implied_gap_pts": 3.7
+   "extra_profit_per_100": 41,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "NHL",
+   "game": "Utah Mammoth @ Vegas Golden Knights",
+   "commence_time": "2026-11-12T02:40:00Z",
+   "market": "h2h",
+   "bet": "Vegas Golden Knights moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "-125"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-150"
+   },
+   "extra_profit_per_100": 13.33,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:00:00Z",
+   "market": "spreads",
+   "bet": "New York Islanders +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-225"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-278"
+   },
+   "extra_profit_per_100": 8.47,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Utah Mammoth @ Vegas Golden Knights",
+   "commence_time": "2026-11-12T02:40:00Z",
+   "market": "h2h",
+   "bet": "Utah Mammoth moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+125"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+106"
+   },
+   "extra_profit_per_100": 19,
+   "implied_gap_pts": 4.1
   }
  ]
 }
