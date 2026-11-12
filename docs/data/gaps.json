@@ -1,133 +1,61 @@
 {
- "generated_at": "2026-11-11T22:18:12.720Z",
- "odds_generated_at": "2026-11-11T22:18:03.372Z",
+ "generated_at": "2026-11-12T00:18:15.926Z",
+ "odds_generated_at": "2026-11-12T00:18:04.792Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "College Basketball",
-   "game": "Marquette Golden Eagles @ Michigan Wolverines",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "h2h",
-   "bet": "Michigan Wolverines moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-145"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-180"
-   },
-   "extra_profit_per_100": 13.41,
-   "implied_gap_pts": 5.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Chicago St Cougars @ Cal Baptist Lancers",
-   "commence_time": "2026-11-12T03:00:00Z",
+   "sport": "NHL",
+   "game": "Pittsburgh Penguins @ San Jose Sharks",
+   "commence_time": "2026-11-12T03:10:00Z",
    "market": "spreads",
-   "bet": "Cal Baptist Lancers -11.5",
+   "bet": "Pittsburgh Penguins -1.5",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "James Madison Dukes @ Delaware Blue Hens",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "h2h",
-   "bet": "James Madison Dukes moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-150"
-   },
-   "worst": {
     "book": "BetRivers",
-    "price": "-182"
-   },
-   "extra_profit_per_100": 11.72,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UNC Asheville Bulldogs @ West Georgia Wolves",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "h2h",
-   "bet": "West Georgia Wolves moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-130"
+    "price": "+175"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-155"
+    "price": "+140"
    },
-   "extra_profit_per_100": 12.4,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Carolina Hurricanes @ Seattle Kraken",
+   "commence_time": "2026-11-12T17:00:00Z",
+   "market": "spreads",
+   "bet": "Seattle Kraken +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-114"
+   },
+   "extra_profit_per_100": 17.28,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "NHL",
    "game": "New York Islanders @ Los Angeles Kings",
    "commence_time": "2026-11-13T03:00:00Z",
-   "market": "spreads",
-   "bet": "New York Islanders +1.5",
-   "books_compared": 6,
+   "market": "totals",
+   "bet": "Under 5.5",
+   "books_compared": 5,
    "best": {
-    "book": "BetMGM",
-    "price": "-225"
+    "book": "theScore Bet",
+    "price": "+110"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-278"
+    "price": "-107"
    },
-   "extra_profit_per_100": 8.47,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Nevada Wolf Pack @ UC Santa Barbara Gauchos",
-   "commence_time": "2026-11-12T02:00:00Z",
-   "market": "h2h",
-   "bet": "UC Santa Barbara Gauchos moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Chicago St Cougars @ Cal Baptist Lancers",
-   "commence_time": "2026-11-12T03:00:00Z",
-   "market": "spreads",
-   "bet": "Chicago St Cougars +11.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
+   "extra_profit_per_100": 16.54,
    "implied_gap_pts": 4.1
   },
   {
@@ -168,21 +96,93 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Furman Paladins @ Holy Cross Crusaders",
-   "commence_time": "2026-11-12T00:00:00Z",
-   "market": "spreads",
-   "bet": "Furman Paladins -12.5",
-   "books_compared": 5,
+   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
+   "commence_time": "2026-11-12T01:00:00Z",
+   "market": "h2h",
+   "bet": "Abilene Christian Wildcats moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-110"
+    "book": "Hard Rock Bet",
+    "price": "+240"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "+200"
+   },
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Lindenwood Lions @ Nebraska Cornhuskers",
+   "commence_time": "2026-11-12T02:00:00Z",
+   "market": "spreads",
+   "bet": "Nebraska Cornhuskers -34.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-129"
+    "price": "-117"
    },
-   "extra_profit_per_100": 13.39,
-   "implied_gap_pts": 4
+   "extra_profit_per_100": 14.53,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Stephen F. Austin Lumberjacks @ Abilene Christian Wildcats",
+   "commence_time": "2026-11-12T01:00:00Z",
+   "market": "h2h",
+   "bet": "Stephen F. Austin Lumberjacks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-250"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-305"
+   },
+   "extra_profit_per_100": 7.21,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "NHL",
+   "game": "Pittsburgh Penguins @ San Jose Sharks",
+   "commence_time": "2026-11-12T03:10:00Z",
+   "market": "spreads",
+   "bet": "San Jose Sharks +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "-185"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-220"
+   },
+   "extra_profit_per_100": 8.6,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "NHL",
+   "game": "Carolina Hurricanes @ Seattle Kraken",
+   "commence_time": "2026-11-12T17:00:00Z",
+   "market": "spreads",
+   "bet": "Carolina Hurricanes -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "-112"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 12.37,
+   "implied_gap_pts": 3.7
   }
  ]
 }
