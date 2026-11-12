@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-12T08:18:21.085Z",
- "odds_generated_at": "2026-11-12T08:18:06.207Z",
+ "generated_at": "2026-11-12T09:47:20.016Z",
+ "odds_generated_at": "2026-11-12T09:47:10.701Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -95,94 +95,94 @@
    "implied_gap_pts": 4
   },
   {
-   "sport": "College Basketball",
-   "game": "Loyola Marymount Lions @ South Alabama Jaguars",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "h2h",
-   "bet": "Loyola Marymount Lions moneyline",
-   "books_compared": 4,
+   "sport": "NHL",
+   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
+   "commence_time": "2026-11-13T00:10:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-111"
+    "book": "theScore Bet",
+    "price": "-110"
    },
    "worst": {
     "book": "BetRivers",
     "price": "-129"
    },
-   "extra_profit_per_100": 12.57,
-   "implied_gap_pts": 3.7
+   "extra_profit_per_100": 13.39,
+   "implied_gap_pts": 4
   },
   {
    "sport": "NHL",
-   "game": "Colorado Avalanche @ Ottawa Senators",
-   "commence_time": "2026-11-13T00:08:00Z",
+   "game": "Buffalo Sabres @ Chicago Blackhawks",
+   "commence_time": "2026-11-13T01:09:00Z",
    "market": "spreads",
-   "bet": "Colorado Avalanche -1.5",
+   "bet": "Buffalo Sabres -1.5",
    "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "+210"
+    "book": "theScore Bet",
+    "price": "+165"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+180"
+    "price": "+140"
    },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 25,
+   "implied_gap_pts": 3.9
   },
   {
-   "sport": "NHL",
-   "game": "Tampa Bay Lightning @ Columbus Blue Jackets",
-   "commence_time": "2026-11-13T00:10:00Z",
-   "market": "spreads",
-   "bet": "Tampa Bay Lightning -1.5",
-   "books_compared": 6,
+   "sport": "College Basketball",
+   "game": "Loyola Marymount Lions @ South Alabama Jaguars",
+   "commence_time": "2026-11-13T01:00:00Z",
+   "market": "h2h",
+   "bet": "Loyola Marymount Lions moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "BetRivers",
-    "price": "+210"
+    "book": "FanDuel",
+    "price": "-111"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+180"
+    "price": "-130"
    },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 13.17,
+   "implied_gap_pts": 3.9
   },
   {
-   "sport": "NHL",
-   "game": "New York Islanders @ Los Angeles Kings",
-   "commence_time": "2026-11-13T03:10:00Z",
+   "sport": "College Basketball",
+   "game": "Niagara Purple Eagles @ Bowling Green Falcons",
+   "commence_time": "2026-11-13T00:00:00Z",
    "market": "spreads",
-   "bet": "Los Angeles Kings -1.5",
-   "books_compared": 6,
+   "bet": "Niagara Purple Eagles +15.5",
+   "books_compared": 3,
    "best": {
-    "book": "BetRivers",
-    "price": "+210"
+    "book": "theScore Bet",
+    "price": "-115"
    },
    "worst": {
+    "book": "BetRivers",
+    "price": "-134"
+   },
+   "extra_profit_per_100": 12.33,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Niagara Purple Eagles @ Bowling Green Falcons",
+   "commence_time": "2026-11-13T00:00:00Z",
+   "market": "spreads",
+   "bet": "Bowling Green Falcons -15.5",
+   "books_compared": 3,
+   "best": {
     "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 3.5
-  },
-  {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Toronto Maple Leafs",
-   "commence_time": "2026-11-13T00:10:00Z",
-   "market": "spreads",
-   "bet": "Toronto Maple Leafs +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "-160"
+    "price": "+110"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-186"
+    "book": "theScore Bet",
+    "price": "-105"
    },
-   "extra_profit_per_100": 8.74,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 14.76,
+   "implied_gap_pts": 3.6
   }
  ]
 }
