@@ -1,34 +1,16 @@
 {
- "generated_at": "2026-11-13T17:42:44.707Z",
- "odds_generated_at": "2026-11-13T17:42:35.724Z",
+ "generated_at": "2026-11-13T18:18:12.224Z",
+ "odds_generated_at": "2026-11-13T18:18:02.867Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Boston Bruins",
-   "commence_time": "2026-11-15T00:10:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
-   "books_compared": 3,
-   "best": {
-    "book": "DraftKings",
-    "price": "+114"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-112"
-   },
-   "extra_profit_per_100": 24.71,
-   "implied_gap_pts": 6.1
-  },
   {
    "sport": "NHL",
    "game": "Edmonton Oilers @ Toronto Maple Leafs",
    "commence_time": "2026-11-15T00:10:00Z",
    "market": "totals",
    "bet": "Under 6.5",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "DraftKings",
     "price": "+120"
@@ -41,22 +23,58 @@
    "implied_gap_pts": 5.5
   },
   {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Boston Bruins",
-   "commence_time": "2026-11-15T00:10:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 3,
+   "sport": "College Basketball",
+   "game": "DePaul Blue Demons @ Northwestern Wildcats",
+   "commence_time": "2026-11-14T02:00:00Z",
+   "market": "h2h",
+   "bet": "DePaul Blue Demons moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "-112"
+    "book": "BetMGM",
+    "price": "+105"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-138"
+    "price": "-118"
    },
-   "extra_profit_per_100": 16.83,
-   "implied_gap_pts": 5.2
+   "extra_profit_per_100": 20.25,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "DePaul Blue Demons @ Northwestern Wildcats",
+   "commence_time": "2026-11-14T02:00:00Z",
+   "market": "h2h",
+   "bet": "Northwestern Wildcats moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-125"
+   },
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 5.1
+  },
+  {
+   "sport": "NHL",
+   "game": "Florida Panthers @ St Louis Blues",
+   "commence_time": "2026-11-15T00:10:00Z",
+   "market": "spreads",
+   "bet": "Florida Panthers -1.5",
+   "books_compared": 4,
+   "best": {
+    "book": "BetRivers",
+    "price": "+225"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 45,
+   "implied_gap_pts": 4.9
   },
   {
    "sport": "NHL",
@@ -64,7 +82,7 @@
    "commence_time": "2026-11-15T00:10:00Z",
    "market": "h2h",
    "bet": "Washington Capitals moneyline",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
     "price": "+104"
@@ -100,7 +118,7 @@
    "commence_time": "2026-11-15T00:10:00Z",
    "market": "h2h",
    "bet": "New Jersey Devils moneyline",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "BetRivers",
     "price": "-103"
@@ -131,21 +149,21 @@
    "implied_gap_pts": 4.7
   },
   {
-   "sport": "College Basketball",
-   "game": "DePaul Blue Demons @ Northwestern Wildcats",
-   "commence_time": "2026-11-14T02:00:00Z",
-   "market": "h2h",
-   "bet": "DePaul Blue Demons moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "New York Islanders @ Anaheim Ducks",
+   "commence_time": "2026-11-15T03:10:00Z",
+   "market": "spreads",
+   "bet": "Anaheim Ducks -1.5",
+   "books_compared": 4,
    "best": {
-    "book": "BetMGM",
-    "price": "+105"
+    "book": "BetRivers",
+    "price": "+220"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "-114"
+    "book": "Hard Rock Bet",
+    "price": "+180"
    },
-   "extra_profit_per_100": 17.28,
+   "extra_profit_per_100": 40,
    "implied_gap_pts": 4.5
   },
   {
@@ -165,24 +183,6 @@
    },
    "extra_profit_per_100": 11.83,
    "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "DePaul Blue Demons @ Northwestern Wildcats",
-   "commence_time": "2026-11-14T02:00:00Z",
-   "market": "h2h",
-   "bet": "Northwestern Wildcats moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "-125"
-   },
-   "extra_profit_per_100": 15.24,
-   "implied_gap_pts": 4.3
   }
  ]
 }
