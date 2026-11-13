@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-13T00:18:15.788Z",
- "odds_generated_at": "2026-11-13T00:18:04.672Z",
+ "generated_at": "2026-11-13T01:04:06.003Z",
+ "odds_generated_at": "2026-11-13T01:03:51.615Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "NBA",
-   "game": "Memphis Grizzlies @ New Orleans Pelicans",
-   "commence_time": "2026-11-14T01:10:00Z",
-   "market": "h2h",
-   "bet": "Memphis Grizzlies moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-140"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-182"
-   },
-   "extra_profit_per_100": 16.48,
-   "implied_gap_pts": 6.2
-  },
   {
    "sport": "NBA",
    "game": "Charlotte Hornets @ Phoenix Suns",
@@ -35,82 +17,10 @@
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-275"
+    "price": "-265"
    },
-   "extra_profit_per_100": 10.15,
-   "implied_gap_pts": 5.1
-  },
-  {
-   "sport": "NBA",
-   "game": "Memphis Grizzlies @ New Orleans Pelicans",
-   "commence_time": "2026-11-14T01:10:00Z",
-   "market": "h2h",
-   "bet": "New Orleans Pelicans moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "BetRivers",
-    "price": "+145"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "+119"
-   },
-   "extra_profit_per_100": 26,
-   "implied_gap_pts": 4.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Southern Jaguars @ Minnesota Golden Gophers",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "spreads",
-   "bet": "Minnesota Golden Gophers -26.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Southern Jaguars @ Minnesota Golden Gophers",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "spreads",
-   "bet": "Southern Jaguars +26.5",
-   "books_compared": 4,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "West Florida Argonauts @ Alabama A&M Bulldogs",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "spreads",
-   "bet": "Alabama A&M Bulldogs -4.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-118"
-   },
-   "extra_profit_per_100": 15.25,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 8.77,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "NBA",
@@ -121,68 +31,158 @@
    "books_compared": 6,
    "best": {
     "book": "BetRivers",
-    "price": "+215"
+    "price": "+210"
    },
    "worst": {
     "book": "theScore Bet",
     "price": "+180"
    },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 4
+   "extra_profit_per_100": 30,
+   "implied_gap_pts": 3.5
   },
   {
-   "sport": "College Basketball",
-   "game": "Richmond Spiders @ Southern Illinois Salukis",
-   "commence_time": "2026-11-13T01:00:00Z",
-   "market": "totals",
-   "bet": "Over 151.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-117"
-   },
-   "extra_profit_per_100": 14.53,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Loyola Marymount Lions @ South Alabama Jaguars",
-   "commence_time": "2026-11-13T01:00:00Z",
+   "sport": "NBA",
+   "game": "Milwaukee Bucks @ Orlando Magic",
+   "commence_time": "2026-11-14T00:10:00Z",
    "market": "h2h",
-   "bet": "Loyola Marymount Lions moneyline",
-   "books_compared": 6,
+   "bet": "Milwaukee Bucks moneyline",
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
-    "price": "-105"
+    "price": "+310"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-122"
+    "price": "+260"
    },
-   "extra_profit_per_100": 13.27,
-   "implied_gap_pts": 3.7
+   "extra_profit_per_100": 50,
+   "implied_gap_pts": 3.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Chattanooga Mocs @ Elon Phoenix",
+   "commence_time": "2026-11-14T00:00:00Z",
+   "market": "h2h",
+   "bet": "Chattanooga Mocs moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "DraftKings",
+    "price": "+145"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+126"
+   },
+   "extra_profit_per_100": 19,
+   "implied_gap_pts": 3.4
   },
   {
    "sport": "NHL",
-   "game": "Detroit Red Wings @ Florida Panthers",
-   "commence_time": "2026-11-13T00:40:00Z",
+   "game": "St Louis Blues @ Utah Mammoth",
+   "commence_time": "2026-11-13T02:10:00Z",
    "market": "spreads",
-   "bet": "Detroit Red Wings +1.5",
+   "bet": "Utah Mammoth +1.5",
    "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "-155"
+    "book": "theScore Bet",
+    "price": "-225"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-180"
+    "price": "-265"
    },
-   "extra_profit_per_100": 8.96,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 6.7,
+   "implied_gap_pts": 3.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Cal Poly Mustangs @ Idaho Vandals",
+   "commence_time": "2026-11-14T02:00:00Z",
+   "market": "spreads",
+   "bet": "Cal Poly Mustangs +1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 11.91,
+   "implied_gap_pts": 3.3
+  },
+  {
+   "sport": "NBA",
+   "game": "Memphis Grizzlies @ New Orleans Pelicans",
+   "commence_time": "2026-11-14T01:10:00Z",
+   "market": "h2h",
+   "bet": "Memphis Grizzlies moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "-141"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-162"
+   },
+   "extra_profit_per_100": 9.19,
+   "implied_gap_pts": 3.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Chattanooga Mocs @ Elon Phoenix",
+   "commence_time": "2026-11-14T00:00:00Z",
+   "market": "h2h",
+   "bet": "Elon Phoenix moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-152"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "-175"
+   },
+   "extra_profit_per_100": 8.65,
+   "implied_gap_pts": 3.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Buffalo Sabres @ Chicago Blackhawks",
+   "commence_time": "2026-11-13T01:09:00Z",
+   "market": "spreads",
+   "bet": "Buffalo Sabres -1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "DraftKings",
+    "price": "+160"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+140"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 3.2
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Los Angeles Kings",
+   "commence_time": "2026-11-13T03:10:00Z",
+   "market": "totals",
+   "bet": "Over 5.5",
+   "books_compared": 5,
+   "best": {
+    "book": "BetRivers",
+    "price": "-127"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-145"
+   },
+   "extra_profit_per_100": 9.77,
+   "implied_gap_pts": 3.2
   }
  ]
 }
