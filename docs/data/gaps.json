@@ -1,9 +1,27 @@
 {
- "generated_at": "2026-11-13T23:30:44.804Z",
- "odds_generated_at": "2026-11-13T23:30:32.188Z",
+ "generated_at": "2026-11-14T00:18:14.660Z",
+ "odds_generated_at": "2026-11-14T00:18:03.936Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Miami (OH) RedHawks @ Evansville Purple Aces",
+   "commence_time": "2026-11-14T19:00:00Z",
+   "market": "h2h",
+   "bet": "Evansville Purple Aces moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "+295"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+225"
+   },
+   "extra_profit_per_100": 70,
+   "implied_gap_pts": 5.5
+  },
   {
    "sport": "College Basketball",
    "game": "SE Missouri St Redhawks @ Middle Tennessee Blue Raiders",
@@ -39,60 +57,6 @@
    },
    "extra_profit_per_100": 20.71,
    "implied_gap_pts": 5.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Florida Int'l Golden Panthers @ Florida Gulf Coast Eagles",
-   "commence_time": "2026-11-14T00:00:00Z",
-   "market": "h2h",
-   "bet": "Florida Gulf Coast Eagles moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "-142"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-177"
-   },
-   "extra_profit_per_100": 13.92,
-   "implied_gap_pts": 5.2
-  },
-  {
-   "sport": "College Football",
-   "game": "Florida State Seminoles @ Pittsburgh Panthers",
-   "commence_time": "2026-11-14T00:00:00Z",
-   "market": "h2h",
-   "bet": "Pittsburgh Panthers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-134"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-165"
-   },
-   "extra_profit_per_100": 14.02,
-   "implied_gap_pts": 5
-  },
-  {
-   "sport": "College Football",
-   "game": "Florida State Seminoles @ Pittsburgh Panthers",
-   "commence_time": "2026-11-14T00:00:00Z",
-   "market": "h2h",
-   "bet": "Florida State Seminoles moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+135"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+112"
-   },
-   "extra_profit_per_100": 23,
-   "implied_gap_pts": 4.6
   },
   {
    "sport": "College Basketball",
@@ -132,24 +96,6 @@
   },
   {
    "sport": "College Football",
-   "game": "Ole Miss Rebels @ Oklahoma Sooners",
-   "commence_time": "2026-11-14T21:15:00Z",
-   "market": "h2h",
-   "bet": "Ole Miss Rebels moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+120"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Football",
    "game": "Kansas Jayhawks @ West Virginia Mountaineers",
    "commence_time": "2026-11-14T22:30:00Z",
    "market": "h2h",
@@ -183,6 +129,60 @@
    },
    "extra_profit_per_100": 14.66,
    "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "College Football",
+   "game": "Auburn Tigers @ Mississippi State Bulldogs",
+   "commence_time": "2026-11-14T17:00:00Z",
+   "market": "h2h",
+   "bet": "Mississippi State Bulldogs moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+110"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Football",
+   "game": "Tulane Green Wave @ Rice Owls",
+   "commence_time": "2026-11-14T19:00:00Z",
+   "market": "h2h",
+   "bet": "Tulane Green Wave moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+110"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Football",
+   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
+   "commence_time": "2026-11-14T22:30:00Z",
+   "market": "h2h",
+   "bet": "Kansas Jayhawks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+110"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 4.1
   }
  ]
 }
