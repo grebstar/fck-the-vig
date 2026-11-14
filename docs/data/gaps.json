@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-14T06:16:32.210Z",
- "odds_generated_at": "2026-11-14T06:16:22.110Z",
+ "generated_at": "2026-11-14T06:18:13.698Z",
+ "odds_generated_at": "2026-11-14T06:18:03.899Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -56,6 +56,24 @@
     "price": "-150"
    },
    "extra_profit_per_100": 13.33,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Wyoming Cowboys @ Denver Pioneers",
+   "commence_time": "2026-11-14T20:00:00Z",
+   "market": "h2h",
+   "bet": "Wyoming Cowboys moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "BetMGM",
+    "price": "-300"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-385"
+   },
+   "extra_profit_per_100": 7.36,
    "implied_gap_pts": 4.4
   },
   {
@@ -164,24 +182,6 @@
     "price": "-106"
    },
    "extra_profit_per_100": 15.66,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Wyoming Cowboys @ Denver Pioneers",
-   "commence_time": "2026-11-14T20:00:00Z",
-   "market": "h2h",
-   "bet": "Wyoming Cowboys moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "DraftKings",
-    "price": "-310"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-385"
-   },
-   "extra_profit_per_100": 6.29,
    "implied_gap_pts": 3.8
   }
  ]
