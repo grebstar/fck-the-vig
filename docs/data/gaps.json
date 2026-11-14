@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-14T06:18:13.698Z",
- "odds_generated_at": "2026-11-14T06:18:03.899Z",
+ "generated_at": "2026-11-14T08:18:14.179Z",
+ "odds_generated_at": "2026-11-14T08:18:04.268Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -41,21 +41,39 @@
    "implied_gap_pts": 4.5
   },
   {
-   "sport": "College Basketball",
-   "game": "New Mexico Lobos @ Santa Clara Broncos",
-   "commence_time": "2026-11-15T03:00:00Z",
+   "sport": "College Football",
+   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
+   "commence_time": "2026-11-14T20:30:00Z",
    "market": "h2h",
-   "bet": "New Mexico Lobos moneyline",
-   "books_compared": 4,
+   "bet": "West Virginia Mountaineers moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "-125"
+    "book": "FanDuel",
+    "price": "-132"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-150"
+    "price": "-159"
    },
-   "extra_profit_per_100": 13.33,
+   "extra_profit_per_100": 12.87,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "St. Thomas (MN) Tommies @ Army Knights",
+   "commence_time": "2026-11-14T18:00:00Z",
+   "market": "h2h",
+   "bet": "Army Knights moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+320"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+255"
+   },
+   "extra_profit_per_100": 65,
    "implied_gap_pts": 4.4
   },
   {
@@ -78,6 +96,24 @@
   },
   {
    "sport": "College Football",
+   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
+   "commence_time": "2026-11-14T20:30:00Z",
+   "market": "h2h",
+   "bet": "Kansas Jayhawks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+110"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Football",
    "game": "Cincinnati Bearcats @ Iowa State Cyclones",
    "commence_time": "2026-11-14T17:00:00Z",
    "market": "totals",
@@ -96,20 +132,20 @@
   },
   {
    "sport": "College Basketball",
-   "game": "New Mexico Lobos @ Santa Clara Broncos",
-   "commence_time": "2026-11-15T03:00:00Z",
-   "market": "spreads",
-   "bet": "New Mexico Lobos -1.5",
-   "books_compared": 5,
+   "game": "Drexel Dragons @ Maine Black Bears",
+   "commence_time": "2026-11-14T18:00:00Z",
+   "market": "h2h",
+   "bet": "Drexel Dragons moneyline",
+   "books_compared": 3,
    "best": {
     "book": "FanDuel",
-    "price": "-110"
+    "price": "-176"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-129"
+    "price": "-210"
    },
-   "extra_profit_per_100": 13.39,
+   "extra_profit_per_100": 9.2,
    "implied_gap_pts": 4
   },
   {
@@ -147,42 +183,6 @@
    },
    "extra_profit_per_100": 9.99,
    "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "NHL",
-   "game": "Colorado Avalanche @ Montréal Canadiens",
-   "commence_time": "2026-11-15T00:09:00Z",
-   "market": "spreads",
-   "bet": "Colorado Avalanche +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "-235"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-286"
-   },
-   "extra_profit_per_100": 7.58,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "NHL",
-   "game": "New York Islanders @ Anaheim Ducks",
-   "commence_time": "2026-11-15T03:10:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-106"
-   },
-   "extra_profit_per_100": 15.66,
-   "implied_gap_pts": 3.8
   }
  ]
 }
