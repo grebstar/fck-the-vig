@@ -1,105 +1,33 @@
 {
- "generated_at": "2026-11-14T12:18:19.105Z",
- "odds_generated_at": "2026-11-14T12:18:05.351Z",
+ "generated_at": "2026-11-14T13:36:03.300Z",
+ "odds_generated_at": "2026-11-14T13:35:53.424Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Toledo Rockets @ Detroit Mercy Titans",
+   "game": "South Dakota St Jackrabbits @ N Colorado Bears",
    "commence_time": "2026-11-14T21:00:00Z",
-   "market": "spreads",
-   "bet": "Toledo Rockets -11.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 21.12,
-   "implied_gap_pts": 6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Toledo Rockets @ Detroit Mercy Titans",
-   "commence_time": "2026-11-14T21:00:00Z",
-   "market": "spreads",
-   "bet": "Detroit Mercy Titans +11.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+105"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 21.67,
-   "implied_gap_pts": 5.8
-  },
-  {
-   "sport": "NBA",
-   "game": "Dallas Mavericks @ Cleveland Cavaliers",
-   "commence_time": "2026-11-15T00:40:00Z",
    "market": "h2h",
-   "bet": "Cleveland Cavaliers moneyline",
+   "bet": "South Dakota St Jackrabbits moneyline",
    "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-110"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-139"
-   },
-   "extra_profit_per_100": 18.97,
-   "implied_gap_pts": 5.8
-  },
-  {
-   "sport": "NBA",
-   "game": "Dallas Mavericks @ Cleveland Cavaliers",
-   "commence_time": "2026-11-15T00:40:00Z",
-   "market": "h2h",
-   "bet": "Dallas Mavericks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+112"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-110"
-   },
-   "extra_profit_per_100": 21.09,
-   "implied_gap_pts": 5.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Northern Illinois Huskies @ Bellarmine Knights",
-   "commence_time": "2026-11-14T19:00:00Z",
-   "market": "spreads",
-   "bet": "Northern Illinois Huskies +1.5",
-   "books_compared": 3,
    "best": {
     "book": "FanDuel",
-    "price": "-110"
+    "price": "-164"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "-135"
+    "book": "Hard Rock Bet",
+    "price": "-210"
    },
-   "extra_profit_per_100": 16.84,
-   "implied_gap_pts": 5.1
+   "extra_profit_per_100": 13.36,
+   "implied_gap_pts": 5.6
   },
   {
    "sport": "NHL",
-   "game": "Minnesota Wild @ Boston Bruins",
+   "game": "Florida Panthers @ St Louis Blues",
    "commence_time": "2026-11-15T00:10:00Z",
    "market": "spreads",
-   "bet": "Boston Bruins +1.5",
+   "bet": "St Louis Blues +1.5",
    "books_compared": 6,
    "best": {
     "book": "BetMGM",
@@ -114,38 +42,20 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Northern Illinois Huskies @ Bellarmine Knights",
-   "commence_time": "2026-11-14T19:00:00Z",
+   "game": "Louisiana Tech Bulldogs @ Nicholls St Colonels",
+   "commence_time": "2026-11-15T01:00:00Z",
    "market": "spreads",
-   "bet": "Bellarmine Knights -1.5",
-   "books_compared": 3,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-110"
-   },
-   "extra_profit_per_100": 19.09,
-   "implied_gap_pts": 4.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Northern Iowa Panthers @ Oakland Golden Grizzlies",
-   "commence_time": "2026-11-14T22:00:00Z",
-   "market": "h2h",
-   "bet": "Oakland Golden Grizzlies moneyline",
+   "bet": "Nicholls St Colonels -1.5",
    "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "-115"
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-140"
+    "book": "BetRivers",
+    "price": "-121"
    },
-   "extra_profit_per_100": 15.53,
+   "extra_profit_per_100": 17.36,
    "implied_gap_pts": 4.8
   },
   {
@@ -154,7 +64,7 @@
    "commence_time": "2026-11-15T01:00:00Z",
    "market": "h2h",
    "bet": "Nicholls St Colonels moneyline",
-   "books_compared": 4,
+   "books_compared": 5,
    "best": {
     "book": "FanDuel",
     "price": "-120"
@@ -167,22 +77,112 @@
    "implied_gap_pts": 4.6
   },
   {
-   "sport": "College Football",
-   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
-   "commence_time": "2026-11-14T20:30:00Z",
-   "market": "h2h",
-   "bet": "West Virginia Mountaineers moneyline",
+   "sport": "College Basketball",
+   "game": "Louisiana Tech Bulldogs @ Nicholls St Colonels",
+   "commence_time": "2026-11-15T01:00:00Z",
+   "market": "spreads",
+   "bet": "Louisiana Tech Bulldogs +1.5",
    "books_compared": 6,
    "best": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 16.67,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "NBA",
+   "game": "Chicago Bulls @ Minnesota Timberwolves",
+   "commence_time": "2026-11-15T01:10:00Z",
+   "market": "totals",
+   "bet": "Under 235.5",
+   "books_compared": 4,
+   "best": {
     "book": "FanDuel",
-    "price": "-132"
+    "price": "-104"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-159"
+    "price": "-124"
    },
-   "extra_profit_per_100": 12.87,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 15.5,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "NBA",
+   "game": "Chicago Bulls @ Minnesota Timberwolves",
+   "commence_time": "2026-11-15T01:10:00Z",
+   "market": "totals",
+   "bet": "Over 235.5",
+   "books_compared": 4,
+   "best": {
+    "book": "BetRivers",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-118"
+   },
+   "extra_profit_per_100": 15.25,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Football",
+   "game": "Cincinnati Bearcats @ Iowa State Cyclones",
+   "commence_time": "2026-11-14T17:00:00Z",
+   "market": "totals",
+   "bet": "Over 58.5",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 14.71,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "NBA",
+   "game": "Dallas Mavericks @ Cleveland Cavaliers",
+   "commence_time": "2026-11-15T00:40:00Z",
+   "market": "h2h",
+   "bet": "Cleveland Cavaliers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-124"
+   },
+   "extra_profit_per_100": 14.59,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "South Dakota St Jackrabbits @ N Colorado Bears",
+   "commence_time": "2026-11-14T21:00:00Z",
+   "market": "h2h",
+   "bet": "N Colorado Bears moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+160"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+136"
+   },
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.9
   }
  ]
 }
