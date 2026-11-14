@@ -1,25 +1,79 @@
 {
- "generated_at": "2026-11-14T08:18:14.179Z",
- "odds_generated_at": "2026-11-14T08:18:04.268Z",
+ "generated_at": "2026-11-14T10:18:15.275Z",
+ "odds_generated_at": "2026-11-14T10:18:04.802Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Drexel Dragons @ Maine Black Bears",
+   "commence_time": "2026-11-14T18:00:00Z",
+   "market": "h2h",
+   "bet": "Maine Black Bears moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+180"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+146"
+   },
+   "extra_profit_per_100": 34,
+   "implied_gap_pts": 4.9
+  },
+  {
+   "sport": "NHL",
+   "game": "Minnesota Wild @ Boston Bruins",
+   "commence_time": "2026-11-15T00:10:00Z",
+   "market": "spreads",
+   "bet": "Boston Bruins +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-235"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 9.22,
+   "implied_gap_pts": 4.9
+  },
   {
    "sport": "College Basketball",
    "game": "South Dakota St Jackrabbits @ N Colorado Bears",
    "commence_time": "2026-11-14T21:00:00Z",
    "market": "h2h",
    "bet": "South Dakota St Jackrabbits moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "-170"
    },
    "worst": {
-    "book": "BetRivers",
+    "book": "Hard Rock Bet",
     "price": "-210"
    },
    "extra_profit_per_100": 11.2,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "NHL",
+   "game": "Colorado Avalanche @ Montréal Canadiens",
+   "commence_time": "2026-11-15T00:09:00Z",
+   "market": "spreads",
+   "bet": "Colorado Avalanche +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-220"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-278"
+   },
+   "extra_profit_per_100": 9.48,
    "implied_gap_pts": 4.8
   },
   {
@@ -34,7 +88,7 @@
     "price": "+220"
    },
    "worst": {
-    "book": "Hard Rock Bet",
+    "book": "BetMGM",
     "price": "+180"
    },
    "extra_profit_per_100": 40,
@@ -56,6 +110,24 @@
     "price": "-159"
    },
    "extra_profit_per_100": 12.87,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Drexel Dragons @ Maine Black Bears",
+   "commence_time": "2026-11-14T18:00:00Z",
+   "market": "h2h",
+   "bet": "Drexel Dragons moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-176"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-215"
+   },
+   "extra_profit_per_100": 10.31,
    "implied_gap_pts": 4.5
   },
   {
@@ -82,7 +154,7 @@
    "commence_time": "2026-11-14T20:00:00Z",
    "market": "h2h",
    "bet": "Wyoming Cowboys moneyline",
-   "books_compared": 4,
+   "books_compared": 5,
    "best": {
     "book": "BetMGM",
     "price": "-300"
@@ -95,94 +167,22 @@
    "implied_gap_pts": 4.4
   },
   {
-   "sport": "College Football",
-   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
-   "commence_time": "2026-11-14T20:30:00Z",
-   "market": "h2h",
-   "bet": "Kansas Jayhawks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+130"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+110"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Football",
-   "game": "Cincinnati Bearcats @ Iowa State Cyclones",
-   "commence_time": "2026-11-14T17:00:00Z",
-   "market": "totals",
-   "bet": "Over 58.5",
-   "books_compared": 4,
-   "best": {
-    "book": "DraftKings",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
    "sport": "College Basketball",
-   "game": "Drexel Dragons @ Maine Black Bears",
-   "commence_time": "2026-11-14T18:00:00Z",
-   "market": "h2h",
-   "bet": "Drexel Dragons moneyline",
-   "books_compared": 3,
-   "best": {
-    "book": "FanDuel",
-    "price": "-176"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-210"
-   },
-   "extra_profit_per_100": 9.2,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "College Football",
-   "game": "Arkansas State Red Wolves @ Coastal Carolina Chanticleers",
-   "commence_time": "2026-11-14T18:00:00Z",
-   "market": "h2h",
-   "bet": "Coastal Carolina Chanticleers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-111"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 13.17,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Washington Huskies @ Utah Utes",
+   "game": "Rice Owls @ Stephen F. Austin Lumberjacks",
    "commence_time": "2026-11-14T19:00:00Z",
-   "market": "h2h",
-   "bet": "Utah Utes moneyline",
+   "market": "spreads",
+   "bet": "Stephen F. Austin Lumberjacks -11.5",
    "books_compared": 5,
    "best": {
-    "book": "FanDuel",
-    "price": "-154"
+    "book": "theScore Bet",
+    "price": "-105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-182"
+    "book": "Hard Rock Bet",
+    "price": "-125"
    },
-   "extra_profit_per_100": 9.99,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 15.24,
+   "implied_gap_pts": 4.3
   }
  ]
 }
