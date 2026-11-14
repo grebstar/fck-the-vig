@@ -1,16 +1,88 @@
 {
- "generated_at": "2026-11-14T02:18:24.035Z",
- "odds_generated_at": "2026-11-14T02:18:10.760Z",
+ "generated_at": "2026-11-14T04:18:14.214Z",
+ "odds_generated_at": "2026-11-14T04:18:03.851Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "New Mexico Lobos @ Santa Clara Broncos",
+   "commence_time": "2026-11-15T03:00:00Z",
+   "market": "h2h",
+   "bet": "New Mexico Lobos moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "BetMGM",
+    "price": "-120"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-152"
+   },
+   "extra_profit_per_100": 17.54,
+   "implied_gap_pts": 5.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UNC Greensboro Spartans @ Cornell Big Red",
+   "commence_time": "2026-11-14T16:00:00Z",
+   "market": "spreads",
+   "bet": "UNC Greensboro Spartans +7.5",
+   "books_compared": 3,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-115"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-143"
+   },
+   "extra_profit_per_100": 17.03,
+   "implied_gap_pts": 5.4
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Anaheim Ducks",
+   "commence_time": "2026-11-15T03:10:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+115"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-106"
+   },
+   "extra_profit_per_100": 20.66,
+   "implied_gap_pts": 4.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UNC Greensboro Spartans @ Cornell Big Red",
+   "commence_time": "2026-11-14T16:00:00Z",
+   "market": "spreads",
+   "bet": "Cornell Big Red -7.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "+115"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "extra_profit_per_100": 19.76,
+   "implied_gap_pts": 4.7
+  },
   {
    "sport": "NHL",
    "game": "Colorado Avalanche @ Montréal Canadiens",
    "commence_time": "2026-11-15T00:09:00Z",
    "market": "spreads",
    "bet": "Montréal Canadiens -1.5",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "BetRivers",
     "price": "+220"
@@ -24,92 +96,38 @@
   },
   {
    "sport": "College Football",
-   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
-   "commence_time": "2026-11-14T22:30:00Z",
+   "game": "Minnesota Golden Gophers @ Penn State Nittany Lions",
+   "commence_time": "2026-11-15T00:00:00Z",
    "market": "h2h",
-   "bet": "West Virginia Mountaineers moneyline",
+   "bet": "Minnesota Golden Gophers moneyline",
    "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-132"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-159"
-   },
-   "extra_profit_per_100": 12.87,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Football",
-   "game": "Ole Miss Rebels @ Oklahoma Sooners",
-   "commence_time": "2026-11-14T21:15:00Z",
-   "market": "h2h",
-   "bet": "Ole Miss Rebels moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+124"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+104"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.4
-  },
-  {
-   "sport": "College Football",
-   "game": "Kansas Jayhawks @ West Virginia Mountaineers",
-   "commence_time": "2026-11-14T22:30:00Z",
-   "market": "h2h",
-   "bet": "Kansas Jayhawks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+130"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+110"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Wyoming Cowboys @ Denver Pioneers",
-   "commence_time": "2026-11-14T20:00:00Z",
-   "market": "spreads",
-   "bet": "Denver Pioneers +6.5",
-   "books_compared": 3,
    "best": {
     "book": "theScore Bet",
-    "price": "+100"
+    "price": "+380"
    },
    "worst": {
-    "book": "BetMGM",
-    "price": "-118"
+    "book": "Hard Rock Bet",
+    "price": "+300"
    },
-   "extra_profit_per_100": 15.25,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 80,
+   "implied_gap_pts": 4.2
   },
   {
    "sport": "College Basketball",
-   "game": "Marshall Thundering Herd @ Youngstown St Penguins",
-   "commence_time": "2026-11-14T23:00:00Z",
+   "game": "New Mexico Lobos @ Santa Clara Broncos",
+   "commence_time": "2026-11-15T03:00:00Z",
    "market": "h2h",
-   "bet": "Marshall Thundering Herd moneyline",
-   "books_compared": 3,
+   "bet": "Santa Clara Broncos moneyline",
+   "books_compared": 4,
    "best": {
+    "book": "BetRivers",
+    "price": "+118"
+   },
+   "worst": {
     "book": "BetMGM",
     "price": "+100"
    },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-118"
-   },
-   "extra_profit_per_100": 15.25,
+   "extra_profit_per_100": 18,
    "implied_gap_pts": 4.1
   },
   {
@@ -118,9 +136,9 @@
    "commence_time": "2026-11-14T17:00:00Z",
    "market": "totals",
    "bet": "Over 58.5",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
-    "book": "BetMGM",
+    "book": "DraftKings",
     "price": "-102"
    },
    "worst": {
@@ -132,39 +150,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Wyoming Cowboys @ Denver Pioneers",
-   "commence_time": "2026-11-14T20:00:00Z",
+   "game": "New Mexico Lobos @ Santa Clara Broncos",
+   "commence_time": "2026-11-15T03:00:00Z",
    "market": "spreads",
-   "bet": "Wyoming Cowboys -6.5",
-   "books_compared": 3,
-   "best": {
-    "book": "BetMGM",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Marshall Thundering Herd @ Youngstown St Penguins",
-   "commence_time": "2026-11-14T23:00:00Z",
-   "market": "h2h",
-   "bet": "Youngstown St Penguins moneyline",
-   "books_compared": 3,
+   "bet": "New Mexico Lobos -1.5",
+   "books_compared": 5,
    "best": {
     "book": "FanDuel",
-    "price": "-102"
+    "price": "-110"
    },
    "worst": {
-    "book": "BetMGM",
-    "price": "-120"
+    "book": "BetRivers",
+    "price": "-129"
    },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 13.39,
+   "implied_gap_pts": 4
   },
   {
    "sport": "College Football",
