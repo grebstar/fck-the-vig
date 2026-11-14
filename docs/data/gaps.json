@@ -1,26 +1,98 @@
 {
- "generated_at": "2026-11-14T10:18:15.275Z",
- "odds_generated_at": "2026-11-14T10:18:04.802Z",
+ "generated_at": "2026-11-14T12:18:19.105Z",
+ "odds_generated_at": "2026-11-14T12:18:05.351Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Drexel Dragons @ Maine Black Bears",
-   "commence_time": "2026-11-14T18:00:00Z",
-   "market": "h2h",
-   "bet": "Maine Black Bears moneyline",
-   "books_compared": 5,
+   "game": "Toledo Rockets @ Detroit Mercy Titans",
+   "commence_time": "2026-11-14T21:00:00Z",
+   "market": "spreads",
+   "bet": "Toledo Rockets -11.5",
+   "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "+180"
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 21.12,
+   "implied_gap_pts": 6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Toledo Rockets @ Detroit Mercy Titans",
+   "commence_time": "2026-11-14T21:00:00Z",
+   "market": "spreads",
+   "bet": "Detroit Mercy Titans +11.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+105"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "+146"
+    "price": "-120"
    },
-   "extra_profit_per_100": 34,
-   "implied_gap_pts": 4.9
+   "extra_profit_per_100": 21.67,
+   "implied_gap_pts": 5.8
+  },
+  {
+   "sport": "NBA",
+   "game": "Dallas Mavericks @ Cleveland Cavaliers",
+   "commence_time": "2026-11-15T00:40:00Z",
+   "market": "h2h",
+   "bet": "Cleveland Cavaliers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-110"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-139"
+   },
+   "extra_profit_per_100": 18.97,
+   "implied_gap_pts": 5.8
+  },
+  {
+   "sport": "NBA",
+   "game": "Dallas Mavericks @ Cleveland Cavaliers",
+   "commence_time": "2026-11-15T00:40:00Z",
+   "market": "h2h",
+   "bet": "Dallas Mavericks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+112"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 21.09,
+   "implied_gap_pts": 5.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Northern Illinois Huskies @ Bellarmine Knights",
+   "commence_time": "2026-11-14T19:00:00Z",
+   "market": "spreads",
+   "bet": "Northern Illinois Huskies +1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-110"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-135"
+   },
+   "extra_profit_per_100": 16.84,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "NHL",
@@ -42,57 +114,57 @@
   },
   {
    "sport": "College Basketball",
-   "game": "South Dakota St Jackrabbits @ N Colorado Bears",
-   "commence_time": "2026-11-14T21:00:00Z",
-   "market": "h2h",
-   "bet": "South Dakota St Jackrabbits moneyline",
-   "books_compared": 6,
+   "game": "Northern Illinois Huskies @ Bellarmine Knights",
+   "commence_time": "2026-11-14T19:00:00Z",
+   "market": "spreads",
+   "bet": "Bellarmine Knights -1.5",
+   "books_compared": 3,
    "best": {
     "book": "theScore Bet",
-    "price": "-170"
+    "price": "+110"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 19.09,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Northern Iowa Panthers @ Oakland Golden Grizzlies",
+   "commence_time": "2026-11-14T22:00:00Z",
+   "market": "h2h",
+   "bet": "Oakland Golden Grizzlies moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "-115"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-210"
+    "price": "-140"
    },
-   "extra_profit_per_100": 11.2,
+   "extra_profit_per_100": 15.53,
    "implied_gap_pts": 4.8
   },
   {
-   "sport": "NHL",
-   "game": "Colorado Avalanche @ Montréal Canadiens",
-   "commence_time": "2026-11-15T00:09:00Z",
-   "market": "spreads",
-   "bet": "Colorado Avalanche +1.5",
-   "books_compared": 6,
+   "sport": "College Basketball",
+   "game": "Louisiana Tech Bulldogs @ Nicholls St Colonels",
+   "commence_time": "2026-11-15T01:00:00Z",
+   "market": "h2h",
+   "bet": "Nicholls St Colonels moneyline",
+   "books_compared": 4,
    "best": {
-    "book": "BetMGM",
-    "price": "-220"
+    "book": "FanDuel",
+    "price": "-120"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-278"
+    "book": "Hard Rock Bet",
+    "price": "-145"
    },
-   "extra_profit_per_100": 9.48,
-   "implied_gap_pts": 4.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Colorado Avalanche @ Montréal Canadiens",
-   "commence_time": "2026-11-15T00:09:00Z",
-   "market": "spreads",
-   "bet": "Montréal Canadiens -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+220"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 40,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 14.36,
+   "implied_gap_pts": 4.6
   },
   {
    "sport": "College Football",
@@ -111,78 +183,6 @@
    },
    "extra_profit_per_100": 12.87,
    "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Drexel Dragons @ Maine Black Bears",
-   "commence_time": "2026-11-14T18:00:00Z",
-   "market": "h2h",
-   "bet": "Drexel Dragons moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-176"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-215"
-   },
-   "extra_profit_per_100": 10.31,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "St. Thomas (MN) Tommies @ Army Knights",
-   "commence_time": "2026-11-14T18:00:00Z",
-   "market": "h2h",
-   "bet": "Army Knights moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+320"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+255"
-   },
-   "extra_profit_per_100": 65,
-   "implied_gap_pts": 4.4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Wyoming Cowboys @ Denver Pioneers",
-   "commence_time": "2026-11-14T20:00:00Z",
-   "market": "h2h",
-   "bet": "Wyoming Cowboys moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "BetMGM",
-    "price": "-300"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-385"
-   },
-   "extra_profit_per_100": 7.36,
-   "implied_gap_pts": 4.4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Rice Owls @ Stephen F. Austin Lumberjacks",
-   "commence_time": "2026-11-14T19:00:00Z",
-   "market": "spreads",
-   "bet": "Stephen F. Austin Lumberjacks -11.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-125"
-   },
-   "extra_profit_per_100": 15.24,
-   "implied_gap_pts": 4.3
   }
  ]
 }
