@@ -1,26 +1,26 @@
 {
- "generated_at": "2026-11-15T16:18:18.078Z",
- "odds_generated_at": "2026-11-15T16:18:07.004Z",
+ "generated_at": "2026-11-15T18:18:17.428Z",
+ "odds_generated_at": "2026-11-15T18:18:05.133Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Harvard Crimson @ American Eagles",
-   "commence_time": "2026-11-15T18:00:00Z",
+   "game": "Albany Great Danes @ Holy Cross Crusaders",
+   "commence_time": "2026-11-15T19:00:00Z",
    "market": "h2h",
-   "bet": "American Eagles moneyline",
+   "bet": "Albany Great Danes moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-110"
+    "book": "theScore Bet",
+    "price": "-145"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-130"
+    "price": "-180"
    },
-   "extra_profit_per_100": 13.99,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 13.41,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "NHL",
@@ -42,147 +42,147 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Missouri Tigers @ Marquette Golden Eagles",
-   "commence_time": "2026-11-15T19:30:00Z",
+   "game": "Albany Great Danes @ Holy Cross Crusaders",
+   "commence_time": "2026-11-15T19:00:00Z",
    "market": "h2h",
-   "bet": "Marquette Golden Eagles moneyline",
+   "bet": "Holy Cross Crusaders moneyline",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "-115"
+    "book": "Hard Rock Bet",
+    "price": "+145"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-135"
+    "book": "theScore Bet",
+    "price": "+125"
    },
-   "extra_profit_per_100": 12.89,
-   "implied_gap_pts": 4
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 3.6
   },
   {
    "sport": "College Basketball",
-   "game": "Quinnipiac Bobcats @ Central Connecticut St Blue Devils",
-   "commence_time": "2026-11-15T18:00:00Z",
+   "game": "CSU Bakersfield Roadrunners @ North Dakota St Bison",
+   "commence_time": "2026-11-15T19:00:00Z",
    "market": "h2h",
-   "bet": "Quinnipiac Bobcats moneyline",
+   "bet": "North Dakota St Bison moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-175"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-205"
+   },
+   "extra_profit_per_100": 8.36,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Creighton Bluejays @ Iowa Hawkeyes",
+   "commence_time": "2026-11-15T20:00:00Z",
+   "market": "h2h",
+   "bet": "Iowa Hawkeyes moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-175"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-205"
+   },
+   "extra_profit_per_100": 8.36,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Temple Owls @ La Salle Explorers",
+   "commence_time": "2026-11-15T19:00:00Z",
+   "market": "h2h",
+   "bet": "Temple Owls moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+104"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 13.09,
+   "implied_gap_pts": 3.4
+  },
+  {
+   "sport": "NHL",
+   "game": "Vancouver Canucks @ Vegas Golden Knights",
+   "commence_time": "2026-11-16T02:10:00Z",
+   "market": "spreads",
+   "bet": "Vancouver Canucks +2.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetMGM",
+    "price": "-118"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-135"
+   },
+   "extra_profit_per_100": 10.68,
+   "implied_gap_pts": 3.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Fort Wayne Mastodons @ Eastern Illinois Panthers",
+   "commence_time": "2026-11-15T20:00:00Z",
+   "market": "h2h",
+   "bet": "Fort Wayne Mastodons moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
     "price": "-154"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-180"
-   },
-   "extra_profit_per_100": 9.38,
-   "implied_gap_pts": 3.7
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Missouri Tigers @ Marquette Golden Eagles",
-   "commence_time": "2026-11-15T19:30:00Z",
-   "market": "h2h",
-   "bet": "Missouri Tigers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-105"
-   },
-   "extra_profit_per_100": 14.76,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Harvard Crimson @ American Eagles",
-   "commence_time": "2026-11-15T18:00:00Z",
-   "market": "h2h",
-   "bet": "Harvard Crimson moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+105"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-110"
-   },
-   "extra_profit_per_100": 14.09,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Harvard Crimson @ American Eagles",
-   "commence_time": "2026-11-15T18:00:00Z",
-   "market": "spreads",
-   "bet": "American Eagles -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+105"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-110"
-   },
-   "extra_profit_per_100": 14.09,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Boise State Broncos @ Nebraska Cornhuskers",
-   "commence_time": "2026-11-15T18:00:00Z",
-   "market": "h2h",
-   "bet": "Boise State Broncos moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "BetMGM",
-    "price": "+400"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+325"
-   },
-   "extra_profit_per_100": 75,
-   "implied_gap_pts": 3.5
-  },
-  {
-   "sport": "NBA",
-   "game": "Charlotte Hornets @ Los Angeles Clippers",
-   "commence_time": "2026-11-15T21:40:00Z",
-   "market": "h2h",
-   "bet": "Charlotte Hornets moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-115"
-   },
-   "extra_profit_per_100": 13.04,
-   "implied_gap_pts": 3.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Mercyhurst Lakers @ James Madison Dukes",
-   "commence_time": "2026-11-15T21:00:00Z",
-   "market": "spreads",
-   "bet": "Mercyhurst Lakers +13.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
     "book": "BetRivers",
-    "price": "-117"
+    "price": "-177"
    },
-   "extra_profit_per_100": 12.57,
-   "implied_gap_pts": 3.4
+   "extra_profit_per_100": 8.44,
+   "implied_gap_pts": 3.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Calgary Flames @ Anaheim Ducks",
+   "commence_time": "2026-11-16T01:10:00Z",
+   "market": "spreads",
+   "bet": "Anaheim Ducks -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+160"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+140"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 3.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Temple Owls @ La Salle Explorers",
+   "commence_time": "2026-11-15T19:00:00Z",
+   "market": "h2h",
+   "bet": "La Salle Explorers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-110"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-125"
+   },
+   "extra_profit_per_100": 10.91,
+   "implied_gap_pts": 3.2
   }
  ]
 }
