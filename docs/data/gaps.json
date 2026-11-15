@@ -1,9 +1,81 @@
 {
- "generated_at": "2026-11-15T00:18:18.551Z",
- "odds_generated_at": "2026-11-15T00:18:05.766Z",
+ "generated_at": "2026-11-15T02:18:24.556Z",
+ "odds_generated_at": "2026-11-15T02:18:10.060Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Boise State Broncos @ Nebraska Cornhuskers",
+   "commence_time": "2026-11-15T18:00:00Z",
+   "market": "h2h",
+   "bet": "Boise State Broncos moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+360"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+275"
+   },
+   "extra_profit_per_100": 85,
+   "implied_gap_pts": 4.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Washington Huskies @ Utah Utes",
+   "commence_time": "2026-11-15T19:00:00Z",
+   "market": "spreads",
+   "bet": "Utah Utes -3.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+110"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 19.09,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Temple Owls @ La Salle Explorers",
+   "commence_time": "2026-11-15T19:00:00Z",
+   "market": "h2h",
+   "bet": "Temple Owls moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "+104"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 17.04,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Washington Huskies @ Utah Utes",
+   "commence_time": "2026-11-15T19:00:00Z",
+   "market": "spreads",
+   "bet": "Washington Huskies +3.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-110"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-132"
+   },
+   "extra_profit_per_100": 15.15,
+   "implied_gap_pts": 4.5
+  },
   {
    "sport": "NFL",
    "game": "New England Patriots @ Detroit Lions",
@@ -23,78 +95,6 @@
    "implied_gap_pts": 4.5
   },
   {
-   "sport": "NHL",
-   "game": "Colorado Avalanche @ Montréal Canadiens",
-   "commence_time": "2026-11-15T00:20:00Z",
-   "market": "spreads",
-   "bet": "Montréal Canadiens -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "+194"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+160"
-   },
-   "extra_profit_per_100": 34,
-   "implied_gap_pts": 4.4
-  },
-  {
-   "sport": "College Football",
-   "game": "North Dakota State Bison @ Hawaii Rainbow Warriors",
-   "commence_time": "2026-11-15T04:00:00Z",
-   "market": "h2h",
-   "bet": "Hawaii Rainbow Warriors moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+250"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+205"
-   },
-   "extra_profit_per_100": 45,
-   "implied_gap_pts": 4.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Furman Paladins @ Belmont Bruins",
-   "commence_time": "2026-11-15T01:30:00Z",
-   "market": "h2h",
-   "bet": "Belmont Bruins moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-140"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-167"
-   },
-   "extra_profit_per_100": 11.55,
-   "implied_gap_pts": 4.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Washington Huskies @ Utah Utes",
-   "commence_time": "2026-11-15T19:00:00Z",
-   "market": "h2h",
-   "bet": "Utah Utes moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-152"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-182"
-   },
-   "extra_profit_per_100": 10.84,
-   "implied_gap_pts": 4.2
-  },
-  {
    "sport": "College Football",
    "game": "Ole Miss Rebels @ Oklahoma Sooners",
    "commence_time": "2026-11-15T18:00:00Z",
@@ -111,6 +111,24 @@
    },
    "extra_profit_per_100": 19,
    "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Anaheim Ducks",
+   "commence_time": "2026-11-15T03:10:00Z",
+   "market": "spreads",
+   "bet": "Anaheim Ducks -1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 4
   },
   {
    "sport": "NHL",
@@ -149,40 +167,22 @@
    "implied_gap_pts": 4
   },
   {
-   "sport": "College Basketball",
-   "game": "Cincinnati Bearcats @ Dayton Flyers",
-   "commence_time": "2026-11-15T00:35:00Z",
-   "market": "h2h",
-   "bet": "Dayton Flyers moneyline",
+   "sport": "NHL",
+   "game": "Nashville Predators @ San Jose Sharks",
+   "commence_time": "2026-11-16T02:10:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
    "books_compared": 6,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+240"
+    "book": "DraftKings",
+    "price": "-105"
    },
    "worst": {
-    "book": "BetMGM",
-    "price": "+200"
+    "book": "BetRivers",
+    "price": "-122"
    },
-   "extra_profit_per_100": 40,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "NHL",
-   "game": "Colorado Avalanche @ Montréal Canadiens",
-   "commence_time": "2026-11-15T00:20:00Z",
-   "market": "h2h",
-   "bet": "Montréal Canadiens moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-128"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-150"
-   },
-   "extra_profit_per_100": 11.46,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 13.27,
+   "implied_gap_pts": 3.7
   }
  ]
 }
