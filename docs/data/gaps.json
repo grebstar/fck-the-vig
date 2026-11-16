@@ -1,9 +1,27 @@
 {
- "generated_at": "2026-11-16T04:18:22.366Z",
- "odds_generated_at": "2026-11-16T04:18:09.212Z",
+ "generated_at": "2026-11-16T06:18:18.728Z",
+ "odds_generated_at": "2026-11-16T06:18:04.798Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "NBA",
+   "game": "Memphis Grizzlies @ Washington Wizards",
+   "commence_time": "2026-11-17T00:10:00Z",
+   "market": "h2h",
+   "bet": "Memphis Grizzlies moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-158"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-190"
+   },
+   "extra_profit_per_100": 10.66,
+   "implied_gap_pts": 4.3
+  },
   {
    "sport": "College Basketball",
    "game": "Western Kentucky Hilltoppers @ Tulsa Golden Hurricane",
@@ -28,7 +46,7 @@
    "commence_time": "2026-11-17T00:00:00Z",
    "market": "spreads",
    "bet": "Virginia Tech Hokies -12.5",
-   "books_compared": 4,
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "-115"
@@ -46,7 +64,7 @@
    "commence_time": "2026-11-17T00:00:00Z",
    "market": "spreads",
    "bet": "Richmond Spiders +12.5",
-   "books_compared": 4,
+   "books_compared": 6,
    "best": {
     "book": "Hard Rock Bet",
     "price": "+110"
@@ -59,94 +77,58 @@
    "implied_gap_pts": 3.6
   },
   {
-   "sport": "College Basketball",
-   "game": "Jacksonville Dolphins @ Georgia Bulldogs",
-   "commence_time": "2026-11-17T00:00:00Z",
+   "sport": "NHL",
+   "game": "Montréal Canadiens @ New York Rangers",
+   "commence_time": "2026-11-17T00:30:00Z",
    "market": "spreads",
-   "bet": "Georgia Bulldogs -23.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetMGM",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-117"
-   },
-   "extra_profit_per_100": 12.57,
-   "implied_gap_pts": 3.4
-  },
-  {
-   "sport": "NBA",
-   "game": "Houston Rockets @ Miami Heat",
-   "commence_time": "2026-11-17T00:40:00Z",
-   "market": "h2h",
-   "bet": "Houston Rockets moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-136"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-155"
-   },
-   "extra_profit_per_100": 9.01,
-   "implied_gap_pts": 3.2
-  },
-  {
-   "sport": "NBA",
-   "game": "Chicago Bulls @ Cleveland Cavaliers",
-   "commence_time": "2026-11-17T00:10:00Z",
-   "market": "h2h",
-   "bet": "Chicago Bulls moneyline",
-   "books_compared": 6,
+   "bet": "New York Rangers +1.5",
+   "books_compared": 3,
    "best": {
     "book": "Hard Rock Bet",
-    "price": "+325"
+    "price": "-250"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "+275"
+    "book": "theScore Bet",
+    "price": "-300"
    },
-   "extra_profit_per_100": 50,
-   "implied_gap_pts": 3.1
+   "extra_profit_per_100": 6.67,
+   "implied_gap_pts": 3.6
   },
   {
-   "sport": "NBA",
-   "game": "Golden State Warriors @ New Orleans Pelicans",
-   "commence_time": "2026-11-17T01:10:00Z",
-   "market": "h2h",
-   "bet": "New Orleans Pelicans moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "Montréal Canadiens @ New York Rangers",
+   "commence_time": "2026-11-17T00:30:00Z",
+   "market": "spreads",
+   "bet": "Montréal Canadiens -1.5",
+   "books_compared": 3,
    "best": {
     "book": "FanDuel",
-    "price": "+134"
+    "price": "+210"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "+118"
+    "book": "Hard Rock Bet",
+    "price": "+180"
    },
-   "extra_profit_per_100": 16,
-   "implied_gap_pts": 3.1
+   "extra_profit_per_100": 30,
+   "implied_gap_pts": 3.5
   },
   {
    "sport": "College Basketball",
-   "game": "Long Beach St 49ers @ UCLA Bruins",
-   "commence_time": "2026-11-17T03:00:00Z",
-   "market": "spreads",
-   "bet": "UCLA Bruins -34.5",
+   "game": "Central Arkansas Bears @ Oklahoma St Cowboys",
+   "commence_time": "2026-11-17T01:00:00Z",
+   "market": "totals",
+   "bet": "Under 160.5",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "+100"
+    "price": "-105"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-113"
+    "price": "-120"
    },
-   "extra_profit_per_100": 11.5,
-   "implied_gap_pts": 3.1
+   "extra_profit_per_100": 11.91,
+   "implied_gap_pts": 3.3
   },
   {
    "sport": "College Basketball",
@@ -167,22 +149,40 @@
    "implied_gap_pts": 3.1
   },
   {
-   "sport": "College Basketball",
-   "game": "Jacksonville Dolphins @ Georgia Bulldogs",
-   "commence_time": "2026-11-17T00:00:00Z",
-   "market": "spreads",
-   "bet": "Jacksonville Dolphins +23.5",
-   "books_compared": 5,
+   "sport": "NBA",
+   "game": "Chicago Bulls @ Cleveland Cavaliers",
+   "commence_time": "2026-11-17T00:10:00Z",
+   "market": "h2h",
+   "bet": "Cleveland Cavaliers moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "-105"
+    "book": "FanDuel",
+    "price": "-335"
    },
    "worst": {
-    "book": "BetMGM",
-    "price": "-118"
+    "book": "theScore Bet",
+    "price": "-400"
    },
-   "extra_profit_per_100": 10.49,
-   "implied_gap_pts": 2.9
+   "extra_profit_per_100": 4.85,
+   "implied_gap_pts": 3
+  },
+  {
+   "sport": "NBA",
+   "game": "Chicago Bulls @ Cleveland Cavaliers",
+   "commence_time": "2026-11-17T00:10:00Z",
+   "market": "h2h",
+   "bet": "Chicago Bulls moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+312"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+270"
+   },
+   "extra_profit_per_100": 42,
+   "implied_gap_pts": 2.8
   }
  ]
 }
