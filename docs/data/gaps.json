@@ -1,188 +1,188 @@
 {
- "generated_at": "2026-11-16T16:18:12.394Z",
- "odds_generated_at": "2026-11-16T16:18:03.744Z",
+ "generated_at": "2026-11-16T18:18:15.348Z",
+ "odds_generated_at": "2026-11-16T18:18:04.962Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "NHL",
-   "game": "Vancouver Canucks @ Utah Mammoth",
-   "commence_time": "2026-11-17T02:30:00Z",
-   "market": "spreads",
-   "bet": "Vancouver Canucks +1.5",
-   "books_compared": 6,
+   "game": "Calgary Flames @ San Jose Sharks",
+   "commence_time": "2026-11-18T03:10:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 4,
    "best": {
     "book": "theScore Bet",
-    "price": "+120"
+    "price": "+115"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "+102"
+    "price": "-134"
    },
-   "extra_profit_per_100": 18,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NBA",
-   "game": "Orlando Magic @ Boston Celtics",
-   "commence_time": "2026-11-17T00:10:00Z",
-   "market": "spreads",
-   "bet": "Boston Celtics -8.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-118"
-   },
-   "extra_profit_per_100": 15.25,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 40.37,
+   "implied_gap_pts": 10.8
   },
   {
    "sport": "NHL",
-   "game": "Montréal Canadiens @ New York Rangers",
-   "commence_time": "2026-11-17T00:30:00Z",
-   "market": "spreads",
-   "bet": "New York Rangers +1.5",
-   "books_compared": 5,
+   "game": "Calgary Flames @ San Jose Sharks",
+   "commence_time": "2026-11-18T03:10:00Z",
+   "market": "totals",
+   "bet": "Over 6.5",
+   "books_compared": 4,
    "best": {
-    "book": "BetMGM",
-    "price": "-250"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-300"
-   },
-   "extra_profit_per_100": 6.67,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Alcorn St Braves @ Maryland Terrapins",
-   "commence_time": "2026-11-16T23:00:00Z",
-   "market": "spreads",
-   "bet": "Alcorn St Braves +35.5",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "worst": {
     "book": "DraftKings",
-    "price": "-115"
+    "price": "+110"
    },
-   "extra_profit_per_100": 13.04,
-   "implied_gap_pts": 3.5
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-135"
+   },
+   "extra_profit_per_100": 35.93,
+   "implied_gap_pts": 9.8
   },
   {
-   "sport": "College Basketball",
-   "game": "St. Thomas (MN) Tommies @ LIU Sharks",
-   "commence_time": "2026-11-17T00:00:00Z",
+   "sport": "NHL",
+   "game": "Ottawa Senators @ Winnipeg Jets",
+   "commence_time": "2026-11-18T00:10:00Z",
    "market": "h2h",
-   "bet": "LIU Sharks moneyline",
-   "books_compared": 5,
+   "bet": "Ottawa Senators moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "-108"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 15.67,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Nashville Predators @ Minnesota Wild",
+   "commence_time": "2026-11-18T01:10:00Z",
+   "market": "spreads",
+   "bet": "Nashville Predators +1.5",
+   "books_compared": 3,
    "best": {
     "book": "DraftKings",
-    "price": "-108"
+    "price": "-130"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-157"
+   },
+   "extra_profit_per_100": 13.23,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Anaheim Ducks @ St Louis Blues",
+   "commence_time": "2026-11-18T01:10:00Z",
+   "market": "spreads",
+   "bet": "Anaheim Ducks +1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-196"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-240"
+   },
+   "extra_profit_per_100": 9.35,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "NHL",
+   "game": "Ottawa Senators @ Winnipeg Jets",
+   "commence_time": "2026-11-18T00:10:00Z",
+   "market": "h2h",
+   "bet": "Winnipeg Jets moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "+108"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 17.09,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Columbus Blue Jackets @ New York Islanders",
+   "commence_time": "2026-11-18T00:10:00Z",
+   "market": "spreads",
+   "bet": "Columbus Blue Jackets +1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-215"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-265"
+   },
+   "extra_profit_per_100": 8.77,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Toronto Maple Leafs @ Chicago Blackhawks",
+   "commence_time": "2026-11-18T00:40:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-105"
    },
    "worst": {
     "book": "BetRivers",
     "price": "-124"
    },
-   "extra_profit_per_100": 11.94,
-   "implied_gap_pts": 3.4
+   "extra_profit_per_100": 14.59,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "NBA",
-   "game": "Orlando Magic @ Boston Celtics",
+   "game": "Chicago Bulls @ Cleveland Cavaliers",
    "commence_time": "2026-11-17T00:10:00Z",
-   "market": "spreads",
-   "bet": "Orlando Magic +8.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 11.91,
-   "implied_gap_pts": 3.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Alcorn St Braves @ Maryland Terrapins",
-   "commence_time": "2026-11-16T23:00:00Z",
-   "market": "spreads",
-   "bet": "Maryland Terrapins -35.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 11.91,
-   "implied_gap_pts": 3.3
-  },
-  {
-   "sport": "NHL",
-   "game": "Vancouver Canucks @ Utah Mammoth",
-   "commence_time": "2026-11-17T02:30:00Z",
-   "market": "spreads",
-   "bet": "Utah Mammoth -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "-127"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-145"
-   },
-   "extra_profit_per_100": 9.77,
-   "implied_gap_pts": 3.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Grambling St Tigers @ Kentucky Wildcats",
-   "commence_time": "2026-11-17T00:00:00Z",
-   "market": "spreads",
-   "bet": "Kentucky Wildcats -28.5",
-   "books_compared": 4,
-   "best": {
-    "book": "DraftKings",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-118"
-   },
-   "extra_profit_per_100": 10.49,
-   "implied_gap_pts": 2.9
-  },
-  {
-   "sport": "College Football",
-   "game": "Miami (OH) RedHawks @ Kent State Golden Flashes",
-   "commence_time": "2026-11-18T00:00:00Z",
    "market": "h2h",
-   "bet": "Kent State Golden Flashes moneyline",
+   "bet": "Chicago Bulls moneyline",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
+    "book": "Hard Rock Bet",
     "price": "+300"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "+260"
+    "book": "BetRivers",
+    "price": "+245"
    },
-   "extra_profit_per_100": 40,
-   "implied_gap_pts": 2.8
+   "extra_profit_per_100": 55,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "Columbus Blue Jackets @ New York Islanders",
+   "commence_time": "2026-11-18T00:10:00Z",
+   "market": "spreads",
+   "bet": "New York Islanders -1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "+205"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+172"
+   },
+   "extra_profit_per_100": 33,
+   "implied_gap_pts": 4
   }
  ]
 }
