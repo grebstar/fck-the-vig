@@ -1,61 +1,97 @@
 {
- "generated_at": "2026-11-16T12:18:24.767Z",
- "odds_generated_at": "2026-11-16T12:18:12.252Z",
+ "generated_at": "2026-11-16T14:18:20.037Z",
+ "odds_generated_at": "2026-11-16T14:18:05.928Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "College Basketball",
-   "game": "Central Arkansas Bears @ Oklahoma St Cowboys",
-   "commence_time": "2026-11-17T01:00:00Z",
+   "sport": "NHL",
+   "game": "Montréal Canadiens @ New York Rangers",
+   "commence_time": "2026-11-17T00:30:00Z",
+   "market": "spreads",
+   "bet": "New York Rangers +1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "BetMGM",
+    "price": "-250"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 6.67,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Vancouver Canucks @ Utah Mammoth",
+   "commence_time": "2026-11-17T02:30:00Z",
    "market": "totals",
-   "bet": "Under 160.5",
+   "bet": "Over 6.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 13.04,
+   "implied_gap_pts": 3.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Abilene Christian Wildcats @ Missouri St Bears",
+   "commence_time": "2026-11-17T01:00:00Z",
+   "market": "spreads",
+   "bet": "Missouri St Bears -5.5",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "-105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-134"
+    "book": "FanDuel",
+    "price": "-120"
    },
-   "extra_profit_per_100": 20.61,
-   "implied_gap_pts": 6
+   "extra_profit_per_100": 11.91,
+   "implied_gap_pts": 3.3
   },
   {
    "sport": "College Basketball",
-   "game": "Central Arkansas Bears @ Oklahoma St Cowboys",
-   "commence_time": "2026-11-17T01:00:00Z",
-   "market": "totals",
-   "bet": "Over 160.5",
+   "game": "Texas Southern Tigers @ UC San Diego Tritons",
+   "commence_time": "2026-11-17T03:00:00Z",
+   "market": "spreads",
+   "bet": "Texas Southern Tigers +19.5",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+108"
+    "book": "DraftKings",
+    "price": "-105"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "-115"
+    "book": "Hard Rock Bet",
+    "price": "-120"
    },
-   "extra_profit_per_100": 21.04,
-   "implied_gap_pts": 5.4
+   "extra_profit_per_100": 11.91,
+   "implied_gap_pts": 3.3
   },
   {
-   "sport": "NBA",
-   "game": "Phoenix Suns @ Denver Nuggets",
-   "commence_time": "2026-11-17T02:10:00Z",
-   "market": "h2h",
-   "bet": "Phoenix Suns moneyline",
+   "sport": "NHL",
+   "game": "Vancouver Canucks @ Utah Mammoth",
+   "commence_time": "2026-11-17T02:30:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "+360"
+    "book": "BetMGM",
+    "price": "-105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "+300"
+    "book": "Hard Rock Bet",
+    "price": "-120"
    },
-   "extra_profit_per_100": 60,
+   "extra_profit_per_100": 11.91,
    "implied_gap_pts": 3.3
   },
   {
@@ -80,24 +116,6 @@
    "sport": "NHL",
    "game": "Vancouver Canucks @ Utah Mammoth",
    "commence_time": "2026-11-17T02:30:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-113"
-   },
-   "extra_profit_per_100": 11.5,
-   "implied_gap_pts": 3.1
-  },
-  {
-   "sport": "NHL",
-   "game": "Vancouver Canucks @ Utah Mammoth",
-   "commence_time": "2026-11-17T02:30:00Z",
    "market": "spreads",
    "bet": "Vancouver Canucks +1.5",
    "books_compared": 5,
@@ -114,11 +132,47 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Florida A&M Rattlers @ UTEP Miners",
-   "commence_time": "2026-11-16T19:00:00Z",
+   "game": "Abilene Christian Wildcats @ Missouri St Bears",
+   "commence_time": "2026-11-17T01:00:00Z",
    "market": "spreads",
-   "bet": "UTEP Miners -19.5",
-   "books_compared": 4,
+   "bet": "Abilene Christian Wildcats +5.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 11.08,
+   "implied_gap_pts": 3
+  },
+  {
+   "sport": "NBA",
+   "game": "Golden State Warriors @ New Orleans Pelicans",
+   "commence_time": "2026-11-17T01:10:00Z",
+   "market": "h2h",
+   "bet": "New Orleans Pelicans moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+150"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+133"
+   },
+   "extra_profit_per_100": 17,
+   "implied_gap_pts": 2.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "East Texas A&M Lions @ Oregon St Beavers",
+   "commence_time": "2026-11-17T02:30:00Z",
+   "market": "spreads",
+   "bet": "Oregon St Beavers -16.5",
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "-105"
@@ -129,60 +183,6 @@
    },
    "extra_profit_per_100": 9.77,
    "implied_gap_pts": 2.7
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Western Illinois Leathernecks @ Minnesota Golden Gophers",
-   "commence_time": "2026-11-17T01:00:00Z",
-   "market": "spreads",
-   "bet": "Minnesota Golden Gophers -35.5",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-117"
-   },
-   "extra_profit_per_100": 9.77,
-   "implied_gap_pts": 2.7
-  },
-  {
-   "sport": "NBA",
-   "game": "Memphis Grizzlies @ Washington Wizards",
-   "commence_time": "2026-11-17T00:10:00Z",
-   "market": "h2h",
-   "bet": "Memphis Grizzlies moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-162"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-182"
-   },
-   "extra_profit_per_100": 6.78,
-   "implied_gap_pts": 2.7
-  },
-  {
-   "sport": "NHL",
-   "game": "Montréal Canadiens @ New York Rangers",
-   "commence_time": "2026-11-17T00:30:00Z",
-   "market": "spreads",
-   "bet": "Montréal Canadiens -1.5",
-   "books_compared": 4,
-   "best": {
-    "book": "DraftKings",
-    "price": "+225"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+200"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 2.6
   }
  ]
 }
