@@ -1,188 +1,188 @@
 {
- "generated_at": "2026-11-16T00:18:11.588Z",
- "odds_generated_at": "2026-11-16T00:18:03.755Z",
+ "generated_at": "2026-11-16T02:00:50.393Z",
+ "odds_generated_at": "2026-11-16T02:00:41.828Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "Calgary Flames @ Anaheim Ducks",
-   "commence_time": "2026-11-16T01:10:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
-   "books_compared": 6,
+   "sport": "College Basketball",
+   "game": "Western Kentucky Hilltoppers @ Tulsa Golden Hurricane",
+   "commence_time": "2026-11-17T00:00:00Z",
+   "market": "h2h",
+   "bet": "Western Kentucky Hilltoppers moneyline",
+   "books_compared": 5,
    "best": {
     "book": "FanDuel",
-    "price": "-118"
+    "price": "+265"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-137"
+    "price": "+215"
    },
-   "extra_profit_per_100": 11.76,
-   "implied_gap_pts": 3.7
-  },
-  {
-   "sport": "NFL",
-   "game": "Pittsburgh Steelers @ Cincinnati Bengals",
-   "commence_time": "2026-11-16T01:20:00Z",
-   "market": "h2h",
-   "bet": "Pittsburgh Steelers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "+180"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+155"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 50,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "NHL",
-   "game": "Calgary Flames @ Anaheim Ducks",
-   "commence_time": "2026-11-16T01:10:00Z",
+   "game": "Nashville Predators @ San Jose Sharks",
+   "commence_time": "2026-11-16T02:10:00Z",
    "market": "totals",
    "bet": "Under 6.5",
-   "books_compared": 6,
+   "books_compared": 5,
    "best": {
-    "book": "BetRivers",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-104"
-   },
-   "extra_profit_per_100": 13.85,
-   "implied_gap_pts": 3.4
-  },
-  {
-   "sport": "NFL",
-   "game": "Pittsburgh Steelers @ Cincinnati Bengals",
-   "commence_time": "2026-11-16T01:20:00Z",
-   "market": "h2h",
-   "bet": "Cincinnati Bengals moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "-190"
+    "book": "theScore Bet",
+    "price": "-110"
    },
    "worst": {
     "book": "BetMGM",
-    "price": "-220"
+    "price": "-130"
    },
-   "extra_profit_per_100": 7.18,
-   "implied_gap_pts": 3.2
-  },
-  {
-   "sport": "NHL",
-   "game": "Florida Panthers @ Dallas Stars",
-   "commence_time": "2026-11-16T01:10:00Z",
-   "market": "spreads",
-   "bet": "Dallas Stars -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+200"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+175"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3
+   "extra_profit_per_100": 13.99,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "College Basketball",
-   "game": "Texas State Bobcats @ UTSA Roadrunners",
-   "commence_time": "2026-11-16T01:00:00Z",
+   "game": "Tarleton State Texans @ Drake Bulldogs",
+   "commence_time": "2026-11-17T00:30:00Z",
    "market": "spreads",
-   "bet": "UTSA Roadrunners +3.5",
+   "bet": "Drake Bulldogs -10.5",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-105"
+    "price": "+100"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-118"
+    "price": "-117"
    },
-   "extra_profit_per_100": 10.49,
-   "implied_gap_pts": 2.9
+   "extra_profit_per_100": 14.53,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Richmond Spiders @ Virginia Tech Hokies",
+   "commence_time": "2026-11-17T00:00:00Z",
+   "market": "spreads",
+   "bet": "Virginia Tech Hokies -12.5",
+   "books_compared": 4,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-115"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-134"
+   },
+   "extra_profit_per_100": 12.33,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Western Kentucky Hilltoppers @ Tulsa Golden Hurricane",
+   "commence_time": "2026-11-17T00:00:00Z",
+   "market": "h2h",
+   "bet": "Tulsa Golden Hurricane moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "-275"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-335"
+   },
+   "extra_profit_per_100": 6.51,
+   "implied_gap_pts": 3.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Richmond Spiders @ Virginia Tech Hokies",
+   "commence_time": "2026-11-17T00:00:00Z",
+   "market": "spreads",
+   "bet": "Richmond Spiders +12.5",
+   "books_compared": 4,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+110"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "-105"
+   },
+   "extra_profit_per_100": 14.76,
+   "implied_gap_pts": 3.6
   },
   {
    "sport": "NHL",
    "game": "Vancouver Canucks @ Vegas Golden Knights",
    "commence_time": "2026-11-16T02:10:00Z",
    "market": "spreads",
-   "bet": "Vegas Golden Knights -1.5",
+   "bet": "Vegas Golden Knights -2.5",
    "books_compared": 3,
    "best": {
-    "book": "DraftKings",
-    "price": "-155"
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-175"
+    "book": "BetMGM",
+    "price": "-115"
    },
-   "extra_profit_per_100": 7.38,
-   "implied_gap_pts": 2.9
+   "extra_profit_per_100": 13.04,
+   "implied_gap_pts": 3.5
   },
   {
-   "sport": "NHL",
-   "game": "Calgary Flames @ Anaheim Ducks",
-   "commence_time": "2026-11-16T01:10:00Z",
+   "sport": "College Basketball",
+   "game": "Tarleton State Texans @ Drake Bulldogs",
+   "commence_time": "2026-11-17T00:30:00Z",
    "market": "spreads",
-   "bet": "Calgary Flames +1.5",
+   "bet": "Tarleton State Texans +10.5",
    "books_compared": 6,
    "best": {
-    "book": "BetMGM",
-    "price": "-185"
+    "book": "Hard Rock Bet",
+    "price": "-105"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-210"
+    "book": "theScore Bet",
+    "price": "-120"
    },
-   "extra_profit_per_100": 6.43,
-   "implied_gap_pts": 2.8
+   "extra_profit_per_100": 11.91,
+   "implied_gap_pts": 3.3
   },
   {
    "sport": "NBA",
-   "game": "Oklahoma City Thunder @ Sacramento Kings",
-   "commence_time": "2026-11-16T02:10:00Z",
+   "game": "Portland Trail Blazers @ Minnesota Timberwolves",
+   "commence_time": "2026-11-17T01:10:00Z",
    "market": "h2h",
-   "bet": "Sacramento Kings moneyline",
+   "bet": "Minnesota Timberwolves moneyline",
    "books_compared": 5,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+400"
+    "book": "theScore Bet",
+    "price": "-130"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "+340"
+    "book": "BetRivers",
+    "price": "-148"
    },
-   "extra_profit_per_100": 60,
-   "implied_gap_pts": 2.7
+   "extra_profit_per_100": 9.35,
+   "implied_gap_pts": 3.2
   },
   {
    "sport": "NHL",
-   "game": "Nashville Predators @ San Jose Sharks",
-   "commence_time": "2026-11-16T02:10:00Z",
-   "market": "spreads",
-   "bet": "San Jose Sharks +1.5",
+   "game": "Vancouver Canucks @ Utah Mammoth",
+   "commence_time": "2026-11-17T02:30:00Z",
+   "market": "totals",
+   "bet": "Over 6.5",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "-165"
+    "book": "Hard Rock Bet",
+    "price": "+100"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-185"
+    "book": "BetRivers",
+    "price": "-112"
    },
-   "extra_profit_per_100": 6.56,
-   "implied_gap_pts": 2.6
+   "extra_profit_per_100": 10.71,
+   "implied_gap_pts": 2.8
   }
  ]
 }
