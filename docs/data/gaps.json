@@ -1,80 +1,26 @@
 {
- "generated_at": "2026-11-16T18:18:15.348Z",
- "odds_generated_at": "2026-11-16T18:18:04.962Z",
+ "generated_at": "2026-11-16T20:18:15.025Z",
+ "odds_generated_at": "2026-11-16T20:18:03.905Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "Calgary Flames @ San Jose Sharks",
-   "commence_time": "2026-11-18T03:10:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+115"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-134"
-   },
-   "extra_profit_per_100": 40.37,
-   "implied_gap_pts": 10.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Calgary Flames @ San Jose Sharks",
-   "commence_time": "2026-11-18T03:10:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
+   "sport": "College Basketball",
+   "game": "Villanova Wildcats @ Pittsburgh Panthers",
+   "commence_time": "2026-11-18T00:00:00Z",
+   "market": "h2h",
+   "bet": "Villanova Wildcats moneyline",
    "books_compared": 4,
    "best": {
     "book": "DraftKings",
     "price": "+110"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "-135"
-   },
-   "extra_profit_per_100": 35.93,
-   "implied_gap_pts": 9.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Ottawa Senators @ Winnipeg Jets",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "h2h",
-   "bet": "Ottawa Senators moneyline",
-   "books_compared": 3,
-   "best": {
     "book": "BetRivers",
-    "price": "-108"
+    "price": "-109"
    },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 15.67,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "NHL",
-   "game": "Nashville Predators @ Minnesota Wild",
-   "commence_time": "2026-11-18T01:10:00Z",
-   "market": "spreads",
-   "bet": "Nashville Predators +1.5",
-   "books_compared": 3,
-   "best": {
-    "book": "DraftKings",
-    "price": "-130"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-157"
-   },
-   "extra_profit_per_100": 13.23,
-   "implied_gap_pts": 4.6
+   "extra_profit_per_100": 18.26,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "NHL",
@@ -82,7 +28,7 @@
    "commence_time": "2026-11-18T01:10:00Z",
    "market": "spreads",
    "bet": "Anaheim Ducks +1.5",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
     "price": "-196"
@@ -95,40 +41,22 @@
    "implied_gap_pts": 4.4
   },
   {
-   "sport": "NHL",
-   "game": "Ottawa Senators @ Winnipeg Jets",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "h2h",
-   "bet": "Winnipeg Jets moneyline",
-   "books_compared": 3,
-   "best": {
-    "book": "FanDuel",
-    "price": "+108"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-110"
-   },
-   "extra_profit_per_100": 17.09,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "NHL",
-   "game": "Columbus Blue Jackets @ New York Islanders",
-   "commence_time": "2026-11-18T00:10:00Z",
+   "sport": "College Basketball",
+   "game": "St. Thomas (MN) Tommies @ LIU Sharks",
+   "commence_time": "2026-11-17T00:00:00Z",
    "market": "spreads",
-   "bet": "Columbus Blue Jackets +1.5",
-   "books_compared": 3,
+   "bet": "LIU Sharks +1.5",
+   "books_compared": 4,
    "best": {
-    "book": "FanDuel",
-    "price": "-215"
+    "book": "DraftKings",
+    "price": "-105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-265"
+    "book": "FanDuel",
+    "price": "-124"
    },
-   "extra_profit_per_100": 8.77,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 14.59,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "NHL",
@@ -136,7 +64,7 @@
    "commence_time": "2026-11-18T00:40:00Z",
    "market": "totals",
    "bet": "Under 6.5",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
     "price": "-105"
@@ -149,40 +77,112 @@
    "implied_gap_pts": 4.1
   },
   {
-   "sport": "NBA",
-   "game": "Chicago Bulls @ Cleveland Cavaliers",
-   "commence_time": "2026-11-17T00:10:00Z",
-   "market": "h2h",
-   "bet": "Chicago Bulls moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "Toronto Maple Leafs @ Chicago Blackhawks",
+   "commence_time": "2026-11-18T00:40:00Z",
+   "market": "spreads",
+   "bet": "Toronto Maple Leafs -1.5",
+   "books_compared": 4,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+300"
+    "book": "BetRivers",
+    "price": "+175"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "+245"
+    "book": "FanDuel",
+    "price": "+148"
    },
-   "extra_profit_per_100": 55,
+   "extra_profit_per_100": 27,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "St. Thomas (MN) Tommies @ LIU Sharks",
+   "commence_time": "2026-11-17T00:00:00Z",
+   "market": "spreads",
+   "bet": "St. Thomas (MN) Tommies -1.5",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "+102"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 15.04,
    "implied_gap_pts": 4
   },
   {
    "sport": "NHL",
-   "game": "Columbus Blue Jackets @ New York Islanders",
-   "commence_time": "2026-11-18T00:10:00Z",
+   "game": "Washington Capitals @ Tampa Bay Lightning",
+   "commence_time": "2026-11-18T00:40:00Z",
    "market": "spreads",
-   "bet": "New York Islanders -1.5",
-   "books_compared": 3,
+   "bet": "Washington Capitals +1.5",
+   "books_compared": 4,
    "best": {
-    "book": "BetRivers",
-    "price": "+205"
+    "book": "FanDuel",
+    "price": "-172"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "+172"
+    "book": "BetRivers",
+    "price": "-205"
    },
-   "extra_profit_per_100": 33,
+   "extra_profit_per_100": 9.36,
    "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "Toronto Maple Leafs @ Chicago Blackhawks",
+   "commence_time": "2026-11-18T00:40:00Z",
+   "market": "spreads",
+   "bet": "Chicago Blackhawks +1.5",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "-184"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-220"
+   },
+   "extra_profit_per_100": 8.9,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Villanova Wildcats @ Pittsburgh Panthers",
+   "commence_time": "2026-11-18T00:00:00Z",
+   "market": "h2h",
+   "bet": "Pittsburgh Panthers moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "-111"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 13.17,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "NHL",
+   "game": "Edmonton Oilers @ Florida Panthers",
+   "commence_time": "2026-11-18T00:10:00Z",
+   "market": "spreads",
+   "bet": "Florida Panthers -1.5",
+   "books_compared": 4,
+   "best": {
+    "book": "BetRivers",
+    "price": "+220"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+185"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 3.8
   }
  ]
 }
