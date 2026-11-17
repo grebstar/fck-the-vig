@@ -1,9 +1,81 @@
 {
- "generated_at": "2026-11-17T16:18:21.092Z",
- "odds_generated_at": "2026-11-17T16:18:06.948Z",
+ "generated_at": "2026-11-17T18:18:14.198Z",
+ "odds_generated_at": "2026-11-17T18:18:03.968Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Saint Peter's Peacocks @ UMass Lowell River Hawks",
+   "commence_time": "2026-11-17T23:00:00Z",
+   "market": "h2h",
+   "bet": "UMass Lowell River Hawks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-230"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-325"
+   },
+   "extra_profit_per_100": 12.71,
+   "implied_gap_pts": 6.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Liberty Flames @ Southern Illinois Salukis",
+   "commence_time": "2026-11-17T23:00:00Z",
+   "market": "h2h",
+   "bet": "Liberty Flames moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+106"
+   },
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 5.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Liberty Flames @ Southern Illinois Salukis",
+   "commence_time": "2026-11-17T23:00:00Z",
+   "market": "h2h",
+   "bet": "Southern Illinois Salukis moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "-130"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-160"
+   },
+   "extra_profit_per_100": 14.42,
+   "implied_gap_pts": 5
+  },
+  {
+   "sport": "NHL",
+   "game": "Los Angeles Kings @ Boston Bruins",
+   "commence_time": "2026-11-18T00:10:00Z",
+   "market": "spreads",
+   "bet": "Boston Bruins -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+172"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+140"
+   },
+   "extra_profit_per_100": 32,
+   "implied_gap_pts": 4.9
+  },
   {
    "sport": "College Basketball",
    "game": "Villanova Wildcats @ Pittsburgh Panthers",
@@ -42,147 +114,75 @@
   },
   {
    "sport": "College Basketball",
-   "game": "UC Irvine Anteaters @ Stanford Cardinal",
-   "commence_time": "2026-11-18T03:00:00Z",
-   "market": "spreads",
-   "bet": "Stanford Cardinal -6.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
    "game": "Saint Peter's Peacocks @ UMass Lowell River Hawks",
    "commence_time": "2026-11-17T23:00:00Z",
    "market": "h2h",
-   "bet": "UMass Lowell River Hawks moneyline",
+   "bet": "Saint Peter's Peacocks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+230"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+188"
+   },
+   "extra_profit_per_100": 42,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Wagner Seahawks @ Saint Joseph's Hawks",
+   "commence_time": "2026-11-18T00:00:00Z",
+   "market": "spreads",
+   "bet": "Saint Joseph's Hawks -16.5",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-260"
+    "price": "-105"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-325"
+    "price": "-125"
    },
-   "extra_profit_per_100": 7.69,
-   "implied_gap_pts": 4.2
+   "extra_profit_per_100": 15.24,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "College Basketball",
-   "game": "Monmouth Hawks @ Wake Forest Demon Deacons",
+   "game": "Wagner Seahawks @ Saint Joseph's Hawks",
    "commence_time": "2026-11-18T00:00:00Z",
    "market": "spreads",
-   "bet": "Monmouth Hawks +14.5",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UC Irvine Anteaters @ Stanford Cardinal",
-   "commence_time": "2026-11-18T03:00:00Z",
-   "market": "spreads",
-   "bet": "UC Irvine Anteaters +6.5",
+   "bet": "Wagner Seahawks +16.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-102"
+    "book": "BetRivers",
+    "price": "+102"
    },
    "worst": {
     "book": "theScore Bet",
-    "price": "-120"
+    "price": "-115"
    },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Akron Zips @ Bucknell Bison",
-   "commence_time": "2026-11-18T00:00:00Z",
-   "market": "spreads",
-   "bet": "Bucknell Bison +14.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-110"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-129"
-   },
-   "extra_profit_per_100": 13.39,
+   "extra_profit_per_100": 15.04,
    "implied_gap_pts": 4
   },
   {
-   "sport": "College Basketball",
-   "game": "Charlotte 49ers @ Davidson Wildcats",
-   "commence_time": "2026-11-18T00:00:00Z",
-   "market": "h2h",
-   "bet": "Davidson Wildcats moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-154"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-182"
-   },
-   "extra_profit_per_100": 9.99,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Marist Red Foxes @ Army Knights",
-   "commence_time": "2026-11-17T23:00:00Z",
-   "market": "h2h",
-   "bet": "Marist Red Foxes moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "Montréal Canadiens @ New Jersey Devils",
+   "commence_time": "2026-11-19T00:40:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 4,
    "best": {
     "book": "theScore Bet",
-    "price": "+105"
+    "price": "-120"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-111"
+    "price": "-140"
    },
-   "extra_profit_per_100": 14.91,
+   "extra_profit_per_100": 11.9,
    "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Calgary Flames @ San Jose Sharks",
-   "commence_time": "2026-11-18T03:10:00Z",
-   "market": "spreads",
-   "bet": "San Jose Sharks -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+200"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "+170"
-   },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 3.7
   }
  ]
 }
