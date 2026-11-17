@@ -1,26 +1,44 @@
 {
- "generated_at": "2026-11-16T22:18:16.241Z",
- "odds_generated_at": "2026-11-16T22:18:05.584Z",
+ "generated_at": "2026-11-17T00:18:18.771Z",
+ "odds_generated_at": "2026-11-17T00:18:04.836Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "Columbus Blue Jackets @ New York Islanders",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "spreads",
-   "bet": "Columbus Blue Jackets +1.5",
-   "books_compared": 6,
+   "sport": "College Basketball",
+   "game": "West Virginia Mountaineers @ Auburn Tigers",
+   "commence_time": "2026-11-18T05:00:00Z",
+   "market": "h2h",
+   "bet": "Auburn Tigers moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "theScore Bet",
-    "price": "-200"
+    "book": "BetMGM",
+    "price": "+100"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-250"
+    "price": "-124"
    },
-   "extra_profit_per_100": 10,
-   "implied_gap_pts": 4.8
+   "extra_profit_per_100": 19.35,
+   "implied_gap_pts": 5.4
+  },
+  {
+   "sport": "NHL",
+   "game": "Montréal Canadiens @ New York Rangers",
+   "commence_time": "2026-11-17T00:30:00Z",
+   "market": "spreads",
+   "bet": "New York Rangers +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-235"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-305"
+   },
+   "extra_profit_per_100": 9.76,
+   "implied_gap_pts": 5.2
   },
   {
    "sport": "NHL",
@@ -42,93 +60,57 @@
   },
   {
    "sport": "NHL",
-   "game": "Edmonton Oilers @ Florida Panthers",
+   "game": "Buffalo Sabres @ Philadelphia Flyers",
    "commence_time": "2026-11-18T00:10:00Z",
    "market": "spreads",
-   "bet": "Florida Panthers -1.5",
+   "bet": "Philadelphia Flyers +1.5",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+220"
+    "book": "BetMGM",
+    "price": "-220"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 40,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "NHL",
-   "game": "Ottawa Senators @ Winnipeg Jets",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "spreads",
-   "bet": "Ottawa Senators -1.5",
-   "books_compared": 6,
-   "best": {
     "book": "BetRivers",
-    "price": "+220"
+    "price": "-275"
    },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 40,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 9.09,
+   "implied_gap_pts": 4.6
   },
   {
    "sport": "College Basketball",
-   "game": "Villanova Wildcats @ Pittsburgh Panthers",
-   "commence_time": "2026-11-18T00:00:00Z",
+   "game": "West Virginia Mountaineers @ Auburn Tigers",
+   "commence_time": "2026-11-18T05:00:00Z",
    "market": "h2h",
-   "bet": "Villanova Wildcats moneyline",
-   "books_compared": 4,
+   "bet": "West Virginia Mountaineers moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "DraftKings",
-    "price": "+110"
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-109"
+    "book": "BetMGM",
+    "price": "-120"
    },
-   "extra_profit_per_100": 18.26,
+   "extra_profit_per_100": 16.67,
    "implied_gap_pts": 4.5
   },
   {
    "sport": "NHL",
-   "game": "Columbus Blue Jackets @ New York Islanders",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "totals",
-   "bet": "Over 5.5",
+   "game": "Washington Capitals @ Tampa Bay Lightning",
+   "commence_time": "2026-11-18T00:40:00Z",
+   "market": "spreads",
+   "bet": "Washington Capitals +1.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-112"
+    "book": "BetMGM",
+    "price": "-165"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-134"
+    "price": "-200"
    },
-   "extra_profit_per_100": 14.66,
+   "extra_profit_per_100": 10.61,
    "implied_gap_pts": 4.4
-  },
-  {
-   "sport": "NHL",
-   "game": "Edmonton Oilers @ Florida Panthers",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-108"
-   },
-   "extra_profit_per_100": 17.41,
-   "implied_gap_pts": 4.3
   },
   {
    "sport": "NHL",
@@ -150,39 +132,57 @@
   },
   {
    "sport": "NHL",
-   "game": "Washington Capitals @ Tampa Bay Lightning",
-   "commence_time": "2026-11-18T00:40:00Z",
+   "game": "Columbus Blue Jackets @ New York Islanders",
+   "commence_time": "2026-11-18T00:10:00Z",
    "market": "spreads",
-   "bet": "Washington Capitals +1.5",
+   "bet": "Columbus Blue Jackets +1.5",
    "books_compared": 6,
    "best": {
-    "book": "BetMGM",
-    "price": "-170"
+    "book": "theScore Bet",
+    "price": "-200"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-205"
+    "price": "-245"
    },
-   "extra_profit_per_100": 10.04,
+   "extra_profit_per_100": 9.18,
    "implied_gap_pts": 4.3
   },
   {
    "sport": "NHL",
-   "game": "Ottawa Senators @ Winnipeg Jets",
-   "commence_time": "2026-11-18T00:10:00Z",
+   "game": "Anaheim Ducks @ St Louis Blues",
+   "commence_time": "2026-11-18T01:10:00Z",
    "market": "spreads",
-   "bet": "Winnipeg Jets +1.5",
+   "bet": "St Louis Blues -1.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-225"
+    "book": "BetRivers",
+    "price": "+185"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-278"
+    "book": "BetMGM",
+    "price": "+155"
    },
-   "extra_profit_per_100": 8.47,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 30,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "NHL",
+   "game": "Washington Capitals @ Tampa Bay Lightning",
+   "commence_time": "2026-11-18T00:40:00Z",
+   "market": "spreads",
+   "bet": "Tampa Bay Lightning -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+160"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "+135"
+   },
+   "extra_profit_per_100": 25,
+   "implied_gap_pts": 4.1
   }
  ]
 }
