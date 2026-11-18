@@ -1,45 +1,9 @@
 {
- "generated_at": "2026-11-18T17:14:38.663Z",
- "odds_generated_at": "2026-11-18T17:14:22.850Z",
+ "generated_at": "2026-11-18T18:18:21.349Z",
+ "odds_generated_at": "2026-11-18T18:18:05.935Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Binghamton Bearcats @ Lafayette Leopards",
-   "commence_time": "2026-11-19T00:00:00Z",
-   "market": "h2h",
-   "bet": "Lafayette Leopards moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-165"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-230"
-   },
-   "extra_profit_per_100": 17.13,
-   "implied_gap_pts": 7.4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Binghamton Bearcats @ Lafayette Leopards",
-   "commence_time": "2026-11-19T00:00:00Z",
-   "market": "h2h",
-   "bet": "Binghamton Bearcats moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+175"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "+140"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 5.3
-  },
   {
    "sport": "College Basketball",
    "game": "Howard Bison @ Duquesne Dukes",
@@ -56,24 +20,6 @@
     "price": "-245"
    },
    "extra_profit_per_100": 10.73,
-   "implied_gap_pts": 5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Brown Bears @ Holy Cross Crusaders",
-   "commence_time": "2026-11-19T00:00:00Z",
-   "market": "h2h",
-   "bet": "Brown Bears moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-250"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-325"
-   },
-   "extra_profit_per_100": 9.23,
    "implied_gap_pts": 5
   },
   {
@@ -96,24 +42,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "North Carolina Central Eagles @ George Mason Patriots",
-   "commence_time": "2026-11-19T00:00:00Z",
-   "market": "spreads",
-   "bet": "George Mason Patriots -23.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
    "game": "Chattanooga Mocs @ Winthrop Eagles",
    "commence_time": "2026-11-18T23:30:00Z",
    "market": "h2h",
@@ -132,21 +60,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Houston Cougars @ Florida Gators",
-   "commence_time": "2026-11-18T21:30:00Z",
+   "game": "Binghamton Bearcats @ Lafayette Leopards",
+   "commence_time": "2026-11-19T00:00:00Z",
    "market": "h2h",
-   "bet": "Houston Cougars moneyline",
+   "bet": "Lafayette Leopards moneyline",
    "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "+114"
+    "book": "FanDuel",
+    "price": "-176"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "-104"
+    "book": "BetRivers",
+    "price": "-215"
    },
-   "extra_profit_per_100": 17.85,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 10.31,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "College Basketball",
@@ -183,6 +111,78 @@
    },
    "extra_profit_per_100": 10.76,
    "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Weber State Wildcats @ Utah State Aggies",
+   "commence_time": "2026-11-19T02:00:00Z",
+   "market": "spreads",
+   "bet": "Weber State Wildcats +29.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetMGM",
+    "price": "-115"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-136"
+   },
+   "extra_profit_per_100": 13.43,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Howard Bison @ Duquesne Dukes",
+   "commence_time": "2026-11-19T00:00:00Z",
+   "market": "h2h",
+   "bet": "Howard Bison moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+190"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+160"
+   },
+   "extra_profit_per_100": 30,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Mercer Bears @ Presbyterian Blue Hose",
+   "commence_time": "2026-11-19T00:00:00Z",
+   "market": "h2h",
+   "bet": "Mercer Bears moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+112"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "extra_profit_per_100": 16.76,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Chattanooga Mocs @ Winthrop Eagles",
+   "commence_time": "2026-11-18T23:30:00Z",
+   "market": "h2h",
+   "bet": "Winthrop Eagles moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+160"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+136"
+   },
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.9
   }
  ]
 }
