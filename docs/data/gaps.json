@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-18T08:18:19.929Z",
- "odds_generated_at": "2026-11-18T08:18:05.720Z",
+ "generated_at": "2026-11-18T10:18:18.361Z",
+ "odds_generated_at": "2026-11-18T10:18:04.521Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -10,17 +10,17 @@
    "commence_time": "2026-11-19T00:00:00Z",
    "market": "h2h",
    "bet": "Brown Bears moneyline",
-   "books_compared": 3,
+   "books_compared": 5,
    "best": {
     "book": "DraftKings",
     "price": "-225"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-315"
+    "book": "Hard Rock Bet",
+    "price": "-325"
    },
-   "extra_profit_per_100": 12.69,
-   "implied_gap_pts": 6.7
+   "extra_profit_per_100": 13.67,
+   "implied_gap_pts": 7.2
   },
   {
    "sport": "College Basketball",
@@ -28,7 +28,7 @@
    "commence_time": "2026-11-19T01:00:00Z",
    "market": "h2h",
    "bet": "UNC Greensboro Spartans moneyline",
-   "books_compared": 3,
+   "books_compared": 5,
    "best": {
     "book": "DraftKings",
     "price": "-135"
@@ -42,21 +42,39 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Vermont Catamounts @ Yale Bulldogs",
+   "game": "North Carolina Central Eagles @ George Mason Patriots",
    "commence_time": "2026-11-19T00:00:00Z",
-   "market": "h2h",
-   "bet": "Yale Bulldogs moneyline",
-   "books_compared": 4,
+   "market": "spreads",
+   "bet": "North Carolina Central Eagles +26.5",
+   "books_compared": 5,
    "best": {
-    "book": "DraftKings",
-    "price": "-155"
+    "book": "theScore Bet",
+    "price": "-105"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-200"
+    "price": "-130"
    },
-   "extra_profit_per_100": 14.52,
-   "implied_gap_pts": 5.9
+   "extra_profit_per_100": 18.32,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UNC Greensboro Spartans @ Gardner-Webb Bulldogs",
+   "commence_time": "2026-11-19T01:00:00Z",
+   "market": "h2h",
+   "bet": "Gardner-Webb Bulldogs moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+140"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "+114"
+   },
+   "extra_profit_per_100": 26,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "College Basketball",
@@ -64,7 +82,7 @@
    "commence_time": "2026-11-19T00:00:00Z",
    "market": "h2h",
    "bet": "Holy Cross Crusaders moneyline",
-   "books_compared": 3,
+   "books_compared": 5,
    "best": {
     "book": "BetRivers",
     "price": "+230"
@@ -78,20 +96,56 @@
   },
   {
    "sport": "College Basketball",
-   "game": "UNC Greensboro Spartans @ Gardner-Webb Bulldogs",
-   "commence_time": "2026-11-19T01:00:00Z",
+   "game": "Vermont Catamounts @ Yale Bulldogs",
+   "commence_time": "2026-11-19T00:00:00Z",
    "market": "h2h",
-   "bet": "Gardner-Webb Bulldogs moneyline",
-   "books_compared": 3,
+   "bet": "Yale Bulldogs moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "BetRivers",
-    "price": "+138"
+    "book": "DraftKings",
+    "price": "-162"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "+114"
+    "book": "Hard Rock Bet",
+    "price": "-200"
    },
-   "extra_profit_per_100": 24,
+   "extra_profit_per_100": 11.73,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "North Carolina Central Eagles @ George Mason Patriots",
+   "commence_time": "2026-11-19T00:00:00Z",
+   "market": "spreads",
+   "bet": "George Mason Patriots -26.5",
+   "books_compared": 5,
+   "best": {
+    "book": "BetRivers",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 4.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Samford Bulldogs @ South Carolina Upstate Spartans",
+   "commence_time": "2026-11-18T23:30:00Z",
+   "market": "h2h",
+   "bet": "Samford Bulldogs moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "DraftKings",
+    "price": "-278"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-360"
+   },
+   "extra_profit_per_100": 8.19,
    "implied_gap_pts": 4.7
   },
   {
@@ -118,7 +172,7 @@
    "commence_time": "2026-11-18T23:30:00Z",
    "market": "spreads",
    "bet": "Navy Midshipmen +22.5",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "BetMGM",
     "price": "-110"
@@ -129,60 +183,6 @@
    },
    "extra_profit_per_100": 15.15,
    "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UC Riverside Highlanders @ San Diego Toreros",
-   "commence_time": "2026-11-19T02:30:00Z",
-   "market": "h2h",
-   "bet": "San Diego Toreros moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-295"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-375"
-   },
-   "extra_profit_per_100": 7.23,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Portland Pilots @ Colorado Buffaloes",
-   "commence_time": "2026-11-19T02:00:00Z",
-   "market": "spreads",
-   "bet": "Colorado Buffaloes -14.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-118"
-   },
-   "extra_profit_per_100": 15.25,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Portland Pilots @ Colorado Buffaloes",
-   "commence_time": "2026-11-19T02:00:00Z",
-   "market": "spreads",
-   "bet": "Portland Pilots +14.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
   }
  ]
 }
