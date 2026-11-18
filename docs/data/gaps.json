@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-17T23:30:28.545Z",
- "odds_generated_at": "2026-11-17T23:30:03.468Z",
+ "generated_at": "2026-11-18T00:18:15.666Z",
+ "odds_generated_at": "2026-11-18T00:18:04.883Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Football",
-   "game": "Ball State Cardinals @ Ohio Bobcats",
-   "commence_time": "2026-11-18T00:00:00Z",
-   "market": "h2h",
-   "bet": "Ball State Cardinals moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+400"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+300"
-   },
-   "extra_profit_per_100": 100,
-   "implied_gap_pts": 5
-  },
   {
    "sport": "NHL",
    "game": "Colorado Avalanche @ Utah Mammoth",
@@ -42,57 +24,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Michigan St Spartans @ Tennessee Volunteers",
-   "commence_time": "2026-11-18T02:00:00Z",
+   "game": "UC Irvine Anteaters @ Stanford Cardinal",
+   "commence_time": "2026-11-18T03:00:00Z",
    "market": "h2h",
-   "bet": "Tennessee Volunteers moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+125"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+105"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Green Bay Phoenix @ West Florida Argonauts",
-   "commence_time": "2026-11-18T00:00:00Z",
-   "market": "h2h",
-   "bet": "Green Bay Phoenix moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-215"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-265"
-   },
-   "extra_profit_per_100": 8.77,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Villanova Wildcats @ Pittsburgh Panthers",
-   "commence_time": "2026-11-18T00:00:00Z",
-   "market": "h2h",
-   "bet": "Villanova Wildcats moneyline",
+   "bet": "Stanford Cardinal moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-125"
+    "price": "-275"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-148"
+    "book": "Hard Rock Bet",
+    "price": "-350"
    },
-   "extra_profit_per_100": 12.43,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 7.79,
+   "implied_gap_pts": 4.4
   },
   {
    "sport": "NHL",
@@ -114,60 +60,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "UConn Huskies @ Arizona Wildcats",
-   "commence_time": "2026-11-19T02:00:00Z",
-   "market": "h2h",
-   "bet": "UConn Huskies moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+145"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+123"
-   },
-   "extra_profit_per_100": 22,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "NHL",
-   "game": "Edmonton Oilers @ Florida Panthers",
-   "commence_time": "2026-11-18T00:10:00Z",
-   "market": "spreads",
-   "bet": "Edmonton Oilers +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-220"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-265"
-   },
-   "extra_profit_per_100": 7.71,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Villanova Wildcats @ Pittsburgh Panthers",
-   "commence_time": "2026-11-18T00:00:00Z",
-   "market": "h2h",
-   "bet": "Pittsburgh Panthers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+120"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+104"
-   },
-   "extra_profit_per_100": 16,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
    "game": "SIU-Edwardsville Cougars @ North Dakota Fighting Hawks",
    "commence_time": "2026-11-18T01:00:00Z",
    "market": "h2h",
@@ -183,6 +75,114 @@
    },
    "extra_profit_per_100": 10.38,
    "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UC Irvine Anteaters @ Stanford Cardinal",
+   "commence_time": "2026-11-18T03:00:00Z",
+   "market": "h2h",
+   "bet": "UC Irvine Anteaters moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+260"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+220"
+   },
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 3.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "West Virginia Mountaineers @ Auburn Tigers",
+   "commence_time": "2026-11-18T05:00:00Z",
+   "market": "h2h",
+   "bet": "West Virginia Mountaineers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 13.04,
+   "implied_gap_pts": 3.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "West Virginia Mountaineers @ Auburn Tigers",
+   "commence_time": "2026-11-18T05:00:00Z",
+   "market": "h2h",
+   "bet": "Auburn Tigers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-121"
+   },
+   "extra_profit_per_100": 12.6,
+   "implied_gap_pts": 3.5
+  },
+  {
+   "sport": "NHL",
+   "game": "Colorado Avalanche @ Utah Mammoth",
+   "commence_time": "2026-11-19T03:10:00Z",
+   "market": "spreads",
+   "bet": "Colorado Avalanche +1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-240"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-286"
+   },
+   "extra_profit_per_100": 6.7,
+   "implied_gap_pts": 3.5
+  },
+  {
+   "sport": "NHL",
+   "game": "Dallas Stars @ Vegas Golden Knights",
+   "commence_time": "2026-11-18T03:10:00Z",
+   "market": "spreads",
+   "bet": "Dallas Stars +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-225"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-265"
+   },
+   "extra_profit_per_100": 6.7,
+   "implied_gap_pts": 3.4
+  },
+  {
+   "sport": "NHL",
+   "game": "Washington Capitals @ Tampa Bay Lightning",
+   "commence_time": "2026-11-18T00:40:00Z",
+   "market": "h2h",
+   "bet": "Washington Capitals moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+128"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+112"
+   },
+   "extra_profit_per_100": 16,
+   "implied_gap_pts": 3.3
   }
  ]
 }
