@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-19T20:18:14.226Z",
- "odds_generated_at": "2026-11-19T20:18:03.365Z",
+ "generated_at": "2026-11-19T20:32:07.750Z",
+ "odds_generated_at": "2026-11-19T20:31:52.593Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -149,24 +149,6 @@
    "implied_gap_pts": 3.9
   },
   {
-   "sport": "College Basketball",
-   "game": "Texas A&M Aggies @ TCU Horned Frogs",
-   "commence_time": "2026-11-20T01:00:00Z",
-   "market": "spreads",
-   "bet": "TCU Horned Frogs -1.5",
-   "books_compared": 3,
-   "best": {
-    "book": "DraftKings",
-    "price": "+114"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "-102"
-   },
-   "extra_profit_per_100": 15.96,
-   "implied_gap_pts": 3.8
-  },
-  {
    "sport": "NHL",
    "game": "Edmonton Oilers @ Tampa Bay Lightning",
    "commence_time": "2026-11-20T00:40:00Z",
@@ -182,6 +164,24 @@
     "price": "+116"
    },
    "extra_profit_per_100": 18,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "VCU Rams @ Santa Clara Broncos",
+   "commence_time": "2026-11-20T03:30:00Z",
+   "market": "h2h",
+   "bet": "VCU Rams moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+120"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+104"
+   },
+   "extra_profit_per_100": 16,
    "implied_gap_pts": 3.6
   }
  ]
