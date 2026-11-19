@@ -1,80 +1,26 @@
 {
- "generated_at": "2026-11-19T10:18:17.093Z",
- "odds_generated_at": "2026-11-19T10:18:08.632Z",
+ "generated_at": "2026-11-19T12:18:15.127Z",
+ "odds_generated_at": "2026-11-19T12:18:05.540Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "UNLV Rebels @ Rutgers Scarlet Knights",
-   "commence_time": "2026-11-20T01:30:00Z",
-   "market": "h2h",
-   "bet": "UNLV Rebels moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+140"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+110"
-   },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Robert Morris Colonials @ Toledo Rockets",
-   "commence_time": "2026-11-20T00:00:00Z",
-   "market": "h2h",
-   "bet": "Toledo Rockets moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-295"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-400"
-   },
-   "extra_profit_per_100": 8.9,
-   "implied_gap_pts": 5.3
-  },
   {
    "sport": "College Basketball",
    "game": "Southern Miss Golden Eagles @ Grambling St Tigers",
    "commence_time": "2026-11-20T00:00:00Z",
    "market": "h2h",
    "bet": "Southern Miss Golden Eagles moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "BetMGM",
-    "price": "-118"
+    "price": "-120"
    },
    "worst": {
     "book": "Hard Rock Bet",
     "price": "-145"
    },
-   "extra_profit_per_100": 15.78,
-   "implied_gap_pts": 5.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UNLV Rebels @ Rutgers Scarlet Knights",
-   "commence_time": "2026-11-20T01:30:00Z",
-   "market": "spreads",
-   "bet": "UNLV Rebels +2.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-122"
-   },
-   "extra_profit_per_100": 18.03,
-   "implied_gap_pts": 5
+   "extra_profit_per_100": 14.36,
+   "implied_gap_pts": 4.6
   },
   {
    "sport": "NHL",
@@ -96,39 +42,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "UNLV Rebels @ Rutgers Scarlet Knights",
-   "commence_time": "2026-11-20T01:30:00Z",
-   "market": "spreads",
-   "bet": "Rutgers Scarlet Knights -2.5",
-   "books_compared": 5,
+   "game": "Georgia Southern Eagles @ Houston Christian Huskies",
+   "commence_time": "2026-11-20T01:00:00Z",
+   "market": "h2h",
+   "bet": "Houston Christian Huskies moneyline",
+   "books_compared": 6,
    "best": {
+    "book": "theScore Bet",
+    "price": "-155"
+   },
+   "worst": {
     "book": "BetRivers",
-    "price": "+100"
+    "price": "-186"
    },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Tarleton State Texans @ USC Trojans",
-   "commence_time": "2026-11-20T04:00:00Z",
-   "market": "spreads",
-   "bet": "USC Trojans -26.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 10.76,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "NHL",
@@ -150,39 +78,111 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Tarleton State Texans @ USC Trojans",
-   "commence_time": "2026-11-20T04:00:00Z",
-   "market": "spreads",
-   "bet": "Tarleton State Texans +26.5",
+   "game": "SE Missouri St Redhawks @ St. Thomas (MN) Tommies",
+   "commence_time": "2026-11-20T01:00:00Z",
+   "market": "h2h",
+   "bet": "St. Thomas (MN) Tommies moneyline",
    "books_compared": 4,
    "best": {
     "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Robert Morris Colonials @ Toledo Rockets",
-   "commence_time": "2026-11-20T00:00:00Z",
-   "market": "spreads",
-   "bet": "Toledo Rockets -6.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-115"
+    "price": "-300"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-136"
+    "price": "-375"
    },
-   "extra_profit_per_100": 13.43,
-   "implied_gap_pts": 4.1
+   "extra_profit_per_100": 6.66,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "NHL",
+   "game": "Columbus Blue Jackets @ Chicago Blackhawks",
+   "commence_time": "2026-11-20T01:10:00Z",
+   "market": "spreads",
+   "bet": "Columbus Blue Jackets -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+164"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+140"
+   },
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "NHL",
+   "game": "Minnesota Wild @ Calgary Flames",
+   "commence_time": "2026-11-20T01:10:00Z",
+   "market": "spreads",
+   "bet": "Calgary Flames +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-130"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-152"
+   },
+   "extra_profit_per_100": 11.13,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Texas A&M Aggies @ TCU Horned Frogs",
+   "commence_time": "2026-11-20T01:00:00Z",
+   "market": "h2h",
+   "bet": "Texas A&M Aggies moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-122"
+   },
+   "extra_profit_per_100": 13.27,
+   "implied_gap_pts": 3.7
+  },
+  {
+   "sport": "NHL",
+   "game": "Columbus Blue Jackets @ Chicago Blackhawks",
+   "commence_time": "2026-11-20T01:10:00Z",
+   "market": "spreads",
+   "bet": "Chicago Blackhawks +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-170"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-200"
+   },
+   "extra_profit_per_100": 8.82,
+   "implied_gap_pts": 3.7
+  },
+  {
+   "sport": "NHL",
+   "game": "Montréal Canadiens @ Carolina Hurricanes",
+   "commence_time": "2026-11-20T00:10:00Z",
+   "market": "spreads",
+   "bet": "Montréal Canadiens +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 14.09,
+   "implied_gap_pts": 3.6
   }
  ]
 }
