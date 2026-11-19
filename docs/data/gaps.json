@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-19T00:18:18.219Z",
- "odds_generated_at": "2026-11-19T00:18:09.686Z",
+ "generated_at": "2026-11-19T00:20:25.648Z",
+ "odds_generated_at": "2026-11-19T00:20:01.002Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
