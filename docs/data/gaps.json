@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-19T00:20:25.648Z",
- "odds_generated_at": "2026-11-19T00:20:01.002Z",
+ "generated_at": "2026-11-19T02:18:13.930Z",
+ "odds_generated_at": "2026-11-19T02:18:04.839Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -16,7 +16,7 @@
     "price": "-192"
    },
    "worst": {
-    "book": "BetRivers",
+    "book": "Hard Rock Bet",
     "price": "-240"
    },
    "extra_profit_per_100": 10.41,
@@ -41,42 +41,6 @@
    "implied_gap_pts": 4.5
   },
   {
-   "sport": "College Basketball",
-   "game": "UL Monroe Warhawks @ LSU Tigers",
-   "commence_time": "2026-11-19T01:00:00Z",
-   "market": "spreads",
-   "bet": "LSU Tigers -37.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UL Monroe Warhawks @ LSU Tigers",
-   "commence_time": "2026-11-19T01:00:00Z",
-   "market": "spreads",
-   "bet": "UL Monroe Warhawks +37.5",
-   "books_compared": 5,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
    "sport": "NHL",
    "game": "Anaheim Ducks @ Colorado Avalanche",
    "commence_time": "2026-11-20T02:10:00Z",
@@ -95,40 +59,58 @@
    "implied_gap_pts": 4.4
   },
   {
-   "sport": "College Basketball",
-   "game": "UConn Huskies @ Arizona Wildcats",
-   "commence_time": "2026-11-19T02:00:00Z",
-   "market": "h2h",
-   "bet": "Arizona Wildcats moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "New York Islanders @ Winnipeg Jets",
+   "commence_time": "2026-11-20T00:10:00Z",
+   "market": "spreads",
+   "bet": "Winnipeg Jets -1.5",
+   "books_compared": 5,
    "best": {
-    "book": "theScore Bet",
-    "price": "-155"
+    "book": "FanDuel",
+    "price": "+225"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-186"
+    "book": "theScore Bet",
+    "price": "+185"
    },
-   "extra_profit_per_100": 10.76,
+   "extra_profit_per_100": 40,
    "implied_gap_pts": 4.3
   },
   {
-   "sport": "College Basketball",
-   "game": "UNC Greensboro Spartans @ Gardner-Webb Bulldogs",
-   "commence_time": "2026-11-19T01:00:00Z",
+   "sport": "NHL",
+   "game": "Vancouver Canucks @ Seattle Kraken",
+   "commence_time": "2026-11-20T02:50:00Z",
    "market": "spreads",
-   "bet": "Gardner-Webb Bulldogs +2.5",
+   "bet": "Seattle Kraken -1.5",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "+100"
+    "book": "FanDuel",
+    "price": "+148"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-117"
+    "book": "BetMGM",
+    "price": "+125"
    },
-   "extra_profit_per_100": 14.53,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 23,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "NHL",
+   "game": "Vancouver Canucks @ Seattle Kraken",
+   "commence_time": "2026-11-20T02:50:00Z",
+   "market": "spreads",
+   "bet": "Vancouver Canucks +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-155"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-184"
+   },
+   "extra_profit_per_100": 10.17,
+   "implied_gap_pts": 4
   },
   {
    "sport": "NHL",
@@ -136,7 +118,7 @@
    "commence_time": "2026-11-19T03:10:00Z",
    "market": "spreads",
    "bet": "Colorado Avalanche +1.5",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "BetMGM",
     "price": "-250"
@@ -150,39 +132,57 @@
   },
   {
    "sport": "NHL",
-   "game": "New York Islanders @ Winnipeg Jets",
-   "commence_time": "2026-11-20T00:10:00Z",
+   "game": "Columbus Blue Jackets @ Chicago Blackhawks",
+   "commence_time": "2026-11-20T01:10:00Z",
    "market": "spreads",
-   "bet": "Winnipeg Jets -1.5",
-   "books_compared": 5,
+   "bet": "Columbus Blue Jackets -1.5",
+   "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "+220"
+    "book": "DraftKings",
+    "price": "+164"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "+185"
+    "book": "Hard Rock Bet",
+    "price": "+140"
    },
-   "extra_profit_per_100": 35,
+   "extra_profit_per_100": 24,
    "implied_gap_pts": 3.8
   },
   {
-   "sport": "NBA",
-   "game": "Washington Wizards @ Toronto Raptors",
-   "commence_time": "2026-11-19T00:40:00Z",
-   "market": "h2h",
-   "bet": "Toronto Raptors moneyline",
-   "books_compared": 6,
+   "sport": "College Basketball",
+   "game": "Tarleton State Texans @ USC Trojans",
+   "commence_time": "2026-11-20T04:00:00Z",
+   "market": "spreads",
+   "bet": "Tarleton State Texans +27.5",
+   "books_compared": 4,
    "best": {
-    "book": "FanDuel",
-    "price": "-162"
+    "book": "BetMGM",
+    "price": "-105"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-190"
+    "price": "-122"
    },
-   "extra_profit_per_100": 9.1,
+   "extra_profit_per_100": 13.27,
    "implied_gap_pts": 3.7
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Winnipeg Jets",
+   "commence_time": "2026-11-20T00:10:00Z",
+   "market": "spreads",
+   "bet": "New York Islanders +1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-250"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 6.67,
+   "implied_gap_pts": 3.6
   }
  ]
 }
