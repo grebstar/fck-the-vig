@@ -1,25 +1,97 @@
 {
- "generated_at": "2026-11-20T16:18:16.166Z",
- "odds_generated_at": "2026-11-20T16:18:05.640Z",
+ "generated_at": "2026-11-20T18:18:12.896Z",
+ "odds_generated_at": "2026-11-20T18:18:03.763Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "Washington Capitals @ Boston Bruins",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 5,
+   "sport": "College Basketball",
+   "game": "Indiana St Sycamores @ Stephen F. Austin Lumberjacks",
+   "commence_time": "2026-11-20T20:00:00Z",
+   "market": "h2h",
+   "bet": "Stephen F. Austin Lumberjacks moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "+100"
+    "book": "FanDuel",
+    "price": "-160"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-210"
+   },
+   "extra_profit_per_100": 14.88,
+   "implied_gap_pts": 6.2
+  },
+  {
+   "sport": "NHL",
+   "game": "Minnesota Wild @ Vancouver Canucks",
+   "commence_time": "2026-11-22T03:00:00Z",
+   "market": "spreads",
+   "bet": "Minnesota Wild -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 18.32,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Football",
+   "game": "Florida International Panthers @ Kennesaw State Owls",
+   "commence_time": "2026-11-21T20:00:00Z",
+   "market": "h2h",
+   "bet": "Kennesaw State Owls moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-130"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-162"
+   },
+   "extra_profit_per_100": 15.19,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Los Angeles Kings @ Ottawa Senators",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "spreads",
+   "bet": "Los Angeles Kings +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-160"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-200"
+   },
+   "extra_profit_per_100": 12.5,
+   "implied_gap_pts": 5.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Indiana St Sycamores @ Stephen F. Austin Lumberjacks",
+   "commence_time": "2026-11-20T20:00:00Z",
+   "market": "h2h",
+   "bet": "Indiana St Sycamores moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+165"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-122"
+    "price": "+134"
    },
-   "extra_profit_per_100": 18.03,
+   "extra_profit_per_100": 31,
    "implied_gap_pts": 5
   },
   {
@@ -42,21 +114,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Tenn-Martin Skyhawks @ Southern Illinois Salukis",
-   "commence_time": "2026-11-20T22:30:00Z",
+   "game": "Georgia St Panthers @ Jacksonville St Gamecocks",
+   "commence_time": "2026-11-21T00:00:00Z",
    "market": "spreads",
-   "bet": "Southern Illinois Salukis -1.5",
-   "books_compared": 6,
+   "bet": "Jacksonville St Gamecocks -1.5",
+   "books_compared": 4,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
+    "book": "DraftKings",
+    "price": "+105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-121"
+    "book": "BetMGM",
+    "price": "-115"
    },
-   "extra_profit_per_100": 17.36,
-   "implied_gap_pts": 4.8
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 4.7
   },
   {
    "sport": "NHL",
@@ -64,125 +136,53 @@
    "commence_time": "2026-11-22T03:00:00Z",
    "market": "spreads",
    "bet": "Vancouver Canucks +1.5",
-   "books_compared": 4,
+   "books_compared": 6,
    "best": {
     "book": "Hard Rock Bet",
-    "price": "+115"
+    "price": "+105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-105"
+    "book": "theScore Bet",
+    "price": "-115"
    },
-   "extra_profit_per_100": 19.76,
+   "extra_profit_per_100": 18.04,
    "implied_gap_pts": 4.7
   },
   {
    "sport": "College Basketball",
-   "game": "Loyola (MD) Greyhounds @ Virginia Cavaliers",
-   "commence_time": "2026-11-21T00:00:00Z",
-   "market": "spreads",
-   "bet": "Loyola (MD) Greyhounds +41.5",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-104"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-125"
-   },
-   "extra_profit_per_100": 16.15,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Vancouver Canucks",
-   "commence_time": "2026-11-22T03:00:00Z",
-   "market": "spreads",
-   "bet": "Minnesota Wild -1.5",
-   "books_compared": 4,
-   "best": {
-    "book": "BetRivers",
-    "price": "-120"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-145"
-   },
-   "extra_profit_per_100": 14.36,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "East Carolina Pirates @ Utah Valley Wolverines",
-   "commence_time": "2026-11-21T01:00:00Z",
+   "game": "NC State Wolfpack @ Seton Hall Pirates",
+   "commence_time": "2026-11-21T02:30:00Z",
    "market": "h2h",
-   "bet": "Utah Valley Wolverines moneyline",
+   "bet": "Seton Hall Pirates moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-160"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-195"
-   },
-   "extra_profit_per_100": 11.22,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "NHL",
-   "game": "Edmonton Oilers @ Carolina Hurricanes",
-   "commence_time": "2026-11-21T18:00:00Z",
-   "market": "spreads",
-   "bet": "Edmonton Oilers +1.5",
-   "books_compared": 5,
-   "best": {
     "book": "theScore Bet",
-    "price": "-160"
+    "price": "+155"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-195"
+    "price": "+128"
    },
-   "extra_profit_per_100": 11.22,
+   "extra_profit_per_100": 27,
    "implied_gap_pts": 4.6
   },
   {
-   "sport": "NHL",
-   "game": "New York Islanders @ Detroit Red Wings",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "spreads",
-   "bet": "New York Islanders +1.5",
-   "books_compared": 3,
-   "best": {
-    "book": "DraftKings",
-    "price": "-238"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-300"
-   },
-   "extra_profit_per_100": 8.69,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Tenn-Martin Skyhawks @ Southern Illinois Salukis",
-   "commence_time": "2026-11-20T22:30:00Z",
+   "sport": "College Football",
+   "game": "Florida International Panthers @ Kennesaw State Owls",
+   "commence_time": "2026-11-21T20:00:00Z",
    "market": "h2h",
-   "bet": "Tenn-Martin Skyhawks moneyline",
+   "bet": "Florida International Panthers moneyline",
    "books_compared": 6,
    "best": {
     "book": "BetRivers",
-    "price": "+114"
+    "price": "+130"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-105"
+    "book": "FanDuel",
+    "price": "+108"
    },
-   "extra_profit_per_100": 18.76,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 22,
+   "implied_gap_pts": 4.6
   }
  ]
 }
