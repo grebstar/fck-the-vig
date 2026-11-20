@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-20T06:18:10.706Z",
- "odds_generated_at": "2026-11-20T06:18:02.225Z",
+ "generated_at": "2026-11-20T08:18:13.709Z",
+ "odds_generated_at": "2026-11-20T08:18:05.009Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -13,28 +13,64 @@
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-160"
+    "price": "-162"
    },
    "worst": {
     "book": "Hard Rock Bet",
     "price": "-210"
    },
-   "extra_profit_per_100": 14.88,
-   "implied_gap_pts": 6.2
+   "extra_profit_per_100": 14.11,
+   "implied_gap_pts": 5.9
   },
   {
    "sport": "College Basketball",
-   "game": "Saint Joseph's Hawks @ Drexel Dragons",
+   "game": "Western Illinois Leathernecks @ Albany Great Danes",
+   "commence_time": "2026-11-20T20:00:00Z",
+   "market": "h2h",
+   "bet": "Albany Great Danes moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "-278"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-375"
+   },
+   "extra_profit_per_100": 9.3,
+   "implied_gap_pts": 5.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Western Illinois Leathernecks @ Albany Great Danes",
+   "commence_time": "2026-11-20T20:00:00Z",
+   "market": "h2h",
+   "bet": "Western Illinois Leathernecks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+290"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "+225"
+   },
+   "extra_profit_per_100": 65,
+   "implied_gap_pts": 5.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Monmouth Hawks @ Princeton Tigers",
    "commence_time": "2026-11-21T00:00:00Z",
    "market": "h2h",
-   "bet": "Saint Joseph's Hawks moneyline",
-   "books_compared": 5,
+   "bet": "Princeton Tigers moneyline",
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
     "price": "-160"
    },
    "worst": {
-    "book": "Hard Rock Bet",
+    "book": "BetRivers",
     "price": "-200"
    },
    "extra_profit_per_100": 12.5,
@@ -59,57 +95,39 @@
    "implied_gap_pts": 5
   },
   {
-   "sport": "College Basketball",
-   "game": "Western Illinois Leathernecks @ Albany Great Danes",
-   "commence_time": "2026-11-20T20:00:00Z",
+   "sport": "College Football",
+   "game": "Coastal Carolina Chanticleers @ Louisiana Ragin Cajuns",
+   "commence_time": "2026-11-21T20:00:00Z",
    "market": "h2h",
-   "bet": "Albany Great Danes moneyline",
-   "books_compared": 5,
+   "bet": "Coastal Carolina Chanticleers moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "-285"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "-375"
-   },
-   "extra_profit_per_100": 8.42,
-   "implied_gap_pts": 4.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Monmouth Hawks @ Princeton Tigers",
-   "commence_time": "2026-11-21T00:00:00Z",
-   "market": "h2h",
-   "bet": "Princeton Tigers moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-162"
-   },
-   "worst": {
     "book": "BetRivers",
-    "price": "-200"
+    "price": "+335"
    },
-   "extra_profit_per_100": 11.73,
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+260"
+   },
+   "extra_profit_per_100": 75,
    "implied_gap_pts": 4.8
   },
   {
    "sport": "College Basketball",
-   "game": "Western Illinois Leathernecks @ Albany Great Danes",
-   "commence_time": "2026-11-20T20:00:00Z",
+   "game": "UMKC Kangaroos @ Iona Gaels",
+   "commence_time": "2026-11-21T00:00:00Z",
    "market": "h2h",
-   "bet": "Western Illinois Leathernecks moneyline",
-   "books_compared": 5,
+   "bet": "Iona Gaels moneyline",
+   "books_compared": 4,
    "best": {
-    "book": "BetMGM",
-    "price": "+290"
+    "book": "FanDuel",
+    "price": "-182"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "+230"
+    "book": "BetRivers",
+    "price": "-225"
    },
-   "extra_profit_per_100": 60,
+   "extra_profit_per_100": 10.51,
    "implied_gap_pts": 4.7
   },
   {
@@ -154,7 +172,7 @@
    "commence_time": "2026-11-20T21:00:00Z",
    "market": "h2h",
    "bet": "South Dakota St Jackrabbits moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "FanDuel",
     "price": "-255"
@@ -165,24 +183,6 @@
    },
    "extra_profit_per_100": 8.45,
    "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "North Texas Mean Green @ Appalachian St Mountaineers",
-   "commence_time": "2026-11-20T23:30:00Z",
-   "market": "h2h",
-   "bet": "Appalachian St Mountaineers moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "+132"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+110"
-   },
-   "extra_profit_per_100": 22,
-   "implied_gap_pts": 4.5
   }
  ]
 }
