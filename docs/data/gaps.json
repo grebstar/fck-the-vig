@@ -1,26 +1,26 @@
 {
- "generated_at": "2026-11-20T08:18:13.709Z",
- "odds_generated_at": "2026-11-20T08:18:05.009Z",
+ "generated_at": "2026-11-20T10:18:12.061Z",
+ "odds_generated_at": "2026-11-20T10:18:04.728Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Temple Owls @ Middle Tennessee Blue Raiders",
-   "commence_time": "2026-11-20T17:30:00Z",
+   "game": "Lipscomb Bisons @ Alabama A&M Bulldogs",
+   "commence_time": "2026-11-21T01:00:00Z",
    "market": "h2h",
-   "bet": "Temple Owls moneyline",
-   "books_compared": 6,
+   "bet": "Lipscomb Bisons moneyline",
+   "books_compared": 5,
    "best": {
     "book": "FanDuel",
-    "price": "-162"
+    "price": "-225"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-210"
+    "price": "-300"
    },
-   "extra_profit_per_100": 14.11,
-   "implied_gap_pts": 5.9
+   "extra_profit_per_100": 11.11,
+   "implied_gap_pts": 5.8
   },
   {
    "sport": "College Basketball",
@@ -34,11 +34,11 @@
     "price": "-278"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "-375"
+    "book": "BetRivers",
+    "price": "-385"
    },
-   "extra_profit_per_100": 9.3,
-   "implied_gap_pts": 5.4
+   "extra_profit_per_100": 10,
+   "implied_gap_pts": 5.8
   },
   {
    "sport": "College Basketball",
@@ -64,13 +64,13 @@
    "commence_time": "2026-11-21T00:00:00Z",
    "market": "h2h",
    "bet": "Princeton Tigers moneyline",
-   "books_compared": 4,
+   "books_compared": 6,
    "best": {
     "book": "FanDuel",
     "price": "-160"
    },
    "worst": {
-    "book": "BetRivers",
+    "book": "Hard Rock Bet",
     "price": "-200"
    },
    "extra_profit_per_100": 12.5,
@@ -82,7 +82,7 @@
    "commence_time": "2026-11-21T00:30:00Z",
    "market": "h2h",
    "bet": "Xavier Musketeers moneyline",
-   "books_compared": 4,
+   "books_compared": 5,
    "best": {
     "book": "FanDuel",
     "price": "-150"
@@ -114,11 +114,29 @@
   },
   {
    "sport": "College Basketball",
+   "game": "Western Michigan Broncos @ Mt. St. Mary's Mountaineers",
+   "commence_time": "2026-11-21T00:00:00Z",
+   "market": "spreads",
+   "bet": "Western Michigan Broncos -8.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+110"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 19.09,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
    "game": "UMKC Kangaroos @ Iona Gaels",
    "commence_time": "2026-11-21T00:00:00Z",
    "market": "h2h",
    "bet": "Iona Gaels moneyline",
-   "books_compared": 4,
+   "books_compared": 6,
    "best": {
     "book": "FanDuel",
     "price": "-182"
@@ -131,58 +149,40 @@
    "implied_gap_pts": 4.7
   },
   {
-   "sport": "College Basketball",
-   "game": "Indiana St Sycamores @ Stephen F. Austin Lumberjacks",
-   "commence_time": "2026-11-20T20:00:00Z",
+   "sport": "College Football",
+   "game": "LSU Tigers @ Tennessee Volunteers",
+   "commence_time": "2026-11-21T20:30:00Z",
    "market": "h2h",
-   "bet": "Stephen F. Austin Lumberjacks moneyline",
+   "bet": "Tennessee Volunteers moneyline",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-175"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-215"
-   },
-   "extra_profit_per_100": 10.63,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UT-Arlington Mavericks @ Northwestern St Demons",
-   "commence_time": "2026-11-21T00:30:00Z",
-   "market": "h2h",
-   "bet": "UT-Arlington Mavericks moneyline",
-   "books_compared": 3,
-   "best": {
-    "book": "BetMGM",
-    "price": "-175"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-215"
-   },
-   "extra_profit_per_100": 10.63,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "South Dakota St Jackrabbits @ Idaho State Bengals",
-   "commence_time": "2026-11-20T21:00:00Z",
-   "market": "h2h",
-   "bet": "South Dakota St Jackrabbits moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-255"
+    "price": "+100"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-325"
+    "price": "-120"
    },
-   "extra_profit_per_100": 8.45,
-   "implied_gap_pts": 4.6
+   "extra_profit_per_100": 16.67,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Green Bay Phoenix @ Florida St Seminoles",
+   "commence_time": "2026-11-20T17:00:00Z",
+   "market": "spreads",
+   "bet": "Florida St Seminoles -22.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 16.67,
+   "implied_gap_pts": 4.5
   }
  ]
 }
