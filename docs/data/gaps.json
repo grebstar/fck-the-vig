@@ -1,9 +1,45 @@
 {
- "generated_at": "2026-11-20T21:48:07.469Z",
- "odds_generated_at": "2026-11-20T21:47:55.417Z",
+ "generated_at": "2026-11-20T22:18:15.737Z",
+ "odds_generated_at": "2026-11-20T22:18:06.022Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Tenn-Martin Skyhawks @ Southern Illinois Salukis",
+   "commence_time": "2026-11-20T22:30:00Z",
+   "market": "h2h",
+   "bet": "Southern Illinois Salukis moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-135"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-180"
+   },
+   "extra_profit_per_100": 18.51,
+   "implied_gap_pts": 6.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Tenn-Martin Skyhawks @ Southern Illinois Salukis",
+   "commence_time": "2026-11-20T22:30:00Z",
+   "market": "h2h",
+   "bet": "Tenn-Martin Skyhawks moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+145"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+115"
+   },
+   "extra_profit_per_100": 30,
+   "implied_gap_pts": 5.7
+  },
   {
    "sport": "College Basketball",
    "game": "Saint Joseph's Hawks @ Drexel Dragons",
@@ -21,6 +57,24 @@
    },
    "extra_profit_per_100": 12.62,
    "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Football",
+   "game": "Colorado Buffaloes @ Cincinnati Bearcats",
+   "commence_time": "2026-11-21T17:00:00Z",
+   "market": "h2h",
+   "bet": "Cincinnati Bearcats moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-142"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-175"
+   },
+   "extra_profit_per_100": 13.28,
+   "implied_gap_pts": 5
   },
   {
    "sport": "College Football",
@@ -113,76 +167,22 @@
    "implied_gap_pts": 4.2
   },
   {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Vancouver Canucks",
-   "commence_time": "2026-11-22T03:00:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
+   "sport": "College Basketball",
+   "game": "Wagner Seahawks @ Maryland Terrapins",
+   "commence_time": "2026-11-21T00:00:00Z",
+   "market": "spreads",
+   "bet": "Maryland Terrapins -33.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
+    "book": "theScore Bet",
     "price": "+100"
    },
    "worst": {
-    "book": "BetRivers",
+    "book": "FanDuel",
     "price": "-118"
    },
    "extra_profit_per_100": 15.25,
    "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Football",
-   "game": "Memphis Tigers @ Navy Midshipmen",
-   "commence_time": "2026-11-21T17:00:00Z",
-   "market": "spreads",
-   "bet": "Memphis Tigers -2.5",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-110"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 13.99,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NHL",
-   "game": "Minnesota Wild @ Vancouver Canucks",
-   "commence_time": "2026-11-22T03:00:00Z",
-   "market": "spreads",
-   "bet": "Minnesota Wild -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-110"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-130"
-   },
-   "extra_profit_per_100": 13.99,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Saint Joseph's Hawks @ Drexel Dragons",
-   "commence_time": "2026-11-21T00:00:00Z",
-   "market": "h2h",
-   "bet": "Drexel Dragons moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+165"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+140"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.9
   }
  ]
 }
