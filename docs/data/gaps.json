@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-21T18:18:18.963Z",
- "odds_generated_at": "2026-11-21T18:18:04.398Z",
+ "generated_at": "2026-11-21T20:18:20.269Z",
+ "odds_generated_at": "2026-11-21T20:18:05.420Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Football",
-   "game": "Coastal Carolina Chanticleers @ Louisiana Ragin Cajuns",
-   "commence_time": "2026-11-21T20:00:00Z",
-   "market": "h2h",
-   "bet": "Coastal Carolina Chanticleers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+335"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+260"
-   },
-   "extra_profit_per_100": 75,
-   "implied_gap_pts": 4.8
-  },
   {
    "sport": "College Basketball",
    "game": "Longwood Lancers @ East Tennessee St Buccaneers",
@@ -60,24 +42,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Morehead St Eagles @ Elon Phoenix",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "spreads",
-   "bet": "Elon Phoenix -11.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
    "game": "South Florida Bulls @ George Mason Patriots",
    "commence_time": "2026-11-21T21:00:00Z",
    "market": "h2h",
@@ -113,21 +77,21 @@
    "implied_gap_pts": 4.3
   },
   {
-   "sport": "College Basketball",
-   "game": "Morehead St Eagles @ Elon Phoenix",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "spreads",
-   "bet": "Morehead St Eagles +11.5",
+   "sport": "NHL",
+   "game": "Minnesota Wild @ Vancouver Canucks",
+   "commence_time": "2026-11-22T03:00:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-102"
+    "book": "Hard Rock Bet",
+    "price": "-110"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
+    "book": "FanDuel",
+    "price": "-130"
    },
-   "extra_profit_per_100": 14.71,
+   "extra_profit_per_100": 13.99,
    "implied_gap_pts": 4.1
   },
   {
@@ -139,6 +103,24 @@
    "books_compared": 6,
    "best": {
     "book": "DraftKings",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "Seattle Kraken @ San Jose Sharks",
+   "commence_time": "2026-11-22T03:00:00Z",
+   "market": "spreads",
+   "bet": "San Jose Sharks -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
     "price": "+215"
    },
    "worst": {
@@ -182,6 +164,24 @@
     "price": "+160"
    },
    "extra_profit_per_100": 30,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UC Irvine Anteaters @ San Diego Toreros",
+   "commence_time": "2026-11-21T21:30:00Z",
+   "market": "h2h",
+   "bet": "UC Irvine Anteaters moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-188"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-225"
+   },
+   "extra_profit_per_100": 8.75,
    "implied_gap_pts": 4
   }
  ]
