@@ -1,63 +1,9 @@
 {
- "generated_at": "2026-11-21T20:31:01.633Z",
- "odds_generated_at": "2026-11-21T20:30:49.038Z",
+ "generated_at": "2026-11-21T22:18:13.092Z",
+ "odds_generated_at": "2026-11-21T22:18:04.098Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Longwood Lancers @ East Tennessee St Buccaneers",
-   "commence_time": "2026-11-21T21:00:00Z",
-   "market": "h2h",
-   "bet": "East Tennessee St Buccaneers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-200"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-250"
-   },
-   "extra_profit_per_100": 10,
-   "implied_gap_pts": 4.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Nicholls St Colonels @ Southern Miss Golden Eagles",
-   "commence_time": "2026-11-21T22:00:00Z",
-   "market": "h2h",
-   "bet": "Southern Miss Golden Eagles moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-138"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-167"
-   },
-   "extra_profit_per_100": 12.58,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "South Florida Bulls @ George Mason Patriots",
-   "commence_time": "2026-11-21T21:00:00Z",
-   "market": "h2h",
-   "bet": "George Mason Patriots moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-155"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-186"
-   },
-   "extra_profit_per_100": 10.76,
-   "implied_gap_pts": 4.3
-  },
   {
    "sport": "College Basketball",
    "game": "Brown Bears @ Vermont Catamounts",
@@ -75,6 +21,24 @@
    },
    "extra_profit_per_100": 9.61,
    "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Maine Black Bears @ Massachusetts Minutemen",
+   "commence_time": "2026-11-21T23:00:00Z",
+   "market": "spreads",
+   "bet": "Maine Black Bears +11.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 14.71,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "NHL",
@@ -131,21 +95,21 @@
    "implied_gap_pts": 4
   },
   {
-   "sport": "College Basketball",
-   "game": "Longwood Lancers @ East Tennessee St Buccaneers",
-   "commence_time": "2026-11-21T21:00:00Z",
-   "market": "h2h",
-   "bet": "Longwood Lancers moneyline",
+   "sport": "NHL",
+   "game": "Washington Capitals @ Boston Bruins",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "spreads",
+   "bet": "Boston Bruins -1.5",
    "books_compared": 6,
    "best": {
     "book": "BetRivers",
-    "price": "+195"
+    "price": "+190"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "+164"
+    "book": "Hard Rock Bet",
+    "price": "+160"
    },
-   "extra_profit_per_100": 31,
+   "extra_profit_per_100": 30,
    "implied_gap_pts": 4
   },
   {
@@ -167,22 +131,58 @@
    "implied_gap_pts": 4
   },
   {
-   "sport": "College Basketball",
-   "game": "UC Irvine Anteaters @ San Diego Toreros",
-   "commence_time": "2026-11-21T21:30:00Z",
-   "market": "h2h",
-   "bet": "UC Irvine Anteaters moneyline",
+   "sport": "College Football",
+   "game": "Utah State Aggies @ Oregon State Beavers",
+   "commence_time": "2026-11-22T03:30:00Z",
+   "market": "totals",
+   "bet": "Over 51.5",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-188"
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-225"
+    "price": "-117"
    },
-   "extra_profit_per_100": 8.75,
-   "implied_gap_pts": 4
+   "extra_profit_per_100": 14.53,
+   "implied_gap_pts": 3.9
+  },
+  {
+   "sport": "NFL",
+   "game": "Tennessee Titans @ Dallas Cowboys",
+   "commence_time": "2026-11-22T18:00:00Z",
+   "market": "h2h",
+   "bet": "Tennessee Titans moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+330"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+270"
+   },
+   "extra_profit_per_100": 60,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "NHL",
+   "game": "Minnesota Wild @ Vancouver Canucks",
+   "commence_time": "2026-11-22T03:00:00Z",
+   "market": "totals",
+   "bet": "Over 6.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+106"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-110"
+   },
+   "extra_profit_per_100": 15.09,
+   "implied_gap_pts": 3.8
   }
  ]
 }
