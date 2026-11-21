@@ -1,44 +1,26 @@
 {
- "generated_at": "2026-11-21T10:18:13.473Z",
- "odds_generated_at": "2026-11-21T10:18:05.310Z",
+ "generated_at": "2026-11-21T12:18:14.100Z",
+ "odds_generated_at": "2026-11-21T12:18:03.583Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Denver Pioneers @ Eastern Michigan Eagles",
-   "commence_time": "2026-11-21T18:00:00Z",
-   "market": "h2h",
-   "bet": "Eastern Michigan Eagles moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-285"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-400"
-   },
-   "extra_profit_per_100": 10.09,
-   "implied_gap_pts": 6
-  },
   {
    "sport": "College Basketball",
    "game": "Presbyterian Blue Hose @ Tennessee Tech Golden Eagles",
    "commence_time": "2026-11-22T00:30:00Z",
    "market": "h2h",
    "bet": "Tennessee Tech Golden Eagles moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "-278"
+    "book": "theScore Bet",
+    "price": "-270"
    },
    "worst": {
     "book": "BetRivers",
     "price": "-385"
    },
-   "extra_profit_per_100": 10,
-   "implied_gap_pts": 5.8
+   "extra_profit_per_100": 11.07,
+   "implied_gap_pts": 6.4
   },
   {
    "sport": "College Basketball",
@@ -49,32 +31,14 @@
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-280"
+    "price": "-270"
    },
    "worst": {
     "book": "Hard Rock Bet",
     "price": "-375"
    },
-   "extra_profit_per_100": 9.04,
-   "implied_gap_pts": 5.3
-  },
-  {
-   "sport": "NHL",
-   "game": "Anaheim Ducks @ Utah Mammoth",
-   "commence_time": "2026-11-22T02:00:00Z",
-   "market": "spreads",
-   "bet": "Anaheim Ducks +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "-160"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-200"
-   },
-   "extra_profit_per_100": 12.5,
-   "implied_gap_pts": 5.1
+   "extra_profit_per_100": 10.37,
+   "implied_gap_pts": 6
   },
   {
    "sport": "College Football",
@@ -93,6 +57,42 @@
    },
    "extra_profit_per_100": 13.28,
    "implied_gap_pts": 5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Denver Pioneers @ Eastern Michigan Eagles",
+   "commence_time": "2026-11-21T18:00:00Z",
+   "market": "h2h",
+   "bet": "Eastern Michigan Eagles moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-300"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-400"
+   },
+   "extra_profit_per_100": 8.33,
+   "implied_gap_pts": 5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Presbyterian Blue Hose @ Tennessee Tech Golden Eagles",
+   "commence_time": "2026-11-22T00:30:00Z",
+   "market": "h2h",
+   "bet": "Presbyterian Blue Hose moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+280"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+220"
+   },
+   "extra_profit_per_100": 60,
+   "implied_gap_pts": 4.9
   },
   {
    "sport": "College Basketball",
@@ -131,24 +131,6 @@
    "implied_gap_pts": 4.9
   },
   {
-   "sport": "NHL",
-   "game": "New York Islanders @ Detroit Red Wings",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "spreads",
-   "bet": "Detroit Red Wings +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "-235"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-300"
-   },
-   "extra_profit_per_100": 9.22,
-   "implied_gap_pts": 4.9
-  },
-  {
    "sport": "College Football",
    "game": "Coastal Carolina Chanticleers @ Louisiana Ragin Cajuns",
    "commence_time": "2026-11-21T20:00:00Z",
@@ -168,21 +150,39 @@
   },
   {
    "sport": "College Basketball",
-   "game": "UC Irvine Anteaters @ San Diego Toreros",
-   "commence_time": "2026-11-21T21:30:00Z",
+   "game": "South Carolina Upstate Spartans @ UNC Greensboro Spartans",
+   "commence_time": "2026-11-21T16:00:00Z",
    "market": "h2h",
-   "bet": "UC Irvine Anteaters moneyline",
+   "bet": "South Carolina Upstate Spartans moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-200"
+    "book": "BetRivers",
+    "price": "+275"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+220"
+   },
+   "extra_profit_per_100": 55,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Siena Saints @ Bucknell Bison",
+   "commence_time": "2026-11-21T16:00:00Z",
+   "market": "h2h",
+   "bet": "Siena Saints moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-240"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-250"
+    "price": "-300"
    },
-   "extra_profit_per_100": 10,
-   "implied_gap_pts": 4.8
+   "extra_profit_per_100": 8.34,
+   "implied_gap_pts": 4.4
   }
  ]
 }
