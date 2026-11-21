@@ -1,63 +1,9 @@
 {
- "generated_at": "2026-11-21T16:18:17.661Z",
- "odds_generated_at": "2026-11-21T16:18:03.555Z",
+ "generated_at": "2026-11-21T18:18:18.963Z",
+ "odds_generated_at": "2026-11-21T18:18:04.398Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Football",
-   "game": "Hawaii Rainbow Warriors @ Nevada Wolf Pack",
-   "commence_time": "2026-11-22T03:30:00Z",
-   "market": "h2h",
-   "bet": "Hawaii Rainbow Warriors moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+240"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+190"
-   },
-   "extra_profit_per_100": 50,
-   "implied_gap_pts": 5.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Stony Brook Seawolves @ Saint Peter's Peacocks",
-   "commence_time": "2026-11-21T19:00:00Z",
-   "market": "h2h",
-   "bet": "Stony Brook Seawolves moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-210"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-265"
-   },
-   "extra_profit_per_100": 9.88,
-   "implied_gap_pts": 4.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Air Force Falcons @ UTSA Roadrunners",
-   "commence_time": "2026-11-21T22:00:00Z",
-   "market": "h2h",
-   "bet": "UTSA Roadrunners moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-225"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-286"
-   },
-   "extra_profit_per_100": 9.47,
-   "implied_gap_pts": 4.9
-  },
   {
    "sport": "College Football",
    "game": "Coastal Carolina Chanticleers @ Louisiana Ragin Cajuns",
@@ -114,24 +60,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Stony Brook Seawolves @ Saint Peter's Peacocks",
-   "commence_time": "2026-11-21T19:00:00Z",
-   "market": "h2h",
-   "bet": "Saint Peter's Peacocks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+210"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+172"
-   },
-   "extra_profit_per_100": 38,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
    "game": "Morehead St Eagles @ Elon Phoenix",
    "commence_time": "2026-11-22T00:00:00Z",
    "market": "spreads",
@@ -150,24 +78,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Albany Great Danes @ Canisius Golden Griffins",
-   "commence_time": "2026-11-21T21:00:00Z",
-   "market": "h2h",
-   "bet": "Canisius Golden Griffins moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+125"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+105"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
    "game": "South Florida Bulls @ George Mason Patriots",
    "commence_time": "2026-11-21T21:00:00Z",
    "market": "h2h",
@@ -183,6 +93,96 @@
    },
    "extra_profit_per_100": 10.76,
    "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Brown Bears @ Vermont Catamounts",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "h2h",
+   "bet": "Vermont Catamounts moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-185"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-225"
+   },
+   "extra_profit_per_100": 9.61,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Morehead St Eagles @ Elon Phoenix",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "spreads",
+   "bet": "Morehead St Eagles +11.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 14.71,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "NHL",
+   "game": "Columbus Blue Jackets @ Toronto Maple Leafs",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "spreads",
+   "bet": "Toronto Maple Leafs -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Longwood Lancers @ East Tennessee St Buccaneers",
+   "commence_time": "2026-11-21T21:00:00Z",
+   "market": "h2h",
+   "bet": "Longwood Lancers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+195"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+164"
+   },
+   "extra_profit_per_100": 31,
+   "implied_gap_pts": 4
+  },
+  {
+   "sport": "NHL",
+   "game": "Vegas Golden Knights @ Winnipeg Jets",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "spreads",
+   "bet": "Vegas Golden Knights -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+190"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+160"
+   },
+   "extra_profit_per_100": 30,
+   "implied_gap_pts": 4
   }
  ]
 }
