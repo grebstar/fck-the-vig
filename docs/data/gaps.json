@@ -1,63 +1,9 @@
 {
- "generated_at": "2026-11-21T06:18:17.145Z",
- "odds_generated_at": "2026-11-21T06:18:04.251Z",
+ "generated_at": "2026-11-21T08:18:16.306Z",
+ "odds_generated_at": "2026-11-21T08:18:05.220Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Brown Bears @ Vermont Catamounts",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "h2h",
-   "bet": "Vermont Catamounts moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-166"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-225"
-   },
-   "extra_profit_per_100": 15.8,
-   "implied_gap_pts": 6.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Nicholls St Colonels @ Southern Miss Golden Eagles",
-   "commence_time": "2026-11-21T22:00:00Z",
-   "market": "h2h",
-   "bet": "Southern Miss Golden Eagles moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-150"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-200"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 6.7
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Central Arkansas Bears @ Jacksonville Dolphins",
-   "commence_time": "2026-11-21T21:00:00Z",
-   "market": "h2h",
-   "bet": "Central Arkansas Bears moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-146"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-190"
-   },
-   "extra_profit_per_100": 15.86,
-   "implied_gap_pts": 6.2
-  },
   {
    "sport": "College Basketball",
    "game": "Denver Pioneers @ Eastern Michigan Eagles",
@@ -75,24 +21,6 @@
    },
    "extra_profit_per_100": 10.09,
    "implied_gap_pts": 6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Stony Brook Seawolves @ Saint Peter's Peacocks",
-   "commence_time": "2026-11-21T19:00:00Z",
-   "market": "h2h",
-   "bet": "Stony Brook Seawolves moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-200"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-265"
-   },
-   "extra_profit_per_100": 12.26,
-   "implied_gap_pts": 5.9
   },
   {
    "sport": "College Basketball",
@@ -121,14 +49,14 @@
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-275"
+    "price": "-280"
    },
    "worst": {
     "book": "Hard Rock Bet",
     "price": "-375"
    },
-   "extra_profit_per_100": 9.69,
-   "implied_gap_pts": 5.6
+   "extra_profit_per_100": 9.04,
+   "implied_gap_pts": 5.3
   },
   {
    "sport": "NHL",
@@ -149,24 +77,6 @@
    "implied_gap_pts": 5.1
   },
   {
-   "sport": "College Basketball",
-   "game": "Brown Bears @ Vermont Catamounts",
-   "commence_time": "2026-11-22T00:00:00Z",
-   "market": "h2h",
-   "bet": "Brown Bears moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "BetRivers",
-    "price": "+170"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+138"
-   },
-   "extra_profit_per_100": 32,
-   "implied_gap_pts": 5
-  },
-  {
    "sport": "College Football",
    "game": "Colorado Buffaloes @ Cincinnati Bearcats",
    "commence_time": "2026-11-21T17:00:00Z",
@@ -183,6 +93,96 @@
    },
    "extra_profit_per_100": 13.28,
    "implied_gap_pts": 5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Stony Brook Seawolves @ Saint Peter's Peacocks",
+   "commence_time": "2026-11-21T19:00:00Z",
+   "market": "h2h",
+   "bet": "Stony Brook Seawolves moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-210"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-265"
+   },
+   "extra_profit_per_100": 9.88,
+   "implied_gap_pts": 4.9
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Fordham Rams @ Portland Pilots",
+   "commence_time": "2026-11-21T19:00:00Z",
+   "market": "h2h",
+   "bet": "Fordham Rams moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-235"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 9.22,
+   "implied_gap_pts": 4.9
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Detroit Red Wings",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "spreads",
+   "bet": "Detroit Red Wings +1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-235"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 9.22,
+   "implied_gap_pts": 4.9
+  },
+  {
+   "sport": "College Football",
+   "game": "Coastal Carolina Chanticleers @ Louisiana Ragin Cajuns",
+   "commence_time": "2026-11-21T20:00:00Z",
+   "market": "h2h",
+   "bet": "Coastal Carolina Chanticleers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+335"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+260"
+   },
+   "extra_profit_per_100": 75,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Michigan Wolverines @ Villanova Wildcats",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "h2h",
+   "bet": "Michigan Wolverines moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-178"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-220"
+   },
+   "extra_profit_per_100": 10.73,
+   "implied_gap_pts": 4.7
   }
  ]
 }
