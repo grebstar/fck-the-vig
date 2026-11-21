@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-21T03:12:10.235Z",
- "odds_generated_at": "2026-11-21T03:12:02.260Z",
+ "generated_at": "2026-11-21T04:18:19.620Z",
+ "odds_generated_at": "2026-11-21T04:18:04.705Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Denver Pioneers @ Eastern Michigan Eagles",
-   "commence_time": "2026-11-21T18:00:00Z",
-   "market": "h2h",
-   "bet": "Eastern Michigan Eagles moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-280"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-400"
-   },
-   "extra_profit_per_100": 10.71,
-   "implied_gap_pts": 6.3
-  },
   {
    "sport": "College Basketball",
    "game": "South Carolina Upstate Spartans @ UNC Greensboro Spartans",
@@ -31,50 +13,86 @@
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-270"
+    "price": "-260"
    },
    "worst": {
     "book": "Hard Rock Bet",
     "price": "-375"
    },
-   "extra_profit_per_100": 10.37,
-   "implied_gap_pts": 6
+   "extra_profit_per_100": 11.79,
+   "implied_gap_pts": 6.7
   },
   {
    "sport": "College Basketball",
-   "game": "Pennsylvania Quakers @ La Salle Explorers",
+   "game": "Central Arkansas Bears @ Jacksonville Dolphins",
    "commence_time": "2026-11-21T21:00:00Z",
    "market": "h2h",
-   "bet": "Pennsylvania Quakers moneyline",
-   "books_compared": 5,
+   "bet": "Central Arkansas Bears moneyline",
+   "books_compared": 4,
    "best": {
-    "book": "DraftKings",
-    "price": "+110"
+    "book": "FanDuel",
+    "price": "-146"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-112"
+    "price": "-190"
    },
-   "extra_profit_per_100": 20.71,
-   "implied_gap_pts": 5.2
+   "extra_profit_per_100": 15.86,
+   "implied_gap_pts": 6.2
   },
   {
    "sport": "College Basketball",
-   "game": "Pennsylvania Quakers @ La Salle Explorers",
-   "commence_time": "2026-11-21T21:00:00Z",
-   "market": "spreads",
-   "bet": "Pennsylvania Quakers +2.5",
+   "game": "Presbyterian Blue Hose @ Tennessee Tech Golden Eagles",
+   "commence_time": "2026-11-22T00:30:00Z",
+   "market": "h2h",
+   "bet": "Tennessee Tech Golden Eagles moneyline",
    "books_compared": 4,
    "best": {
-    "book": "theScore Bet",
-    "price": "+100"
+    "book": "DraftKings",
+    "price": "-278"
    },
    "worst": {
-    "book": "FanDuel",
-    "price": "-122"
+    "book": "BetRivers",
+    "price": "-385"
    },
-   "extra_profit_per_100": 18.03,
-   "implied_gap_pts": 5
+   "extra_profit_per_100": 10,
+   "implied_gap_pts": 5.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Denver Pioneers @ Eastern Michigan Eagles",
+   "commence_time": "2026-11-21T18:00:00Z",
+   "market": "h2h",
+   "bet": "Eastern Michigan Eagles moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-290"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-400"
+   },
+   "extra_profit_per_100": 9.48,
+   "implied_gap_pts": 5.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "South Carolina Upstate Spartans @ UNC Greensboro Spartans",
+   "commence_time": "2026-11-21T16:00:00Z",
+   "market": "h2h",
+   "bet": "South Carolina Upstate Spartans moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+275"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+215"
+   },
+   "extra_profit_per_100": 60,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "College Football",
@@ -93,6 +111,24 @@
    },
    "extra_profit_per_100": 13.28,
    "implied_gap_pts": 5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Brown Bears @ Vermont Catamounts",
+   "commence_time": "2026-11-22T00:00:00Z",
+   "market": "h2h",
+   "bet": "Vermont Catamounts moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "DraftKings",
+    "price": "-180"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-225"
+   },
+   "extra_profit_per_100": 11.12,
+   "implied_gap_pts": 4.9
   },
   {
    "sport": "College Football",
@@ -147,42 +183,6 @@
    },
    "extra_profit_per_100": 9.22,
    "implied_gap_pts": 4.9
-  },
-  {
-   "sport": "College Football",
-   "game": "Coastal Carolina Chanticleers @ Louisiana Ragin Cajuns",
-   "commence_time": "2026-11-21T20:00:00Z",
-   "market": "h2h",
-   "bet": "Coastal Carolina Chanticleers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+335"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+260"
-   },
-   "extra_profit_per_100": 75,
-   "implied_gap_pts": 4.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "South Carolina Upstate Spartans @ UNC Greensboro Spartans",
-   "commence_time": "2026-11-21T16:00:00Z",
-   "market": "h2h",
-   "bet": "South Carolina Upstate Spartans moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+275"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "+220"
-   },
-   "extra_profit_per_100": 55,
-   "implied_gap_pts": 4.6
   }
  ]
 }
