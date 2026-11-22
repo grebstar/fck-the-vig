@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-22T08:18:14.118Z",
- "odds_generated_at": "2026-11-22T08:18:05.454Z",
+ "generated_at": "2026-11-22T09:44:03.896Z",
+ "odds_generated_at": "2026-11-22T09:43:51.202Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -44,37 +44,19 @@
    "sport": "NHL",
    "game": "Chicago Blackhawks @ Vancouver Canucks",
    "commence_time": "2026-11-23T01:10:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-121"
-   },
-   "extra_profit_per_100": 17.36,
-   "implied_gap_pts": 4.8
-  },
-  {
-   "sport": "College Basketball",
-   "game": "UNC Asheville Bulldogs @ Samford Bulldogs",
-   "commence_time": "2026-11-22T22:00:00Z",
-   "market": "totals",
-   "bet": "Under 156.5",
-   "books_compared": 4,
+   "market": "spreads",
+   "bet": "Chicago Blackhawks -1.5",
+   "books_compared": 5,
    "best": {
     "book": "DraftKings",
-    "price": "-108"
+    "price": "+225"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-129"
+    "book": "Hard Rock Bet",
+    "price": "+180"
    },
-   "extra_profit_per_100": 15.07,
-   "implied_gap_pts": 4.4
+   "extra_profit_per_100": 45,
+   "implied_gap_pts": 4.9
   },
   {
    "sport": "College Basketball",
@@ -95,22 +77,22 @@
    "implied_gap_pts": 4.3
   },
   {
-   "sport": "College Basketball",
-   "game": "UNC Asheville Bulldogs @ Samford Bulldogs",
-   "commence_time": "2026-11-22T22:00:00Z",
-   "market": "totals",
-   "bet": "Over 156.5",
-   "books_compared": 4,
+   "sport": "NHL",
+   "game": "Carolina Hurricanes @ New York Rangers",
+   "commence_time": "2026-11-22T17:40:00Z",
+   "market": "spreads",
+   "bet": "Carolina Hurricanes -1.5",
+   "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+105"
+    "book": "DraftKings",
+    "price": "+164"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "-112"
+    "book": "Hard Rock Bet",
+    "price": "+140"
    },
-   "extra_profit_per_100": 15.71,
-   "implied_gap_pts": 4
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.8
   },
   {
    "sport": "College Basketball",
@@ -132,13 +114,31 @@
   },
   {
    "sport": "College Basketball",
+   "game": "Utah Tech Trailblazers @ South Dakota Coyotes",
+   "commence_time": "2026-11-22T19:00:00Z",
+   "market": "spreads",
+   "bet": "Utah Tech Trailblazers -1.5",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "+110"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-105"
+   },
+   "extra_profit_per_100": 14.76,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
    "game": "Temple Owls @ Stephen F. Austin Lumberjacks",
    "commence_time": "2026-11-22T22:30:00Z",
    "market": "h2h",
    "bet": "Stephen F. Austin Lumberjacks moneyline",
-   "books_compared": 3,
+   "books_compared": 5,
    "best": {
-    "book": "DraftKings",
+    "book": "theScore Bet",
     "price": "+110"
    },
    "worst": {
@@ -146,24 +146,6 @@
     "price": "-105"
    },
    "extra_profit_per_100": 14.76,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "NHL",
-   "game": "Chicago Blackhawks @ Vancouver Canucks",
-   "commence_time": "2026-11-23T01:10:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "-104"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 12.82,
    "implied_gap_pts": 3.6
   },
   {
@@ -183,6 +165,24 @@
    },
    "extra_profit_per_100": 12.59,
    "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Chicago Blackhawks @ Vancouver Canucks",
+   "commence_time": "2026-11-23T01:10:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-121"
+   },
+   "extra_profit_per_100": 12.6,
+   "implied_gap_pts": 3.5
   }
  ]
 }
