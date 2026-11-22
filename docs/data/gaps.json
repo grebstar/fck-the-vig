@@ -1,152 +1,62 @@
 {
- "generated_at": "2026-11-22T12:18:21.618Z",
- "odds_generated_at": "2026-11-22T12:18:09.276Z",
+ "generated_at": "2026-11-22T14:18:25.942Z",
+ "odds_generated_at": "2026-11-22T14:18:09.165Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "William & Mary Tribe @ Youngstown St Penguins",
-   "commence_time": "2026-11-22T19:00:00Z",
-   "market": "h2h",
-   "bet": "Youngstown St Penguins moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+125"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+100"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 5.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Miami (OH) RedHawks @ UIC Flames",
-   "commence_time": "2026-11-22T17:00:00Z",
-   "market": "h2h",
-   "bet": "UIC Flames moneyline",
+   "game": "UNC Asheville Bulldogs @ Samford Bulldogs",
+   "commence_time": "2026-11-22T22:00:00Z",
+   "market": "totals",
+   "bet": "Under 156.5",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "+102"
+    "price": "-105"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-120"
+    "price": "-130"
    },
-   "extra_profit_per_100": 18.67,
-   "implied_gap_pts": 5
+   "extra_profit_per_100": 18.32,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "San José St Spartans @ Loyola (Chi) Ramblers",
+   "commence_time": "2026-11-23T04:59:00Z",
+   "market": "h2h",
+   "bet": "Loyola (Chi) Ramblers moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-170"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-215"
+   },
+   "extra_profit_per_100": 12.31,
+   "implied_gap_pts": 5.3
   },
   {
    "sport": "College Basketball",
    "game": "Lamar Cardinals @ Rice Owls",
    "commence_time": "2026-11-22T22:00:00Z",
    "market": "h2h",
-   "bet": "Rice Owls moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+120"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Western Kentucky Hilltoppers @ GW Revolutionaries",
-   "commence_time": "2026-11-22T19:00:00Z",
-   "market": "h2h",
-   "bet": "GW Revolutionaries moneyline",
+   "bet": "Lamar Cardinals moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-200"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-245"
-   },
-   "extra_profit_per_100": 9.18,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "NHL",
-   "game": "Carolina Hurricanes @ New York Rangers",
-   "commence_time": "2026-11-22T17:40:00Z",
-   "market": "spreads",
-   "bet": "Carolina Hurricanes -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+164"
+    "price": "-126"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+140"
+    "price": "-155"
    },
-   "extra_profit_per_100": 24,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "NHL",
-   "game": "Chicago Blackhawks @ Vancouver Canucks",
-   "commence_time": "2026-11-23T01:10:00Z",
-   "market": "spreads",
-   "bet": "Chicago Blackhawks -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "+225"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "+190"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 3.7
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Utah Tech Trailblazers @ South Dakota Coyotes",
-   "commence_time": "2026-11-22T19:00:00Z",
-   "market": "spreads",
-   "bet": "Utah Tech Trailblazers -1.5",
-   "books_compared": 4,
-   "best": {
-    "book": "DraftKings",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-105"
-   },
-   "extra_profit_per_100": 14.76,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Temple Owls @ Stephen F. Austin Lumberjacks",
-   "commence_time": "2026-11-22T22:30:00Z",
-   "market": "h2h",
-   "bet": "Stephen F. Austin Lumberjacks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+110"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-105"
-   },
-   "extra_profit_per_100": 14.76,
-   "implied_gap_pts": 3.6
+   "extra_profit_per_100": 14.85,
+   "implied_gap_pts": 5
   },
   {
    "sport": "College Basketball",
@@ -157,32 +67,122 @@
    "books_compared": 3,
    "best": {
     "book": "DraftKings",
-    "price": "+105"
+    "price": "+110"
    },
    "worst": {
     "book": "FanDuel",
     "price": "-110"
    },
-   "extra_profit_per_100": 14.09,
-   "implied_gap_pts": 3.6
+   "extra_profit_per_100": 19.09,
+   "implied_gap_pts": 4.8
   },
   {
    "sport": "College Basketball",
-   "game": "Virginia Tech Hokies @ Oklahoma St Cowboys",
-   "commence_time": "2026-11-22T20:30:00Z",
-   "market": "h2h",
-   "bet": "Oklahoma St Cowboys moneyline",
-   "books_compared": 6,
+   "game": "Nicholls St Colonels @ Troy Trojans",
+   "commence_time": "2026-11-22T20:00:00Z",
+   "market": "spreads",
+   "bet": "Nicholls St Colonels +5.5",
+   "books_compared": 4,
    "best": {
     "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-121"
+   },
+   "extra_profit_per_100": 17.36,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "UNC Asheville Bulldogs @ Samford Bulldogs",
+   "commence_time": "2026-11-22T22:00:00Z",
+   "market": "totals",
+   "bet": "Over 156.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
     "price": "+105"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-110"
+    "book": "FanDuel",
+    "price": "-115"
    },
-   "extra_profit_per_100": 14.09,
-   "implied_gap_pts": 3.6
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 4.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Lamar Cardinals @ Rice Owls",
+   "commence_time": "2026-11-22T22:00:00Z",
+   "market": "h2h",
+   "bet": "Rice Owls moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+125"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+104"
+   },
+   "extra_profit_per_100": 21,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Duquesne Dukes @ Wyoming Cowboys",
+   "commence_time": "2026-11-22T19:00:00Z",
+   "market": "h2h",
+   "bet": "Wyoming Cowboys moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-165"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-200"
+   },
+   "extra_profit_per_100": 10.61,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Cal Baptist Lancers @ Portland Pilots",
+   "commence_time": "2026-11-23T00:00:00Z",
+   "market": "h2h",
+   "bet": "Cal Baptist Lancers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+380"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+300"
+   },
+   "extra_profit_per_100": 80,
+   "implied_gap_pts": 4.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Temple Owls @ Stephen F. Austin Lumberjacks",
+   "commence_time": "2026-11-22T22:30:00Z",
+   "market": "h2h",
+   "bet": "Temple Owls moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-122"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-145"
+   },
+   "extra_profit_per_100": 13,
+   "implied_gap_pts": 4.2
   }
  ]
 }
