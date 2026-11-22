@@ -1,9 +1,27 @@
 {
- "generated_at": "2026-11-22T17:49:05.645Z",
- "odds_generated_at": "2026-11-22T17:48:55.883Z",
+ "generated_at": "2026-11-22T18:18:17.400Z",
+ "odds_generated_at": "2026-11-22T18:18:04.464Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Mercyhurst Lakers @ Albany Great Danes",
+   "commence_time": "2026-11-22T20:30:00Z",
+   "market": "h2h",
+   "bet": "Mercyhurst Lakers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-115"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-140"
+   },
+   "extra_profit_per_100": 15.53,
+   "implied_gap_pts": 4.8
+  },
   {
    "sport": "NHL",
    "game": "Chicago Blackhawks @ Vancouver Canucks",
@@ -42,56 +60,56 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Mercyhurst Lakers @ Albany Great Danes",
-   "commence_time": "2026-11-22T20:30:00Z",
+   "game": "Lamar Cardinals @ Rice Owls",
+   "commence_time": "2026-11-22T22:00:00Z",
    "market": "h2h",
-   "bet": "Mercyhurst Lakers moneyline",
+   "bet": "Lamar Cardinals moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-115"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-137"
-   },
-   "extra_profit_per_100": 13.97,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "NFL",
-   "game": "Baltimore Ravens @ Carolina Panthers",
-   "commence_time": "2026-11-22T18:05:00Z",
-   "market": "h2h",
-   "bet": "Baltimore Ravens moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "+125"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+107"
-   },
-   "extra_profit_per_100": 18,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "McNeese Cowboys @ Texas State Bobcats",
-   "commence_time": "2026-11-22T20:30:00Z",
-   "market": "h2h",
-   "bet": "Texas State Bobcats moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-130"
+    "price": "-128"
    },
    "worst": {
     "book": "BetRivers",
     "price": "-152"
    },
-   "extra_profit_per_100": 11.13,
+   "extra_profit_per_100": 12.34,
+   "implied_gap_pts": 4.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Virginia Tech Hokies @ Oklahoma St Cowboys",
+   "commence_time": "2026-11-22T20:30:00Z",
+   "market": "spreads",
+   "bet": "Virginia Tech Hokies -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-118"
+   },
+   "extra_profit_per_100": 15.25,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Mercyhurst Lakers @ Albany Great Danes",
+   "commence_time": "2026-11-22T20:30:00Z",
+   "market": "h2h",
+   "bet": "Albany Great Danes moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+112"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-104"
+   },
+   "extra_profit_per_100": 15.85,
    "implied_gap_pts": 3.8
   },
   {
@@ -114,75 +132,57 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Western Illinois Leathernecks @ Canisius Golden Griffins",
-   "commence_time": "2026-11-22T18:00:00Z",
+   "game": "William & Mary Tribe @ Youngstown St Penguins",
+   "commence_time": "2026-11-22T19:00:00Z",
    "market": "h2h",
-   "bet": "Canisius Golden Griffins moneyline",
+   "bet": "Youngstown St Penguins moneyline",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-170"
+    "price": "+135"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-200"
+    "book": "FanDuel",
+    "price": "+116"
    },
-   "extra_profit_per_100": 8.82,
+   "extra_profit_per_100": 19,
+   "implied_gap_pts": 3.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "San José St Spartans @ Loyola (Chi) Ramblers",
+   "commence_time": "2026-11-23T04:59:00Z",
+   "market": "h2h",
+   "bet": "Loyola (Chi) Ramblers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-182"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-215"
+   },
+   "extra_profit_per_100": 8.44,
    "implied_gap_pts": 3.7
   },
   {
    "sport": "NHL",
-   "game": "Edmonton Oilers @ St Louis Blues",
-   "commence_time": "2026-11-23T00:10:00Z",
-   "market": "spreads",
-   "bet": "St Louis Blues -1.5",
-   "books_compared": 6,
+   "game": "Anaheim Ducks @ Seattle Kraken",
+   "commence_time": "2026-11-24T02:50:00Z",
+   "market": "totals",
+   "bet": "Under 6.5",
+   "books_compared": 4,
    "best": {
     "book": "DraftKings",
-    "price": "+210"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 30,
-   "implied_gap_pts": 3.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Dayton Flyers @ Northwestern Wildcats",
-   "commence_time": "2026-11-22T18:00:00Z",
-   "market": "h2h",
-   "bet": "Dayton Flyers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-155"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-180"
-   },
-   "extra_profit_per_100": 8.96,
-   "implied_gap_pts": 3.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Mercyhurst Lakers @ Albany Great Danes",
-   "commence_time": "2026-11-22T20:30:00Z",
-   "market": "h2h",
-   "bet": "Albany Great Danes moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+110"
+    "price": "+105"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-104"
+    "price": "-110"
    },
-   "extra_profit_per_100": 13.85,
-   "implied_gap_pts": 3.4
+   "extra_profit_per_100": 14.09,
+   "implied_gap_pts": 3.6
   }
  ]
 }
