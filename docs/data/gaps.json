@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-22T10:18:22.223Z",
- "odds_generated_at": "2026-11-22T10:18:07.414Z",
+ "generated_at": "2026-11-22T12:18:21.618Z",
+ "odds_generated_at": "2026-11-22T12:18:09.276Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Miami (OH) RedHawks @ UIC Flames",
-   "commence_time": "2026-11-22T17:00:00Z",
-   "market": "h2h",
-   "bet": "UIC Flames moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+105"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 21.67,
-   "implied_gap_pts": 5.8
-  },
   {
    "sport": "College Basketball",
    "game": "William & Mary Tribe @ Youngstown St Penguins",
@@ -41,22 +23,40 @@
    "implied_gap_pts": 5.6
   },
   {
-   "sport": "NHL",
-   "game": "Chicago Blackhawks @ Vancouver Canucks",
-   "commence_time": "2026-11-23T01:10:00Z",
-   "market": "spreads",
-   "bet": "Chicago Blackhawks -1.5",
-   "books_compared": 5,
+   "sport": "College Basketball",
+   "game": "Miami (OH) RedHawks @ UIC Flames",
+   "commence_time": "2026-11-22T17:00:00Z",
+   "market": "h2h",
+   "bet": "UIC Flames moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "+225"
+    "book": "FanDuel",
+    "price": "+102"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+180"
+    "price": "-120"
    },
-   "extra_profit_per_100": 45,
-   "implied_gap_pts": 4.9
+   "extra_profit_per_100": 18.67,
+   "implied_gap_pts": 5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Lamar Cardinals @ Rice Owls",
+   "commence_time": "2026-11-22T22:00:00Z",
+   "market": "h2h",
+   "bet": "Rice Owls moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+120"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "College Basketball",
@@ -95,6 +95,24 @@
    "implied_gap_pts": 3.8
   },
   {
+   "sport": "NHL",
+   "game": "Chicago Blackhawks @ Vancouver Canucks",
+   "commence_time": "2026-11-23T01:10:00Z",
+   "market": "spreads",
+   "bet": "Chicago Blackhawks -1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "DraftKings",
+    "price": "+225"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+190"
+   },
+   "extra_profit_per_100": 35,
+   "implied_gap_pts": 3.7
+  },
+  {
    "sport": "College Basketball",
    "game": "Utah Tech Trailblazers @ South Dakota Coyotes",
    "commence_time": "2026-11-22T19:00:00Z",
@@ -118,13 +136,13 @@
    "commence_time": "2026-11-22T22:30:00Z",
    "market": "h2h",
    "bet": "Stephen F. Austin Lumberjacks moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
     "price": "+110"
    },
    "worst": {
-    "book": "BetRivers",
+    "book": "Hard Rock Bet",
     "price": "-105"
    },
    "extra_profit_per_100": 14.76,
@@ -134,55 +152,37 @@
    "sport": "College Basketball",
    "game": "Miami (OH) RedHawks @ UIC Flames",
    "commence_time": "2026-11-22T17:00:00Z",
-   "market": "h2h",
-   "bet": "Miami (OH) RedHawks moneyline",
-   "books_compared": 6,
+   "market": "spreads",
+   "bet": "Miami (OH) RedHawks -1.5",
+   "books_compared": 3,
    "best": {
-    "book": "BetRivers",
-    "price": "-108"
+    "book": "DraftKings",
+    "price": "+105"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "-125"
+    "book": "FanDuel",
+    "price": "-110"
    },
-   "extra_profit_per_100": 12.59,
+   "extra_profit_per_100": 14.09,
    "implied_gap_pts": 3.6
   },
   {
-   "sport": "NHL",
-   "game": "Chicago Blackhawks @ Vancouver Canucks",
-   "commence_time": "2026-11-23T01:10:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 6,
-   "best": {
-    "book": "Hard Rock Bet",
-    "price": "-105"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-121"
-   },
-   "extra_profit_per_100": 12.6,
-   "implied_gap_pts": 3.5
-  },
-  {
-   "sport": "NFL",
-   "game": "Baltimore Ravens @ Carolina Panthers",
-   "commence_time": "2026-11-22T18:00:00Z",
+   "sport": "College Basketball",
+   "game": "Virginia Tech Hokies @ Oklahoma St Cowboys",
+   "commence_time": "2026-11-22T20:30:00Z",
    "market": "h2h",
-   "bet": "Carolina Panthers moneyline",
+   "bet": "Oklahoma St Cowboys moneyline",
    "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "-140"
+    "price": "+105"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-162"
+    "book": "Hard Rock Bet",
+    "price": "-110"
    },
-   "extra_profit_per_100": 9.7,
-   "implied_gap_pts": 3.5
+   "extra_profit_per_100": 14.09,
+   "implied_gap_pts": 3.6
   }
  ]
 }
