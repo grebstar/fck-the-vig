@@ -1,26 +1,44 @@
 {
- "generated_at": "2026-11-23T04:18:14.658Z",
- "odds_generated_at": "2026-11-23T04:18:04.781Z",
+ "generated_at": "2026-11-23T06:18:14.641Z",
+ "odds_generated_at": "2026-11-23T06:18:05.090Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Nevada Wolf Pack @ San Francisco Dons",
-   "commence_time": "2026-11-23T21:30:00Z",
+   "game": "Tulsa Golden Hurricane @ Oregon St Beavers",
+   "commence_time": "2026-11-23T19:00:00Z",
    "market": "h2h",
-   "bet": "Nevada Wolf Pack moneyline",
-   "books_compared": 5,
+   "bet": "Oregon St Beavers moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-275"
+    "book": "theScore Bet",
+    "price": "-260"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-360"
+    "price": "-335"
    },
-   "extra_profit_per_100": 8.58,
-   "implied_gap_pts": 4.9
+   "extra_profit_per_100": 8.61,
+   "implied_gap_pts": 4.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "William & Mary Tribe @ IUPUI Jaguars",
+   "commence_time": "2026-11-23T20:30:00Z",
+   "market": "h2h",
+   "bet": "William & Mary Tribe moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-175"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-215"
+   },
+   "extra_profit_per_100": 10.63,
+   "implied_gap_pts": 4.6
   },
   {
    "sport": "NHL",
@@ -42,42 +60,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Colorado St Rams @ Arizona Wildcats",
-   "commence_time": "2026-11-24T04:30:00Z",
-   "market": "spreads",
-   "bet": "Arizona Wildcats -16.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Colorado St Rams @ Arizona Wildcats",
-   "commence_time": "2026-11-24T04:30:00Z",
-   "market": "spreads",
-   "bet": "Colorado St Rams +16.5",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-102"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 14.71,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
    "game": "Middle Tennessee Blue Raiders @ Southern Illinois Salukis",
    "commence_time": "2026-11-23T20:00:00Z",
    "market": "h2h",
@@ -93,6 +75,24 @@
    },
    "extra_profit_per_100": 11.57,
    "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Nevada Wolf Pack @ San Francisco Dons",
+   "commence_time": "2026-11-23T21:30:00Z",
+   "market": "h2h",
+   "bet": "Nevada Wolf Pack moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-300"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-375"
+   },
+   "extra_profit_per_100": 6.66,
+   "implied_gap_pts": 3.9
   },
   {
    "sport": "College Basketball",
@@ -131,21 +131,21 @@
    "implied_gap_pts": 3.7
   },
   {
-   "sport": "NBA",
-   "game": "Milwaukee Bucks @ Toronto Raptors",
-   "commence_time": "2026-11-24T00:40:00Z",
-   "market": "spreads",
-   "bet": "Toronto Raptors -11.5",
+   "sport": "College Basketball",
+   "game": "Yale Bulldogs @ Belmont Bruins",
+   "commence_time": "2026-11-23T21:00:00Z",
+   "market": "h2h",
+   "bet": "Belmont Bruins moneyline",
    "books_compared": 4,
    "best": {
-    "book": "BetMGM",
-    "price": "-102"
+    "book": "theScore Bet",
+    "price": "-150"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-118"
+    "price": "-175"
    },
-   "extra_profit_per_100": 13.29,
+   "extra_profit_per_100": 9.53,
    "implied_gap_pts": 3.6
   },
   {
