@@ -1,9 +1,63 @@
 {
- "generated_at": "2026-11-23T18:18:15.448Z",
- "odds_generated_at": "2026-11-23T18:18:04.899Z",
+ "generated_at": "2026-11-23T20:11:05.150Z",
+ "odds_generated_at": "2026-11-23T20:10:51.738Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Yale Bulldogs @ Belmont Bruins",
+   "commence_time": "2026-11-23T21:00:00Z",
+   "market": "h2h",
+   "bet": "Belmont Bruins moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-115"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-148"
+   },
+   "extra_profit_per_100": 19.39,
+   "implied_gap_pts": 6.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Baylor Bears @ Alabama Crimson Tide",
+   "commence_time": "2026-11-25T03:00:00Z",
+   "market": "h2h",
+   "bet": "Baylor Bears moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+104"
+   },
+   "extra_profit_per_100": 26,
+   "implied_gap_pts": 5.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Yale Bulldogs @ Belmont Bruins",
+   "commence_time": "2026-11-23T21:00:00Z",
+   "market": "h2h",
+   "bet": "Yale Bulldogs moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+117"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-105"
+   },
+   "extra_profit_per_100": 21.76,
+   "implied_gap_pts": 5.1
+  },
   {
    "sport": "NHL",
    "game": "Utah Mammoth @ Winnipeg Jets",
@@ -23,40 +77,94 @@
    "implied_gap_pts": 4.9
   },
   {
-   "sport": "College Basketball",
-   "game": "Fairleigh Dickinson Knights @ Iona Gaels",
-   "commence_time": "2026-11-24T00:00:00Z",
-   "market": "h2h",
-   "bet": "Fairleigh Dickinson Knights moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "Vegas Golden Knights @ Edmonton Oilers",
+   "commence_time": "2026-11-25T01:00:00Z",
+   "market": "totals",
+   "bet": "Over 6.5",
+   "books_compared": 4,
    "best": {
-    "book": "BetMGM",
-    "price": "+360"
+    "book": "theScore Bet",
+    "price": "+105"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "+290"
+    "price": "-114"
    },
-   "extra_profit_per_100": 70,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 17.28,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "College Basketball",
-   "game": "Washington Huskies @ BYU Cougars",
-   "commence_time": "2026-11-23T22:00:00Z",
-   "market": "spreads",
-   "bet": "BYU Cougars -11.5",
+   "game": "Illinois St Redbirds @ Santa Clara Broncos",
+   "commence_time": "2026-11-24T00:00:00Z",
+   "market": "h2h",
+   "bet": "Santa Clara Broncos moneyline",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
-    "price": "+100"
+    "book": "FanDuel",
+    "price": "-150"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-117"
+    "price": "-182"
    },
-   "extra_profit_per_100": 14.53,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 11.72,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Baylor Bears @ Alabama Crimson Tide",
+   "commence_time": "2026-11-25T03:00:00Z",
+   "market": "h2h",
+   "bet": "Alabama Crimson Tide moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "DraftKings",
+    "price": "-125"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-150"
+   },
+   "extra_profit_per_100": 13.33,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "North Carolina A&T Aggies @ South Carolina St Bulldogs",
+   "commence_time": "2026-11-24T00:00:00Z",
+   "market": "h2h",
+   "bet": "South Carolina St Bulldogs moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+116"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "extra_profit_per_100": 16,
+   "implied_gap_pts": 3.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Illinois St Redbirds @ Santa Clara Broncos",
+   "commence_time": "2026-11-24T00:00:00Z",
+   "market": "h2h",
+   "bet": "Illinois St Redbirds moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+145"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "+125"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 3.6
   },
   {
    "sport": "College Basketball",
@@ -67,122 +175,14 @@
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-142"
+    "price": "-150"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-167"
-   },
-   "extra_profit_per_100": 10.54,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Charlotte 49ers @ Florida Gulf Coast Eagles",
-   "commence_time": "2026-11-23T18:30:00Z",
-   "market": "h2h",
-   "bet": "Charlotte 49ers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "-290"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-360"
-   },
-   "extra_profit_per_100": 6.7,
-   "implied_gap_pts": 3.9
-  },
-  {
-   "sport": "NHL",
-   "game": "Vegas Golden Knights @ Edmonton Oilers",
-   "commence_time": "2026-11-25T01:00:00Z",
-   "market": "totals",
-   "bet": "Over 6.5",
-   "books_compared": 3,
-   "best": {
-    "book": "FanDuel",
-    "price": "+102"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-114"
-   },
-   "extra_profit_per_100": 14.28,
-   "implied_gap_pts": 3.8
-  },
-  {
-   "sport": "NBA",
-   "game": "Oklahoma City Thunder @ Indiana Pacers",
-   "commence_time": "2026-11-24T00:40:00Z",
-   "market": "h2h",
-   "bet": "Oklahoma City Thunder moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "-190"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-225"
-   },
-   "extra_profit_per_100": 8.19,
-   "implied_gap_pts": 3.7
-  },
-  {
-   "sport": "NHL",
-   "game": "Los Angeles Kings @ Montréal Canadiens",
-   "commence_time": "2026-11-24T00:40:00Z",
-   "market": "spreads",
-   "bet": "Montréal Canadiens -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+163"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+140"
-   },
-   "extra_profit_per_100": 23,
-   "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "NHL",
-   "game": "Los Angeles Kings @ Montréal Canadiens",
-   "commence_time": "2026-11-24T00:40:00Z",
-   "market": "spreads",
-   "bet": "Los Angeles Kings +1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
     "price": "-175"
    },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-205"
-   },
-   "extra_profit_per_100": 8.36,
+   "extra_profit_per_100": 9.53,
    "implied_gap_pts": 3.6
-  },
-  {
-   "sport": "NBA",
-   "game": "Oklahoma City Thunder @ Indiana Pacers",
-   "commence_time": "2026-11-24T00:40:00Z",
-   "market": "h2h",
-   "bet": "Indiana Pacers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+180"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "+155"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.5
   }
  ]
 }
