@@ -1,27 +1,9 @@
 {
- "generated_at": "2026-11-23T20:11:05.150Z",
- "odds_generated_at": "2026-11-23T20:10:51.738Z",
+ "generated_at": "2026-11-23T20:18:20.296Z",
+ "odds_generated_at": "2026-11-23T20:18:04.828Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
-  {
-   "sport": "College Basketball",
-   "game": "Yale Bulldogs @ Belmont Bruins",
-   "commence_time": "2026-11-23T21:00:00Z",
-   "market": "h2h",
-   "bet": "Belmont Bruins moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-115"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-148"
-   },
-   "extra_profit_per_100": 19.39,
-   "implied_gap_pts": 6.2
-  },
   {
    "sport": "College Basketball",
    "game": "Baylor Bears @ Alabama Crimson Tide",
@@ -39,42 +21,6 @@
    },
    "extra_profit_per_100": 26,
    "implied_gap_pts": 5.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Yale Bulldogs @ Belmont Bruins",
-   "commence_time": "2026-11-23T21:00:00Z",
-   "market": "h2h",
-   "bet": "Yale Bulldogs moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+117"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-105"
-   },
-   "extra_profit_per_100": 21.76,
-   "implied_gap_pts": 5.1
-  },
-  {
-   "sport": "NHL",
-   "game": "Utah Mammoth @ Winnipeg Jets",
-   "commence_time": "2026-11-24T00:40:00Z",
-   "market": "spreads",
-   "bet": "Winnipeg Jets -1.5",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "+225"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 45,
-   "implied_gap_pts": 4.9
   },
   {
    "sport": "NHL",
@@ -183,6 +129,60 @@
    },
    "extra_profit_per_100": 9.53,
    "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Utah Mammoth @ Winnipeg Jets",
+   "commence_time": "2026-11-24T00:40:00Z",
+   "market": "spreads",
+   "bet": "Winnipeg Jets +1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetMGM",
+    "price": "-250"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-300"
+   },
+   "extra_profit_per_100": 6.67,
+   "implied_gap_pts": 3.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Yale Bulldogs @ Belmont Bruins",
+   "commence_time": "2026-11-23T21:00:00Z",
+   "market": "spreads",
+   "bet": "Belmont Bruins -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 13.04,
+   "implied_gap_pts": 3.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Washington Huskies @ BYU Cougars",
+   "commence_time": "2026-11-23T22:00:00Z",
+   "market": "spreads",
+   "bet": "BYU Cougars -11.5",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 13.04,
+   "implied_gap_pts": 3.5
   }
  ]
 }
