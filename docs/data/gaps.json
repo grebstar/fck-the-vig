@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-24T04:18:15.995Z",
- "odds_generated_at": "2026-11-24T04:18:05.754Z",
+ "generated_at": "2026-11-24T04:46:36.020Z",
+ "odds_generated_at": "2026-11-24T04:46:27.950Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -23,6 +23,42 @@
    "implied_gap_pts": 7
   },
   {
+   "sport": "College Basketball",
+   "game": "Creighton Bluejays @ Michigan Wolverines",
+   "commence_time": "2026-11-24T22:30:00Z",
+   "market": "h2h",
+   "bet": "Creighton Bluejays moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "+215"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+175"
+   },
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "NBA",
+   "game": "Detroit Pistons @ Orlando Magic",
+   "commence_time": "2026-11-25T00:11:00Z",
+   "market": "h2h",
+   "bet": "Orlando Magic moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "+125"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "+104"
+   },
+   "extra_profit_per_100": 21,
+   "implied_gap_pts": 4.6
+  },
+  {
    "sport": "NHL",
    "game": "Vegas Golden Knights @ Edmonton Oilers",
    "commence_time": "2026-11-25T01:00:00Z",
@@ -42,13 +78,31 @@
   },
   {
    "sport": "College Basketball",
+   "game": "Army Knights @ Air Force Falcons",
+   "commence_time": "2026-11-25T01:00:00Z",
+   "market": "spreads",
+   "bet": "Air Force Falcons -3.5",
+   "books_compared": 3,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 16.67,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
    "game": "Tennessee Volunteers @ Maryland Terrapins",
    "commence_time": "2026-11-24T20:00:00Z",
    "market": "h2h",
    "bet": "Tennessee Volunteers moneyline",
    "books_compared": 4,
    "best": {
-    "book": "FanDuel",
+    "book": "theScore Bet",
     "price": "-210"
    },
    "worst": {
@@ -77,6 +131,24 @@
    "implied_gap_pts": 4.4
   },
   {
+   "sport": "NBA",
+   "game": "Detroit Pistons @ Orlando Magic",
+   "commence_time": "2026-11-25T00:11:00Z",
+   "market": "h2h",
+   "bet": "Detroit Pistons moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "-125"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-150"
+   },
+   "extra_profit_per_100": 13.33,
+   "implied_gap_pts": 4.4
+  },
+  {
    "sport": "College Basketball",
    "game": "North Dakota Fighting Hawks @ Detroit Mercy Titans",
    "commence_time": "2026-11-24T20:00:00Z",
@@ -100,7 +172,7 @@
    "commence_time": "2026-11-25T00:00:00Z",
    "market": "h2h",
    "bet": "Harvard Crimson moneyline",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
     "price": "-205"
@@ -111,78 +183,6 @@
    },
    "extra_profit_per_100": 8.78,
    "implied_gap_pts": 4.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Texas Tech Red Raiders @ Louisville Cardinals",
-   "commence_time": "2026-11-25T01:00:00Z",
-   "market": "h2h",
-   "bet": "Louisville Cardinals moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "BetRivers",
-    "price": "+160"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "+135"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NBA",
-   "game": "Detroit Pistons @ Orlando Magic",
-   "commence_time": "2026-11-25T00:11:00Z",
-   "market": "h2h",
-   "bet": "Orlando Magic moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetMGM",
-    "price": "+120"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+102"
-   },
-   "extra_profit_per_100": 18,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "College Basketball",
-   "game": "SE Louisiana Lions @ N Colorado Bears",
-   "commence_time": "2026-11-24T17:30:00Z",
-   "market": "h2h",
-   "bet": "SE Louisiana Lions moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+145"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+123"
-   },
-   "extra_profit_per_100": 22,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "San José St Spartans @ UC San Diego Tritons",
-   "commence_time": "2026-11-24T04:59:00Z",
-   "market": "spreads",
-   "bet": "San José St Spartans +1.5",
-   "books_compared": 4,
-   "best": {
-    "book": "BetMGM",
-    "price": "+105"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-112"
-   },
-   "extra_profit_per_100": 15.71,
-   "implied_gap_pts": 4
   }
  ]
 }
