@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-24T06:18:19.180Z",
- "odds_generated_at": "2026-11-24T06:18:07.388Z",
+ "generated_at": "2026-11-24T08:18:17.426Z",
+ "odds_generated_at": "2026-11-24T08:18:05.576Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -24,21 +24,57 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Texas Tech Red Raiders @ Louisville Cardinals",
-   "commence_time": "2026-11-25T01:00:00Z",
+   "game": "Vermont Catamounts @ Siena Saints",
+   "commence_time": "2026-11-25T00:00:00Z",
    "market": "h2h",
-   "bet": "Texas Tech Red Raiders moneyline",
-   "books_compared": 5,
+   "bet": "Siena Saints moneyline",
+   "books_compared": 4,
    "best": {
-    "book": "FanDuel",
-    "price": "-162"
+    "book": "DraftKings",
+    "price": "-148"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-210"
+    "book": "BetRivers",
+    "price": "-190"
    },
-   "extra_profit_per_100": 14.11,
-   "implied_gap_pts": 5.9
+   "extra_profit_per_100": 14.94,
+   "implied_gap_pts": 5.8
+  },
+  {
+   "sport": "College Basketball",
+   "game": "North Dakota Fighting Hawks @ Detroit Mercy Titans",
+   "commence_time": "2026-11-24T20:00:00Z",
+   "market": "totals",
+   "bet": "Over 151.5",
+   "books_compared": 3,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 4.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "North Dakota Fighting Hawks @ Detroit Mercy Titans",
+   "commence_time": "2026-11-24T20:00:00Z",
+   "market": "totals",
+   "bet": "Under 151.5",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-127"
+   },
+   "extra_profit_per_100": 16.5,
+   "implied_gap_pts": 4.7
   },
   {
    "sport": "College Basketball",
@@ -60,6 +96,42 @@
   },
   {
    "sport": "College Basketball",
+   "game": "Ole Miss Rebels @ BYU Cougars",
+   "commence_time": "2026-11-24T19:30:00Z",
+   "market": "h2h",
+   "bet": "Ole Miss Rebels moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "+102"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-118"
+   },
+   "extra_profit_per_100": 17.25,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Vegas Golden Knights @ Edmonton Oilers",
+   "commence_time": "2026-11-25T01:00:00Z",
+   "market": "spreads",
+   "bet": "Vegas Golden Knights -1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "+220"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
    "game": "Baylor Bears @ Alabama Crimson Tide",
    "commence_time": "2026-11-25T03:00:00Z",
    "market": "h2h",
@@ -78,21 +150,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Tennessee Volunteers @ Maryland Terrapins",
-   "commence_time": "2026-11-24T20:00:00Z",
+   "game": "Vermont Catamounts @ Siena Saints",
+   "commence_time": "2026-11-25T00:00:00Z",
    "market": "h2h",
-   "bet": "Tennessee Volunteers moneyline",
+   "bet": "Vermont Catamounts moneyline",
    "books_compared": 4,
    "best": {
-    "book": "theScore Bet",
-    "price": "-210"
+    "book": "BetRivers",
+    "price": "+148"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-260"
+    "book": "DraftKings",
+    "price": "+124"
    },
-   "extra_profit_per_100": 9.16,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 24,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "College Basketball",
@@ -111,78 +183,6 @@
    },
    "extra_profit_per_100": 11.11,
    "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Colorado Buffaloes @ Stanford Cardinal",
-   "commence_time": "2026-11-25T04:59:00Z",
-   "market": "h2h",
-   "bet": "Stanford Cardinal moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-166"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-200"
-   },
-   "extra_profit_per_100": 10.24,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "North Dakota Fighting Hawks @ Detroit Mercy Titans",
-   "commence_time": "2026-11-24T20:00:00Z",
-   "market": "h2h",
-   "bet": "North Dakota Fighting Hawks moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-185"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-225"
-   },
-   "extra_profit_per_100": 9.61,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Boston Univ. Terriers @ Harvard Crimson",
-   "commence_time": "2026-11-25T00:00:00Z",
-   "market": "h2h",
-   "bet": "Harvard Crimson moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "FanDuel",
-    "price": "-205"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-250"
-   },
-   "extra_profit_per_100": 8.78,
-   "implied_gap_pts": 4.2
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Nevada Wolf Pack @ Santa Clara Broncos",
-   "commence_time": "2026-11-25T00:00:00Z",
-   "market": "h2h",
-   "bet": "Nevada Wolf Pack moneyline",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-110"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-129"
-   },
-   "extra_profit_per_100": 13.39,
-   "implied_gap_pts": 4
   }
  ]
 }
