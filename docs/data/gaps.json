@@ -1,44 +1,44 @@
 {
- "generated_at": "2026-11-25T06:18:12.734Z",
- "odds_generated_at": "2026-11-25T06:18:04.104Z",
+ "generated_at": "2026-11-25T08:18:23.885Z",
+ "odds_generated_at": "2026-11-25T08:18:10.759Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "N Colorado Bears @ Detroit Mercy Titans",
-   "commence_time": "2026-11-25T17:30:00Z",
-   "market": "totals",
-   "bet": "Over 147.5",
-   "books_compared": 4,
+   "game": "BYU Cougars @ Providence Friars",
+   "commence_time": "2026-11-25T22:30:00Z",
+   "market": "h2h",
+   "bet": "BYU Cougars moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "DraftKings",
-    "price": "-110"
+    "book": "theScore Bet",
+    "price": "-155"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-143"
+    "price": "-200"
    },
-   "extra_profit_per_100": 20.98,
-   "implied_gap_pts": 6.5
+   "extra_profit_per_100": 14.52,
+   "implied_gap_pts": 5.9
   },
   {
    "sport": "College Basketball",
-   "game": "N Colorado Bears @ Detroit Mercy Titans",
-   "commence_time": "2026-11-25T17:30:00Z",
-   "market": "totals",
-   "bet": "Under 147.5",
+   "game": "Virginia Cavaliers @ Marquette Golden Eagles",
+   "commence_time": "2026-11-25T17:00:00Z",
+   "market": "spreads",
+   "bet": "Marquette Golden Eagles +5.5",
    "books_compared": 4,
    "best": {
-    "book": "BetRivers",
-    "price": "+116"
+    "book": "DraftKings",
+    "price": "-105"
    },
    "worst": {
-    "book": "BetMGM",
-    "price": "-110"
+    "book": "BetRivers",
+    "price": "-132"
    },
-   "extra_profit_per_100": 25.09,
-   "implied_gap_pts": 6.1
+   "extra_profit_per_100": 19.48,
+   "implied_gap_pts": 5.7
   },
   {
    "sport": "College Basketball",
@@ -78,57 +78,57 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Rice Owls @ Ohio Bobcats",
-   "commence_time": "2026-11-25T16:00:00Z",
-   "market": "h2h",
-   "bet": "Ohio Bobcats moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-188"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-240"
-   },
-   "extra_profit_per_100": 11.52,
-   "implied_gap_pts": 5.3
-  },
-  {
-   "sport": "College Basketball",
    "game": "N Colorado Bears @ Detroit Mercy Titans",
    "commence_time": "2026-11-25T17:30:00Z",
    "market": "h2h",
    "bet": "N Colorado Bears moneyline",
-   "books_compared": 4,
+   "books_compared": 5,
    "best": {
-    "book": "FanDuel",
-    "price": "-220"
+    "book": "theScore Bet",
+    "price": "-215"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-286"
+    "price": "-278"
    },
-   "extra_profit_per_100": 10.48,
+   "extra_profit_per_100": 10.54,
    "implied_gap_pts": 5.3
   },
   {
    "sport": "College Basketball",
-   "game": "BYU Cougars @ Providence Friars",
-   "commence_time": "2026-11-25T22:30:00Z",
+   "game": "Princeton Tigers @ Liberty Flames",
+   "commence_time": "2026-11-25T21:00:00Z",
    "market": "h2h",
-   "bet": "BYU Cougars moneyline",
+   "bet": "Princeton Tigers moneyline",
    "books_compared": 5,
    "best": {
-    "book": "FanDuel",
-    "price": "-160"
+    "book": "DraftKings",
+    "price": "+142"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-200"
+    "price": "+115"
    },
-   "extra_profit_per_100": 12.5,
-   "implied_gap_pts": 5.1
+   "extra_profit_per_100": 27,
+   "implied_gap_pts": 5.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Virginia Cavaliers @ Marquette Golden Eagles",
+   "commence_time": "2026-11-25T17:00:00Z",
+   "market": "spreads",
+   "bet": "Virginia Cavaliers -5.5",
+   "books_compared": 4,
+   "best": {
+    "book": "BetRivers",
+    "price": "+107"
+   },
+   "worst": {
+    "book": "BetMGM",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 20.04,
+   "implied_gap_pts": 5.2
   },
   {
    "sport": "College Basketball",
@@ -150,21 +150,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "St. Bonaventure Bonnies @ Belmont Bruins",
-   "commence_time": "2026-11-25T15:00:00Z",
+   "game": "SE Louisiana Lions @ North Dakota Fighting Hawks",
+   "commence_time": "2026-11-25T20:00:00Z",
    "market": "h2h",
-   "bet": "St. Bonaventure Bonnies moneyline",
-   "books_compared": 6,
+   "bet": "SE Louisiana Lions moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "FanDuel",
-    "price": "-176"
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-220"
+    "book": "BetRivers",
+    "price": "-121"
    },
-   "extra_profit_per_100": 11.37,
-   "implied_gap_pts": 5
+   "extra_profit_per_100": 17.36,
+   "implied_gap_pts": 4.8
   },
   {
    "sport": "College Basketball",
