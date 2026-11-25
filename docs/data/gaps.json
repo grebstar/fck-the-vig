@@ -1,79 +1,151 @@
 {
- "generated_at": "2026-11-25T00:18:18.011Z",
- "odds_generated_at": "2026-11-25T00:18:04.707Z",
+ "generated_at": "2026-11-25T02:18:16.081Z",
+ "odds_generated_at": "2026-11-25T02:18:06.188Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Duke Blue Devils @ UConn Huskies",
-   "commence_time": "2026-11-26T00:00:00Z",
+   "game": "Memphis Tigers @ Penn State Nittany Lions",
+   "commence_time": "2026-11-25T22:00:00Z",
    "market": "h2h",
-   "bet": "Duke Blue Devils moneyline",
+   "bet": "Penn State Nittany Lions moneyline",
    "books_compared": 4,
    "best": {
     "book": "DraftKings",
-    "price": "+130"
+    "price": "+185"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "+104"
+    "book": "FanDuel",
+    "price": "+146"
    },
-   "extra_profit_per_100": 26,
+   "extra_profit_per_100": 39,
+   "implied_gap_pts": 5.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Memphis Tigers @ Penn State Nittany Lions",
+   "commence_time": "2026-11-25T22:00:00Z",
+   "market": "h2h",
+   "bet": "Memphis Tigers moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "-176"
+   },
+   "worst": {
+    "book": "DraftKings",
+    "price": "-225"
+   },
+   "extra_profit_per_100": 12.38,
    "implied_gap_pts": 5.5
   },
   {
    "sport": "College Basketball",
-   "game": "Alabama A&M Bulldogs @ North Alabama Lions",
-   "commence_time": "2026-11-25T01:00:00Z",
+   "game": "Wake Forest Demon Deacons @ Mississippi St Bulldogs",
+   "commence_time": "2026-11-26T00:30:00Z",
    "market": "h2h",
-   "bet": "North Alabama Lions moneyline",
-   "books_compared": 5,
+   "bet": "Mississippi St Bulldogs moneyline",
+   "books_compared": 4,
    "best": {
     "book": "FanDuel",
-    "price": "-160"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-200"
-   },
-   "extra_profit_per_100": 12.5,
-   "implied_gap_pts": 5.1
-  },
-  {
-   "sport": "NHL",
-   "game": "Vegas Golden Knights @ Edmonton Oilers",
-   "commence_time": "2026-11-25T01:10:00Z",
-   "market": "totals",
-   "bet": "Under 6.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetMGM",
-    "price": "+110"
+    "price": "-176"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-109"
+    "price": "-225"
    },
-   "extra_profit_per_100": 18.26,
+   "extra_profit_per_100": 12.38,
+   "implied_gap_pts": 5.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Utah State Aggies @ SMU Mustangs",
+   "commence_time": "2026-11-26T00:00:00Z",
+   "market": "h2h",
+   "bet": "Utah State Aggies moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "FanDuel",
+    "price": "-176"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-220"
+   },
+   "extra_profit_per_100": 11.37,
+   "implied_gap_pts": 5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Northern Iowa Panthers @ Charlotte 49ers",
+   "commence_time": "2026-11-25T16:00:00Z",
+   "market": "spreads",
+   "bet": "Northern Iowa Panthers +7.5",
+   "books_compared": 4,
+   "best": {
+    "book": "Hard Rock Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 16.67,
    "implied_gap_pts": 4.5
   },
   {
    "sport": "College Basketball",
-   "game": "Duke Blue Devils @ UConn Huskies",
-   "commence_time": "2026-11-26T00:00:00Z",
-   "market": "h2h",
-   "bet": "UConn Huskies moneyline",
+   "game": "Northern Iowa Panthers @ Charlotte 49ers",
+   "commence_time": "2026-11-25T16:00:00Z",
+   "market": "spreads",
+   "bet": "Charlotte 49ers -7.5",
    "books_compared": 4,
    "best": {
     "book": "FanDuel",
-    "price": "-130"
+    "price": "-102"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "-155"
+    "book": "BetRivers",
+    "price": "-122"
    },
-   "extra_profit_per_100": 12.4,
+   "extra_profit_per_100": 16.07,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Northern Iowa Panthers @ Charlotte 49ers",
+   "commence_time": "2026-11-25T16:00:00Z",
+   "market": "h2h",
+   "bet": "Northern Iowa Panthers moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "BetRivers",
+    "price": "+300"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+240"
+   },
+   "extra_profit_per_100": 60,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Utah State Aggies @ SMU Mustangs",
+   "commence_time": "2026-11-26T00:00:00Z",
+   "market": "h2h",
+   "bet": "SMU Mustangs moneyline",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "+170"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+142"
+   },
+   "extra_profit_per_100": 28,
    "implied_gap_pts": 4.3
   },
   {
@@ -95,94 +167,22 @@
    "implied_gap_pts": 4.3
   },
   {
-   "sport": "NHL",
-   "game": "Vancouver Canucks @ Detroit Red Wings",
-   "commence_time": "2026-11-26T00:30:00Z",
-   "market": "spreads",
-   "bet": "Vancouver Canucks +1.5",
-   "books_compared": 5,
+   "sport": "College Basketball",
+   "game": "Northern Iowa Panthers @ Charlotte 49ers",
+   "commence_time": "2026-11-25T16:00:00Z",
+   "market": "h2h",
+   "bet": "Charlotte 49ers moneyline",
+   "books_compared": 3,
    "best": {
-    "book": "BetMGM",
-    "price": "-125"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-148"
-   },
-   "extra_profit_per_100": 12.43,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NHL",
-   "game": "Calgary Flames @ Pittsburgh Penguins",
-   "commence_time": "2026-11-26T00:00:00Z",
-   "market": "spreads",
-   "bet": "Calgary Flames +1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetMGM",
-    "price": "-175"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-210"
-   },
-   "extra_profit_per_100": 9.52,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NHL",
-   "game": "New Jersey Devils @ Columbus Blue Jackets",
-   "commence_time": "2026-11-26T00:00:00Z",
-   "market": "spreads",
-   "bet": "Columbus Blue Jackets +1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetMGM",
-    "price": "-175"
+    "book": "FanDuel",
+    "price": "-295"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "-210"
+    "price": "-375"
    },
-   "extra_profit_per_100": 9.52,
-   "implied_gap_pts": 4.1
-  },
-  {
-   "sport": "NHL",
-   "game": "St Louis Blues @ New York Islanders",
-   "commence_time": "2026-11-26T00:00:00Z",
-   "market": "spreads",
-   "bet": "New York Islanders -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetRivers",
-    "price": "+215"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+180"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "NHL",
-   "game": "Calgary Flames @ Pittsburgh Penguins",
-   "commence_time": "2026-11-26T00:00:00Z",
-   "market": "spreads",
-   "bet": "Pittsburgh Penguins -1.5",
-   "books_compared": 5,
-   "best": {
-    "book": "BetRivers",
-    "price": "+165"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+140"
-   },
-   "extra_profit_per_100": 25,
-   "implied_gap_pts": 3.9
+   "extra_profit_per_100": 7.23,
+   "implied_gap_pts": 4.3
   }
  ]
 }
