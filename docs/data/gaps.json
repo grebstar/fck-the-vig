@@ -1,26 +1,26 @@
 {
- "generated_at": "2026-11-26T02:18:17.966Z",
- "odds_generated_at": "2026-11-26T02:18:06.390Z",
+ "generated_at": "2026-11-26T04:18:14.755Z",
+ "odds_generated_at": "2026-11-26T04:18:02.987Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
    "sport": "College Basketball",
-   "game": "Baylor Bears @ Gonzaga Bulldogs",
-   "commence_time": "2026-11-27T04:30:00Z",
+   "game": "Maryland Terrapins @ San Diego St Aztecs",
+   "commence_time": "2026-11-26T18:00:00Z",
    "market": "h2h",
-   "bet": "Baylor Bears moneyline",
+   "bet": "San Diego St Aztecs moneyline",
    "books_compared": 6,
    "best": {
     "book": "DraftKings",
-    "price": "+170"
+    "price": "+185"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+135"
+    "price": "+145"
    },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 5.5
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 5.7
   },
   {
    "sport": "College Basketball",
@@ -42,57 +42,39 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Saint Louis Billikens @ Stanford Cardinal",
-   "commence_time": "2026-11-26T05:00:43Z",
-   "market": "spreads",
-   "bet": "Stanford Cardinal +3.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Maryland Terrapins @ San Diego St Aztecs",
-   "commence_time": "2026-11-26T18:00:00Z",
-   "market": "h2h",
-   "bet": "San Diego St Aztecs moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+160"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+134"
-   },
-   "extra_profit_per_100": 26,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
    "game": "Baylor Bears @ Gonzaga Bulldogs",
    "commence_time": "2026-11-27T04:30:00Z",
    "market": "h2h",
-   "bet": "Gonzaga Bulldogs moneyline",
+   "bet": "Baylor Bears moneyline",
    "books_compared": 6,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "-170"
+    "book": "DraftKings",
+    "price": "+164"
    },
    "worst": {
-    "book": "DraftKings",
-    "price": "-205"
+    "book": "Hard Rock Bet",
+    "price": "+135"
    },
-   "extra_profit_per_100": 10.04,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 29,
+   "implied_gap_pts": 4.7
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Utah State Aggies @ USC Trojans",
+   "commence_time": "2026-11-26T21:30:00Z",
+   "market": "h2h",
+   "bet": "USC Trojans moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-145"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-175"
+   },
+   "extra_profit_per_100": 11.83,
+   "implied_gap_pts": 4.5
   },
   {
    "sport": "College Basketball",
@@ -102,15 +84,51 @@
    "bet": "Maryland Terrapins moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "-160"
+    "book": "Hard Rock Bet",
+    "price": "-185"
    },
    "worst": {
     "book": "DraftKings",
-    "price": "-192"
+    "price": "-225"
    },
-   "extra_profit_per_100": 10.42,
+   "extra_profit_per_100": 9.61,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "TCU Horned Frogs @ Creighton Bluejays",
+   "commence_time": "2026-11-26T23:00:00Z",
+   "market": "spreads",
+   "bet": "Creighton Bluejays +1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetMGM",
+    "price": "-118"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-140"
+   },
+   "extra_profit_per_100": 13.32,
    "implied_gap_pts": 4.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Army Knights @ UTSA Roadrunners",
+   "commence_time": "2026-11-26T17:00:00Z",
+   "market": "spreads",
+   "bet": "UTSA Roadrunners -13.5",
+   "books_compared": 5,
+   "best": {
+    "book": "DraftKings",
+    "price": "-102"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-120"
+   },
+   "extra_profit_per_100": 14.71,
+   "implied_gap_pts": 4.1
   },
   {
    "sport": "College Basketball",
@@ -132,57 +150,39 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Arkansas Razorbacks @ Michigan St Spartans",
-   "commence_time": "2026-11-26T21:30:00Z",
+   "game": "Miami Hurricanes @ Michigan Wolverines",
+   "commence_time": "2026-11-26T20:30:00Z",
    "market": "h2h",
-   "bet": "Michigan St Spartans moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "DraftKings",
-    "price": "-218"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-265"
-   },
-   "extra_profit_per_100": 8.13,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Saint Mary's Gaels @ UCLA Bruins",
-   "commence_time": "2026-11-26T22:00:00Z",
-   "market": "h2h",
-   "bet": "UCLA Bruins moneyline",
+   "bet": "Miami Hurricanes moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-310"
+    "price": "-134"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-385"
+    "price": "-157"
    },
-   "extra_profit_per_100": 6.29,
+   "extra_profit_per_100": 10.94,
    "implied_gap_pts": 3.8
   },
   {
    "sport": "College Basketball",
-   "game": "Baylor Bears @ Gonzaga Bulldogs",
-   "commence_time": "2026-11-27T04:30:00Z",
+   "game": "Army Knights @ UTSA Roadrunners",
+   "commence_time": "2026-11-26T17:00:00Z",
    "market": "spreads",
-   "bet": "Baylor Bears +4.5",
-   "books_compared": 4,
+   "bet": "Army Knights +13.5",
+   "books_compared": 5,
    "best": {
+    "book": "FanDuel",
+    "price": "-102"
+   },
+   "worst": {
     "book": "DraftKings",
     "price": "-118"
    },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-137"
-   },
-   "extra_profit_per_100": 11.76,
-   "implied_gap_pts": 3.7
+   "extra_profit_per_100": 13.29,
+   "implied_gap_pts": 3.6
   }
  ]
 }
