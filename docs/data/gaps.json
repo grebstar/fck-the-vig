@@ -1,9 +1,45 @@
 {
- "generated_at": "2026-11-26T10:18:17.356Z",
- "odds_generated_at": "2026-11-26T10:18:03.672Z",
+ "generated_at": "2026-11-26T12:18:20.476Z",
+ "odds_generated_at": "2026-11-26T12:18:06.998Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Utah State Aggies @ USC Trojans",
+   "commence_time": "2026-11-26T21:30:00Z",
+   "market": "h2h",
+   "bet": "USC Trojans moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-140"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-175"
+   },
+   "extra_profit_per_100": 14.29,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Boston College Eagles @ UCF Knights",
+   "commence_time": "2026-11-26T18:30:00Z",
+   "market": "h2h",
+   "bet": "UCF Knights moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-120"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-148"
+   },
+   "extra_profit_per_100": 15.76,
+   "implied_gap_pts": 5.1
+  },
   {
    "sport": "College Basketball",
    "game": "Georgia Bulldogs @ Cincinnati Bearcats",
@@ -12,7 +48,7 @@
    "bet": "Cincinnati Bearcats moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
+    "book": "theScore Bet",
     "price": "-130"
    },
    "worst": {
@@ -42,24 +78,6 @@
   },
   {
    "sport": "NHL",
-   "game": "Calgary Flames @ New Jersey Devils",
-   "commence_time": "2026-11-27T18:00:00Z",
-   "market": "h2h",
-   "bet": "Calgary Flames moneyline",
-   "books_compared": 3,
-   "best": {
-    "book": "BetRivers",
-    "price": "+240"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+195"
-   },
-   "extra_profit_per_100": 45,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "NHL",
    "game": "Utah Mammoth @ Nashville Predators",
    "commence_time": "2026-11-27T18:00:00Z",
    "market": "spreads",
@@ -74,24 +92,6 @@
     "price": "+180"
    },
    "extra_profit_per_100": 40,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Utah State Aggies @ USC Trojans",
-   "commence_time": "2026-11-26T21:30:00Z",
-   "market": "h2h",
-   "bet": "USC Trojans moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-145"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-175"
-   },
-   "extra_profit_per_100": 11.83,
    "implied_gap_pts": 4.5
   },
   {
@@ -120,7 +120,7 @@
    "bet": "Pittsburgh Panthers moneyline",
    "books_compared": 6,
    "best": {
-    "book": "theScore Bet",
+    "book": "BetMGM",
     "price": "-105"
    },
    "worst": {
@@ -128,42 +128,6 @@
     "price": "-125"
    },
    "extra_profit_per_100": 15.24,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Tennessee Volunteers @ Iowa State Cyclones",
-   "commence_time": "2026-11-26T20:30:00Z",
-   "market": "h2h",
-   "bet": "Iowa State Cyclones moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-142"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-170"
-   },
-   "extra_profit_per_100": 11.6,
-   "implied_gap_pts": 4.3
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Maryland Terrapins @ San Diego St Aztecs",
-   "commence_time": "2026-11-26T18:00:00Z",
-   "market": "h2h",
-   "bet": "Maryland Terrapins moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-185"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-225"
-   },
-   "extra_profit_per_100": 9.61,
    "implied_gap_pts": 4.3
   },
   {
@@ -178,10 +142,46 @@
     "price": "+185"
    },
    "worst": {
-    "book": "theScore Bet",
+    "book": "BetMGM",
     "price": "+155"
    },
    "extra_profit_per_100": 30,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "SMU Mustangs @ LSU Tigers",
+   "commence_time": "2026-11-27T00:00:00Z",
+   "market": "spreads",
+   "bet": "LSU Tigers -5.5",
+   "books_compared": 4,
+   "best": {
+    "book": "theScore Bet",
+    "price": "+100"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-118"
+   },
+   "extra_profit_per_100": 15.25,
+   "implied_gap_pts": 4.1
+  },
+  {
+   "sport": "College Basketball",
+   "game": "TCU Horned Frogs @ Creighton Bluejays",
+   "commence_time": "2026-11-26T23:00:00Z",
+   "market": "h2h",
+   "bet": "Creighton Bluejays moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "-110"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-130"
+   },
+   "extra_profit_per_100": 13.99,
    "implied_gap_pts": 4.1
   }
  ]
