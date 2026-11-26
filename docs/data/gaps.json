@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-26T06:18:19.346Z",
- "odds_generated_at": "2026-11-26T06:18:05.099Z",
+ "generated_at": "2026-11-26T08:11:16.793Z",
+ "odds_generated_at": "2026-11-26T08:11:04.355Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -84,7 +84,7 @@
    "bet": "Maryland Terrapins moneyline",
    "books_compared": 6,
    "best": {
-    "book": "Hard Rock Bet",
+    "book": "theScore Bet",
     "price": "-185"
    },
    "worst": {
@@ -114,20 +114,20 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Tennessee Volunteers @ Iowa State Cyclones",
-   "commence_time": "2026-11-26T20:30:00Z",
-   "market": "h2h",
-   "bet": "Tennessee Volunteers moneyline",
-   "books_compared": 5,
+   "game": "SMU Mustangs @ LSU Tigers",
+   "commence_time": "2026-11-27T00:00:00Z",
+   "market": "spreads",
+   "bet": "LSU Tigers -5.5",
+   "books_compared": 4,
    "best": {
-    "book": "DraftKings",
-    "price": "+136"
+    "book": "theScore Bet",
+    "price": "+100"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "+115"
+    "book": "FanDuel",
+    "price": "-118"
    },
-   "extra_profit_per_100": 21,
+   "extra_profit_per_100": 15.25,
    "implied_gap_pts": 4.1
   },
   {
@@ -150,21 +150,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Oklahoma Sooners @ Purdue Boilermakers",
-   "commence_time": "2026-11-26T17:00:00Z",
+   "game": "Tennessee Volunteers @ Iowa State Cyclones",
+   "commence_time": "2026-11-26T20:30:00Z",
    "market": "h2h",
-   "bet": "Purdue Boilermakers moneyline",
-   "books_compared": 6,
+   "bet": "Iowa State Cyclones moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "FanDuel",
-    "price": "-188"
+    "book": "theScore Bet",
+    "price": "-145"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-225"
+    "book": "Hard Rock Bet",
+    "price": "-170"
    },
-   "extra_profit_per_100": 8.75,
-   "implied_gap_pts": 4
+   "extra_profit_per_100": 10.15,
+   "implied_gap_pts": 3.8
   },
   {
    "sport": "College Basketball",
@@ -174,7 +174,7 @@
    "bet": "LSU Tigers moneyline",
    "books_compared": 6,
    "best": {
-    "book": "BetMGM",
+    "book": "theScore Bet",
     "price": "-210"
    },
    "worst": {
