@@ -1,80 +1,62 @@
 {
- "generated_at": "2026-11-26T20:18:18.106Z",
- "odds_generated_at": "2026-11-26T20:18:03.607Z",
+ "generated_at": "2026-11-26T22:18:12.388Z",
+ "odds_generated_at": "2026-11-26T22:18:03.657Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "Florida Panthers @ Washington Capitals",
-   "commence_time": "2026-11-27T20:00:00Z",
-   "market": "spreads",
-   "bet": "Florida Panthers -1.5",
-   "books_compared": 4,
+   "sport": "NBA",
+   "game": "Milwaukee Bucks @ Detroit Pistons",
+   "commence_time": "2026-11-28T00:40:00Z",
+   "market": "h2h",
+   "bet": "Milwaukee Bucks moneyline",
+   "books_compared": 6,
    "best": {
-    "book": "DraftKings",
-    "price": "+235"
+    "book": "BetRivers",
+    "price": "+400"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+310"
+   },
+   "extra_profit_per_100": 90,
+   "implied_gap_pts": 4.4
+  },
+  {
+   "sport": "NHL",
+   "game": "Dallas Stars @ St Louis Blues",
+   "commence_time": "2026-11-27T19:00:00Z",
+   "market": "spreads",
+   "bet": "Dallas Stars -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+194"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+180"
+    "price": "+160"
    },
-   "extra_profit_per_100": 55,
-   "implied_gap_pts": 5.9
+   "extra_profit_per_100": 34,
+   "implied_gap_pts": 4.4
   },
   {
-   "sport": "NBA",
-   "game": "Philadelphia 76ers @ Indiana Pacers",
-   "commence_time": "2026-11-28T00:40:00Z",
-   "market": "h2h",
-   "bet": "Philadelphia 76ers moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-152"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-186"
-   },
-   "extra_profit_per_100": 12.03,
-   "implied_gap_pts": 4.7
-  },
-  {
-   "sport": "NBA",
-   "game": "Philadelphia 76ers @ Indiana Pacers",
-   "commence_time": "2026-11-28T00:40:00Z",
+   "sport": "NHL",
+   "game": "Dallas Stars @ St Louis Blues",
+   "commence_time": "2026-11-27T19:00:00Z",
    "market": "spreads",
-   "bet": "Indiana Pacers +3.5",
+   "bet": "St Louis Blues +1.5",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+102"
+    "book": "BetMGM",
+    "price": "-200"
    },
    "worst": {
     "book": "FanDuel",
-    "price": "-118"
+    "price": "-245"
    },
-   "extra_profit_per_100": 17.25,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "NBA",
-   "game": "Philadelphia 76ers @ Indiana Pacers",
-   "commence_time": "2026-11-28T00:40:00Z",
-   "market": "spreads",
-   "bet": "Philadelphia 76ers -3.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-104"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-125"
-   },
-   "extra_profit_per_100": 16.15,
-   "implied_gap_pts": 4.6
+   "extra_profit_per_100": 9.18,
+   "implied_gap_pts": 4.3
   },
   {
    "sport": "College Football",
@@ -95,21 +77,21 @@
    "implied_gap_pts": 4.1
   },
   {
-   "sport": "NHL",
-   "game": "Dallas Stars @ St Louis Blues",
-   "commence_time": "2026-11-27T19:00:00Z",
-   "market": "spreads",
-   "bet": "Dallas Stars -1.5",
+   "sport": "College Football",
+   "game": "Tulsa Golden Hurricane @ UTSA Roadrunners",
+   "commence_time": "2026-11-27T17:00:00Z",
+   "market": "h2h",
+   "bet": "UTSA Roadrunners moneyline",
    "books_compared": 6,
    "best": {
-    "book": "BetRivers",
-    "price": "+190"
+    "book": "DraftKings",
+    "price": "+102"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+160"
+    "price": "-115"
    },
-   "extra_profit_per_100": 30,
+   "extra_profit_per_100": 15.04,
    "implied_gap_pts": 4
   },
   {
@@ -164,6 +146,24 @@
     "price": "+140"
    },
    "extra_profit_per_100": 24,
+   "implied_gap_pts": 3.8
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Rangers @ Chicago Blackhawks",
+   "commence_time": "2026-11-27T22:30:00Z",
+   "market": "spreads",
+   "bet": "New York Rangers -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "+152"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+130"
+   },
+   "extra_profit_per_100": 22,
    "implied_gap_pts": 3.8
   },
   {
