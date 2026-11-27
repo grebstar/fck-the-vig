@@ -70,7 +70,7 @@ function renderUsers() {
   $('#users').innerHTML = users.length ? users.map(u => {
     const plan = u.unlimited
       ? `<span class="pill on">Unlimited</span><br><span class="hint">${esc(howLabel[u.plan_source] || '')}${u.plan_until ? ` · until ${esc(fmtDay(u.plan_until))}` : ''}</span>`
-      : `<span class="pill">Free</span>${u.saves_today ? `<br><span class="hint">${u.saves_today} saved today</span>` : ''}`;
+      : `<span class="pill">Free</span>${u.saves_today ? `<br><span class="hint">${u.saves_today} saved today</span>` : ''}${u.slips_today ? `<br><span class="hint">${u.slips_today} bet slip${u.slips_today === 1 ? '' : 's'} today</span>` : ''}`;
     const act = u.plan_source === 'stripe' ? '<span class="hint">Pays by card</span>'
       : u.unlimited ? `<button class="link-btn danger" data-ugrant="${esc(u.username)}" data-remove="1">Move to Free</button>`
         : `<button class="chip" data-ugrant="${esc(u.username)}">Give Unlimited</button>`;

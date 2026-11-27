@@ -3,8 +3,8 @@
    Saved bets live in this browser and, when signed in, sync to the accounts API (worker/index.js). */
 import { gradeBets, settle } from './grade.js?v=9';
 import { loadBets, saveBets, mergeBets, newId, visible, tombstone, summarize, breakdown } from './bets.js?v=9';
-import { MARKET_LABELS, mLabel, isProp, legLabel, effDec, findArbs, findValue, arbStakes, bestOffer } from './odds-math.js?v=9';
-import { comboLink, COMBO_BOOKS } from './slip-links.js?v=9';
+import { MARKET_LABELS, mLabel, isProp, legLabel, netAm, netEvent, EX_FEES, findArbs, findValue, arbStakes, bestOffer } from './odds-math.js?v=10';
+import { comboLink, COMBO_BOOKS } from './slip-links.js?v=10';
 import { drawShareCard } from './share-card.js?v=1';
 
 (() => {
@@ -27,9 +27,11 @@ import { drawShareCard } from './share-card.js?v=1';
   const API_BASE = LOCAL ? 'http://localhost:8787' : 'https://api.fckvig.com';
   const GAME_TABS = new Set(['today', 'build', 'results']);
   // Membership. The real charge is whatever Price is set in Stripe; keep these labels in step with it.
-  const PLAN_PRICE = { month: '$9.99', year: '$79.99', yearPerMonth: '$6.67', yearSave: '33%' };
-  const COMPETITORS = [   // their App Store prices (App Pricing Lab / App Store listings, checked Apr–May 2026)
-    ['Pikkit Pro', '$29.99/mo'],
+  // The yearly price is only shown once STRIPE_PRICE_ANNUAL is set on the worker.
+  const PLAN_PRICE = { month: '$4.99', year: '$39.99', yearPerMonth: '$3.33', yearSave: '33%' };
+  const COMPETITORS = [   // checked Nov 26, 2026 (see projects/screw-the-vig-pricing-research.md in the GrebStar project)
+    ['Dynatyze Betting Pro', '$24.99/mo'],
+    ['Outlier', 'from $19.99/mo'],
     ['Action Network PRO', 'from $19.99/mo'],
     ['OddsJam (cheapest plan)', '$19.99/mo'],
   ];
@@ -57,7 +59,7 @@ import { drawShareCard } from './share-card.js?v=1';
     bets: [], betFilter: 'open', user: null, syncAt: null, syncErr: null, gradedAt: null,
     statsTab: 'sport', moneyTotal: 100, q: '', alerts: null, alertsErr: null, metaAt: null,
     myBooks: null, myBooksAt: 0, onlyMine: true, day: null,
-    plan: null, quota: null, billing: null, admin: false, planInterval: 'month',
+    plan: null, quota: null, slips: null, billing: null, admin: false, planInterval: 'month',
   };
 
   const $ = sel => document.querySelector(sel);
@@ -85,8 +87,18 @@ import { drawShareCard } from './share-card.js?v=1';
 
   function indexEvents() {
     S.events.clear();
-    for (const sp of S.data.sports) for (const ev of sp.events) S.events.set(ev.id, { ...ev, sport: sp.key });
+    const now = Date.now();
+    for (const sp of S.data.sports) for (const ev of sp.events) S.events.set(ev.id, netEvent({ ...ev, sport: sp.key }, now));
     S.legs = S.legs.filter(l => S.events.has(l.eventId)); // drop legs whose game left the feed
+  }
+
+  function netFutures(f) {
+    for (const m of f.markets || []) for (const o of m.outcomes || []) {
+      if (!o.prices || o.gross) continue;
+      o.gross = { ...o.prices };
+      for (const [bk, am] of Object.entries(o.prices)) if (EX_FEES[bk] && Number.isFinite(am)) o.prices[bk] = netAm(bk, am, 'future');
+    }
+    return f;
   }
 
   // ---------- books & states ----------
@@ -128,6 +140,42 @@ import { drawShareCard } from './share-card.js?v=1';
     try { return /^https?:$/.test(new URL(u).protocol) ? u : null; } catch { return null; }
   }
   const allowedBooks = () => new Set([...allBookKeys()].filter(k => availability(k) !== 'no'));
+
+  // ---------- one-tap bet slips: free accounts get FREE_SLIPS a day, Unlimited gets every one ----------
+  // The worker counts them (POST /api/slips/claim), so the limit holds across devices and can't be reset here.
+  const slipsUnlimited = () => S.plan?.name === 'unlimited' || !!S.slips?.unlimited;
+  const FREE_SLIPS = () => S.slips?.limit ?? 1;
+  function fingerprint(str) {   // short, stable id for "this bet": FNV-1a, base 36, plus the length
+    let h = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return `${h.toString(36)}${str.length.toString(36)}`;
+  }
+  const legsSig = (legs = S.legs) => legs.map(l => [l.eventId, l.market, l.name, l.desc || '', l.point ?? ''].join('|')).join(',');
+  // Ask the worker for a slip. Resolves 'ok' or 'limit'; 'auth' when they need to sign in; null on a network error.
+  async function claimSlip(book, sig) {
+    try {
+      const r = await api('/api/slips/claim', { key: `${book}:${fingerprint(sig)}` });
+      S.slips = r.slips || S.slips;
+      renderAcctBox();
+      return 'ok';
+    } catch (err) {
+      if (err.status === 402) { S.slips = err.data?.slips || S.slips; renderAcctBox(); return 'limit'; }
+      if (err.status === 401) { setSession(null); return 'auth'; }
+      toast(err.status ? err.message : "Couldn't reach the server to open the slip. Check your connection and try again.");
+      return null;
+    }
+  }
+  const slipsLeftNote = () => {
+    const q = S.slips;
+    if (!q || q.unlimited) return '';
+    return q.left > 0 ? `${q.left} free bet slip${q.left === 1 ? '' : 's'} left today.` : "That was today's free bet slip. Opening this same bet here again today is free.";
+  };
+  function lockedSlipHtml() {
+    const reset = S.slips?.resets_at ? ` It resets at midnight Central.` : '';
+    return `<div class="note info slip-lock"><b>You've used today's free bet slip.</b>${reset}
+      <span>Go Unlimited (${esc(PLAN_PRICE.month)}/mo) and every Bet button opens the book with your bet already on the slip.</span>
+      ${NATIVE ? '' : '<button type="button" class="cta" data-plan="slips">Go Unlimited</button>'}</div>`;
+  }
 
   // ---------- my books ----------
   // The books the user has accounts with. Saved in this browser and, when signed in, in their profile.
@@ -656,7 +704,7 @@ import { drawShareCard } from './share-card.js?v=1';
       const line = l.point == null ? '' : lg.market === 'spreads' ? `${fmtPt(l.point)} ` : `${lg.name === 'Over' ? 'o' : 'u'}${l.point} `;
       const cls = `lp${l.same ? '' : ' off'}`;
       const label = `${esc(line)}${fmtAm(l.price)}`;
-      return l.link
+      return l.link && slipsUnlimited()
         ? `<a class="${cls}" href="${esc(l.link)}" target="_blank" rel="noopener" title="Add ${esc(legLabel(lg))} to the ${esc(r.name)} bet slip">${label}<span class="ext">↗</span></a>`
         : `<span class="${cls}" title="${esc(legLabel(lg))}">${label}</span>`;
     }).join('');
@@ -756,7 +804,7 @@ import { drawShareCard } from './share-card.js?v=1';
       }
       if (missing.length) res += `<p class="missing">Not offering every leg: ${missing.map(k => esc(bookInfo(k).name)).join(', ')}</p>`;
       if ([...full, ...alt].some(r => r.ex)) {
-        res += `<div class="note info"><strong>Prediction markets</strong> (Kalshi, Polymarket, Novig, ProphetX) are priced leg-by-leg. Trading fees aren't included, and a native combo there may be priced differently.</div>`;
+        res += `<div class="note info"><strong>Prediction markets</strong> (Kalshi, Polymarket, Novig, ProphetX) are priced leg-by-leg, after each one's trading fee. A native combo there may be priced differently.</div>`;
       }
     }
     $('#warnings').innerHTML = warn.join('');
@@ -1011,7 +1059,7 @@ import { drawShareCard } from './share-card.js?v=1';
         [`We compare ${books.length} books and exchanges.`, `${esc(andList(books))}.${missingBooks.length ? ` ${esc(andList([...missingBooks, 'some others']))} aren’t included yet.` : ''}`],
         ['It’s where you are, not where you live.', 'Books check your location when you bet. Pick the state you’ll be in when you place it.'],
         ['Laws change.', `We checked where each platform is legal${checked} and recheck about once a month. <button type="button" class="link-btn" id="knowStates">See every state and our sources</button>`],
-        ['Prediction markets have fees and limits.', 'Kalshi, Polymarket, Novig and ProphetX prices are shown before their trading fees (Sports Book Arbitrage adds Kalshi’s estimated fee). The price shown may only be there for a small amount; a bigger bet can fill at a worse price.'],
+        ['Prediction markets have fees and limits.', 'Kalshi, Polymarket, Novig and ProphetX prices are shown after their trading fees, as what you’d net taking the price now: Kalshi 0.07 × P × (1 − P) per contract, Polymarket about 0.095 × P × (1 − P), Novig free before the game (0.03 live), ProphetX 2% of winnings. The price shown may only be there for a small amount; a bigger bet can fill at a worse price.'],
       ] },
       { id: 'money', title: 'Sports Book Arbitrage', items: [
         ['These go fast.', 'Sure things and edges come from our last pull, and books often fix them within minutes. Check both prices in the apps before you bet either side.'],
@@ -1111,7 +1159,7 @@ import { drawShareCard } from './share-card.js?v=1';
     const onlyKalshi = allBooks.size === 1 && allBooks.has('kalshi');
     const notes = [];
     if (m.type === 'ladder') notes.push('These are "at least N wins" contracts. A sportsbook over 10.5 wins is the same bet as 11+ wins here.');
-    if (allBooks.has('kalshi')) notes.push('Kalshi prices are the current ask, before trading fees. Thin quotes are left out.');
+    if (allBooks.has('kalshi')) notes.push('Kalshi prices are the current ask, after its trading fee. Thin quotes are left out.');
     if (onlyKalshi) notes.push("Our sportsbook feed doesn't carry this market, so these are Kalshi prices only.");
     const shown = rows.slice(0, MAX_ROWS);
     view.innerHTML = `
@@ -1121,7 +1169,7 @@ import { drawShareCard } from './share-card.js?v=1';
       <div class="frows">${shown.map(({ o, i, ps }) => {
         const [bk, am] = ps[0];
         const info = futuresBookInfo(bk);
-        const link = cleanLink(o.links?.[bk] || (bk === 'kalshi' ? m.links?.kalshi : null));
+        const link = oneSlipLink(bk, cleanLink(o.links?.[bk] || (bk === 'kalshi' ? m.links?.kalshi : null)), `${m.title}: ${o.name}`, am);
         const others = ps.slice(1, 7).map(([k, a]) => `<span class="lp" title="${esc(futuresBookInfo(k).name)}">${esc(futuresBookInfo(k).short)} ${fmtAm(a)}</span>`).join('');
         return `<div class="frow">
           <span class="fname">${esc(o.name)}</span>
@@ -1265,14 +1313,17 @@ import { drawShareCard } from './share-card.js?v=1';
   // ---------- membership ----------
   function setMembership(m) {
     if (!m || !m.plan) return;
-    S.plan = m.plan; S.quota = m.quota; S.billing = m.billing; S.admin = !!m.admin;
+    const before = slipsUnlimited();
+    S.plan = m.plan; S.quota = m.quota; S.slips = m.slips || null; S.billing = m.billing; S.admin = !!m.admin;
+    if (slipsUnlimited() !== before && S.data) render();   // show (or hide) the one-tap links in every list
   }
 
   function openPlan(why) {
     const d = $('#planDialog');
     if (!d) return;
     const q = S.quota;
-    $('#planKicker').textContent = why === 'limit' && q ? `You've used today's ${q.limit} free saves. They reset at midnight Central.` : '';
+    $('#planKicker').textContent = why === 'limit' && q ? `You've used today's ${q.limit} free saves. They reset at midnight Central.`
+      : why === 'slips' ? `You've used today's free bet slip${FREE_SLIPS() === 1 ? '' : 's'}. ${FREE_SLIPS() === 1 ? 'It resets' : 'They reset'} at midnight Central.` : '';
     $('#planKicker').hidden = !$('#planKicker').textContent;
     $('#planErr').textContent = '';
     $('#planMsg').textContent = '';
@@ -1294,6 +1345,7 @@ import { drawShareCard } from './share-card.js?v=1';
     $('#planYearSub').textContent = `${PLAN_PRICE.yearPerMonth}/mo · save ${PLAN_PRICE.yearSave}`;
     $('#planMonthLabel').textContent = `${PLAN_PRICE.month}/mo`;
     $('#planFreeN').textContent = FREE_N();
+    $('#planFreeSlips').textContent = FREE_SLIPS() === 1 ? '1 one-tap bet slip' : `${FREE_SLIPS()} one-tap bet slips`;
     const buy = $('#planBuy');
     buy.disabled = false;
     if (unlimited) { buy.textContent = "You're on Unlimited"; buy.disabled = true; }
@@ -1619,7 +1671,8 @@ import { drawShareCard } from './share-card.js?v=1';
       return `<div class="plan-line"><span class="small"><b class="plan-badge">Unlimited</b> <span class="muted">${esc(until)}${how}</span></span>
         <span class="acct-actions">${p.manage && !NATIVE ? '<button class="link-btn" data-plan="manage">Manage billing</button>' : ''}${admin}</span></div>`;
     }
-    const left = q && !q.unlimited ? `${q.left} of ${q.limit} free saves left today` : 'Free plan';
+    const sl = S.slips && !S.slips.unlimited ? ` · ${S.slips.left} of ${S.slips.limit} bet slip${S.slips.limit === 1 ? '' : 's'}` : '';
+    const left = q && !q.unlimited ? `${q.left} of ${q.limit} free saves${sl} left today` : 'Free plan';
     return `<div class="plan-line"><span class="small"><b>Free plan</b> <span class="muted">· ${esc(left)}</span></span>
       <span class="acct-actions">${admin}${NATIVE ? '' : '<button class="chip plan-chip" data-plan="open">Go Unlimited</button>'}</span></div>`;
   }
@@ -1777,7 +1830,7 @@ import { drawShareCard } from './share-card.js?v=1';
     try { await api('/api/logout', {}); } catch { /* token may already be gone */ }
     setSession(null);
     S.syncAt = null; S.syncErr = null;
-    S.plan = S.quota = S.billing = null; S.admin = false;
+    S.plan = S.quota = S.slips = S.billing = null; S.admin = false;
     if (synced) {
       S.bets = []; saveBets(S.bets);
       S.myBooks = null; S.myBooksAt = 0;   // they're saved in the account; don't hand them to the next person on this browser
@@ -1988,11 +2041,11 @@ import { drawShareCard } from './share-card.js?v=1';
   const whenFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
   const pct = (x, d = 1) => `${(x * 100).toFixed(d)}%`;
   const MK_NAME = { h2h: 'Moneyline', spreads: 'Spread', totals: 'Total' };
-  const exNote = bk => (bk === 'kalshi' ? 'incl. est. fee' : bookInfo(bk).ex ? 'before fees' : '');
+  const exNote = bk => (EX_FEES[bk] ? 'after fee' : '');
 
-  function moneyBookCell(o) {
+  function moneyBookCell(o, label) {
     const info = bookInfo(o.bk);
-    const link = cleanLink(o.link);
+    const link = oneSlipLink(o.bk, cleanLink(o.link), label || info.name, o.price);
     const name = `${bchip(info)}<span class="mb-name">${esc(info.name)}</span>`;
     return link ? `<a class="mb-book" href="${esc(link)}" target="_blank" rel="noopener">${name}<span class="ext">↗</span></a>` : `<span class="mb-book">${name}</span>`;
   }
@@ -2011,7 +2064,7 @@ import { drawShareCard } from './share-card.js?v=1';
     const sideRow = (ev, mk, o, stake) => `<div class="mb-side">
         <span class="mb-pick"><b>${esc(legLabel({ market: mk, name: o.name, desc: o.desc, point: o.point }))}</b></span>
         <span class="mb-price">${fmtAm(o.price)}${exNote(o.bk) ? `<span class="mb-fee">${exNote(o.bk)}</span>` : ''}</span>
-        ${moneyBookCell(o)}
+        ${moneyBookCell(o, `${legLabel({ market: mk, name: o.name, desc: o.desc, point: o.point })} (${ev.away} @ ${ev.home})`)}
         ${stake != null ? `<span class="mb-stake">Bet <b>${money(stake)}</b></span>` : ''}
       </div>`;
     const game = ev => `${esc(ev.away)} @ ${esc(ev.home)} · ${esc(SPORT_SHORT[ev.sport] || '')} · ${esc(whenFmt.format(new Date(ev.commence_time)))}`;
@@ -2047,7 +2100,7 @@ import { drawShareCard } from './share-card.js?v=1';
         <div class="mb-sec-h"><div><h3>Beat the market</h3><p class="muted small">Prices better than the fair odds every other book implies. Not guaranteed, but bets like these win you money over time.</p></div></div>
         <div class="mb-list">${valueHtml}</div>
       </section>
-      <p class="hint">Kalshi prices include its estimated trading fee (about 7% × price × (1 − price) per contract). Other prediction markets are shown before their fees. Books can limit or void bets on obvious errors.</p>`;
+      <p class="hint">Prediction-market prices are after their trading fees (Kalshi, Polymarket, ProphetX; Novig is free before the game). Books can limit or void bets on obvious errors.</p>`;
   }
 
   // ---------- line-move alerts ----------
@@ -2202,15 +2255,55 @@ import { drawShareCard } from './share-card.js?v=1';
   }
 
   // ---------- bet slip: fill in a book's slip for the current parlay ----------
-  let betKey = null;
+  let betKey = null, betClaim = null, betLocked = false, betOne = null;
   const betAdded = new Set();
+  // Single links outside the parlay (season-long markets, the arbitrage board). Unlimited gets the real link;
+  // everyone else gets '#slip-<n>', which opens the Bet dialog for that one bet after the worker says yes.
+  const oneSlips = new Map();   // id -> { book, link, label, price }; ids come from the link, so re-renders keep them
+  function oneSlipLink(book, link, label, price) {
+    if (!link || slipsUnlimited()) return link;
+    const id = fingerprint(`${book} ${link}`);
+    oneSlips.set(id, { book, link, label, price });
+    return `#slip-${id}`;
+  }
+  async function openOneSlip(i) {
+    const o = oneSlips.get(i);
+    if (!o) return;
+    if (!S.user) { afterAuth = () => openOneSlip(i); return openAcct('signup', `Create a free account to open bet slips with one tap. Free accounts get ${FREE_SLIPS()} a day.`); }
+    const got = slipsUnlimited() ? 'ok' : await claimSlip(o.book, o.link);
+    if (got === 'auth') { afterAuth = () => openOneSlip(i); return openAcct('signin', 'Your session expired. Sign in again to open this bet slip.'); }
+    if (!got) return;
+    betKey = null; betOne = { ...o, locked: got === 'limit' };
+    renderOneSlip();
+    const d = $('#betDialog');
+    if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+  }
+  function renderOneSlip() {
+    const o = betOne, info = bookInfo(o.book);
+    $('#betSave').hidden = true;
+    $('#betBody').innerHTML = `
+      <h3>Bet this at ${esc(info.name)}</h3>
+      <p class="muted">${esc(o.label)}${o.price != null ? ` · ${fmtAm(o.price)}` : ''}</p>
+      ${o.locked ? lockedSlipHtml() : `<a class="cta slip-all" href="${esc(o.link)}" target="_blank" rel="noopener">Open the ${esc(info.name)} bet slip ↗</a>
+        <p class="muted small">${esc(slipsLeftNote())} Sign in to ${esc(info.name)}, check the odds and place it. We never see your account.</p>`}`;
+  }
   function betRow(key) {
     const { full, alt } = priceParlay(allowedBooks());
     return [...full, ...alt].find(r => r.key === key) || null;
   }
-  function openBet(key) {
-    betKey = key;
+  async function openBet(key) {
+    betKey = key; betOne = null; betLocked = false; betClaim = null;
     betAdded.clear();
+    if (!S.legs.length || !betRow(key)) return;
+    if (!slipsUnlimited()) {
+      if (!S.user) { afterAuth = () => openBet(key); return openAcct('signup', `Create a free account to open bet slips with one tap. Free accounts get ${FREE_SLIPS()} a day.`); }
+      const sig = legsSig();
+      const got = await claimSlip(key, sig);
+      if (got === 'auth') { afterAuth = () => openBet(key); return openAcct('signin', 'Your session expired. Sign in again to open this bet slip.'); }
+      if (!got) return;
+      betClaim = `${key}:${sig}`;
+      betLocked = got === 'limit';
+    }
     if (!renderBetDialog()) return;
     const d = $('#betDialog');
     if (d.showModal) d.showModal(); else d.setAttribute('open', '');
@@ -2220,9 +2313,14 @@ import { drawShareCard } from './share-card.js?v=1';
     return lg.market === 'spreads' ? fmtPt(l.point) : `${lg.name === 'Over' ? 'o' : 'u'}${l.point}`;
   }
   function renderBetDialog() {
+    if (betOne) return true;   // a single season-long or arbitrage bet: nothing on it changes with the parlay
+    $('#betSave').hidden = false;
     const r = betRow(betKey);
     const n = S.legs.length;
     if (!r || !n) { $('#betDialog').close?.(); return false; }
+    // Free accounts only see links for the bet the worker counted. If the parlay changed since, tap Bet again.
+    const locked = !slipsUnlimited() && (betLocked || betClaim !== `${r.key}:${legsSig()}`);
+    if (locked) r.legs = r.legs.map(l => ({ ...l, link: null }));
     const combo = n > 1 ? comboLink(r.key, r.legs.map(l => l.link)) : null;
     const beta = combo && !COMBO_BOOKS[r.key]?.tested;
     const what = n === 1 ? 'Straight bet' : `${n}-leg parlay`;
@@ -2234,7 +2332,7 @@ import { drawShareCard } from './share-card.js?v=1';
       const done = betAdded.has(i);
       const btn = l.link
         ? `<a class="chip slip-add${done ? ' done' : ''}" href="${esc(l.link)}" target="_blank" rel="noopener" data-slipleg="${i}">${done ? 'Added ✓' : 'Add ↗'}</a>`
-        : '<span class="muted small">Find it in the app</span>';
+        : `<span class="muted small">${locked ? '' : 'Find it in the app'}</span>`;
       return `<li><span class="sl-what"><b>${esc(legLabel(lg))}</b><span class="muted small">${ev ? `${esc(ev.away)} @ ${esc(ev.home)}` : ''}${off}</span></span><span class="sl-px">${fmtAm(l.price)}</span>${btn}</li>`;
     }).join('');
     const how = r.ex
@@ -2249,11 +2347,14 @@ import { drawShareCard } from './share-card.js?v=1';
         ${beta ? `<p class="muted small">New: we're still confirming this one-tap link with ${esc(r.name)}. If any leg is missing from the slip, add it below.</p>` : ''}` : ''}
       <h4 class="slip-h">${combo ? 'Or add them one at a time' : n > 1 ? 'Add each leg to your slip' : 'Add it to your slip'}</h4>
       <ol class="slip-legs">${items}</ol>
-      ${links ? '' : `<p class="note info">${esc(r.name)} doesn't give us bet slip links, so search for each leg in the app. Copy slip puts the list on your clipboard.</p>`}
+      ${locked ? (betLocked ? lockedSlipHtml() : '<p class="note info">Your parlay changed. Tap <b>Bet</b> again to open the new slip.</p>')
+        : links ? '' : `<p class="note info">${esc(r.name)} doesn't give us bet slip links, so search for each leg in the app. Copy slip puts the list on your clipboard.</p>`}
+      ${!locked && slipsLeftNote() ? `<p class="muted small">${esc(slipsLeftNote())}</p>` : ''}
       <p class="muted small">${how} You're signed in to ${esc(r.name)} on your own phone or computer. We never see your account.</p>`;
     return true;
   }
   function slipText() {
+    if (betOne) return `${bookInfo(betOne.book).name} · ${betOne.label}${betOne.price != null ? ` ${fmtAm(betOne.price)}` : ''}\nCompared on screwvig.com`;
     const r = betRow(betKey);
     if (!r) return '';
     const lines = r.legs.map((l, i) => {
@@ -2361,6 +2462,8 @@ import { drawShareCard } from './share-card.js?v=1';
     if (e.target.closest('[data-save="parlay"]')) return openSaveParlay();
     const bt = e.target.closest('[data-betbook]');
     if (bt) return openBet(bt.dataset.betbook);
+    const os = e.target.closest('a[href^="#slip-"]');
+    if (os) { e.preventDefault(); return openOneSlip(os.getAttribute('href').slice(6)); }
     const sa = e.target.closest('.slip-add[data-slipleg]');
     if (sa) { betAdded.add(Number(sa.dataset.slipleg)); setTimeout(renderBetDialog, 0); return; }   // let the link open first
     if (e.target.closest('#betCopy')) return copySlip();
@@ -2417,6 +2520,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (pl) {
       const a = pl.dataset.plan;
       if (a === 'open') return openPlan();
+      if (a === 'slips') { $('#betDialog').close?.(); return openPlan('slips'); }
       if (a === 'manage') return openBillingPortal(pl);
       if (a === 'close') return $('#planDialog').close();
     }
@@ -2531,7 +2635,7 @@ import { drawShareCard } from './share-card.js?v=1';
   async function loadFutures() {
     try {
       const f = await loadJson('data/futures.json');
-      if (!S.futures || f.generated_at !== S.futures.generated_at) { S.futures = f; renderSeason(); }
+      if (!S.futures || f.generated_at !== S.futures.generated_at) { S.futures = netFutures(f); renderSeason(); }
     } catch {
       if (!S.futures) { S.futures = { markets: [], missing: true }; renderSeason(); }
     }

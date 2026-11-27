@@ -15,7 +15,10 @@
 // (/s/<id>). Texting apps read that page's preview tags and show the bet's own picture; people who open it are
 // sent on to the site with the bet loaded. Pictures are dropped after SHARE_IMG_DAYS (the link keeps working).
 //
-// Membership: every account is Free (FREE_SAVES_PER_DAY saved bets a day, counted in Central time) or Unlimited.
+// Membership: every account is Free (FREE_SAVES_PER_DAY saved bets and FREE_SLIPS_PER_DAY opened bet slips a day,
+// counted in Central time) or Unlimited. A "bet slip" is one bet (a straight bet or a parlay) opened at one book through
+// our one-tap slip links: POST /api/slips/claim counts it before the site shows the links. Opening the same bet at the
+// same book again that day is free.
 // Unlimited comes from a Stripe subscription (secrets STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, vars
 // STRIPE_PRICE_MONTHLY and optionally STRIPE_PRICE_ANNUAL), from a secret code the admin hands out, or from the
 // admin granting it by username. The admin is the account whose email is in ADMIN_EMAILS (default
@@ -42,6 +45,8 @@ const SHARE_MAX_IMG = 300000;        // bytes (the site sends a ~60-150 KB JPEG)
 const SHARE_MAX_IMGS = 2500;         // newest pictures kept in the database (~250 MB at most; D1 free allows 500 MB)
 const SHARE_MAX_LEGS = 12;
 const FREE_SAVES_PER_DAY = 2;        // env FREE_SAVES_PER_DAY overrides
+const FREE_SLIPS_PER_DAY = 1;        // env FREE_SLIPS_PER_DAY overrides
+const SLIP_KEY_RE = /^[a-z0-9_]{2,30}:[A-Za-z0-9_.:-]{1,120}$/;   // book:bet-fingerprint, made by the site
 const PLAN_TZ = 'America/Chicago';   // the free daily count resets at midnight here
 const ADMIN_EMAILS = 'cory@fckvig.com,cory@screwvig.com';
 const STRIPE_GRACE_DAYS = 3;         // keep Unlimited this long past a period end while Stripe retries a card
@@ -65,6 +70,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS shares (id TEXT PRIMARY KEY, legs TEXT NOT NULL, stake REAL, title TEXT NOT NULL, descr TEXT NOT NULL, img TEXT, mime TEXT, created_at INTEGER NOT NULL)`,
   `CREATE INDEX IF NOT EXISTS shares_created ON shares (created_at)`,
   `CREATE TABLE IF NOT EXISTS saves (user_id INTEGER NOT NULL, day TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (user_id, day))`,
+  `CREATE TABLE IF NOT EXISTS slips (user_id INTEGER NOT NULL, day TEXT NOT NULL, k TEXT NOT NULL, at INTEGER NOT NULL, PRIMARY KEY (user_id, day, k))`,
   `CREATE TABLE IF NOT EXISTS codes (id INTEGER PRIMARY KEY AUTOINCREMENT, code_hash TEXT NOT NULL UNIQUE, hint TEXT NOT NULL, label TEXT NOT NULL, max_uses INTEGER, uses INTEGER NOT NULL DEFAULT 0, grant_days INTEGER, expires_at INTEGER, revoked INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL)`,
   `CREATE TABLE IF NOT EXISTS redemptions (code_id INTEGER NOT NULL, user_id INTEGER NOT NULL, at INTEGER NOT NULL, PRIMARY KEY (code_id, user_id))`,
   `CREATE INDEX IF NOT EXISTS redemptions_user ON redemptions (user_id)`,
@@ -431,6 +437,7 @@ async function deleteAccount(req, db, env) {
   }
   await db.batch([
     db.prepare('DELETE FROM saves WHERE user_id = ?').bind(u.id),
+    db.prepare('DELETE FROM slips WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM redemptions WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM bets WHERE user_id = ?').bind(u.id),
     db.prepare('DELETE FROM resets WHERE user_id = ?').bind(u.id),
@@ -447,6 +454,7 @@ async function deleteAccount(req, db, env) {
 const userRow = (db, id) => db.prepare('SELECT id, username, email, created_at, plan, plan_until, plan_source, plan_code, stripe_customer, stripe_sub, stripe_status FROM users WHERE id = ?').bind(id).first();
 const isUnlimited = (row, now = Date.now()) => !!row && row.plan === 'unlimited' && (row.plan_until == null || row.plan_until > now);
 const freeLimit = env => { const n = Number(env.FREE_SAVES_PER_DAY); return Number.isInteger(n) && n >= 0 ? n : FREE_SAVES_PER_DAY; };
+const slipLimit = env => { const n = Number(env.FREE_SLIPS_PER_DAY); return env.FREE_SLIPS_PER_DAY != null && env.FREE_SLIPS_PER_DAY !== '' && Number.isInteger(n) && n >= 0 ? n : FREE_SLIPS_PER_DAY; };
 
 // Calendar date and time in Central time.
 const tzParts = (ms, tz = PLAN_TZ) => {
@@ -494,6 +502,34 @@ async function quota(db, env, row) {
   return { unlimited: false, limit, used, left: limit - used, resets_at: nextMidnight() };
 }
 
+// ---------- free bet slips ----------
+async function slipQuota(db, env, row) {
+  if (isUnlimited(row)) return { unlimited: true };
+  const r = await db.prepare('SELECT COUNT(*) AS n, GROUP_CONCAT(k, \' \') AS keys FROM slips WHERE user_id = ? AND day = ?').bind(row.id, planDay()).first();
+  const limit = slipLimit(env), used = Math.min(r?.n || 0, limit);
+  return { unlimited: false, limit, used, left: limit - used, resets_at: nextMidnight(), opened: r?.keys ? String(r.keys).split(' ') : [] };
+}
+
+// The site calls this when someone taps Bet at a book, before it shows the slip links. Unlimited: always yes.
+// Free: yes if this bet was already opened at this book today, or if a free slip is left (the check and the insert
+// are one statement, so two taps at once can't both get the last one). Otherwise 402 with the quota.
+async function claimSlip(req, db, env) {
+  const u = await auth(req, db);
+  const b = await body(req);
+  const key = String(b.key ?? '');
+  if (!SLIP_KEY_RE.test(key)) throw new HttpError(400, "That bet slip link doesn't look right. Reload the page and try again.");
+  const row = await userRow(db, u.id);
+  if (isUnlimited(row)) return json(req, { ok: true, slips: { unlimited: true } });
+  const day = planDay();
+  await db.prepare(`INSERT INTO slips (user_id, day, k, at) SELECT ?, ?, ?, ?
+      WHERE (SELECT COUNT(*) FROM slips WHERE user_id = ? AND day = ?) < ? ON CONFLICT(user_id, day, k) DO NOTHING`)
+    .bind(u.id, day, key, Date.now(), u.id, day, slipLimit(env)).run();
+  const have = await db.prepare('SELECT 1 AS ok FROM slips WHERE user_id = ? AND day = ? AND k = ?').bind(u.id, day, key).first();
+  const slips = await slipQuota(db, env, row);
+  if (!have) return json(req, { ok: false, error: `You've opened today's free bet slip${slips.limit === 1 ? '' : 's'}. Go Unlimited for one-tap slips on every bet.`, slips }, 402);
+  return json(req, { ok: true, slips });
+}
+
 async function isAdmin(db, env, row) {
   if (!row?.email) return false;
   const emails = String(env.ADMIN_EMAILS || ADMIN_EMAILS).toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
@@ -519,6 +555,7 @@ async function membership(db, env, row) {
       manage: !!(row?.stripe_sub && env.STRIPE_SECRET_KEY),
     },
     quota: await quota(db, env, row),
+    slips: await slipQuota(db, env, row),
     billing: { ready: billingReady(env), annual: !!env.STRIPE_PRICE_ANNUAL },
     admin: await isAdmin(db, env, row),
   };
@@ -610,12 +647,13 @@ async function adminUsers(req, db, env) {
   const rows = await db.prepare(`SELECT u.id, u.username, u.email, u.created_at, u.plan, u.plan_until, u.plan_source, u.stripe_status,
       (SELECT COUNT(*) FROM bets b WHERE b.user_id = u.id AND b.deleted = 0) AS bets,
       (SELECT MAX(created_at) FROM sessions s WHERE s.user_id = u.id) AS last_login,
-      (SELECT n FROM saves v WHERE v.user_id = u.id AND v.day = ?) AS saves_today
-    FROM users u ${where} ORDER BY u.created_at DESC LIMIT ? OFFSET ?`).bind(planDay(), ...args, per, page * per).all();
+      (SELECT n FROM saves v WHERE v.user_id = u.id AND v.day = ?) AS saves_today,
+      (SELECT COUNT(*) FROM slips p WHERE p.user_id = u.id AND p.day = ?) AS slips_today
+    FROM users u ${where} ORDER BY u.created_at DESC LIMIT ? OFFSET ?`).bind(planDay(), planDay(), ...args, per, page * per).all();
   const now = Date.now();
   const users = (rows.results || []).map(r => ({
     username: r.username, email: r.email, created_at: r.created_at, bets: r.bets || 0, last_login: r.last_login || null,
-    saves_today: r.saves_today || 0, unlimited: isUnlimited(r, now), plan_source: isUnlimited(r, now) ? r.plan_source : null,
+    saves_today: r.saves_today || 0, slips_today: r.slips_today || 0, unlimited: isUnlimited(r, now), plan_source: isUnlimited(r, now) ? r.plan_source : null,
     plan_until: isUnlimited(r, now) ? r.plan_until : null, stripe_status: r.stripe_status || null,
   }));
   return json(req, { total: total?.n || 0, page, per, users });
@@ -1188,6 +1226,7 @@ const ROUTES = {
   'POST /api/alerts/fire': fireAlerts,
   'POST /api/share': createShare,
   'POST /api/bets/save': saveBet,
+  'POST /api/slips/claim': claimSlip,
   'GET /api/plan': getPlan,
   'POST /api/redeem': redeemCode,
   'POST /api/billing/checkout': checkout,

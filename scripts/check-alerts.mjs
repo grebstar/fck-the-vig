@@ -4,7 +4,7 @@
 
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { checkAlert } from '../docs/js/odds-math.js';
+import { checkAlert, netEvent } from '../docs/js/odds-math.js';
 
 const API = (process.env.ALERTS_API || 'https://api.fckvig.com').replace(/\/$/, '');
 const ODDS = process.env.OUT_FILE || 'docs/data/odds.json';
@@ -27,7 +27,7 @@ export function evaluate(alerts, data, now = Date.now()) {
     if (!a.spec || !(a.commence > now)) { expired.push(a.id); continue; }
     const ev = events.get(a.spec.eventId);
     if (!ev) continue;                       // not in this snapshot (props not refreshed yet, etc.)
-    const hit = checkAlert(a, ev);
+    const hit = checkAlert(a, netEvent(ev, now));   // same after-fee prices the site shows
     if (hit) fired.push({ id: a.id, ...hit });
   }
   return { fired, expired };

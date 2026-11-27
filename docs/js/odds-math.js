@@ -33,15 +33,54 @@ export function legLabel(leg) {
   return `${leg.name} ${leg.point}`;
 }
 
-// Kalshi's trading fee is about 7% x P x (1 - P) per $1 contract (P = price), so the real cost of a contract is
-// a little above the quoted price. Other exchanges' fees aren't modeled; the site labels them "before fees".
-export const KALSHI_FEE = 0.07;
-export function effDec(bk, price) {
-  const d = toDec(price);
-  if (bk !== 'kalshi') return d;
-  const p = 1 / d;
-  return 1 / (p + KALSHI_FEE * p * (1 - p));
+// ---------- prediction-market fees ----------
+// The site shows every exchange price AFTER its trading fee (what you'd actually net if you take the price now),
+// so exchanges and sportsbooks compare fairly. main.js converts the prices once when the odds load (netAm), and
+// keeps the quoted price as `gross`. Fee schedules, checked Nov 26, 2026:
+//   Kalshi: taker fee 0.07 x P x (1 - P) per $1 contract (kalshi.com fee schedule, effective Jul 7, 2026).
+//   Polymarket US: taker fee 0.095 x P x (1 - P) for traders under $10k of 30-day volume (review sites, Nov 2026;
+//     Polymarket's earlier US schedule was 0.05). Treat as an estimate.
+//   Novig: pre-game straight trades free; live taker 0.03 x P x (1 - P); futures 0.06 (Novig's published schedule
+//     per review sites, Oct-Nov 2026).
+//   ProphetX: 2% of net winnings on straight trades (ProphetX help center / review sites, Oct 2026).
+// P = the contract price in dollars (the implied probability). Sportsbooks have no separate fee.
+export const EX_FEES = {
+  kalshi: { pre: 0.07, live: 0.07, future: 0.07 },
+  polymarket_us: { pre: 0.095, live: 0.095, future: 0.095 },
+  polymarket: { pre: 0.095, live: 0.095, future: 0.095 },
+  novig: { pre: 0, live: 0.03, future: 0.06 },
+  prophetx: { winnings: 0.02 },
+};
+// Decimal odds after the fee. when: 'pre' (default), 'live' or 'future'.
+export function netDec(bk, dec, when = 'pre') {
+  const f = EX_FEES[bk];
+  if (!f || !(dec > 1)) return dec;
+  if (f.winnings) return 1 + (dec - 1) * (1 - f.winnings);
+  const k = f[when] ?? f.pre;
+  if (!k) return dec;
+  const p = 1 / dec;
+  return 1 / (p + k * p * (1 - p));
 }
+// American odds after the fee (rounded like any American price).
+export const netAm = (bk, am, when) => (EX_FEES[bk] ? toAm(netDec(bk, toDec(am), when)) : am);
+// One game with every exchange price after its fee; the quoted price stays on each outcome as `gross`.
+// Games already under way use the live fee. Used by the site and by scripts/check-alerts.mjs.
+export function netEvent(ev, now = Date.now()) {
+  const when = Date.parse(ev.commence_time) <= now ? 'live' : 'pre';
+  let books = ev.books;
+  for (const bk of Object.keys(ev.books || {})) {
+    if (!EX_FEES[bk]) continue;
+    if (books === ev.books) books = { ...ev.books };
+    const b = ev.books[bk], markets = {};
+    for (const [mk, outs] of Object.entries(b.markets || {})) {
+      markets[mk] = outs.map(o => (Number.isFinite(o.price) ? { ...o, gross: o.gross ?? o.price, price: netAm(bk, o.gross ?? o.price, when) } : o));
+    }
+    books[bk] = { ...b, markets };
+  }
+  return books === ev.books ? ev : { ...ev, books };
+}
+// Kept for older callers: prices are already net when main.js passes them in, so this is just toDec.
+export const effDec = (bk, price) => toDec(price);
 
 const same = (o, name, desc) => o.name === name && (o.desc || null) === (desc || null);
 
