@@ -1,9 +1,45 @@
 {
- "generated_at": "2026-11-27T06:18:11.817Z",
- "odds_generated_at": "2026-11-27T06:18:02.804Z",
+ "generated_at": "2026-11-27T08:18:14.357Z",
+ "odds_generated_at": "2026-11-27T08:18:04.482Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Texas A&M Aggies @ Marquette Golden Eagles",
+   "commence_time": "2026-11-27T22:00:00Z",
+   "market": "h2h",
+   "bet": "Texas A&M Aggies moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-115"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-155"
+   },
+   "extra_profit_per_100": 22.44,
+   "implied_gap_pts": 7.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Texas A&M Aggies @ Marquette Golden Eagles",
+   "commence_time": "2026-11-27T22:00:00Z",
+   "market": "h2h",
+   "bet": "Marquette Golden Eagles moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+120"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "-104"
+   },
+   "extra_profit_per_100": 23.85,
+   "implied_gap_pts": 5.5
+  },
   {
    "sport": "College Basketball",
    "game": "Hampton Pirates @ UMass Lowell River Hawks",
@@ -24,24 +60,6 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Colgate Raiders @ Hofstra Pride",
-   "commence_time": "2026-11-27T20:30:00Z",
-   "market": "h2h",
-   "bet": "Hofstra Pride moneyline",
-   "books_compared": 3,
-   "best": {
-    "book": "FanDuel",
-    "price": "-172"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-220"
-   },
-   "extra_profit_per_100": 12.69,
-   "implied_gap_pts": 5.5
-  },
-  {
-   "sport": "College Basketball",
    "game": "North Texas Mean Green @ North Dakota St Bison",
    "commence_time": "2026-11-28T01:00:00Z",
    "market": "h2h",
@@ -57,6 +75,60 @@
    },
    "extra_profit_per_100": 10.05,
    "implied_gap_pts": 5.5
+  },
+  {
+   "sport": "College Basketball",
+   "game": "West Virginia Mountaineers @ North Carolina Tar Heels",
+   "commence_time": "2026-11-28T00:00:00Z",
+   "market": "h2h",
+   "bet": "West Virginia Mountaineers moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-140"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-175"
+   },
+   "extra_profit_per_100": 14.29,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Virginia Cavaliers @ Xavier Musketeers",
+   "commence_time": "2026-11-27T16:00:00Z",
+   "market": "h2h",
+   "bet": "Virginia Cavaliers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-295"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-400"
+   },
+   "extra_profit_per_100": 8.9,
+   "implied_gap_pts": 5.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Colgate Raiders @ Hofstra Pride",
+   "commence_time": "2026-11-27T20:30:00Z",
+   "market": "h2h",
+   "bet": "Hofstra Pride moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-175"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-220"
+   },
+   "extra_profit_per_100": 11.69,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "College Basketball",
@@ -96,93 +168,21 @@
   },
   {
    "sport": "College Football",
-   "game": "Southern Mississippi Golden Eagles @ Old Dominion Monarchs",
-   "commence_time": "2026-11-28T18:00:00Z",
+   "game": "Tulsa Golden Hurricane @ UTSA Roadrunners",
+   "commence_time": "2026-11-27T17:01:00Z",
    "market": "h2h",
-   "bet": "Southern Mississippi Golden Eagles moneyline",
+   "bet": "UTSA Roadrunners moneyline",
    "books_compared": 6,
    "best": {
-    "book": "FanDuel",
-    "price": "+195"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+160"
-   },
-   "extra_profit_per_100": 35,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "NBA",
-   "game": "Dallas Mavericks @ Phoenix Suns",
-   "commence_time": "2026-11-28T02:10:00Z",
-   "market": "h2h",
-   "bet": "Dallas Mavericks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "+120"
-   },
-   "worst": {
     "book": "theScore Bet",
-    "price": "+100"
-   },
-   "extra_profit_per_100": 20,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Pacific Tigers @ UC Davis Aggies",
-   "commence_time": "2026-11-28T01:00:00Z",
-   "market": "spreads",
-   "bet": "Pacific Tigers -5.5",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "NHL",
-   "game": "Dallas Stars @ St Louis Blues",
-   "commence_time": "2026-11-27T19:00:00Z",
-   "market": "spreads",
-   "bet": "Dallas Stars -1.5",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "+194"
+    "price": "+105"
    },
    "worst": {
     "book": "Hard Rock Bet",
-    "price": "+160"
+    "price": "-115"
    },
-   "extra_profit_per_100": 34,
-   "implied_gap_pts": 4.4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Texas A&M Aggies @ Marquette Golden Eagles",
-   "commence_time": "2026-11-27T22:00:00Z",
-   "market": "h2h",
-   "bet": "Texas A&M Aggies moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-130"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-155"
-   },
-   "extra_profit_per_100": 12.4,
-   "implied_gap_pts": 4.3
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 4.7
   }
  ]
 }
