@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-27T22:18:15.995Z",
- "odds_generated_at": "2026-11-27T22:18:05.313Z",
+ "generated_at": "2026-11-27T22:41:02.200Z",
+ "odds_generated_at": "2026-11-27T22:40:51.442Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
@@ -168,20 +168,20 @@
   },
   {
    "sport": "College Football",
-   "game": "UAB Blazers @ North Texas Mean Green",
-   "commence_time": "2026-11-28T21:00:00Z",
-   "market": "spreads",
-   "bet": "UAB Blazers +2.5",
-   "books_compared": 5,
+   "game": "Kansas Jayhawks @ Oklahoma State Cowboys",
+   "commence_time": "2026-11-28T23:15:00Z",
+   "market": "h2h",
+   "bet": "Oklahoma State Cowboys moneyline",
+   "books_compared": 6,
    "best": {
     "book": "theScore Bet",
-    "price": "+100"
+    "price": "-200"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-117"
+    "book": "Hard Rock Bet",
+    "price": "-240"
    },
-   "extra_profit_per_100": 14.53,
+   "extra_profit_per_100": 8.33,
    "implied_gap_pts": 3.9
   }
  ]
