@@ -1,9 +1,27 @@
 {
- "generated_at": "2026-11-27T02:50:44.234Z",
- "odds_generated_at": "2026-11-27T02:50:30.139Z",
+ "generated_at": "2026-11-27T04:18:14.818Z",
+ "odds_generated_at": "2026-11-27T04:18:04.857Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Texas State Bobcats @ Louisiana Tech Bulldogs",
+   "commence_time": "2026-11-27T20:00:00Z",
+   "market": "h2h",
+   "bet": "Texas State Bobcats moneyline",
+   "books_compared": 5,
+   "best": {
+    "book": "FanDuel",
+    "price": "-200"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-275"
+   },
+   "extra_profit_per_100": 13.64,
+   "implied_gap_pts": 6.7
+  },
   {
    "sport": "College Basketball",
    "game": "North Texas Mean Green @ North Dakota St Bison",
@@ -24,75 +42,21 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Vermont Catamounts @ Merrimack Warriors",
-   "commence_time": "2026-11-27T18:00:00Z",
+   "game": "Texas State Bobcats @ Louisiana Tech Bulldogs",
+   "commence_time": "2026-11-27T20:00:00Z",
    "market": "h2h",
-   "bet": "Vermont Catamounts moneyline",
-   "books_compared": 3,
+   "bet": "Louisiana Tech Bulldogs moneyline",
+   "books_compared": 5,
    "best": {
-    "book": "theScore Bet",
-    "price": "-140"
+    "book": "Hard Rock Bet",
+    "price": "+210"
    },
    "worst": {
-    "book": "BetRivers",
-    "price": "-177"
-   },
-   "extra_profit_per_100": 14.93,
-   "implied_gap_pts": 5.6
-  },
-  {
-   "sport": "NBA",
-   "game": "Denver Nuggets @ Utah Jazz",
-   "commence_time": "2026-11-28T02:40:00Z",
-   "market": "h2h",
-   "bet": "Utah Jazz moneyline",
-   "books_compared": 6,
-   "best": {
     "book": "FanDuel",
-    "price": "+385"
+    "price": "+164"
    },
-   "worst": {
-    "book": "BetRivers",
-    "price": "+290"
-   },
-   "extra_profit_per_100": 95,
-   "implied_gap_pts": 5
-  },
-  {
-   "sport": "NBA",
-   "game": "Dallas Mavericks @ Phoenix Suns",
-   "commence_time": "2026-11-28T02:10:00Z",
-   "market": "h2h",
-   "bet": "Dallas Mavericks moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "DraftKings",
-    "price": "+115"
-   },
-   "worst": {
-    "book": "theScore Bet",
-    "price": "-105"
-   },
-   "extra_profit_per_100": 19.76,
-   "implied_gap_pts": 4.7
-  },
-  {
-   "sport": "NBA",
-   "game": "Dallas Mavericks @ Phoenix Suns",
-   "commence_time": "2026-11-28T02:10:00Z",
-   "market": "h2h",
-   "bet": "Phoenix Suns moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-115"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-139"
-   },
-   "extra_profit_per_100": 15.02,
-   "implied_gap_pts": 4.7
+   "extra_profit_per_100": 46,
+   "implied_gap_pts": 5.6
   },
   {
    "sport": "College Basketball",
@@ -100,53 +64,35 @@
    "commence_time": "2026-11-27T18:00:00Z",
    "market": "h2h",
    "bet": "UMass Lowell River Hawks moneyline",
-   "books_compared": 3,
+   "books_compared": 4,
    "best": {
     "book": "theScore Bet",
-    "price": "-130"
+    "price": "-125"
    },
    "worst": {
     "book": "BetRivers",
     "price": "-157"
    },
-   "extra_profit_per_100": 13.23,
-   "implied_gap_pts": 4.6
+   "extra_profit_per_100": 16.31,
+   "implied_gap_pts": 5.5
   },
   {
    "sport": "College Basketball",
-   "game": "Le Moyne Dolphins @ Maine Black Bears",
-   "commence_time": "2026-11-27T19:00:00Z",
-   "market": "spreads",
-   "bet": "Le Moyne Dolphins +1.5",
-   "books_compared": 4,
+   "game": "Colgate Raiders @ Hofstra Pride",
+   "commence_time": "2026-11-27T20:30:00Z",
+   "market": "h2h",
+   "bet": "Hofstra Pride moneyline",
+   "books_compared": 3,
    "best": {
-    "book": "DraftKings",
-    "price": "+100"
+    "book": "FanDuel",
+    "price": "-210"
    },
    "worst": {
-    "book": "theScore Bet",
-    "price": "-120"
+    "book": "BetRivers",
+    "price": "-265"
    },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Le Moyne Dolphins @ Maine Black Bears",
-   "commence_time": "2026-11-27T19:00:00Z",
-   "market": "spreads",
-   "bet": "Maine Black Bears -1.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "DraftKings",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 9.88,
+   "implied_gap_pts": 4.9
   },
   {
    "sport": "NHL",
@@ -167,6 +113,42 @@
    "implied_gap_pts": 4.4
   },
   {
+   "sport": "College Basketball",
+   "game": "Le Moyne Dolphins @ Maine Black Bears",
+   "commence_time": "2026-11-27T19:00:00Z",
+   "market": "spreads",
+   "bet": "Le Moyne Dolphins +1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "DraftKings",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-125"
+   },
+   "extra_profit_per_100": 15.24,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Pacific Tigers @ UC Davis Aggies",
+   "commence_time": "2026-11-28T01:00:00Z",
+   "market": "h2h",
+   "bet": "Pacific Tigers moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "FanDuel",
+    "price": "-200"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-245"
+   },
+   "extra_profit_per_100": 9.18,
+   "implied_gap_pts": 4.3
+  },
+  {
    "sport": "NHL",
    "game": "Dallas Stars @ St Louis Blues",
    "commence_time": "2026-11-27T19:00:00Z",
@@ -183,6 +165,24 @@
    },
    "extra_profit_per_100": 9.18,
    "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Memphis Tigers @ Wake Forest Demon Deacons",
+   "commence_time": "2026-11-27T18:30:00Z",
+   "market": "h2h",
+   "bet": "Memphis Tigers moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "FanDuel",
+    "price": "-132"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-157"
+   },
+   "extra_profit_per_100": 12.07,
+   "implied_gap_pts": 4.2
   }
  ]
 }
