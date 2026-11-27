@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Anton&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=17">
+<link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body>
 <header class="topbar">
@@ -57,9 +57,24 @@
     <div id="gaps" class="gaps"></div>
     <div class="vig-card">
       <h2>How much each one keeps</h2>
-      <p class="muted small">Average vig (hold) on upcoming game lines. Lower means more of your money comes back. Prediction-market numbers are before their trading fees.</p>
+      <p class="muted small">Average vig (hold) on upcoming game lines. Lower means more of your money comes back. Prediction-market numbers include their trading fees.</p>
       <ol id="vigList" class="vig-list"></ol>
     </div>
+  </section>
+
+  <section id="gate" class="panel panel-gate" aria-labelledby="gateTitle">
+    <p class="eyebrow">Free account · 21+</p>
+    <h2 id="gateTitle" class="panel-title">Sign up free to see every price</h2>
+    <ul class="gate-list">
+      <li><b>Every game and player prop</b> across the sportsbooks and prediction markets in your state, side by side.</li>
+      <li><b>Build a parlay</b> and see which book pays the most for it.</li>
+      <li><b>Prediction markets after fees</b>, so you know what you'd really get.</li>
+      <li><b>One-tap bet slips:</b> tap Bet and the book opens with your bet already on the slip. 1 a day free, every bet on Unlimited.</li>
+      <li><b>Save bets</b> and get them graded automatically.</li>
+    </ul>
+    <button type="button" class="cta gate-cta" data-gate="signup">Create a free account</button>
+    <p class="gate-alt"><button type="button" class="link-btn" data-gate="signin">I already have an account</button></p>
+    <p class="muted small">Unlimited is $4.99/mo. No card needed for the free account.</p>
   </section>
 
   <section id="build" class="panel panel-build" aria-labelledby="buildTitle">
@@ -156,7 +171,7 @@
 
 <footer class="foot">
   <p><button class="link-btn foot-know" data-know="">Good to know: how fresh the odds are, when props show up, and what we can't show yet</button></p>
-  <p><b>How payouts are calculated.</b> Standard parlays pay the product of each leg's price, so that's what we show for every book. Same-game parlays, prediction-market trading fees and boosts aren't reflected. Always confirm the price in the app before you bet.</p>
+  <p><b>How payouts are calculated.</b> Standard parlays pay the product of each leg's price, so that's what we show for every book. Prediction-market prices are after their trading fees. Same-game parlays and boosts aren't reflected. Always confirm the price in the app before you bet.</p>
   <p>Odds via <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a> and <a href="https://kalshi.com" target="_blank" rel="noopener">Kalshi</a> · results from ESPN box scores · <button class="link-btn" id="aboutData">Where each platform is legal or blocked, by state (sources)</button> · <button class="link-btn" id="privacyLink">Privacy</button></p>
   <p class="rg">21+ (18+ on some prediction markets). Gambling problem? Call 1-800-GAMBLER.</p>
   <p class="rg">© 2026 GrebStar Ventures LLC. Screw the Vig is operated by GrebStar Ventures LLC.</p>
@@ -332,6 +347,6 @@
   </form>
 </dialog>
 
-<script type="module" src="js/main.js?v=19"></script>
+<script type="module" src="js/main.js?v=20"></script>
 </body>
 </html>

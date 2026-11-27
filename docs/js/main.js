@@ -483,8 +483,9 @@ import { drawShareCard } from './share-card.js?v=1';
     $('#todaySub').textContent = `${day} · ${games} game${games === 1 ? '' : 's'} · ${allowed.size} books${S.state !== 'ALL' ? ' in ' + stateName(S.state) : ''}`;
     $('#todayTitle').textContent = S.day === todayKey() ? 'Biggest price gaps right now'
       : S.day === 'all' ? 'Biggest price gaps, all days' : `Biggest price gaps ${dayName(S.day, true) === 'Tomorrow' ? 'tomorrow' : 'on ' + dayName(S.day, true)}`;
-    const gaps = priceGaps(allowed);
-    $('#gaps').innerHTML = gaps.length ? gaps.map(g => {
+    const all = priceGaps(allowed);
+    const gaps = gated() ? all.slice(0, TEASER_GAPS) : all;
+    $('#gaps').innerHTML = (gaps.length ? gaps.map(g => {
       const leg = { market: g.mk, name: g.name, point: g.point, desc: g.desc };
       const on = S.legs.some(l => l.eventId === g.ev.id && l.market === g.mk && l.name === g.name && l.desc === g.desc);
       const when = new Intl.DateTimeFormat('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' }).format(new Date(g.ev.commence_time));
@@ -493,7 +494,8 @@ import { drawShareCard } from './share-card.js?v=1';
         <span class="gap-game">${esc(g.ev.away)} @ ${esc(g.ev.home)} · ${esc(when)}</span>
         <span class="gap-row"><span>Best <strong>${fmtAm(g.best.price)} ${esc(bookInfo(g.best.bk).name)}</strong></span><span>Worst <strong>${fmtAm(g.worst.price)} ${esc(bookInfo(g.worst.bk).name)}</strong></span></span>
       </button>`;
-    }).join('') : `<p class="none">No price gaps to show ${S.day === todayKey() ? 'right now' : S.day === 'all' ? 'yet' : dayName(S.day) === 'Tomorrow' ? 'for tomorrow' : 'for ' + esc(dayLong(S.day))}.</p>`;
+    }).join('') : `<p class="none">No price gaps to show ${S.day === todayKey() ? 'right now' : S.day === 'all' ? 'yet' : dayName(S.day) === 'Tomorrow' ? 'for tomorrow' : 'for ' + esc(dayLong(S.day))}.</p>`)
+      + (gated() && all.length > gaps.length ? `<button type="button" class="gap-more" data-gate="signup">See all ${all.length} price gaps, free →</button>` : '');
     const vig = vigByBook(allowed);
     const max = Math.max(...vig.map(v => v.vig), 1);
     $('#vigList').innerHTML = vig.map(v => `<li class="${v.vig < 2 ? 'low' : ''}"><span>${esc(bookInfo(v.bk).name)}${bookInfo(v.bk).ex ? ' <span class="muted small">exchange</span>' : ''}</span><span class="pct">${v.vig.toFixed(1)}%</span><span class="bar"><i style="width:${Math.max(4, v.vig / max * 100).toFixed(0)}%"></i></span></li>`).join('');
@@ -815,6 +817,7 @@ import { drawShareCard } from './share-card.js?v=1';
   }
 
   function setTab(t) {
+    if (gated() && t !== 'today') return gateSignup(() => setTab(t));
     S.tab = t;
     S.view = GAME_TABS.has(t) ? 'games' : VIEWS.has(t) ? t : 'games';
     if (GAME_TABS.has(t)) S.lastGameTab = t;
@@ -1591,8 +1594,29 @@ import { drawShareCard } from './share-card.js?v=1';
     } catch { /* ignore */ }
   }
   function setSession(u) {
+    const was = !!S.user;
     S.user = u;
     try { if (u) localStorage.setItem(SESSION_KEY, JSON.stringify(u)); else localStorage.removeItem(SESSION_KEY); } catch { /* private mode */ }
+    if (!!u !== was) applyGate();
+  }
+
+  // ---------- free account required ----------
+  // Signed-out visitors see the Today teaser (a few price gaps and the vig list) and a sign-up card. Everything
+  // else (all games, parlays, season-long, arbitrage, bets) needs a free account. The odds file is public, so this
+  // is about getting people signed up, not hiding data.
+  const REQUIRE_ACCOUNT = true;
+  const TEASER_GAPS = 3;
+  const gated = () => REQUIRE_ACCOUNT && !S.user;
+  const GATE_MSG = 'Create a free account to see every game and prop, build parlays and open bet slips. It\'s free, 21+.';
+  function gateSignup(then, msg) {
+    afterAuth = then || null;
+    openAcct('signup', msg || GATE_MSG);
+  }
+  function applyGate() {
+    const on = gated();
+    document.body.classList.toggle('gated', on);
+    if (on && S.tab && S.tab !== 'today') setTab('today');
+    if (S.data) renderToday();
   }
 
   async function api(path, body) {
@@ -2453,6 +2477,7 @@ import { drawShareCard } from './share-card.js?v=1';
     if (tb) return setTab(tb.dataset.tab);
     if (e.target.closest('#seeBest')) return setTab('results');
     const gp = e.target.closest('.gap[data-gev]');
+    if (gp && gated()) return gateSignup(() => gp.isConnected && gp.click());
     if (gp) {
       const pt = gp.dataset.gpt === '' ? null : Number(gp.dataset.gpt);
       return toggleLeg(gp.dataset.gev, gp.dataset.gmk, gp.dataset.gnm, pt, gp.dataset.gds || null);
@@ -2460,6 +2485,8 @@ import { drawShareCard } from './share-card.js?v=1';
     const vw = e.target.closest('.views [data-view]');
     if (vw) return setView(vw.dataset.view);
     if (e.target.closest('[data-save="parlay"]')) return openSaveParlay();
+    const gb = e.target.closest('[data-gate]');
+    if (gb) return gb.dataset.gate === 'signin' ? openAcct('signin', 'Sign in to see every game, build parlays and open bet slips.') : gateSignup();
     const bt = e.target.closest('[data-betbook]');
     if (bt) return openBet(bt.dataset.betbook);
     const os = e.target.closest('a[href^="#slip-"]');
@@ -2580,7 +2607,7 @@ import { drawShareCard } from './share-card.js?v=1';
   $('#saveBook').addEventListener('change', () => updateSaveDialog(true));
   window.addEventListener('storage', e => {
     if (e.key === 'ftv-bets') { S.bets = loadBets(); renderBets(); }
-    if (e.key === SESSION_KEY) { loadSession(); if (!lsGet(SESSION_KEY)) S.user = null; renderBets(); }
+    if (e.key === SESSION_KEY) { loadSession(); if (!lsGet(SESSION_KEY)) S.user = null; applyGate(); renderBets(); }
     if (e.key === MYBOOKS_KEY || e.key === ONLYMINE_KEY) { loadMyBooks(); render(); }
   });
 
@@ -2662,6 +2689,7 @@ import { drawShareCard } from './share-card.js?v=1';
     await ageGate();
     S.bets = loadBets();
     loadSession();
+    applyGate();
     loadMyBooks();
     renderAcctBtn();
     renderBetsBadge();
