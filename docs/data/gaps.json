@@ -1,80 +1,62 @@
 {
- "generated_at": "2026-11-27T18:18:12.940Z",
- "odds_generated_at": "2026-11-27T18:18:04.096Z",
+ "generated_at": "2026-11-27T20:18:16.400Z",
+ "odds_generated_at": "2026-11-27T20:18:05.406Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "College Basketball",
-   "game": "Memphis Tigers @ Wake Forest Demon Deacons",
-   "commence_time": "2026-11-27T18:30:00Z",
-   "market": "h2h",
-   "bet": "Wake Forest Demon Deacons moneyline",
-   "books_compared": 6,
+   "sport": "College Football",
+   "game": "UAB Blazers @ North Texas Mean Green",
+   "commence_time": "2026-11-28T21:00:00Z",
+   "market": "spreads",
+   "bet": "UAB Blazers +2.5",
+   "books_compared": 4,
    "best": {
-    "book": "FanDuel",
-    "price": "+102"
+    "book": "theScore Bet",
+    "price": "+105"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-130"
+    "book": "BetRivers",
+    "price": "-117"
    },
-   "extra_profit_per_100": 25.08,
-   "implied_gap_pts": 7
+   "extra_profit_per_100": 19.53,
+   "implied_gap_pts": 5.1
   },
   {
-   "sport": "College Football",
-   "game": "Baylor Bears @ Houston Cougars",
-   "commence_time": "2026-11-29T02:30:00Z",
+   "sport": "College Basketball",
+   "game": "Tennessee Volunteers @ Louisville Cardinals",
+   "commence_time": "2026-11-28T02:00:00Z",
    "market": "h2h",
-   "bet": "Houston Cougars moneyline",
+   "bet": "Louisville Cardinals moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-156"
+    "price": "-160"
    },
    "worst": {
     "book": "Hard Rock Bet",
     "price": "-200"
    },
-   "extra_profit_per_100": 14.1,
-   "implied_gap_pts": 5.7
+   "extra_profit_per_100": 12.5,
+   "implied_gap_pts": 5.1
   },
   {
-   "sport": "College Basketball",
-   "game": "Memphis Tigers @ Wake Forest Demon Deacons",
-   "commence_time": "2026-11-27T18:30:00Z",
-   "market": "h2h",
-   "bet": "Memphis Tigers moneyline",
-   "books_compared": 6,
+   "sport": "NHL",
+   "game": "New York Islanders @ Philadelphia Flyers",
+   "commence_time": "2026-11-29T00:40:00Z",
+   "market": "totals",
+   "bet": "Under 5.5",
+   "books_compared": 3,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-122"
-   },
-   "extra_profit_per_100": 18.03,
-   "implied_gap_pts": 5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Navy Midshipmen @ Fairfield Stags",
-   "commence_time": "2026-11-27T19:00:00Z",
-   "market": "h2h",
-   "bet": "Fairfield Stags moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-210"
+    "book": "DraftKings",
+    "price": "+114"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-265"
+    "price": "-107"
    },
-   "extra_profit_per_100": 9.88,
-   "implied_gap_pts": 4.9
+   "extra_profit_per_100": 20.54,
+   "implied_gap_pts": 5
   },
   {
    "sport": "College Football",
@@ -93,24 +75,6 @@
    },
    "extra_profit_per_100": 35,
    "implied_gap_pts": 4.7
-  },
-  {
-   "sport": "College Football",
-   "game": "Baylor Bears @ Houston Cougars",
-   "commence_time": "2026-11-29T02:30:00Z",
-   "market": "h2h",
-   "bet": "Baylor Bears moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "BetRivers",
-    "price": "+155"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "+128"
-   },
-   "extra_profit_per_100": 27,
-   "implied_gap_pts": 4.6
   },
   {
    "sport": "College Basketball",
@@ -150,39 +114,75 @@
   },
   {
    "sport": "College Basketball",
-   "game": "Navy Midshipmen @ Fairfield Stags",
-   "commence_time": "2026-11-27T19:00:00Z",
+   "game": "North Texas Mean Green @ North Dakota St Bison",
+   "commence_time": "2026-11-28T01:00:00Z",
    "market": "h2h",
-   "bet": "Navy Midshipmen moneyline",
+   "bet": "North Texas Mean Green moneyline",
    "books_compared": 6,
    "best": {
-    "book": "Hard Rock Bet",
-    "price": "+210"
-   },
-   "worst": {
     "book": "FanDuel",
-    "price": "+172"
-   },
-   "extra_profit_per_100": 38,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "NBA",
-   "game": "Memphis Grizzlies @ Minnesota Timberwolves",
-   "commence_time": "2026-11-28T01:40:00Z",
-   "market": "spreads",
-   "bet": "Memphis Grizzlies +3.5",
-   "books_compared": 5,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
+    "price": "-245"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-120"
+    "price": "-305"
    },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
+   "extra_profit_per_100": 8.03,
+   "implied_gap_pts": 4.3
+  },
+  {
+   "sport": "NHL",
+   "game": "Tampa Bay Lightning @ Florida Panthers",
+   "commence_time": "2026-11-28T23:10:00Z",
+   "market": "spreads",
+   "bet": "Florida Panthers -1.5",
+   "books_compared": 3,
+   "best": {
+    "book": "BetRivers",
+    "price": "+230"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "+190"
+   },
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 4.2
+  },
+  {
+   "sport": "College Football",
+   "game": "Oregon State Beavers @ Fresno State Bulldogs",
+   "commence_time": "2026-11-29T03:00:00Z",
+   "market": "h2h",
+   "bet": "Fresno State Bulldogs moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-140"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-167"
+   },
+   "extra_profit_per_100": 11.55,
+   "implied_gap_pts": 4.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Texas A&M Aggies @ Marquette Golden Eagles",
+   "commence_time": "2026-11-27T22:00:00Z",
+   "market": "h2h",
+   "bet": "Texas A&M Aggies moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "DraftKings",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-112"
+   },
+   "extra_profit_per_100": 15.71,
+   "implied_gap_pts": 4
   }
  ]
 }
