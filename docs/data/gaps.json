@@ -1,26 +1,26 @@
 {
- "generated_at": "2026-11-27T22:41:02.200Z",
- "odds_generated_at": "2026-11-27T22:40:51.442Z",
+ "generated_at": "2026-11-28T00:18:14.494Z",
+ "odds_generated_at": "2026-11-28T00:18:04.232Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
   {
-   "sport": "NHL",
-   "game": "New York Islanders @ Philadelphia Flyers",
-   "commence_time": "2026-11-29T00:40:00Z",
+   "sport": "College Football",
+   "game": "UConn Huskies @ Wyoming Cowboys",
+   "commence_time": "2026-11-28T17:00:00Z",
    "market": "totals",
-   "bet": "Under 5.5",
-   "books_compared": 3,
+   "bet": "Under 44.5",
+   "books_compared": 5,
    "best": {
-    "book": "DraftKings",
-    "price": "+114"
+    "book": "BetMGM",
+    "price": "-102"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-107"
+    "price": "-125"
    },
-   "extra_profit_per_100": 20.54,
-   "implied_gap_pts": 5
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 5.1
   },
   {
    "sport": "College Football",
@@ -41,39 +41,57 @@
    "implied_gap_pts": 4.7
   },
   {
-   "sport": "NHL",
-   "game": "Calgary Flames @ New York Rangers",
-   "commence_time": "2026-11-29T00:10:00Z",
-   "market": "h2h",
-   "bet": "Calgary Flames moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "+176"
-   },
-   "worst": {
-    "book": "BetMGM",
-    "price": "+145"
-   },
-   "extra_profit_per_100": 31,
-   "implied_gap_pts": 4.6
-  },
-  {
    "sport": "College Basketball",
-   "game": "North Texas Mean Green @ North Dakota St Bison",
-   "commence_time": "2026-11-28T01:00:00Z",
+   "game": "Tennessee Volunteers @ Louisville Cardinals",
+   "commence_time": "2026-11-28T02:00:00Z",
    "market": "h2h",
-   "bet": "North Texas Mean Green moneyline",
+   "bet": "Louisville Cardinals moneyline",
    "books_compared": 6,
    "best": {
     "book": "FanDuel",
-    "price": "-245"
+    "price": "-160"
    },
    "worst": {
     "book": "BetRivers",
-    "price": "-305"
+    "price": "-195"
    },
-   "extra_profit_per_100": 8.03,
+   "extra_profit_per_100": 11.22,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "NHL",
+   "game": "Washington Capitals @ St Louis Blues",
+   "commence_time": "2026-11-29T00:10:00Z",
+   "market": "spreads",
+   "bet": "St Louis Blues -1.5",
+   "books_compared": 5,
+   "best": {
+    "book": "BetRivers",
+    "price": "+220"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+180"
+   },
+   "extra_profit_per_100": 40,
+   "implied_gap_pts": 4.5
+  },
+  {
+   "sport": "NHL",
+   "game": "New York Islanders @ Philadelphia Flyers",
+   "commence_time": "2026-11-29T00:40:00Z",
+   "market": "totals",
+   "bet": "Under 5.5",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "+114"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-104"
+   },
+   "extra_profit_per_100": 17.85,
    "implied_gap_pts": 4.3
   },
   {
@@ -95,6 +113,24 @@
    "implied_gap_pts": 4.2
   },
   {
+   "sport": "NHL",
+   "game": "Calgary Flames @ New York Rangers",
+   "commence_time": "2026-11-29T00:10:00Z",
+   "market": "spreads",
+   "bet": "New York Rangers -1.5",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "+135"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "+115"
+   },
+   "extra_profit_per_100": 20,
+   "implied_gap_pts": 4
+  },
+  {
    "sport": "College Football",
    "game": "Kennesaw State Owls @ Western Kentucky Hilltoppers",
    "commence_time": "2026-11-28T18:00:00Z",
@@ -110,42 +146,6 @@
     "price": "-180"
    },
    "extra_profit_per_100": 10.23,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Tennessee Volunteers @ Louisville Cardinals",
-   "commence_time": "2026-11-28T02:00:00Z",
-   "market": "h2h",
-   "bet": "Louisville Cardinals moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "FanDuel",
-    "price": "-160"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-190"
-   },
-   "extra_profit_per_100": 9.87,
-   "implied_gap_pts": 4
-  },
-  {
-   "sport": "NHL",
-   "game": "Calgary Flames @ New York Rangers",
-   "commence_time": "2026-11-29T00:10:00Z",
-   "market": "h2h",
-   "bet": "New York Rangers moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "BetMGM",
-    "price": "-180"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-215"
-   },
-   "extra_profit_per_100": 9.05,
    "implied_gap_pts": 4
   },
   {
@@ -168,20 +168,20 @@
   },
   {
    "sport": "College Football",
-   "game": "Kansas Jayhawks @ Oklahoma State Cowboys",
-   "commence_time": "2026-11-28T23:15:00Z",
-   "market": "h2h",
-   "bet": "Oklahoma State Cowboys moneyline",
-   "books_compared": 6,
+   "game": "UAB Blazers @ North Texas Mean Green",
+   "commence_time": "2026-11-28T21:00:00Z",
+   "market": "spreads",
+   "bet": "UAB Blazers +2.5",
+   "books_compared": 5,
    "best": {
     "book": "theScore Bet",
-    "price": "-200"
+    "price": "+100"
    },
    "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-240"
+    "book": "BetRivers",
+    "price": "-117"
    },
-   "extra_profit_per_100": 8.33,
+   "extra_profit_per_100": 14.53,
    "implied_gap_pts": 3.9
   }
  ]
