@@ -1,9 +1,63 @@
 {
- "generated_at": "2026-11-28T06:18:21.668Z",
- "odds_generated_at": "2026-11-28T06:18:05.017Z",
+ "generated_at": "2026-11-28T07:43:10.399Z",
+ "odds_generated_at": "2026-11-28T07:42:58.543Z",
  "window_hours": 36,
  "note": "Same bet, same line, sportsbooks only (exchanges excluded). extra_profit_per_100 = profit on a $100 bet at the best price minus at the worst price; implied_gap_pts = difference in implied win probability (percentage points), used for ranking. Prices beyond +/-400 are skipped.",
  "gaps": [
+  {
+   "sport": "College Basketball",
+   "game": "Central Connecticut St Blue Devils @ Navy Midshipmen",
+   "commence_time": "2026-11-28T19:00:00Z",
+   "market": "h2h",
+   "bet": "Central Connecticut St Blue Devils moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetMGM",
+    "price": "-105"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-135"
+   },
+   "extra_profit_per_100": 21.17,
+   "implied_gap_pts": 6.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Delaware Blue Hens @ Stony Brook Seawolves",
+   "commence_time": "2026-11-28T21:00:00Z",
+   "market": "h2h",
+   "bet": "Stony Brook Seawolves moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-210"
+   },
+   "worst": {
+    "book": "Hard Rock Bet",
+    "price": "-275"
+   },
+   "extra_profit_per_100": 11.26,
+   "implied_gap_pts": 5.6
+  },
+  {
+   "sport": "College Basketball",
+   "game": "North Carolina Central Eagles @ Gardner-Webb Bulldogs",
+   "commence_time": "2026-11-28T18:00:00Z",
+   "market": "h2h",
+   "bet": "Gardner-Webb Bulldogs moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "theScore Bet",
+    "price": "-125"
+   },
+   "worst": {
+    "book": "BetRivers",
+    "price": "-157"
+   },
+   "extra_profit_per_100": 16.31,
+   "implied_gap_pts": 5.5
+  },
   {
    "sport": "College Basketball",
    "game": "Ball State Cardinals @ Southern Indiana Screaming Eagles",
@@ -21,6 +75,24 @@
    },
    "extra_profit_per_100": 13.16,
    "implied_gap_pts": 5.2
+  },
+  {
+   "sport": "College Basketball",
+   "game": "Central Connecticut St Blue Devils @ Navy Midshipmen",
+   "commence_time": "2026-11-28T19:00:00Z",
+   "market": "h2h",
+   "bet": "Navy Midshipmen moneyline",
+   "books_compared": 6,
+   "best": {
+    "book": "BetRivers",
+    "price": "+105"
+   },
+   "worst": {
+    "book": "theScore Bet",
+    "price": "-115"
+   },
+   "extra_profit_per_100": 18.04,
+   "implied_gap_pts": 4.7
   },
   {
    "sport": "College Basketball",
@@ -60,6 +132,24 @@
   },
   {
    "sport": "College Basketball",
+   "game": "Charleston Southern Buccaneers @ Morehead St Eagles",
+   "commence_time": "2026-11-29T00:00:00Z",
+   "market": "h2h",
+   "bet": "Morehead St Eagles moneyline",
+   "books_compared": 4,
+   "best": {
+    "book": "DraftKings",
+    "price": "+130"
+   },
+   "worst": {
+    "book": "FanDuel",
+    "price": "+108"
+   },
+   "extra_profit_per_100": 22,
+   "implied_gap_pts": 4.6
+  },
+  {
+   "sport": "College Basketball",
    "game": "St. Thomas (MN) Tommies @ Princeton Tigers",
    "commence_time": "2026-11-28T17:00:00Z",
    "market": "h2h",
@@ -82,7 +172,7 @@
    "commence_time": "2026-11-28T20:00:00Z",
    "market": "h2h",
    "bet": "UMKC Kangaroos moneyline",
-   "books_compared": 5,
+   "books_compared": 6,
    "best": {
     "book": "FanDuel",
     "price": "-132"
@@ -93,96 +183,6 @@
    },
    "extra_profit_per_100": 13.26,
    "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "North Carolina Central Eagles @ Gardner-Webb Bulldogs",
-   "commence_time": "2026-11-28T18:00:00Z",
-   "market": "h2h",
-   "bet": "Gardner-Webb Bulldogs moneyline",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "-130"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-157"
-   },
-   "extra_profit_per_100": 13.23,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Delaware Blue Hens @ Stony Brook Seawolves",
-   "commence_time": "2026-11-28T21:00:00Z",
-   "market": "h2h",
-   "bet": "Stony Brook Seawolves moneyline",
-   "books_compared": 5,
-   "best": {
-    "book": "FanDuel",
-    "price": "-220"
-   },
-   "worst": {
-    "book": "Hard Rock Bet",
-    "price": "-275"
-   },
-   "extra_profit_per_100": 9.09,
-   "implied_gap_pts": 4.6
-  },
-  {
-   "sport": "NHL",
-   "game": "New York Islanders @ Philadelphia Flyers",
-   "commence_time": "2026-11-29T00:40:00Z",
-   "market": "totals",
-   "bet": "Under 5.5",
-   "books_compared": 4,
-   "best": {
-    "book": "DraftKings",
-    "price": "+114"
-   },
-   "worst": {
-    "book": "BetRivers",
-    "price": "-105"
-   },
-   "extra_profit_per_100": 18.76,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "The Citadel Bulldogs @ High Point Panthers",
-   "commence_time": "2026-11-28T19:00:00Z",
-   "market": "spreads",
-   "bet": "High Point Panthers -26.5",
-   "books_compared": 6,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
-  },
-  {
-   "sport": "College Basketball",
-   "game": "Tennessee Tech Golden Eagles @ Eastern Kentucky Colonels",
-   "commence_time": "2026-11-28T21:00:00Z",
-   "market": "spreads",
-   "bet": "Eastern Kentucky Colonels +4.5",
-   "books_compared": 4,
-   "best": {
-    "book": "theScore Bet",
-    "price": "+100"
-   },
-   "worst": {
-    "book": "FanDuel",
-    "price": "-120"
-   },
-   "extra_profit_per_100": 16.67,
-   "implied_gap_pts": 4.5
   }
  ]
 }
